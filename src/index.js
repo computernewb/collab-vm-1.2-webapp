@@ -189,6 +189,7 @@ class CollabVMClient {
                 buttons.takeTurn.innerText = "Take Turn";
                 turn = -1;
                 turnstatus.innerText = "";
+				display.className = "";
                 // Get the number of users queued for a turn
                 var queuedUsers = Number(msgArr[2]);
                 if (queuedUsers === 0) return;
@@ -200,13 +201,15 @@ class CollabVMClient {
                 if (currentTurnUsername === window.username) {
                     turn = 0;
                     turnstatus.innerText = "You have the turn.";
-                }
+					display.className = "focused";
+					}
                 // Highlight all waiting users and set their status
                 if (queuedUsers > 1) {
                     for (var i = 1; i < queuedUsers; i++) {
                         if (window.username === msgArr[i+3]) {
                             turn = i;
                             turnstatus.innerText = "Waiting for turn";
+							display.className = "waiting";
                         };
                         var user = users.find(u => u.username === msgArr[i+3]);
                         user.turn = i;

@@ -19,6 +19,7 @@
     display: block;
     margin-bottom: 10px;
 }
+
 #vmlist > div.row > div {
     padding-bottom: 10px;
 }
@@ -26,9 +27,11 @@
     cursor: pointer;
     border-color: rgb(8, 121, 250);
 }
+
 .vmtile > img {
     margin-bottom: 2px;
-}*/
+}
+
 .chat-table, .username-table {
     overflow-y: auto;
     border: 1px solid #575757;
@@ -36,6 +39,7 @@
 .chat-table {
     height: 30vh;
 }
+
 .username-table {
     max-height: 30vh;
 }
@@ -43,9 +47,22 @@
     position: sticky;
     top: 0;
 }
+
 #turnstatus {
     text-align: center;
 }
 #voteResetPanel {
     text-align: center;
+}
+
+.focused {
+    box-shadow: 0 0 9px 0 rgba(45,213,255,.75);
+    -moz-box-shadow: 0 0 9px 0 rgba(45,213,255,.75);
+    -webkit-box-shadow: 0 0 9px 0 rgba(45,213,255,.75)
+}
+
+.waiting {
+    box-shadow: 0 0 9px 0 rgba(242,255,63,.75);
+    -moz-box-shadow: 0 0 9px 0 rgba(242,255,63,.75);
+    -webkit-box-shadow: 0 0 9px 0 rgba(242,255,63,.75)
 }
