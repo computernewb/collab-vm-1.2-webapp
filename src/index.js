@@ -11,7 +11,8 @@ const users = [];
 const buttons = {
     takeTurn: window.document.getElementById("takeTurnBtn"),
     changeUsername: window.document.getElementById("changeUsernameBtn"),
-    voteReset: window.document.getElementById("voteResetButton")
+    voteReset: window.document.getElementById("voteResetButton"),
+    screenshot: window.document.getElementById("screenshotButton")
 }
 var hasTurn = false;
 var vm;
@@ -363,6 +364,23 @@ async function openVM(url, node) {
     display.addEventListener('keydown', (e) => vm.keyevent(e, true));
     display.addEventListener('keyup', (e) => vm.keyevent(e, false));
 }
+function screenshotVM() {
+    return new Promise((res, rej) => {
+        display.toBlob((b) => {
+            if (b == null) {
+                rej();
+                return;
+            }
+            res(b);
+        }, "image/png");
+    })
+}
+buttons.screenshot.addEventListener('click', async () => {
+    var blob = await screenshotVM();
+    var url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+    URL.revokeObjectURL(url);
+});
 chatinput.addEventListener("keypress", (e) => {
     if (e.key == "Enter") {
         vm.chat(chatinput.value);
@@ -379,3 +397,6 @@ buttons.voteReset.addEventListener('click', () => vm.voteReset(true));
 voteyesbtn.addEventListener('click', () => vm.voteReset(true));
 votenobtn.addEventListener('click', () => vm.voteReset(false));
 config.serverAddresses.forEach(multicollab);
+
+// Export some stuff
+window.screenshotVM = screenshotVM;
