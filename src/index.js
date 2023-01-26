@@ -6,6 +6,7 @@ import { GetKeysym } from "./keyboard";
 // In queue = <queue position>
 var turn = -1;
 var perms = 0;
+var connected = false;
 const vms = [];
 const users = [];
 const buttons = {
@@ -348,6 +349,8 @@ function chatMessage(username, msg) {
     chatList.appendChild(tr);
 }
 async function openVM(url, node) {
+    if (connected) return;
+    connected = true;
     vm = new CollabVMClient(url);
     await vm.connect();
     connected = true;
@@ -400,3 +403,4 @@ config.serverAddresses.forEach(multicollab);
 
 // Export some stuff
 window.screenshotVM = screenshotVM;
+window.multicollab = multicollab;
