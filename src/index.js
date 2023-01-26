@@ -1,6 +1,7 @@
 import { guacutils } from "./protocol";
 import { config } from "./common";
 import { GetKeysym } from "./keyboard";
+import { createNanoEvents } from "nanoevents";
 // None = -1
 // Has turn = 0
 // In queue = <queue position>
@@ -41,6 +42,7 @@ const votetime = document.getElementById("votetime");
 const chatListDiv = document.querySelector(".chat-table");
 
 class CollabVMClient {
+    eventemitter = createNanoEvents();
     socket;
     #url;
     constructor(url) {
@@ -67,21 +69,14 @@ class CollabVMClient {
             if (savedUsername === null)
                 this.socket.send(guacutils.encode(["rename"]));
             else this.socket.send(guacutils.encode(["rename", savedUsername]));
-            var f = (e) => {
-                var msgArr = guacutils.decode(e.data);
-                if (msgArr[0] == "connect") {
-                    switch (msgArr[1]) {
-                        case "0":
-                            rej("Failed to connect to the node");
-                            break;
-                        case "1":
-                            res();
-                            break;
-                    }
-                    this.socket.removeEventListener("message", f);
-                }
-            }
-            this.socket.addEventListener("message", f);
+            var unbind = this.eventemitter.on('connect', () => {
+                unbind();
+                res();
+            });
+            var failunbind = this.eventemitter.on('connectfail', () => {
+                failunbind();
+                rej();
+            });
             this.socket.send(guacutils.encode(["connect", node]));
         });
     }
@@ -91,6 +86,16 @@ class CollabVMClient {
             case "nop":
                 this.socket.send("3.nop;");
                 break;
+            case "connect":
+                switch (msgArr[1]) {
+                    case "0":
+                        this.eventemitter.emit('connectfail');
+                        break;
+                    case "1":
+                        this.eventemitter.emit('connect');
+                        break;
+                }
+                break;
             case "chat":
                 if (!connected) return;
                 for (var i = 1; i < msgArr.length; i += 2) {
@@ -98,6 +103,19 @@ class CollabVMClient {
                 }
                 chatsound.play();
                 chatListDiv.scrollTop = chatListDiv.scrollHeight;
+                break;
+            case "list":
+                var list = [];
+                for (var i = 1; i < msgArr.length; i+=3) {
+                    list.push({
+                        url: this.#url,
+                        id: msgArr[i],
+                        name: msgArr[i+1],
+                        thumb: msgArr[i+2],
+
+                    });
+                }
+                this.eventemitter.emit('list', list);
                 break;
             case "size":
                 if (!connected || msgArr[1] !== "0") return;
@@ -252,24 +270,10 @@ class CollabVMClient {
     }
     async list() {
         return new Promise((res, rej) => {
-            var h = (e) => {
-                var msgArr = guacutils.decode(e.data);
-                if (msgArr[0] === "list") {
-                    var list = [];
-                    for (var i = 1; i < msgArr.length; i+=3) {
-                        list.push({
-                            url: this.#url,
-                            id: msgArr[i],
-                            name: msgArr[i+1],
-                            thumb: msgArr[i+2],
-
-                        });
-                    }
-                    this.socket.removeEventListener("message", h);
-                    res(list);
-                }
-            };
-            this.socket.addEventListener("message", h);
+            var unbind = this.eventemitter.on('list', (e) => {
+                unbind();
+                res(e);
+            })
             this.socket.send("4.list;");
         });
     }
