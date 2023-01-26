@@ -35,9 +35,15 @@
         <div class="container-fluid" id="vmview">
             <canvas id="display" height="0" width="0" tabindex="-1"></canvas>
             <p id="turnstatus" class="text-light"></p>
+            <div id="voteResetPanel" class="bg-dark text-light" style="display:none;">
+                Do you want to reset the vm?<br/>
+                <button class="btn btn-success" id="voteYesBtn">Yes<span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn">No<span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
+                Vote ends in <span id="votetime"></span> seconds
+            </div>
             <div id="btns">
                 <button class="btn btn-secondary" id="takeTurnBtn">Take Turn</button>
                 <button class="btn btn-secondary" id="changeUsernameBtn">Change Username</button>
+                <button class="btn btn-secondary" id="voteResetButton">Vote for Reset</button>
             </div>
             <div class="row">
                 <div class="col-md-4">

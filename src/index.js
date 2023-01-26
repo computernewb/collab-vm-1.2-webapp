@@ -10,11 +10,13 @@ const vms = [];
 const users = [];
 const buttons = {
     takeTurn: window.document.getElementById("takeTurnBtn"),
-    changeUsername: window.document.getElementById("changeUsernameBtn")
+    changeUsername: window.document.getElementById("changeUsernameBtn"),
+    voteReset: window.document.getElementById("voteResetButton")
 }
 var hasTurn = false;
 var vm;
 var connected = false;
+var voteinterval;
 const chatsound = new Audio(config.chatSound);
 // Elements
 const turnstatus = window.document.getElementById("turnstatus");
@@ -27,6 +29,12 @@ const userlist = window.document.getElementById("userlist");
 const usernameSpan = window.document.getElementById("username");
 const onlineusercount = window.document.getElementById("onlineusercount");
 const chatinput = window.document.getElementById("chat-input");
+const voteresetpanel = document.getElementById("voteResetPanel");
+const voteyesbtn = document.getElementById("voteYesBtn");
+const votenobtn = document.getElementById("voteNoBtn");
+const voteyeslabel = document.getElementById("voteYesLabel");
+const votenolabel = document.getElementById("voteNoLabel");
+const votetime = document.getElementById("votetime");
 // needed to scroll to bottom
 const chatListDiv = document.querySelector(".chat-table");
 
@@ -84,13 +92,7 @@ class CollabVMClient {
             case "chat":
                 if (!connected) return;
                 for (var i = 1; i < msgArr.length; i += 2) {
-                    var tr = document.createElement("tr");
-                    var td = document.createElement("td");
-                    if (msgArr[i] == "")
-                        td.innerHTML = msgArr[i+1];
-                    else td.innerHTML = `<b>${msgArr[i]}&gt;</b> ${msgArr[i+1]}`;
-                    tr.appendChild(td);
-                    chatList.appendChild(tr);
+                    chatMessage(msgArr[i], msgArr[i+1])
                 }
                 chatsound.play();
                 chatListDiv.scrollTop = chatListDiv.scrollHeight;
@@ -198,6 +200,38 @@ class CollabVMClient {
                 }
                 this.reloadUsers();
                 break;
+            case "vote":
+                console.log(msgArr);
+                switch (msgArr[1]) {
+                    case "0":
+                        // Vote started
+                    case "1":
+                        // Vote updated
+                        voteresetpanel.style.display = "block";
+                        voteyeslabel.innerText = msgArr[3];
+                        votenolabel.innerText = msgArr[4];
+                        if (voteinterval)
+                            clearInterval(voteinterval);
+                        var timeToEnd = Math.floor(parseInt(msgArr[2]) / 1000);
+                        var updateVote = () => {
+                            timeToEnd--;
+                            if (timeToEnd === 0)
+                                clearInterval(voteinterval);
+                            votetime.innerText = timeToEnd;
+                        }
+                        voteinterval = setInterval(updateVote, 1000);
+                        updateVote();
+                        break;
+                    case "2":
+                        // Vote ended
+                        voteresetpanel.style.display = "none";
+                        break;
+                    case "3":
+                        // too soon dumbass
+                        window.alert(`Please wait ${msgArr[2]} seconds before starting another vote.`);
+                        break;
+                }
+                break;
         }
     }
     reloadUsers() {
@@ -270,6 +304,9 @@ class CollabVMClient {
         if (keysym === undefined) return;
         this.key(keysym, down);
     }
+    voteReset(reset) {
+        this.socket.send(guacutils.encode(["vote", reset ? "1" : "0"]));
+    }
 }
 function multicollab(url) {
     return new Promise(async (res, rej) => {
@@ -300,6 +337,15 @@ function multicollab(url) {
         res();
     });
 }
+function chatMessage(username, msg) {
+    var tr = document.createElement("tr");
+    var td = document.createElement("td");
+    if (username == "" || username === undefined)
+        td.innerHTML = msg;
+    else td.innerHTML = `<b>${username}&gt;</b> ${msg}`;
+    tr.appendChild(td);
+    chatList.appendChild(tr);
+}
 async function openVM(url, node) {
     vm = new CollabVMClient(url);
     await vm.connect();
@@ -329,4 +375,7 @@ buttons.changeUsername.addEventListener('click', () => {
     vm.rename(newuser);
 });
 buttons.takeTurn.addEventListener('click', () => vm.turn());
+buttons.voteReset.addEventListener('click', () => vm.voteReset(true));
+voteyesbtn.addEventListener('click', () => vm.voteReset(true));
+votenobtn.addEventListener('click', () => vm.voteReset(false));
 config.serverAddresses.forEach(multicollab);
