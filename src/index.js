@@ -15,6 +15,7 @@ const buttons = {
 var hasTurn = false;
 var vm;
 var connected = false;
+const chatsound = new Audio(config.chatSound);
 // Elements
 const turnstatus = window.document.getElementById("turnstatus");
 const vmlist = window.document.getElementById("vmlist");
@@ -91,6 +92,7 @@ class CollabVMClient {
                     tr.appendChild(td);
                     chatList.appendChild(tr);
                 }
+                chatsound.play();
                 chatListDiv.scrollTop = chatListDiv.scrollHeight;
                 break;
             case "size":
