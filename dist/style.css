@@ -1,0 +1,48 @@
+#vmview {
+    display: none;
+}
+/*.vmtile {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-size: 16pt;
+    border: 2px solid #575757;
+    border-radius: 15px;
+    height: fit-content;
+    width: fit-content;
+    display: block;
+    padding: 4px;
+}*/
+#display, #btns {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: block;
+    margin-bottom: 10px;
+}
+#vmlist > div.row > div {
+    padding-bottom: 10px;
+}
+#vmlist div.col-sm-4 > div.card:hover {
+    cursor: pointer;
+    border-color: rgb(8, 121, 250);
+}
+.vmtile > img {
+    margin-bottom: 2px;
+}*/
+.chat-table, .username-table {
+    overflow-y: auto;
+    border: 1px solid #575757;
+}
+.chat-table {
+    height: 30vh;
+}
+.username-table {
+    max-height: 30vh;
+}
+.username-table > table > thead {
+    position: sticky;
+    top: 0;
+}
+#turnstatus {
+    text-align: center;
+}
