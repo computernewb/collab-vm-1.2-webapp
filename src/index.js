@@ -191,7 +191,7 @@ class CollabVMClient {
                         if (window.username === msgArr[i+3]) {
                             turn = i;
                             turnstatus.innerText = "Waiting for turn";
-							display.className="waiting";
+							display.className = "waiting";
                         };
                         var user = users.find(u => u.username === msgArr[i+3]);
                         user.turn = i;
