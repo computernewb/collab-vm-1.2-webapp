@@ -316,27 +316,33 @@ function multicollab(url) {
         await vm.connect();
         var list = await vm.list();
         vm.disconnect();
-        list.forEach(curr => {
-            vms.push(curr);
+        for (var i = 0; i < list.length; i++) {
+            var id = list[i].id;
+            var name = list[i].name;
+            if (id === window.location.hash.substring(1)) {
+                openVM(url, id);
+                res(false);
+            }
+            vms.push(list[i]);
             var div = document.createElement("div");
             div.classList = "col-sm-4";
             var card = document.createElement("div");
             card.classList = "card bg-dark text-light";
-            card.addEventListener("click", () => openVM(curr.url, curr.id));
+            card.addEventListener("click", () => openVM(url, id));
             var img = document.createElement("img");
-            img.src = "data:image/png;base64," + curr.thumb;
+            img.src = "data:image/png;base64," + list[i].thumb;
             img.classList = "card-img-top";
             var bdy = document.createElement("div");
             bdy.classList = "card-body";
             var desc = document.createElement("h5");
-            desc.innerHTML = curr.name;
+            desc.innerHTML = name;
             bdy.appendChild(desc);
             card.appendChild(img);
             card.appendChild(bdy);
             div.appendChild(card);
             vmlist.children[0].appendChild(div);
-        });
-        res();
+        }
+        res(true);
     });
 }
 function chatMessage(username, msg) {
@@ -351,6 +357,7 @@ function chatMessage(username, msg) {
 async function openVM(url, node) {
     if (connected) return;
     connected = true;
+    window.location.href = "#" + node;
     vm = new CollabVMClient(url);
     await vm.connect();
     connected = true;
@@ -399,8 +406,12 @@ buttons.takeTurn.addEventListener('click', () => vm.turn());
 buttons.voteReset.addEventListener('click', () => vm.voteReset(true));
 voteyesbtn.addEventListener('click', () => vm.voteReset(true));
 votenobtn.addEventListener('click', () => vm.voteReset(false));
-config.serverAddresses.forEach(multicollab);
-
+(async () => {
+    for (var i = 0; i < config.serverAddresses.length; i++) {
+        var x = await multicollab(config.serverAddresses[i]);
+        if (x === false) break;
+    }
+})();
 // Export some stuff
 window.screenshotVM = screenshotVM;
 window.multicollab = multicollab;
