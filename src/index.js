@@ -406,12 +406,9 @@ buttons.takeTurn.addEventListener('click', () => vm.turn());
 buttons.voteReset.addEventListener('click', () => vm.voteReset(true));
 voteyesbtn.addEventListener('click', () => vm.voteReset(true));
 votenobtn.addEventListener('click', () => vm.voteReset(false));
-(async () => {
-    for (var i = 0; i < config.serverAddresses.length; i++) {
-        var x = await multicollab(config.serverAddresses[i]);
-        if (x === false) break;
-    }
-})();
+
+// Load all vms
+config.serverAddresses.forEach(multicollab);
 // Export some stuff
 window.screenshotVM = screenshotVM;
 window.multicollab = multicollab;
