@@ -182,13 +182,15 @@ class CollabVMClient {
                 if (currentTurnUsername === window.username) {
                     turn = 0;
                     turnstatus.innerText = "You have the turn.";
-                }
+					vmview.class = "focused";
+					}
                 // Highlight all waiting users and set their status
                 if (queuedUsers > 1) {
                     for (var i = 1; i < queuedUsers; i++) {
                         if (window.username === msgArr[i+3]) {
                             turn = i;
                             turnstatus.innerText = "Waiting for turn";
+							vmview.class="waiting";
                         };
                         var user = users.find(u => u.username === msgArr[i+3]);
                         user.turn = i;
