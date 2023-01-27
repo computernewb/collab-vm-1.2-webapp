@@ -28,6 +28,7 @@ var hasTurn = false;
 var vm;
 var connected = false;
 var voteinterval;
+var turninterval;
 const chatsound = new Audio(config.chatSound);
 // Elements
 const turnstatus = window.document.getElementById("turnstatus");
@@ -203,8 +204,10 @@ class CollabVMClient {
                 });
                 buttons.takeTurn.innerText = "Take Turn";
                 turn = -1;
-                turnstatus.innerText = "";
+                if (!msgArr.includes(username))
+                    turnstatus.innerText = "";
 				display.className = "";
+                clearInterval(turninterval);
                 // Get the number of users queued for a turn
                 var queuedUsers = Number(msgArr[2]);
                 if (queuedUsers === 0) return;
@@ -215,7 +218,14 @@ class CollabVMClient {
                 currentTurnUser.turn = 0;
                 if (currentTurnUsername === window.username) {
                     turn = 0;
-                    turnstatus.innerText = "You have the turn.";
+                    var secs = Math.floor(parseInt(msgArr[1]) / 1000);
+                    var turnUpdate = () => {
+                        secs--;
+                        if (secs === 0)
+                            clearInterval(turninterval);
+                        turnstatus.innerText = `Turn expires in ${secs} seconds.`;
+                    }
+                    turninterval = setInterval(turnUpdate, 1000);
 					display.className = "focused";
 				}
                 // Highlight all waiting users and set their status
@@ -223,7 +233,14 @@ class CollabVMClient {
                     for (var i = 1; i < queuedUsers; i++) {
                         if (window.username === msgArr[i+3]) {
                             turn = i;
-                            turnstatus.innerText = "Waiting for turn";
+                            var secs = Math.floor(parseInt(msgArr[msgArr.length-1]) / 1000);
+                            var turnUpdate = () => {
+                                secs--;
+                                if (secs === 0)
+                                    clearInterval(turninterval);
+                                turnstatus.innerText = `Waiting for turn in ${secs} seconds.`;
+                            }
+                            turninterval = setInterval(turnUpdate, 1000);
 							display.className = "waiting";
                         };
                         var user = users.find(u => u.username === msgArr[i+3]);
