@@ -436,7 +436,7 @@ function multicollab(url) {
             div.classList = "col-sm-4";
             var card = document.createElement("div");
             card.classList = "card bg-dark text-light";
-            card.setAttribute("cvm-node", id);
+            card.setAttribute("data-cvm-node", id);
             card.addEventListener("click", () => openVM(url, id));
             var img = document.createElement("img");
             img.src = "data:image/png;base64," + list[i].thumb;
