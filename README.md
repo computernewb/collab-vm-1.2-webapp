@@ -1,10 +1,12 @@
 # CollabVM 1.2 Webapp 2.0
-New webapp to replace the crusty old one
 
-Note that this is still a beta.
+![CollabVM Web App](/webapp.png)
+
+The CollabVM Web App is the viewer for the CollabVM Server, currently in beta
 
 ## Building
 Make sure you filled out common.js, then:
 1. `npm i`
 2. `npm run build`
-Files are in `dist/`
+
+The build output directory is `dist/`
