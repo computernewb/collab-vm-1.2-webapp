@@ -479,12 +479,28 @@ function reloadVMList() {
     vmlist.children[0].innerHTML = "";
     vms.forEach((v) => vmlist.children[0].appendChild(v.element));
 }
-function chatMessage(username, msg) {
+function chatMessage(user, msg) {
     var tr = document.createElement("tr");
     var td = document.createElement("td");
-    if (username == "" || username === undefined)
+    if (user == "" || user === undefined)
         td.innerHTML = msg;
-    else td.innerHTML = `<b>${username}&gt;</b> ${msg}`;
+    else {
+        var u = users.find(u => u.username === user);
+        var userclass = "";
+        switch (u.rank) {
+            case 2:
+                userclass = "text-danger";
+                break;
+            case 3:
+                userclass = "text-success";
+                break;
+            case 0:
+            default:
+                userclass = "text-light";
+                break;
+        }
+        td.innerHTML = `<b class="${userclass}">${user}&gt;</b> ${msg}`;
+    }
     tr.appendChild(td);
     chatList.appendChild(tr);
 }
