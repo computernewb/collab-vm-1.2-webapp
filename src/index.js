@@ -449,10 +449,18 @@ function multicollab(url) {
             card.appendChild(img);
             card.appendChild(bdy);
             div.appendChild(card);
-            vmlist.children[0].appendChild(div);
+            list[i].element = div;
+            reloadVMList();
         }
         res(true);
     });
+}
+function reloadVMList() {
+    vms.sort(function(a, b) {
+        return a.id > b.id ? 1 : -1;
+    });
+    vmlist.children[0].innerHTML = "";
+    vms.forEach((v) => vmlist.children[0].appendChild(v.element));
 }
 function chatMessage(username, msg) {
     var tr = document.createElement("tr");
