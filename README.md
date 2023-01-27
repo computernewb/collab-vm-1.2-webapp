@@ -1,9 +1,12 @@
 # CollabVM 1.2 Webapp 2.0
 
-![Thing](/webapp.png)
+![CollabVM Web App](/webapp.png)
+
+The CollabVM Web App is the client viewer for the CollabVM Server
 
 ## Building
 Make sure you filled out common.js, then:
 1. `npm i`
 2. `npm run build`
-Files are in `dist/`
+
+The build output is `dist/`
