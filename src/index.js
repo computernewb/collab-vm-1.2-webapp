@@ -2,11 +2,13 @@ import { guacutils } from "./protocol";
 import { config } from "./common";
 import { GetKeysym } from "./keyboard";
 import { createNanoEvents } from "nanoevents";
+import { makeperms } from "./permissions";
 // None = -1
 // Has turn = 0
 // In queue = <queue position>
 var turn = -1;
-var perms = 0;
+var perms = makeperms(0);
+var rank = 0;
 var connected = false;
 const vms = [];
 const users = [];
@@ -14,7 +16,13 @@ const buttons = {
     takeTurn: window.document.getElementById("takeTurnBtn"),
     changeUsername: window.document.getElementById("changeUsernameBtn"),
     voteReset: window.document.getElementById("voteResetButton"),
-    screenshot: window.document.getElementById("screenshotButton")
+    screenshot: window.document.getElementById("screenshotButton"),
+    // Staff
+    restore: window.document.getElementById("restoreBtn"),
+    reboot: window.document.getElementById("rebootBtn"),
+    clearQueue: window.document.getElementById("clearQueueBtn"),
+    bypassTurn: window.document.getElementById("bypassTurnBtn"),
+    endTurn: window.document.getElementById("endTurnBtn"),
 }
 var hasTurn = false;
 var vm;
@@ -38,12 +46,14 @@ const votenobtn = document.getElementById("voteNoBtn");
 const voteyeslabel = document.getElementById("voteYesLabel");
 const votenolabel = document.getElementById("voteNoLabel");
 const votetime = document.getElementById("votetime");
+const staffbtns = document.getElementById("staffbtns");
 // needed to scroll to bottom
 const chatListDiv = document.querySelector(".chat-table");
 
 class CollabVMClient {
     eventemitter = createNanoEvents();
     socket;
+    node;
     #url;
     constructor(url) {
         this.#url = url;
@@ -65,6 +75,7 @@ class CollabVMClient {
     }
     connectToVM(node) {
         return new Promise((res, rej) => {
+            this.node = node;
             var savedUsername = window.localStorage.getItem("username");
             if (savedUsername === null)
                 this.socket.send(guacutils.encode(["rename"]));
@@ -78,6 +89,9 @@ class CollabVMClient {
                 rej();
             });
             this.socket.send(guacutils.encode(["connect", node]));
+            var pass = window.localStorage.getItem("password_"+this.#url);
+            if (pass)
+                this.admin.login(pass);
         });
     }
     async #onMessage(event) {
@@ -202,7 +216,7 @@ class CollabVMClient {
                     turn = 0;
                     turnstatus.innerText = "You have the turn.";
 					display.className = "focused";
-					}
+				}
                 // Highlight all waiting users and set their status
                 if (queuedUsers > 1) {
                     for (var i = 1; i < queuedUsers; i++) {
@@ -255,6 +269,50 @@ class CollabVMClient {
                         break;
                 }
                 break;
+                case "admin":
+                    switch (msgArr[1]) {
+                        case "0":
+                            // Login
+                            switch (msgArr[2]) {
+                                case "0":
+                                    this.eventemitter.emit('login', {error: 'badpassword'});
+                                    return;
+                                    break;
+                                case "1":
+                                    perms = makeperms(65535);
+                                    rank = 2;
+                                    break;
+                                case "3":
+                                    rank = 3;
+                                    perms = makeperms(parseInt(msgArr[3]))
+                            }
+                            this.eventemitter.emit('login', {perms: perms, rank: rank});
+                            usernameSpan.classList.remove("text-light");
+                            switch (rank) {
+                                case 2:
+                                    usernameSpan.classList.add("text-danger");
+                                    break;
+                                case 3:
+                                    usernameSpan.classList.add("text-success");
+                                    break;
+                            }
+                            // Disabled for now until we figure out the issue of uservm
+                            //window.localStorage.setItem("password_"+this.#url, password);
+                            staffbtns.style.display = "block";
+                            if (perms.restore) buttons.restore.style.display = "inline-block";
+                            if (perms.reboot) buttons.reboot.style.display = "inline-block";
+                            if (perms.bypassturn) {
+                                buttons.bypassTurn.style.display = "inline-block";
+                                buttons.clearQueue.style.display = "inline-block";
+                                buttons.endTurn.style.display = "inline-block";
+                            }
+                            break;
+                        
+                    }
+                    break;  
+                default:
+                    window.cvmEvents.emit(msgArr[0], msgArr.slice(1));
+                    break;
         }
     }
     reloadUsers() {
@@ -316,6 +374,28 @@ class CollabVMClient {
     voteReset(reset) {
         this.socket.send(guacutils.encode(["vote", reset ? "1" : "0"]));
     }
+    admin = {
+        login: (password) => {
+            return new Promise((res, rej) => {
+                var unbind = this.eventemitter.on('login', (args) => {
+                    unbind();
+                    if (args.error) rej(error);
+                    res(args);
+                })
+                this.socket.send(guacutils.encode(["admin", "2", password]));
+            });
+        },
+        adminInstruction: (...args) => { // Compatibility
+            args.unshift("admin");
+            console.log(args);
+            this.socket.send(guacutils.encode(args));
+        },
+        restore: () => this.socket.send(guacutils.encode(["admin", "8", this.node])),
+        reboot: () => this.socket.send(guacutils.encode(["admin", "10", this.node])),
+        clearQueue: () => this.socket.send(guacutils.encode(["admin", "17", this.node])),
+        bypassTurn: () => this.socket.send(guacutils.encode(["admin", "20"])),
+        endTurn: () => this.socket.send(guacutils.encode(["admin", "16", users[0].username])),
+    }
 }
 function multicollab(url) {
     return new Promise(async (res, rej) => {
@@ -371,15 +451,15 @@ async function openVM(url, node) {
     await vm.connectToVM(node);
     vmlist.style.display = "none";
     vmview.style.display = "block";
-    display.addEventListener('mousemove', (e) => vm.mouseevent(e))
-    display.addEventListener('mousedown', (e) => vm.mouseevent(e));
-    display.addEventListener('mouseup', (e) => vm.mouseevent(e));
+    display.addEventListener('mousemove', (e) => vm.mouseevent(e), {capture: true})
+    display.addEventListener('mousedown', (e) => vm.mouseevent(e), {capture: true});
+    display.addEventListener('mouseup', (e) => vm.mouseevent(e), {capture: true});
     display.addEventListener('contextmenu', (e) => e.preventDefault());
     display.addEventListener('click', () => {
         if (turn === -1) vm.turn();
-    });
-    display.addEventListener('keydown', (e) => vm.keyevent(e, true));
-    display.addEventListener('keyup', (e) => vm.keyevent(e, false));
+    }, {capture: true});
+    display.addEventListener('keydown', (e) => vm.keyevent(e, true), {capture: true});
+    display.addEventListener('keyup', (e) => vm.keyevent(e, false), {capture: true});
 }
 function screenshotVM() {
     return new Promise((res, rej) => {
@@ -413,9 +493,31 @@ buttons.takeTurn.addEventListener('click', () => vm.turn());
 buttons.voteReset.addEventListener('click', () => vm.voteReset(true));
 voteyesbtn.addEventListener('click', () => vm.voteReset(true));
 votenobtn.addEventListener('click', () => vm.voteReset(false));
+// Staff buttons
+buttons.restore.addEventListener('click', () => vm.admin.restore());
+buttons.reboot.addEventListener('click', () => vm.admin.reboot());
+buttons.clearQueue.addEventListener('click', () => vm.admin.clearQueue());
+buttons.bypassTurn.addEventListener('click', () => vm.admin.bypassTurn());
+buttons.endTurn.addEventListener('click', () => vm.admin.endTurn());
+// Login
+var usernameClick = false;
+usernameSpan.addEventListener('click', () => {
+    if (!usernameClick) {
+        usernameClick = true;
+        setInterval(() => {usernameClick = false;}, 1000);
+        return;
+    }
+    var pass = window.prompt("🔑");
+    if (!pass) return;
+    vm.admin.login(pass);
+});
 
 // Load all vms
 config.serverAddresses.forEach(multicollab);
 // Export some stuff
 window.screenshotVM = screenshotVM;
 window.multicollab = multicollab;
+window.getPerms = () => perms;
+window.getRank = () => rank;
+window.GetAdmin = () => vm.admin;
+window.cvmEvents = createNanoEvents();

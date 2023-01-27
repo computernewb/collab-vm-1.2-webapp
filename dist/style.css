@@ -66,3 +66,10 @@
     -moz-box-shadow: 0 0 9px 0 rgba(242,255,63,.75);
     -webkit-box-shadow: 0 0 9px 0 rgba(242,255,63,.75)
 }
+
+#staffbtns {
+    display: none;
+}
+#staffbtns > button {
+    display: none;
+}
