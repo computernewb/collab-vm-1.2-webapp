@@ -9,4 +9,4 @@ Make sure you filled out common.js, then:
 1. `npm i`
 2. `npm run build`
 
-The build output is `dist/`
+The build output directory is `dist/`
