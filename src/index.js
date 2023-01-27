@@ -181,6 +181,7 @@ class CollabVMClient {
                     }
                     tr.appendChild(td);
                     user.element = tr;
+                    if (rank !== 0) userModOptions(user.username, tr, td);
                     userlist.appendChild(tr);
                 }
                 onlineusercount.innerText = users.length;
@@ -306,6 +307,11 @@ class CollabVMClient {
                                 buttons.clearQueue.style.display = "inline-block";
                                 buttons.endTurn.style.display = "inline-block";
                             }
+                            users.forEach((u) => userModOptions(u.username, u.element, u.element.children[0]));
+                            break;
+                        case "19":
+                            // Got IP
+                            this.eventemitter.emit('ip', {username: msgArr[2], ip: msgArr[3]});
                             break;
                         
                     }
@@ -394,7 +400,22 @@ class CollabVMClient {
         reboot: () => this.socket.send(guacutils.encode(["admin", "10", this.node])),
         clearQueue: () => this.socket.send(guacutils.encode(["admin", "17", this.node])),
         bypassTurn: () => this.socket.send(guacutils.encode(["admin", "20"])),
-        endTurn: () => this.socket.send(guacutils.encode(["admin", "16", users[0].username])),
+        endTurn: (user) => this.socket.send(guacutils.encode(["admin", "16", user])),
+        ban: (user) => this.socket.send(guacutils.encode(["admin", "12", user])),
+        kick: (user) => this.socket.send(guacutils.encode(["admin", "15", user])),
+        renameUser: (user, newname) => this.socket.send(guacutils.encode(["admin", "18", user, newname])),
+        mute: (user, mutestate) => this.socket.send(guacutils.encode(["admin", "14", user, mutestate])),
+        getip: (user) => {
+            if (users.find(u => u.username === user) === undefined) return;
+            return new Promise((res, rej) => {
+                var unbind = this.eventemitter.on('ip', (args) => {
+                    if (args.username !== user) return;
+                    unbind();
+                    res(args.ip);
+                });
+                this.socket.send(guacutils.encode(["admin", "19", user]));
+            });
+        },
     }
 }
 function multicollab(url) {
@@ -440,6 +461,44 @@ function chatMessage(username, msg) {
     else td.innerHTML = `<b>${username}&gt;</b> ${msg}`;
     tr.appendChild(td);
     chatList.appendChild(tr);
+}
+function userModOptions(user, tr, td) {
+    tr.classList.add("dropdown");
+    td.classList.add("dropdown-toggle");
+    td.setAttribute("data-bs-toggle", "dropdown");
+    td.setAttribute("role", "button");
+    td.setAttribute("aria-expanded", "false");
+    var ul = document.createElement("ul");
+    ul.classList = "dropdown-menu dropdown-menu-dark table-dark text-light";
+
+    if (perms.bypassturn) addUserDropdownItem(ul, "End Turn", () => vm.admin.endTurn(user));
+    if (perms.ban) addUserDropdownItem(ul, "Ban", () => vm.admin.ban(user));
+    if (perms.kick) addUserDropdownItem(ul, "Kick", () => vm.admin.kick(user));
+    if (perms.rename) addUserDropdownItem(ul, "Rename", () => {
+        var newname = window.prompt(`Enter new username for ${user}`);
+        if (newname == null) return;
+        vm.admin.renameUser(user, newname)
+    });
+    if (perms.mute) {
+        addUserDropdownItem(ul, "Temporary Mute", () => vm.admin.mute(user, 0));
+        addUserDropdownItem(ul, "Indefinite Mute", () => vm.admin.mute(user, 1));
+        addUserDropdownItem(ul, "Unmute", () => vm.admin.mute(user, 2));
+    }
+    if (perms.grabip) addUserDropdownItem(ul, "Get IP", async () => {
+        var ip = await vm.admin.getip(user);
+        alert(ip);
+    });
+    tr.appendChild(ul);
+}
+function addUserDropdownItem(ul, text, func) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "#";
+    a.classList.add("dropdown-item");
+    a.innerHTML = text;
+    a.addEventListener('click', func);
+    li.appendChild(a);
+    ul.appendChild(li);
 }
 async function openVM(url, node) {
     if (connected) return;
@@ -498,7 +557,7 @@ buttons.restore.addEventListener('click', () => vm.admin.restore());
 buttons.reboot.addEventListener('click', () => vm.admin.reboot());
 buttons.clearQueue.addEventListener('click', () => vm.admin.clearQueue());
 buttons.bypassTurn.addEventListener('click', () => vm.admin.bypassTurn());
-buttons.endTurn.addEventListener('click', () => vm.admin.endTurn());
+buttons.endTurn.addEventListener('click', () => vm.admin.endTurn(users[0]));
 // Login
 var usernameClick = false;
 usernameSpan.addEventListener('click', () => {
