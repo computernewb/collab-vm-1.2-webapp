@@ -26,6 +26,7 @@ const buttons = {
     qemuMonitor: window.document.getElementById("qemuMonitorBtn"),
     qemuMonitorSend: window.document.getElementById("qemuMonitorSendBtn"),
     sendChat: window.document.getElementById("sendChatBtn"),
+    ctrlAltDel: window.document.getElementById("ctrlAltDelBtn"),
 }
 var hasTurn = false;
 var vm;
@@ -696,6 +697,20 @@ buttons.changeUsername.addEventListener('click', () => {
 });
 buttons.takeTurn.addEventListener('click', () => vm.turn());
 buttons.voteReset.addEventListener('click', () => vm.voteReset(true));
+buttons.ctrlAltDel.addEventListener('click', () => {
+    // Ctrl
+    vm.key(0xffe3, true);
+    // Alt
+    vm.key(0xffe9, true);
+    // Del
+    vm.key(0xffff, true);
+    // Ctrl
+    vm.key(0xffe3, false);
+    // Alt
+    vm.key(0xffe9, false);
+    // Del
+    vm.key(0xffff, false);
+});
 voteyesbtn.addEventListener('click', () => vm.voteReset(true));
 votenobtn.addEventListener('click', () => vm.voteReset(false));
 // Staff buttons
