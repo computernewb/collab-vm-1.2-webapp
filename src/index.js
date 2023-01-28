@@ -81,7 +81,6 @@ class CollabVMClient {
             try {
                 await this.connect();
             } catch {
-                console.log("h");
                 this.#onClose();
             }
             this.connectToVM(this.node);
@@ -279,7 +278,6 @@ class CollabVMClient {
                 this.reloadUsers();
                 break;
             case "vote":
-                console.log(msgArr);
                 switch (msgArr[1]) {
                     case "0":
                         // Vote started
@@ -475,7 +473,6 @@ class CollabVMClient {
     keyevent(e, down) {
         e.preventDefault();
         var keysym = GetKeysym(e.keyCode, e.keyIdentifier, e.key, e.location);
-        console.log(keysym);
         if (keysym === undefined) return;
         this.key(keysym, down);
     }
@@ -495,7 +492,6 @@ class CollabVMClient {
         },
         adminInstruction: (...args) => { // Compatibility
             args.unshift("admin");
-            console.log(args);
             this.socket.send(guacutils.encode(args));
         },
         restore: () => this.socket.send(guacutils.encode(["admin", "8", this.node])),
