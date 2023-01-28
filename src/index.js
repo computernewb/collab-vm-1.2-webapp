@@ -23,6 +23,8 @@ const buttons = {
     clearQueue: window.document.getElementById("clearQueueBtn"),
     bypassTurn: window.document.getElementById("bypassTurnBtn"),
     endTurn: window.document.getElementById("endTurnBtn"),
+    qemuMonitor: window.document.getElementById("qemuMonitorBtn"),
+    qemuMonitorSend: window.document.getElementById("qemuMonitorSendBtn"),
 }
 var hasTurn = false;
 var vm;
@@ -47,6 +49,8 @@ const voteyeslabel = document.getElementById("voteYesLabel");
 const votenolabel = document.getElementById("voteNoLabel");
 const votetime = document.getElementById("votetime");
 const staffbtns = document.getElementById("staffbtns");
+const qemuMonitorInput = document.getElementById("qemuMonitorInput");
+const qemuMonitorOutput = document.getElementById("qemuMonitorOutput");
 // needed to scroll to bottom
 const chatListDiv = document.querySelector(".chat-table");
 
@@ -325,13 +329,18 @@ class CollabVMClient {
                                 buttons.clearQueue.style.display = "inline-block";
                                 buttons.endTurn.style.display = "inline-block";
                             }
+                            if (rank === 2) buttons.qemuMonitor.style.display = "inline-block";
                             users.forEach((u) => userModOptions(u.username, u.element, u.element.children[0]));
                             break;
                         case "19":
                             // Got IP
                             this.eventemitter.emit('ip', {username: msgArr[2], ip: msgArr[3]});
                             break;
-                        
+                        case "2":
+                            // QEMU output
+                            qemuMonitorOutput.innerHTML += `> ${msgArr[2]}\n`;
+                            qemuMonitorOutput.scrollTop = qemuMonitorOutput.scrollHeight;
+                            break;
                     }
                     break;  
                 default:
@@ -434,6 +443,7 @@ class CollabVMClient {
                 this.socket.send(guacutils.encode(["admin", "19", user]));
             });
         },
+        qemuMonitor: (cmd) => this.socket.send(guacutils.encode(["admin", "5", this.node, cmd])),
     }
 }
 function multicollab(url) {
@@ -601,6 +611,17 @@ buttons.reboot.addEventListener('click', () => vm.admin.reboot());
 buttons.clearQueue.addEventListener('click', () => vm.admin.clearQueue());
 buttons.bypassTurn.addEventListener('click', () => vm.admin.bypassTurn());
 buttons.endTurn.addEventListener('click', () => vm.admin.endTurn(users[0]));
+// QEMU Monitor Shit
+function sendQEMUCommand() {
+    if (!qemuMonitorInput.value) return;
+    vm.admin.qemuMonitor(qemuMonitorInput.value);
+    qemuMonitorInput.value = "";
+}
+qemuMonitorInput.addEventListener('keypress', (e) => {
+    if (e.key === "Enter") sendQEMUCommand();
+});
+buttons.qemuMonitorSend.addEventListener('click', () => sendQEMUCommand());
+
 // Login
 var usernameClick = false;
 usernameSpan.addEventListener('click', () => {

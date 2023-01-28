@@ -10,6 +10,23 @@
 	<link rel="icon" href="favicon.ico">
     </head>
     <body class="bg-dark">
+        <div class="modal fade" id="qemuMonitorModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content bg-dark text-light">
+                    <div class="modal-header">
+                        <h5 class="modal-title">QEMU Monitor</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea id="qemuMonitorOutput" readonly="" class="form-control bg-dark text-light"></textarea>
+                        <div class="input-group">
+                            <input type="text" id="qemuMonitorInput" class="form-control bg-dark text-light" placeholder="Command"/>
+                            <button class="btn btn-outline-secondary btn-primary text-light" type="button" id="qemuMonitorSendBtn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">CollabVM</a>
@@ -27,13 +44,13 @@
                         <li class="nav-item">
                             <a href="https://computernewb.com/collab-vm/rules" class="nav-link">Rules</a>
                         </li>
-			<li class="nav-item">
+			            <li class="nav-item">
                             <a href="https://discord.gg/a4kqb4mGyX" class="nav-link">Discord</a>
                         </li>
-			<li class="nav-item">
+			            <li class="nav-item">
                             <a href="https://reddit.com/r/collabvm" class="nav-link">Subreddit</a>
                         </li>
-			<li class="nav-item">
+			            <li class="nav-item">
                             <a href="https://computernewb.com/collab-vm/user-vm" class="nav-link">UserVM</a>
                         </li>
                     </ul>
@@ -62,6 +79,7 @@
                     <button class="btn btn-secondary" id="clearQueueBtn">Clear Turn Queue</button>
                     <button class="btn btn-secondary" id="bypassTurnBtn">Bypass Turn</button>
                     <button class="btn btn-secondary" id="endTurnBtn">End Turn</button>
+                    <button class="btn btn-secondary" id="qemuMonitorBtn" data-bs-toggle="modal" data-bs-target="#qemuMonitorModal">QEMU Monitor</button>
                 </div>
             </div>
             <div class="row">
