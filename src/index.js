@@ -65,11 +65,27 @@ class CollabVMClient {
     }
     connect() {
         return new Promise((res, rej) => {
-            this.socket = new WebSocket(this.#url, "guacamole");
+            try {
+                this.socket = new WebSocket(this.#url, "guacamole");
+            } catch (e) {
+                rej(e);
+            }
             this.socket.addEventListener('message', (e) => this.#onMessage(e));
             this.socket.addEventListener('open', () => res(), {once: true});
         })
 
+    }
+    #onClose() {
+        cleanup();
+        setTimeout(async () => {
+            try {
+                await this.connect();
+            } catch {
+                console.log("h");
+                this.#onClose();
+            }
+            this.connectToVM(this.node);
+        }, 2000);
     }
     disconnect() {
         this.socket.send(guacutils.encode(["disconnect"]));
@@ -80,6 +96,7 @@ class CollabVMClient {
     }
     connectToVM(node) {
         return new Promise((res, rej) => {
+            this.socket.addEventListener('close', () => this.#onClose());
             this.node = node;
             var savedUsername = window.localStorage.getItem("username");
             if (savedUsername === null)
@@ -642,6 +659,23 @@ function screenshotVM() {
             res(b);
         }, "image/png");
     })
+}
+// Clean everything up after disconnecting
+function cleanup() {
+    turn = -1;
+    window.username = null;
+    rank = 0;
+    hasTurn = false;
+    if (turninterval) clearInterval(turninterval);
+    if (voteinterval) 
+    clearInterval(voteinterval);
+    users.splice(0);
+    userlist.innerHTML = "";
+    Array.prototype.slice.call(staffbtns.children).forEach((curr) => curr.style.display = "none");
+    staffbtns.style.display = "none";
+    usernameSpan.classList = "input-group-text bg-dark text-light";
+    display.height = 0;
+    display.width = 0;
 }
 buttons.screenshot.addEventListener('click', async () => {
     var blob = await screenshotVM();
