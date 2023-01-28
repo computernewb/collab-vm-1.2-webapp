@@ -402,7 +402,8 @@ class CollabVMClient {
         }
     }
     mouse(x, y, mask) {
-        this.socket.send(guacutils.encode(["mouse", x, y, mask]));
+        if(turn == 0)
+            this.socket.send(guacutils.encode(["mouse", x, y, mask]));
     }
     key(keysym, down) {
         this.socket.send(guacutils.encode(["key", keysym, down ? "1" : "0"]));
@@ -452,6 +453,8 @@ class CollabVMClient {
         return mask;
     }
     mouseevent(e, down) {
+        if(turn != 0) return;
+        
         if (down !== undefined) {switch (e.button) {
             case 0:
                 this.mousestate.left = down;
