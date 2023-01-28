@@ -26,7 +26,6 @@ const buttons = {
 }
 var hasTurn = false;
 var vm;
-var connected = false;
 var voteinterval;
 var turninterval;
 const chatsound = new Audio(config.chatSound);
@@ -225,6 +224,7 @@ class CollabVMClient {
                             clearInterval(turninterval);
                         turnstatus.innerText = `Turn expires in ${secs} seconds.`;
                     }
+                    turnUpdate();
                     turninterval = setInterval(turnUpdate, 1000);
 					display.className = "focused";
 				}
@@ -241,6 +241,7 @@ class CollabVMClient {
                                 turnstatus.innerText = `Waiting for turn in ${secs} seconds.`;
                             }
                             turninterval = setInterval(turnUpdate, 1000);
+                            turnUpdate();
 							display.className = "waiting";
                         };
                         var user = users.find(u => u.username === msgArr[i+3]);
@@ -486,8 +487,8 @@ function chatMessage(user, msg) {
         td.innerHTML = msg;
     else {
         var u = users.find(u => u.username === user);
-        var userclass = "";
-        switch (u.rank) {
+        var userclass;
+        if (u) switch (u.rank) {
             case 2:
                 userclass = "text-danger";
                 break;
@@ -499,6 +500,7 @@ function chatMessage(user, msg) {
                 userclass = "text-light";
                 break;
         }
+        else userclass = "text-light";
         td.innerHTML = `<b class="${userclass}">${user}&gt;</b> ${msg}`;
     }
     tr.appendChild(td);
@@ -548,7 +550,6 @@ async function openVM(url, node) {
     window.location.href = "#" + node;
     vm = new CollabVMClient(url);
     await vm.connect();
-    connected = true;
     await vm.connectToVM(node);
     vmlist.style.display = "none";
     vmview.style.display = "block";
