@@ -391,12 +391,69 @@ class CollabVMClient {
     key(keysym, down) {
         this.socket.send(guacutils.encode(["key", keysym, down ? "1" : "0"]));
     }
-    mouseevent(e) {
+    mousewheelhandler(e) {
+        // gutted from guac source code
+        var delta = e.deltaY || -e.wheelDeltaY || -e.wheelDelta;
+        if (!delta) return;
+        if (e.deltaMode === 1)
+            delta = e.deltaY * 40;
+        // Convert to pixels if delta was pages
+        else if (e.deltaMode === 2)
+            delta = e.deltaY * 640;
+        // Up
+        while (delta <= -120) {
+            this.mousestate.scrollup = true;
+            this.sendmouse();
+            this.mousestate.scrollup = false;
+            this.sendmouse();
+            delta += 120;
+        }
+        // Down
+        while (delta >= 120) {
+            this.mousestate.scrolldown = true;
+            this.sendmouse();
+            this.mousestate.scrolldown = false;
+            this.sendmouse();
+            delta -= 120;
+        }
+    }
+    mousestate = {
+        left: false,
+        middle: false,
+        right: false,
+        scrolldown: false,
+        scrollup: false,
+        x: 0,
+        y: 0,
+    }
+    makemousemask() {
         var mask = 0;
-        if ((e.buttons & 1) !== 0) mask |= 1;
-        if ((e.buttons & 4) !== 0) mask |= 2;
-        if ((e.buttons & 2) !== 0) mask |= 4;
-        this.mouse(e.offsetX, e.offsetY, mask);
+        if (this.mousestate.left) mask |= 1;
+        if (this.mousestate.middle) mask |= 2;
+        if (this.mousestate.right) mask |= 4;
+        if (this.mousestate.scrollup) mask |= 8;
+        if (this.mousestate.scrolldown) mask |= 16;
+        return mask;
+    }
+    mouseevent(e, down) {
+        if (down !== undefined) {switch (e.button) {
+            case 0:
+                this.mousestate.left = down;
+                break;
+            case 1:
+                this.mousestate.middle = down;
+                break;
+            case 2:
+                this.mousestate.right = down;
+                break;
+        }}
+        this.mousestate.x = e.offsetX;
+        this.mousestate.y = e.offsetY;
+        this.sendmouse();
+    }
+    sendmouse() {
+        var mask = this.makemousemask();
+        this.mouse(this.mousestate.x, this.mousestate.y, mask);
     }
     keyevent(e, down) {
         e.preventDefault();
@@ -564,9 +621,10 @@ async function openVM(url, node) {
     await vm.connectToVM(node);
     vmlist.style.display = "none";
     vmview.style.display = "block";
-    display.addEventListener('mousemove', (e) => vm.mouseevent(e), {capture: true})
-    display.addEventListener('mousedown', (e) => vm.mouseevent(e), {capture: true});
-    display.addEventListener('mouseup', (e) => vm.mouseevent(e), {capture: true});
+    display.addEventListener('mousemove', (e) => vm.mouseevent(e, undefined), {capture: true})
+    display.addEventListener('mousedown', (e) => vm.mouseevent(e, true), {capture: true});
+    display.addEventListener('mouseup', (e) => vm.mouseevent(e, false), {capture: true});
+    display.addEventListener('wheel', (e) => {vm.mousewheelhandler(e);e.preventDefault();return false;}, {capture: true});
     display.addEventListener('contextmenu', (e) => e.preventDefault());
     display.addEventListener('click', () => {
         if (turn === -1) vm.turn();
