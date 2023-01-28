@@ -25,6 +25,7 @@ const buttons = {
     endTurn: window.document.getElementById("endTurnBtn"),
     qemuMonitor: window.document.getElementById("qemuMonitorBtn"),
     qemuMonitorSend: window.document.getElementById("qemuMonitorSendBtn"),
+    sendChat: window.document.getElementById("sendChatBtn"),
 }
 var hasTurn = false;
 var vm;
@@ -205,7 +206,7 @@ class CollabVMClient {
                     curr.turn = -1;
                     curr.element.classList = "";
                 });
-                buttons.takeTurn.innerText = "Take Turn";
+                buttons.takeTurn.innerHTML = "<i class=\"fa-solid fa-computer-mouse\"></i> Take Turn";
                 turn = -1;
                 if (!msgArr.includes(username))
                     turnstatus.innerText = "";
@@ -254,9 +255,9 @@ class CollabVMClient {
                     }
                 }
                 if (turn === -1) {
-                    buttons.takeTurn.innerText = "Take Turn";
+                    buttons.takeTurn.innerHTML = "<i class=\"fa-solid fa-computer-mouse\"></i> Take Turn";
                 } else {
-                    buttons.takeTurn.innerText = "End Turn";
+                    buttons.takeTurn.innerHTML = "<i class=\"fa-solid fa-computer-mouse\"></i> End Turn";
                 }
                 this.reloadUsers();
                 break;
@@ -595,6 +596,10 @@ chatinput.addEventListener("keypress", (e) => {
         vm.chat(chatinput.value);
         chatinput.value = "";
     }
+});
+buttons.sendChat.addEventListener('click', () => {
+    vm.chat(chatinput.value);
+    chatinput.value = "";
 });
 buttons.changeUsername.addEventListener('click', () => {
     var newuser = window.prompt("Enter new username", window.username);

@@ -36,22 +36,22 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="#" class="nav-link active" aria-current="page">Home</a>
+                            <a href="#" class="nav-link active" aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://computernewb.com/collab-vm/faq/" class="nav-link">FAQ</a>
+                            <a href="https://computernewb.com/collab-vm/faq/" class="nav-link"><i class="fa-solid fa-circle-question"></i> FAQ</a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://computernewb.com/collab-vm/rules" class="nav-link">Rules</a>
+                            <a href="https://computernewb.com/collab-vm/rules" class="nav-link"><i class="fa-solid fa-clipboard-check"></i> Rules</a>
                         </li>
 			            <li class="nav-item">
-                            <a href="https://discord.gg/a4kqb4mGyX" class="nav-link">Discord</a>
+                            <a href="https://discord.gg/a4kqb4mGyX" class="nav-link"><i class="fa-brands fa-discord"></i> Discord</a>
                         </li>
 			            <li class="nav-item">
-                            <a href="https://reddit.com/r/collabvm" class="nav-link">Subreddit</a>
+                            <a href="https://reddit.com/r/collabvm" class="nav-link"><i class="fa-brands fa-reddit"></i> Subreddit</a>
                         </li>
 			            <li class="nav-item">
-                            <a href="https://computernewb.com/collab-vm/user-vm" class="nav-link">UserVM</a>
+                            <a href="https://computernewb.com/collab-vm/user-vm" class="nav-link"><i class="fa-solid fa-user"></i> UserVM</a>
                         </li>
                     </ul>
                 </div>
@@ -65,21 +65,21 @@
             <p id="turnstatus" class="text-light"></p>
             <div id="voteResetPanel" class="bg-dark text-light" style="display:none;">
                 Do you want to reset the vm?<br/>
-                <button class="btn btn-success" id="voteYesBtn">Yes<span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn">No<span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
+                <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i> Yes<span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i> No<span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
                 Vote ends in <span id="votetime"></span> seconds
             </div>
             <div id="btns">
-                <button class="btn btn-secondary" id="takeTurnBtn">Take Turn</button>
-                <button class="btn btn-secondary" id="changeUsernameBtn">Change Username</button>
-                <button class="btn btn-secondary" id="voteResetButton">Vote for Reset</button>
-                <button class="btn btn-secondary" id="screenshotButton">Screenshot</button>
+                <button class="btn btn-secondary" id="takeTurnBtn"><i class="fa-solid fa-computer-mouse"></i> Take Turn</button>
+                <button class="btn btn-secondary" id="changeUsernameBtn"><i class="fa-solid fa-signature"></i> Change Username</button>
+                <button class="btn btn-secondary" id="voteResetButton"><i class="fa-solid fa-rotate-left"></i> Vote for Reset</button>
+                <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i> Screenshot</button>
                 <div id="staffbtns">
-                    <button class="btn btn-secondary" id="restoreBtn">Restore</button>
-                    <button class="btn btn-secondary" id="rebootBtn">Reboot</button>
-                    <button class="btn btn-secondary" id="clearQueueBtn">Clear Turn Queue</button>
-                    <button class="btn btn-secondary" id="bypassTurnBtn">Bypass Turn</button>
-                    <button class="btn btn-secondary" id="endTurnBtn">End Turn</button>
-                    <button class="btn btn-secondary" id="qemuMonitorBtn" data-bs-toggle="modal" data-bs-target="#qemuMonitorModal">QEMU Monitor</button>
+                    <button class="btn btn-secondary" id="restoreBtn"><i class="fa-solid fa-rotate-left"></i> Restore</button>
+                    <button class="btn btn-secondary" id="rebootBtn"><i class="fa-solid fa-power-off"></i> Reboot</button>
+                    <button class="btn btn-secondary" id="clearQueueBtn"><i class="fa-solid fa-eraser"></i> Clear Turn Queue</button>
+                    <button class="btn btn-secondary" id="bypassTurnBtn"><i class="fa-solid fa-forward"></i> Bypass Turn</button>
+                    <button class="btn btn-secondary" id="endTurnBtn"><i class="fa-solid fa-ban"></i> End Turn</button>
+                    <button class="btn btn-secondary" id="qemuMonitorBtn" data-bs-toggle="modal" data-bs-target="#qemuMonitorModal"><i class="fa-solid fa-terminal"></i> QEMU Monitor</button>
                 </div>
             </div>
             <div class="row">
@@ -87,7 +87,7 @@
                     <div class="table-responsive username-table">
                         <table class="table table-hover table-dark table-borderless">
                             <thead>
-                                <th>Users Online (<span id="onlineusercount"></span>)</th>
+                                <th><i class="fa-solid fa-user"></i> Users Online (<span id="onlineusercount"></span>)</th>
                             </thead>
                             <tbody id="userlist"></tbody>
                         </table>
@@ -104,6 +104,7 @@
                     <div class="input-group">
                         <span class="input-group-text bg-dark text-light" id="username">Username</span>
                         <input type="text" class="form-control bg-dark text-light" id="chat-input"/>
+                        <button class="btn btn-primary text-light" type="button" id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
