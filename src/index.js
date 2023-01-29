@@ -7,7 +7,7 @@ import { makeperms } from "./permissions";
 // Has turn = 0
 // In queue = <queue position>
 var turn = -1;
-var perms = makeperms(0);
+var perms = makeperms(0, config);
 var rank = 0;
 var connected = false;
 const vms = [];
@@ -53,6 +53,8 @@ const votetime = document.getElementById("votetime");
 const staffbtns = document.getElementById("staffbtns");
 const qemuMonitorInput = document.getElementById("qemuMonitorInput");
 const qemuMonitorOutput = document.getElementById("qemuMonitorOutput");
+const xssCheckbox = document.getElementById("xssCheckbox");
+const xssCheckboxContainer = document.getElementById("xssCheckboxContainer");
 // needed to scroll to bottom
 const chatListDiv = document.querySelector(".chat-table");
 
@@ -319,12 +321,12 @@ class CollabVMClient {
                                     return;
                                     break;
                                 case "1":
-                                    perms = makeperms(65535);
+                                    perms = makeperms(65535, config);
                                     rank = 2;
                                     break;
                                 case "3":
                                     rank = 3;
-                                    perms = makeperms(parseInt(msgArr[3]))
+                                    perms = makeperms(parseInt(msgArr[3]), config)
                             }
                             this.eventemitter.emit('login', {perms: perms, rank: rank});
                             usernameSpan.classList.remove("text-light");
@@ -347,6 +349,9 @@ class CollabVMClient {
                                 buttons.endTurn.style.display = "inline-block";
                             }
                             if (rank === 2) buttons.qemuMonitor.style.display = "inline-block";
+                            if ((config.xssImplementation === 2 && perms.xss) || (rank === 2 && config.xssImplementation === 1)) {
+                                xssCheckboxContainer.style.display = "inline-block";
+                            }
                             users.forEach((u) => userModOptions(u.username, u.element, u.element.children[0]));
                             break;
                         case "19":
@@ -516,6 +521,20 @@ class CollabVMClient {
             });
         },
         qemuMonitor: (cmd) => this.socket.send(guacutils.encode(["admin", "5", this.node, cmd])),
+        globalXss: (msg) => {
+            switch (config.xssImplementation) {
+                case 1:
+                    this.socket.send(guacutils.encode(["admin", "21", msg]));
+                    break;
+                case 2:
+                    users.forEach((u) => this.socket.send(guacutils.encode(["admin", "21", u.username, msg])));
+                    break;
+            }
+        },
+        userXss: (user, msg) => {
+            if (config.xssImplementation !== 2 || !users.find(u => u.username === user)) return;
+            this.socket.send(guacutils.encode(["admin", "21", user, msg]));
+        }
     }
 }
 function multicollab(url) {
@@ -614,6 +633,11 @@ function userModOptions(user, tr, td) {
         var ip = await vm.admin.getip(user);
         alert(ip);
     });
+    if (config.xssImplementation === 2 && perms.xss) addUserDropdownItem(ul, "Direct Message (XSS)", () => {
+        var msg = window.prompt("Enter message to send");
+        if (!msg) return;
+        vm.admin.userXss(user, msg);
+    });
     tr.appendChild(ul);
 }
 function addUserDropdownItem(ul, text, func) {
@@ -680,15 +704,16 @@ buttons.screenshot.addEventListener('click', async () => {
     window.open(url, "_blank");
 });
 chatinput.addEventListener("keypress", (e) => {
-    if (e.key == "Enter") {
+    if (e.key == "Enter") sendChat();
+});
+buttons.sendChat.addEventListener('click', () => sendChat());
+function sendChat() {
+    if (xssCheckbox.checked)
+        vm.admin.globalXss(chatinput.value); 
+    else 
         vm.chat(chatinput.value);
-        chatinput.value = "";
-    }
-});
-buttons.sendChat.addEventListener('click', () => {
-    vm.chat(chatinput.value);
     chatinput.value = "";
-});
+}
 buttons.changeUsername.addEventListener('click', () => {
     var newuser = window.prompt("Enter new username", window.username);
     if (newuser == null) return;

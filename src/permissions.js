@@ -1,4 +1,4 @@
-export function makeperms(mask) {
+export function makeperms(mask, config) {
     const perms = {
         restore: false,
         reboot: false,
@@ -8,7 +8,8 @@ export function makeperms(mask) {
         kick: false,
         bypassturn: false,
         rename: false,
-        grabip: false
+        grabip: false,
+        xss: false
     };
     if ((mask & 1) !== 0) perms.restore = true;
     if ((mask & 2) !== 0) perms.reboot = true;
@@ -19,5 +20,6 @@ export function makeperms(mask) {
     if ((mask & 64) !== 0) perms.bypassturn = true;
     if ((mask & 128) !== 0) perms.rename = true;
     if ((mask & 256) !== 0) perms.grabip = true;
+    if (config.xssImplementation === 2 && (mask & 512) !== 0) perms.xss = true;
     return perms;
 }

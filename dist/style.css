@@ -78,3 +78,7 @@
 #qemuMonitorOutput {
     height: 180px;
 }
+
+#xssCheckboxContainer {
+    display: none;
+}
