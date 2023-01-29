@@ -524,14 +524,14 @@ function multicollab(url) {
         await vm.connect();
         var list = await vm.list();
         vm.disconnect();
-        for (var i = 0; i < list.length; i++) {
-            var id = list[i].id;
-            var name = list[i].name;
+        list.forEach((curr) => {
+            var id = curr.id;
+            var name = curr.name;
             if (id === window.location.hash.substring(1)) {
                 openVM(url, id);
                 res(false);
             }
-            vms.push(list[i]);
+            vms.push(curr);
             var div = document.createElement("div");
             div.classList = "col-sm-4";
             var card = document.createElement("div");
@@ -539,7 +539,7 @@ function multicollab(url) {
             card.setAttribute("data-cvm-node", id);
             card.addEventListener("click", () => openVM(url, id));
             var img = document.createElement("img");
-            img.src = "data:image/png;base64," + list[i].thumb;
+            img.src = "data:image/png;base64," + curr.thumb;
             img.classList = "card-img-top";
             var bdy = document.createElement("div");
             bdy.classList = "card-body";
@@ -549,9 +549,9 @@ function multicollab(url) {
             card.appendChild(img);
             card.appendChild(bdy);
             div.appendChild(card);
-            list[i].element = div;
+            curr.element = div;
             reloadVMList();
-        }
+        });
         res(true);
     });
 }
