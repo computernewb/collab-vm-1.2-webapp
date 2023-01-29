@@ -678,7 +678,6 @@ buttons.screenshot.addEventListener('click', async () => {
     var blob = await screenshotVM();
     var url = URL.createObjectURL(blob);
     window.open(url, "_blank");
-    URL.revokeObjectURL(url);
 });
 chatinput.addEventListener("keypress", (e) => {
     if (e.key == "Enter") {
