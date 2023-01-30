@@ -120,6 +120,7 @@ class CollabVMClient {
     }
     async #onMessage(event) {
         var msgArr = guacutils.decode(event.data);
+        window.cvmEvents.emit(msgArr[0], msgArr.slice(1));
         switch (msgArr[0]) {
             case "nop":
                 this.socket.send("3.nop;");
@@ -364,9 +365,6 @@ class CollabVMClient {
                             qemuMonitorOutput.scrollTop = qemuMonitorOutput.scrollHeight;
                             break;
                     }
-                    break;  
-                default:
-                    window.cvmEvents.emit(msgArr[0], msgArr.slice(1));
                     break;
         }
     }
