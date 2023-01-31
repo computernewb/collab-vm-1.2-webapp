@@ -557,7 +557,7 @@ function multicollab(url) {
             }
             vms.push(curr);
             var div = document.createElement("div");
-            div.classList = "col-sm-4";
+            div.classList = "col-sm-5 col-md-3";
             var card = document.createElement("div");
             card.classList = "card bg-dark text-light";
             card.setAttribute("data-cvm-node", id);
