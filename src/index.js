@@ -27,6 +27,8 @@ const buttons = {
     qemuMonitorSend: window.document.getElementById("qemuMonitorSendBtn"),
     sendChat: window.document.getElementById("sendChatBtn"),
     ctrlAltDel: window.document.getElementById("ctrlAltDelBtn"),
+    forceVoteYes: window.document.getElementById("forceVoteYesBtn"),
+    forceVoteNo: window.document.getElementById("forceVoteNoBtn"),
 }
 var hasTurn = false;
 var vm;
@@ -55,6 +57,7 @@ const qemuMonitorInput = document.getElementById("qemuMonitorInput");
 const qemuMonitorOutput = document.getElementById("qemuMonitorOutput");
 const xssCheckbox = document.getElementById("xssCheckbox");
 const xssCheckboxContainer = document.getElementById("xssCheckboxContainer");
+const forceVotePanel = document.getElementById("forceVotePanel");
 // needed to scroll to bottom
 const chatListDiv = document.querySelector(".chat-table");
 
@@ -353,6 +356,7 @@ class CollabVMClient {
                             if ((config.xssImplementation === 2 && perms.xss) || (rank === 2 && config.xssImplementation === 1)) {
                                 xssCheckboxContainer.style.display = "inline-block";
                             }
+                            if (perms.forcevote) forceVotePanel.style.display = "block";
                             users.forEach((u) => userModOptions(u.username, u.element, u.element.children[0]));
                             break;
                         case "19":
@@ -532,7 +536,10 @@ class CollabVMClient {
         userXss: (user, msg) => {
             if (config.xssImplementation !== 2 || !users.find(u => u.username === user)) return;
             this.socket.send(guacutils.encode(["admin", "21", user, msg]));
-        }
+        },
+        forceVote: (result) => {
+            this.socket.send(guacutils.encode(["admin", "13", result ? "1" : "0"]));
+        },
     }
 }
 function multicollab(url) {
@@ -741,6 +748,8 @@ buttons.reboot.addEventListener('click', () => vm.admin.reboot());
 buttons.clearQueue.addEventListener('click', () => vm.admin.clearQueue());
 buttons.bypassTurn.addEventListener('click', () => vm.admin.bypassTurn());
 buttons.endTurn.addEventListener('click', () => vm.admin.endTurn(users[0]));
+buttons.forceVoteYes.addEventListener('click', () => vm.admin.forceVote(true));
+buttons.forceVoteNo.addEventListener('click', () => vm.admin.forceVote(false));
 // QEMU Monitor Shit
 function sendQEMUCommand() {
     if (!qemuMonitorInput.value) return;

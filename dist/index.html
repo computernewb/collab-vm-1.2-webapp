@@ -75,7 +75,11 @@
             <div id="voteResetPanel" class="bg-dark text-light" style="display:none;">
                 Do you want to reset the vm?<br/>
                 <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i> Yes<span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i> No<span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
-                Vote ends in <span id="votetime"></span> seconds
+                Vote ends in <span id="votetime"></span> seconds<br/>
+                <div id="forceVotePanel">
+                    <button class="btn btn-info" id="forceVoteYesBtn"><i class="fa-solid fa-check"></i> Pass Vote</button>
+                    <button class="btn btn-info" id="forceVoteNoBtn"><i class="fa-solid fa-ban"></i> Cancel Vote</button>
+                </div>
             </div>
             <div id="btns">
                 <button class="btn btn-secondary" id="takeTurnBtn"><i class="fa-solid fa-computer-mouse"></i> Take Turn</button>

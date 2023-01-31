@@ -82,3 +82,7 @@
 #xssCheckboxContainer {
     display: none;
 }
+
+#forceVotePanel {
+    display: none;
+}
