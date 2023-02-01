@@ -23,7 +23,7 @@
 #vmlist > div.row > div {
     padding-bottom: 10px;
 }
-#vmlist div.col-sm-4 > div.card:hover {
+#vmlist div.col-md-3 > div.card:hover {
     cursor: pointer;
     border-color: rgb(8, 121, 250);
 }
