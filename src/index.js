@@ -175,9 +175,26 @@ class CollabVMClient {
                 break;
             case "rename":
                 if (msgArr[1] === "0") {
+                    switch (msgArr[2]) {
+                        case "1":
+                            alert("That username is already taken");
+                            break;
+                        case "2":
+                            alert("Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.");
+                            break;
+                        case "3":
+                            alert("That username has been blacklisted.");
+                            break;
+                    }    
+                    var u = users.find(u => u.username === window.username);
+                    if (u) {
+                        u.username = msgArr[3];
+                        u.element.children[0].innerHTML = msgArr[3];
+                    }
                     window.username = msgArr[3];
                     usernameSpan.innerText = msgArr[3];
                     window.localStorage.setItem("username", msgArr[3]);
+                    return;
                 }
                 var user = users.find(u => u.username == msgArr[2]);
                 if (user === undefined) break;
@@ -186,32 +203,7 @@ class CollabVMClient {
                 break;
             case "adduser":
                 for (var i = 2; i < msgArr.length; i += 2) {
-                    var olduser = users.find(u => u.username === msgArr[i]);
-                    if (olduser !== undefined) {
-                        users.splice(users.indexOf(olduser), 1);
-                        userlist.removeChild(olduser.element);
-                    }
-                    var user = {
-                        username: msgArr[i],
-                        rank: Number(msgArr[i+1]),
-                        turn: -1
-                    };
-                    users.push(user);
-                    var tr = document.createElement("tr");
-                    var td = document.createElement("td");
-                    td.innerHTML = msgArr[i];
-                    switch (user.rank) {
-                        case 2:
-                            td.style.color = "#FF0000";
-                            break;
-                        case 3:
-                            td.style.color = "#00FF00";
-                            break;
-                    }
-                    tr.appendChild(td);
-                    user.element = tr;
-                    if (rank !== 0) userModOptions(user.username, tr, td);
-                    userlist.appendChild(tr);
+                    this.addUser(msgArr[i], msgArr[i+1]);
                 }
                 onlineusercount.innerText = users.length;
                 break;
@@ -372,6 +364,34 @@ class CollabVMClient {
                     }
                     break;
         }
+    }
+    addUser(name, urank) {
+        var olduser = users.find(u => u.username === name);
+        if (olduser !== undefined) {
+            users.splice(users.indexOf(olduser), 1);
+            userlist.removeChild(olduser.element);
+        }
+        var user = {
+            username: name,
+            rank: Number(urank),
+            turn: -1
+        };
+        users.push(user);
+        var tr = document.createElement("tr");
+        var td = document.createElement("td");
+        td.innerHTML = name;
+        switch (user.rank) {
+            case 2:
+                td.style.color = "#FF0000";
+                break;
+            case 3:
+                td.style.color = "#00FF00";
+                break;
+        }
+        tr.appendChild(td);
+        user.element = tr;
+        if (rank !== 0) userModOptions(user.username, tr, td);
+        userlist.appendChild(tr);
     }
     reloadUsers() {
         // Sort the user list by turn status
