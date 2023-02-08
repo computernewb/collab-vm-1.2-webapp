@@ -185,6 +185,7 @@ class CollabVMClient {
                             alert("That username has been blacklisted.");
                             break;
                     }    
+		    if (!connected) return;
                     var u = users.find(u => u.username === window.username);
                     if (u) {
                         u.username = msgArr[3];
@@ -201,12 +202,14 @@ class CollabVMClient {
                 user.element.children[0].innerHTML = msgArr[3];
                 break;
             case "adduser":
+		if (!connected) return;
                 for (var i = 2; i < msgArr.length; i += 2) {
                     this.addUser(msgArr[i], msgArr[i+1]);
                 }
                 onlineusercount.innerText = users.length;
                 break;
             case "remuser":
+		if (!connected) return;
                 for (var i = 2; i < msgArr.length; i++) {
                     var user = users.find(u => u.username == msgArr[i]);
                     users.splice(users.indexOf(user), 1);
@@ -571,10 +574,6 @@ function multicollab(url) {
         list.forEach((curr) => {
             var id = curr.id;
             var name = curr.name;
-            if (id === window.location.hash.substring(1)) {
-                openVM(url, id);
-                res(false);
-            }
             vms.push(curr);
             var div = document.createElement("div");
             div.classList = "col-sm-5 col-md-3";
@@ -795,7 +794,14 @@ usernameSpan.addEventListener('click', () => {
 });
 
 // Load all vms
-config.serverAddresses.forEach(multicollab);
+(async () => {
+var p = [];
+config.serverAddresses.forEach(v => p.push(multicollab(v)));
+await Promise.all(p);
+var vm = vms.find(v => v.id === window.location.hash.substring(1));
+if (vm)
+	openVM(vm.url, vm.id);
+})();
 // Export some stuff
 window.screenshotVM = screenshotVM;
 window.multicollab = multicollab;
