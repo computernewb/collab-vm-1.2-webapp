@@ -709,9 +709,9 @@ function addUserDropdownItem(ul, text, func) {
 async function openVM(url, node) {
     if (connected) return;
     connected = true;
-    var vm = vms.find(v => v.url === url);
+    var _vm = vms.find(v => v.url === url);
     var token = null;
-    if (vm.captcha !== false) {
+    if (_vm.captcha !== false) {
         token = await doCaptcha(vm.captcha);
     }
     window.location.href = "#" + node;
