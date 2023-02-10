@@ -18,7 +18,6 @@ const buttons = {
     changeUsername: window.document.getElementById("changeUsernameBtn"),
     voteReset: window.document.getElementById("voteResetButton"),
     screenshot: window.document.getElementById("screenshotButton"),
-    autotype: window.document.getElementById("autotypebtn"),
     // Staff
     restore: window.document.getElementById("restoreBtn"),
     reboot: window.document.getElementById("rebootBtn"),
@@ -543,13 +542,6 @@ class CollabVMClient {
     voteReset(reset) {
         this.socket.send(guacutils.encode(["vote", reset ? "1" : "0"]));
     }
-    autotype(str) {
-        for (var i = 0; i < str.length; i++) {
-            var key = GetKeysym(null, null, str[i], null);
-            this.key(key, true);
-            this.key(key, false);
-        }
-    }
     admin = {
         login: (password) => {
             return new Promise((res, rej) => {
@@ -806,11 +798,6 @@ buttons.ctrlAltDel.addEventListener('click', () => {
 });
 voteyesbtn.addEventListener('click', () => vm.voteReset(true));
 votenobtn.addEventListener('click', () => vm.voteReset(false));
-buttons.autotype.addEventListener('click', () => {
-    var h = window.prompt("Enter string to type");
-    if (!h) return;
-    vm.autotype(h);
-})
 // Staff buttons
 buttons.restore.addEventListener('click', () => vm.admin.restore());
 buttons.reboot.addEventListener('click', () => vm.admin.reboot());
