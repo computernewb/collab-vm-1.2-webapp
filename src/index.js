@@ -3,6 +3,7 @@ import { config } from "./common";
 import { GetKeysym } from "./keyboard";
 import { createNanoEvents } from "nanoevents";
 import { makeperms } from "./permissions";
+import doCaptcha from "./captcha";
 // None = -1
 // Has turn = 0
 // In queue = <queue position>
@@ -67,10 +68,13 @@ class CollabVMClient {
     socket;
     node;
     #url;
+    #captcha = false;
+    captchaToken;
     constructor(url) {
         this.#url = url;
     }
-    connect() {
+    connect(hcaptchatoken) {
+        this.captchaToken = hcaptchatoken;
         return new Promise((res, rej) => {
             try {
                 this.socket = new WebSocket(this.#url, "guacamole");
@@ -101,9 +105,24 @@ class CollabVMClient {
         return this.#url;
     }
     connectToVM(node) {
-        return new Promise((res, rej) => {
+        return new Promise(async (res, rej) => {
             this.socket.addEventListener('close', () => this.#onClose());
             this.node = node;
+            if (this.captchaToken !== null) {
+                await new Promise((reso, reje) => {
+                    var unbind = this.eventemitter.on('captcha', (result) => {
+                        unbind();
+                        if (result === true) {
+                            reso();
+                            return;
+                        }
+                        else {
+                            reje();
+                        }
+                    });
+                    this.socket.send(guacutils.encode(["captcha", this.captchaToken]));
+                });
+            }
             var savedUsername = window.localStorage.getItem("username");
             if (savedUsername === null)
                 this.socket.send(guacutils.encode(["rename"]));
@@ -139,6 +158,18 @@ class CollabVMClient {
                         break;
                 }
                 break;
+            case "captcha":
+                switch (msgArr[1]) {
+                    case "0":
+                        this.#captcha = msgArr[2];
+                        console.log(this.#captcha);
+                        break;
+                    case "1":
+                        this.eventemitter.emit('captcha', true);
+                        break;
+                    case "2":
+                        this.eventemitter.emit('captcha', false);
+                }
             case "chat":
                 if (!connected) return;
                 for (var i = 1; i < msgArr.length; i += 2) {
@@ -155,6 +186,7 @@ class CollabVMClient {
                         id: msgArr[i],
                         name: msgArr[i+1],
                         thumb: msgArr[i+2],
+                        captcha: this.#captcha,
 
                     });
                 }
@@ -685,9 +717,14 @@ function addUserDropdownItem(ul, text, func) {
 async function openVM(url, node) {
     if (connected) return;
     connected = true;
+    var vm = vms.find(v => v.url === url);
+    var token = null;
+    if (vm.captcha !== false) {
+        token = await doCaptcha(vm.captcha);
+    }
     window.location.href = "#" + node;
     vm = new CollabVMClient(url);
-    await vm.connect();
+    await vm.connect(token);
     await vm.connectToVM(node);
     vmlist.style.display = "none";
     vmview.style.display = "block";
