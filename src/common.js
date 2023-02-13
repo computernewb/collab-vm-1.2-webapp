@@ -12,8 +12,8 @@ export const config = {
     ],
     chatSound: "https://computernewb.com/collab-vm/notify.ogg",
     // What XSS implementation the server uses
-    // 0: No XSS (If you're using upstream it will be this)
-    // 1: Internal fork style (main vms only, global opcode 21)
+    // 0: No XSS (cvm1.2.11)
+    // 1: Internal fork style (cvm1.ts, global opcode 21)
     // 2: yellows111/collab-vm-server style (per-user opcode 21)
     xssImplementation: 1,
 }
