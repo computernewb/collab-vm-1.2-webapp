@@ -69,8 +69,10 @@ class CollabVMClient {
     #url;
     #captcha = false;
     captchaToken;
-    constructor(url) {
+    isMainSocket;
+    constructor(url, isMainSocket) {
         this.#url = url;
+        this.isMainSocket = isMainSocket;
     }
     connect(hcaptchatoken) {
         this.captchaToken = hcaptchatoken;
@@ -170,7 +172,7 @@ class CollabVMClient {
                         this.eventemitter.emit('captcha', false);
                 }
             case "chat":
-                if (!connected) return;
+                if (!connected || !this.isMainSocket) return;
                 for (var i = 1; i < msgArr.length; i += 2) {
                     chatMessage(msgArr[i], msgArr[i+1])
                 }
@@ -217,7 +219,7 @@ class CollabVMClient {
                             alert("That username has been blacklisted.");
                             break;
                     }    
-		    if (!connected) return;
+		    if (!connected || !this.isMainSocket) return;
                     var u = users.find(u => u.username === window.username);
                     if (u) {
                         u.username = msgArr[3];
@@ -234,14 +236,14 @@ class CollabVMClient {
                 user.element.children[0].innerHTML = msgArr[3];
                 break;
             case "adduser":
-		if (!connected) return;
+		        if (!connected || !this.isMainSocket) return;
                 for (var i = 2; i < msgArr.length; i += 2) {
                     this.addUser(msgArr[i], msgArr[i+1]);
                 }
                 onlineusercount.innerText = users.length;
                 break;
             case "remuser":
-		if (!connected) return;
+		if (!connected || !this.isMainSocket) return;
                 for (var i = 2; i < msgArr.length; i++) {
                     var user = users.find(u => u.username == msgArr[i]);
                     users.splice(users.indexOf(user), 1);
@@ -599,7 +601,7 @@ class CollabVMClient {
 }
 function multicollab(url) {
     return new Promise(async (res, rej) => {
-        var vm = new CollabVMClient(url);
+        var vm = new CollabVMClient(url, false);
         await vm.connect();
         var list = await vm.list();
         vm.disconnect();
@@ -715,7 +717,7 @@ async function openVM(url, node) {
         token = await doCaptcha(vm.captcha);
     }
     window.location.href = "#" + node;
-    vm = new CollabVMClient(url);
+    vm = new CollabVMClient(url, true);
     await vm.connect(token);
     await vm.connectToVM(node);
     vmlist.style.display = "none";
