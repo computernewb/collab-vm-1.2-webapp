@@ -717,6 +717,7 @@ async function openVM(url, node) {
         token = await doCaptcha(vm.captcha);
     }
     window.location.href = "#" + node;
+    window.VMName = node;
     vm = new CollabVMClient(url, true);
     await vm.connect(token);
     await vm.connectToVM(node);
@@ -848,3 +849,4 @@ window.getPerms = () => perms;
 window.getRank = () => rank;
 window.GetAdmin = () => vm.admin;
 window.cvmEvents = createNanoEvents();
+window.VMName = null;
