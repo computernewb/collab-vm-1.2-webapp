@@ -801,7 +801,7 @@ buttons.ctrlAltDel.addEventListener('click', () => {
 voteyesbtn.addEventListener('click', () => vm.voteReset(true));
 votenobtn.addEventListener('click', () => vm.voteReset(false));
 // Staff buttons
-buttons.restore.addEventListener('click', () => vm.admin.restore());
+buttons.restore.addEventListener('click', () => {if (window.confirm("Do you really want to restore the VM?")) vm.admin.restore()});
 buttons.reboot.addEventListener('click', () => vm.admin.reboot());
 buttons.clearQueue.addEventListener('click', () => vm.admin.clearQueue());
 buttons.bypassTurn.addEventListener('click', () => vm.admin.bypassTurn());
