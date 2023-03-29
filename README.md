@@ -13,6 +13,6 @@ The build output directory is `dist/`
 
 ## Serving
 
-Just drop the contents of `dist/` somewhere into our webroot. For testing services, you can throw up a quick test webserver with the following command
+Just drop the contents of `dist/` somewhere into our webroot. For testing purposes, you can throw up a quick test webserver with the following command
 
 `npm run serve`
