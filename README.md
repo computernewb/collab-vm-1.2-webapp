@@ -10,3 +10,9 @@ Make sure you filled out common.js, then:
 2. `npm run build`
 
 The build output directory is `dist/`
+
+## Serving
+
+Just drop the contents of `dist/` somewhere into our webroot. For testing services, you can throw up a quick test webserver with the following command
+
+`npm run serve`
