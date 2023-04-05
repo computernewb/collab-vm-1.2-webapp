@@ -9,6 +9,7 @@ export const config = {
         "wss://computernewb.com/collab-vm/vm6",
         "wss://computernewb.com/collab-vm/vm7",
         "wss://computernewb.com/collab-vm/vm8",
+	"wss://computernewb.com/collab-vm/vm9",
     ],
     chatSound: "https://computernewb.com/collab-vm/notify.ogg",
     // What XSS implementation the server uses
