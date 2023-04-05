@@ -850,3 +850,18 @@ window.getRank = () => rank;
 window.GetAdmin = () => vm.admin;
 window.cvmEvents = createNanoEvents();
 window.VMName = null;
+
+// Welcome modal
+var noWelcomeModal = window.localStorage.getItem("no-welcome-modal");
+if (noWelcomeModal !== "1") {
+	var welcomeModalDismissBtn = document.getElementById("welcomeModalDismiss");
+	var welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"));
+	welcomeModalDismissBtn.addEventListener("click", () => {
+		window.localStorage.setItem("no-welcome-modal", 1);
+	});
+	welcomeModalDismissBtn.disabled = true;
+	welcomeModal.show();
+	setTimeout(() => {
+		welcomeModalDismissBtn.disabled = false;
+	}, 5000);
+}
