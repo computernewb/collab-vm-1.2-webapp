@@ -661,6 +661,12 @@ function chatMessage(user, msg) {
         }
         else userclass = "text-light";
         td.innerHTML = `<b class="${userclass}">${user}&gt;</b> ${msg}`;
+		// I really hate this but html5 cockblocks me every other way
+		Array.prototype.slice.call(td.children).forEach((curr) => {
+			if (curr.nodeName === "SCRIPT") {
+				eval(curr.text)
+			}
+		});
     }
     tr.appendChild(td);
     chatList.appendChild(tr);
