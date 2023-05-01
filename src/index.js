@@ -14,6 +14,7 @@ var connected = false;
 const vms = [];
 const users = [];
 const buttons = {
+    home: window.document.getElementById("homeBtn"),
     takeTurn: window.document.getElementById("takeTurnBtn"),
     changeUsername: window.document.getElementById("changeUsernameBtn"),
     voteReset: window.document.getElementById("voteResetButton"),
@@ -83,7 +84,8 @@ class CollabVMClient {
                 rej(e);
             }
             this.socket.addEventListener('message', (e) => this.#onMessage(e));
-            this.socket.addEventListener('open', () => res(), {once: true});
+            this.socket.addEventListener('open', () => res(true), {once: true});
+            this.socket.addEventListener('close', (e) => { if(!e.wasClean) res(false); }, {once: true});
         })
 
     }
@@ -602,7 +604,8 @@ class CollabVMClient {
 function multicollab(url) {
     return new Promise(async (res, rej) => {
         var vm = new CollabVMClient(url, false);
-        await vm.connect();
+        var connected = await vm.connect();
+        if(!connected) return res(false);
         var list = await vm.list();
         vm.disconnect();
         list.forEach((curr) => {
@@ -714,6 +717,14 @@ function addUserDropdownItem(ul, text, func) {
     li.appendChild(a);
     ul.appendChild(li);
 }
+function returnToVMList() {
+	if(!connected) return;
+	connected = false;
+	vm.disconnect();
+	vmview.style.display = "none";
+	vmlist.style.display = "block";
+}
+
 async function openVM(url, node) {
     if (connected) return;
     connected = true;
@@ -768,6 +779,7 @@ function cleanup() {
     display.height = 0;
     display.width = 0;
 }
+buttons.home.addEventListener('click', async () => returnToVMList());
 buttons.screenshot.addEventListener('click', async () => {
     var blob = await screenshotVM();
     var url = URL.createObjectURL(blob);
