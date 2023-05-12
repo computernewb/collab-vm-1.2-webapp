@@ -67,11 +67,11 @@ let events = new Map();
 
 function addListener(element, event, id, callback) {
   events.set(id, callback);
-  element.addEventListener(event, callback);
+  element.addEventListener(event, callback, {capture: true});
 }
 
 function removeListener(element, event, id) {
-  element.removeEventListener(event, events.get(id));
+  element.removeEventListener(event, events.get(id), true);
   events.delete(id);
 }
 
