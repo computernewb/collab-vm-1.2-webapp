@@ -83,6 +83,7 @@ class CollabVMClient {
     #captcha = false;
     captchaToken;
     isMainSocket;
+    shouldReconnect = true;
     constructor(url, isMainSocket) {
         this.#url = url;
         this.isMainSocket = isMainSocket;
@@ -103,14 +104,16 @@ class CollabVMClient {
     }
     #onClose() {
         cleanup();
-        setTimeout(async () => {
-            try {
-                await this.connect();
-            } catch {
-                this.#onClose();
-            }
-            this.connectToVM(this.node);
-        }, 2000);
+		if(this.shouldReconnect) {
+			setTimeout(async () => {
+				try {
+					connected = await this.connect(this.captchaToken);
+				} catch {
+					this.#onClose();
+				}
+				this.connectToVM(this.node);
+			}, 2000);
+		}
     }
     disconnect() {
         this.socket.send(guacutils.encode(["disconnect"]));
@@ -733,6 +736,7 @@ function returnToVMList() {
 	if(!connected) return;
 	connected = false;
 	vm.disconnect();
+	vm.shouldReconnect = false;
 	vmview.style.display = "none";
 	vmlist.style.display = "block";
 }
