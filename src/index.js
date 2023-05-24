@@ -63,6 +63,18 @@ const forceVotePanel = document.getElementById("forceVotePanel");
 // needed to scroll to bottom
 const chatListDiv = document.querySelector(".chat-table");
 
+let events = new Map();
+
+function addListener(element, event, id, callback) {
+  events.set(id, callback);
+  element.addEventListener(event, callback, {capture: true});
+}
+
+function removeListener(element, event, id) {
+  element.removeEventListener(event, events.get(id), true);
+  events.delete(id);
+}
+
 class CollabVMClient {
     eventemitter = createNanoEvents();
     socket;
@@ -71,6 +83,7 @@ class CollabVMClient {
     #captcha = false;
     captchaToken;
     isMainSocket;
+    shouldReconnect = true;
     constructor(url, isMainSocket) {
         this.#url = url;
         this.isMainSocket = isMainSocket;
@@ -91,14 +104,16 @@ class CollabVMClient {
     }
     #onClose() {
         cleanup();
-        setTimeout(async () => {
-            try {
-                await this.connect();
-            } catch {
-                this.#onClose();
-            }
-            this.connectToVM(this.node);
-        }, 2000);
+		if(this.shouldReconnect) {
+			setTimeout(async () => {
+				try {
+					connected = await this.connect(this.captchaToken);
+				} catch {
+					this.#onClose();
+				}
+				this.connectToVM(this.node);
+			}, 2000);
+		}
     }
     disconnect() {
         this.socket.send(guacutils.encode(["disconnect"]));
@@ -721,6 +736,7 @@ function returnToVMList() {
 	if(!connected) return;
 	connected = false;
 	vm.disconnect();
+	vm.shouldReconnect = false;
 	vmview.style.display = "none";
 	vmlist.style.display = "block";
 }
@@ -740,16 +756,14 @@ async function openVM(url, node) {
     await vm.connectToVM(node);
     vmlist.style.display = "none";
     vmview.style.display = "block";
-    display.addEventListener('mousemove', (e) => vm.mouseevent(e, undefined), {capture: true})
-    display.addEventListener('mousedown', (e) => vm.mouseevent(e, true), {capture: true});
-    display.addEventListener('mouseup', (e) => vm.mouseevent(e, false), {capture: true});
-    display.addEventListener('wheel', (e) => {vm.mousewheelhandler(e);e.preventDefault();return false;}, {capture: true});
-    display.addEventListener('contextmenu', (e) => e.preventDefault());
-    display.addEventListener('click', () => {
-        if (turn === -1) vm.turn();
-    }, {capture: true});
-    display.addEventListener('keydown', (e) => vm.keyevent(e, true), {capture: true});
-    display.addEventListener('keyup', (e) => vm.keyevent(e, false), {capture: true});
+    addListener(display, 'mousemove', 'displayMove', (e) => vm.mouseevent(e, undefined));
+    addListener(display, 'mousedown', 'displayDown', (e) => vm.mouseevent(e, true));
+    addListener(display, 'mouseup', 'displayUp', (e) => vm.mouseevent(e, false));
+    addListener(display, 'wheel', 'displayWheel', (e) => {vm.mousewheelhandler(e);e.preventDefault();return false;}); // BUG: mousewheelhandler seems to be broken!
+    addListener(display, 'contextmenu', 'displayContextMenu', (e) => e.preventDefault());
+    addListener(display, 'click', 'displayClick', () => { if (turn === -1) vm.turn(); });
+    addListener(display, 'keydown', 'displayKeyDown', (e) => vm.keyevent(e, true));
+    addListener(display, 'keyup', 'displayKeyUp', (e) => vm.keyevent(e, false));
 }
 function screenshotVM() {
     return new Promise((res, rej) => {
@@ -778,6 +792,14 @@ function cleanup() {
     usernameSpan.classList = "input-group-text bg-dark text-light";
     display.height = 0;
     display.width = 0;
+    removeListener(display, 'mousemove', 'displayMove');
+    removeListener(display, 'mousedown', 'displayDown');
+    removeListener(display, 'mouseup', 'displayUp');
+    removeListener(display, 'wheel', 'displayWheel');
+    removeListener(display, 'contextmenu', 'displayContextMenu');
+    removeListener(display, 'click', 'displayClick');
+    removeListener(display, 'keydown', 'displayKeyDown');
+    removeListener(display, 'keyup', 'displayKeyUp');
 }
 buttons.home.addEventListener('click', async () => returnToVMList());
 buttons.screenshot.addEventListener('click', async () => {
