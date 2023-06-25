@@ -61,13 +61,13 @@ const voteyesbtn = document.getElementById("voteYesBtn");
 const votenobtn = document.getElementById("voteNoBtn");
 const voteyeslabel = document.getElementById("voteYesLabel");
 const votenolabel = document.getElementById("voteNoLabel");
-const votetime = document.getElementById("votetime");
 const staffbtns = document.getElementById("staffbtns");
 const qemuMonitorInput = document.getElementById("qemuMonitorInput");
 const qemuMonitorOutput = document.getElementById("qemuMonitorOutput");
 const xssCheckbox = document.getElementById("xssCheckbox");
 const xssCheckboxContainer = document.getElementById("xssCheckboxContainer");
 const forceVotePanel = document.getElementById("forceVotePanel");
+const voteStatusText = document.getElementById("voteStatusText");
 // needed to scroll to bottom
 const chatListDiv = document.querySelector(".chat-table");
 
@@ -354,7 +354,7 @@ class CollabVMClient {
                             timeToEnd--;
                             if (timeToEnd === 0)
                                 clearInterval(voteinterval);
-                            votetime.innerText = timeToEnd;
+                            voteStatusText.innerText = window.i18n.get("Vote ends in # seconds").replace("#", timeToEnd);
                         }
                         voteinterval = setInterval(updateVote, 1000);
                         updateVote();
