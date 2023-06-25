@@ -55,13 +55,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a id="homeBtn" href="#" class="nav-link active" aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
+                            <a id="homeBtn" href="#" class="nav-link active" aria-current="page"><i class="fa-solid fa-house"></i><span id="homeText">Home</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://computernewb.com/collab-vm/faq/" class="nav-link"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+                            <a href="https://computernewb.com/collab-vm/faq/" class="nav-link"><i class="fa-solid fa-circle-question"></i><span id="faqLink">FAQ</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://computernewb.com/collab-vm/rules" class="nav-link"><i class="fa-solid fa-clipboard-check"></i> Rules</a>
+                            <a href="https://computernewb.com/collab-vm/rules" class="nav-link"><i class="fa-solid fa-clipboard-check"></i><span id="rulesLink">Rules</span></a>
                         </li>
 			            <li class="nav-item">
                             <a href="https://discord.gg/a4kqb4mGyX" class="nav-link"><i class="fa-brands fa-discord"></i> Discord</a>
@@ -71,6 +71,18 @@
                         </li>
 			            <li class="nav-item">
                             <a href="https://computernewb.com/collab-vm/user-vm" class="nav-link"><i class="fa-solid fa-user"></i> UserVM</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" role="button" href="#" data-bs-toggle="dropdown" id="navbarDropdown"><i class="fa-solid fa-globe"></i> Languages</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#" onclick='window.i18n.change("sa")'><img src="//computernewb.com/vncresolver/flags/sa.png"> اللغة العربية (جزئية)</a></li>
+                            <li><a class="dropdown-item" href="#" onclick='window.i18n.change("de")'><img src="//computernewb.com/vncresolver/flags/de.png"> Deutsch</a></li>
+                            <li><a class="dropdown-item" href="#" onclick='window.i18n.change("en")'><img src="//computernewb.com/vncresolver/flags/gb.png"> English</a></li>
+                            <li><a class="dropdown-item" href="#" onclick='window.i18n.change("es")'><img src="https://computernewb.com/vncresolver/flags/es.png"> Español</a></li>
+                            <li><a class="dropdown-item" href="#" onclick='window.i18n.change("jp")'><img src="//computernewb.com/vncresolver/flags/jp.png"> 日本語</a></li>
+                            <li><a class="dropdown-item" href="#" onclick='window.i18n.change("pl")'><img src="//computernewb.com/vncresolver/flags/pl.png"> Polski</a></li>
+                            <li><a class="dropdown-item" href="#" onclick='window.i18n.change("ru")'><img src="//computernewb.com/vncresolver/flags/ru.png"> Русский</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -83,20 +95,20 @@
             <canvas id="display" height="0" width="0" tabindex="-1"></canvas>
             <p id="turnstatus" class="text-light"></p>
             <div id="voteResetPanel" class="bg-dark text-light" style="display:none;">
-                Do you want to reset the vm?<br/>
-                <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i> Yes<span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i> No<span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
+                <span id="voteResetText">Do you want to reset the vm?</span><br/>
+                <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i><span id="voteYesText">Yes</span><span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i><span id="voteNoText">No</span><span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
                 Vote ends in <span id="votetime"></span> seconds<br/>
                 <div id="forceVotePanel">
-                    <button class="btn btn-info" id="forceVoteYesBtn"><i class="fa-solid fa-check"></i> Pass Vote</button>
-                    <button class="btn btn-info" id="forceVoteNoBtn"><i class="fa-solid fa-ban"></i> Cancel Vote</button>
+                    <button class="btn btn-info" id="forceVoteYesBtn"><i class="fa-solid fa-check"></i><span id="passVoteButtonText">Pass Vote</span></button>
+                    <button class="btn btn-info" id="forceVoteNoBtn"><i class="fa-solid fa-ban"></i><span id="cancelVoteButtonText">Cancel Vote</span></button>
                 </div>
             </div>
             <div id="btns">
-                <button class="btn btn-secondary" id="takeTurnBtn"><i class="fa-solid fa-computer-mouse"></i> Take Turn</button>
-                <button class="btn btn-secondary" id="changeUsernameBtn"><i class="fa-solid fa-signature"></i> Change Username</button>
-                <button class="btn btn-secondary" id="voteResetButton"><i class="fa-solid fa-rotate-left"></i> Vote for Reset</button>
-                <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i> Screenshot</button>
-                <button class="btn btn-secondary" id="ctrlAltDelBtn"><i class="fa-solid fa-gear"></i> Ctrl+Alt+Del</button>
+                <button class="btn btn-secondary" id="takeTurnBtn"><i class="fa-solid fa-computer-mouse"></i><span id="takeTurnButtonText">Take Turn</span></button>
+                <button class="btn btn-secondary" id="changeUsernameBtn"><i class="fa-solid fa-signature"></i><span id="changeUsernameButtonText">Change Username</span></button>
+                <button class="btn btn-secondary" id="voteResetButton"><i class="fa-solid fa-rotate-left"></i><span id="voteResetButtonText">Vote for Reset</span></button>
+                <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i><span id="screenshotButtonText">Screenshot</span></button>
+                <button class="btn btn-secondary" id="ctrlAltDelBtn"><i class="fa-solid fa-gear"></i>Ctrl+Alt+Del</button>
                 <div id="staffbtns">
                     <button class="btn btn-secondary" id="restoreBtn"><i class="fa-solid fa-rotate-left"></i> Restore</button>
                     <button class="btn btn-secondary" id="rebootBtn"><i class="fa-solid fa-power-off"></i> Reboot</button>
@@ -111,7 +123,7 @@
                     <div class="table-responsive username-table">
                         <table class="table table-hover table-dark table-borderless">
                             <thead>
-                                <th><i class="fa-solid fa-user"></i> Users Online (<span id="onlineusercount"></span>)</th>
+                                <th><i class="fa-solid fa-user"></i><span id="onlineUserText">Users Online</span> (<span id="onlineusercount"></span>)</th>
                             </thead>
                             <tbody id="userlist"></tbody>
                         </table>

@@ -1,0 +1,22 @@
+{
+	"Control Collaborative Virtual Machines!": "Control Collaborative Virtual Machines!",
+	"Home": "Home",
+	"FAQ": "FAQ",
+	"Rules": "Rules",
+	"Do you want to reset the vm?": "Do you want to reset the vm?",
+	"Yes": "Yes",
+	"No": "No",
+	"Vote ends in # seconds": "Vote ends in # seconds",
+	"Pass Vote": "Pass Vote",
+	"Cancel Vote": "Cancel Vote",
+	"Take Turn": "Take Turn",
+	"Change Username": "Change Username",
+	"Vote for Reset": "Vote for Reset",
+	"Screenshot": "Screenshot",
+	"Users Online": "Users Online",
+	"End Turn": "End Turn",
+	"Turn expires in # seconds.": "Turn expires in # seconds.",
+	"Waiting for turn in # seconds.": "Waiting for turn in # seconds.",
+	"Please wait # seconds before starting another vote.": "Please wait # seconds before starting another vote.",
+	"Enter new username": "Enter new username"
+}

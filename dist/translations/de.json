@@ -1,0 +1,22 @@
+{
+	"Control Collaborative Virtual Machines!": "Steuern Sie kollaborative virtuelle Maschinen!",
+	"Home": "Hauptseite",
+	"FAQ": "FAQ",
+	"Rules": "Regeln",
+	"Do you want to reset the vm?": "Möchten Sie die VM zurücksetzen?",
+	"Yes": "Ja",
+	"No": "Nein",
+	"Vote ends in # seconds": "Abstimmung endet in # Sekunden",
+	"Pass Vote": "Abstimmung bestehen",
+	"Cancel Vote": "Abstimmung abbrechen",
+	"Take Turn": "In Reihe stellen.",
+	"Change Username": "Nutzername ändern",
+	"Vote for Reset": "Für Zurücksetzung abstimmen",
+	"Screenshot": "Screenshot",
+	"Users Online": "Nutzer online",
+	"End Turn": "Aus der Reihe kommen",
+	"Turn expires in # seconds.": "Ihre Zeit läuft in # Sekunden aus.",
+	"Waiting for turn in # seconds.": "In der Reihe warten für # Sekunden.",
+	"Please wait # seconds before starting another vote.": "Bitte warten Sie # Sekunden bevor Sie noch eine Abstimmung starten.",
+	"Enter new username": "Geben Sie Ihren neuen Nutzername ein."
+}

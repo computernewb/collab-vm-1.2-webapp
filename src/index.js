@@ -4,6 +4,14 @@ import { GetKeysym } from "./keyboard";
 import { createNanoEvents } from "nanoevents";
 import { makeperms } from "./permissions";
 import doCaptcha from "./captcha";
+import i18n from "./i18n";
+
+// i18n
+window.i18n = new i18n(navigator.language.split("-")[0]);
+window.i18n.init().then(() => {
+    window.i18n.replaceAllInDOM();
+});
+
 // None = -1
 // Has turn = 0
 // In queue = <queue position>
@@ -275,7 +283,7 @@ class CollabVMClient {
                     curr.turn = -1;
                     curr.element.classList = "";
                 });
-                buttons.takeTurn.innerHTML = "<i class=\"fa-solid fa-computer-mouse\"></i> Take Turn";
+                buttons.takeTurn.innerHTML = `<i class=\"fa-solid fa-computer-mouse\"></i><span id="takeTurnButtonText"> ${window.i18n.get("Take Turn")}</span>`;
                 turn = -1;
                 if (!msgArr.includes(username))
                     turnstatus.innerText = "";
@@ -296,7 +304,7 @@ class CollabVMClient {
                         secs--;
                         if (secs === 0)
                             clearInterval(turninterval);
-                        turnstatus.innerText = `Turn expires in ${secs} seconds.`;
+                        turnstatus.innerText = `${window.i18n.get("Turn expires in # seconds.").replace("#", secs)}`;
                     }
                     turnUpdate();
                     turninterval = setInterval(turnUpdate, 1000);
@@ -312,7 +320,7 @@ class CollabVMClient {
                                 secs--;
                                 if (secs === 0)
                                     clearInterval(turninterval);
-                                turnstatus.innerText = `Waiting for turn in ${secs} seconds.`;
+                                turnstatus.innerText = `${window.i18n.get("Waiting for turn in # seconds.").replace("#", secs)}`;
                             }
                             turninterval = setInterval(turnUpdate, 1000);
                             turnUpdate();
@@ -324,9 +332,9 @@ class CollabVMClient {
                     }
                 }
                 if (turn === -1) {
-                    buttons.takeTurn.innerHTML = "<i class=\"fa-solid fa-computer-mouse\"></i> Take Turn";
+                    buttons.takeTurn.innerHTML = `<i class=\"fa-solid fa-computer-mouse\"></i><span id="takeTurnButtonText"> ${window.i18n.get("Take Turn")}</span>`;
                 } else {
-                    buttons.takeTurn.innerHTML = "<i class=\"fa-solid fa-computer-mouse\"></i> End Turn";
+                    buttons.takeTurn.innerHTML = `<i class=\"fa-solid fa-computer-mouse\"></i><span id="takeTurnButtonText"> ${window.i18n.get("End Turn")}</span>`;
                 }
                 this.reloadUsers();
                 break;
@@ -356,8 +364,8 @@ class CollabVMClient {
                         voteresetpanel.style.display = "none";
                         break;
                     case "3":
-                        // too soon dumbass
-                        window.alert(`Please wait ${msgArr[2]} seconds before starting another vote.`);
+                        // Vote is on cooldown
+                        window.alert(`${window.i18n.get("Please wait # seconds before starting another vote.").replace("#", msgArr[2])}`);
                         break;
                 }
                 break;
@@ -820,7 +828,7 @@ function sendChat() {
     chatinput.value = "";
 }
 buttons.changeUsername.addEventListener('click', () => {
-    var newuser = window.prompt("Enter new username", window.username);
+    var newuser = window.prompt(window.i18n.get("Enter new username"), window.username);
     if (newuser == null) return;
     vm.rename(newuser);
 });
