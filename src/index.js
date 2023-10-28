@@ -737,6 +737,7 @@ function returnToVMList() {
 	connected = false;
 	vm.disconnect();
 	vm.shouldReconnect = false;
+	voteresetpanel.style.display = "none";
 	vmview.style.display = "none";
 	vmlist.style.display = "block";
 }
