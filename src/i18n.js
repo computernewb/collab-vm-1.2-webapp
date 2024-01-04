@@ -54,6 +54,7 @@ export default class i18n {
             this.lang = lang;
             this.data = res;
             this.replaceAllInDOM();
+            window.localStorage.setItem("cvm-lang", lang);
         }).catch((e) => {
             console.log(e);
             return alert(`i18n error: Failed to load language file for ${lang}. Alert a site administrator!`);
@@ -67,6 +68,7 @@ export default class i18n {
             { id: "homeText", key: "Home" },
             { id: "faqLink", key: "FAQ" },
             { id: "rulesLink", key: "Rules" },
+            { id: "welcomeText", key: "Welcome to CollabVM" },
             { id: "onlineUserText", key: "Users Online" },
             { id: "voteResetText", key: "Do you want to reset the vm?" },
             { id: "voteYesText", key: "Yes" },
@@ -76,13 +78,14 @@ export default class i18n {
             { id: "takeTurnButtonText", key: "Take Turn" },
             { id: "changeUsernameButtonText", key: "Change Username" },
             { id: "voteResetButtonText", key: "Vote for Reset" },
-            { id: "screenshotButtonText", key: "Screenshot" }
+            { id: "screenshotButtonText", key: "Screenshot" },
+            { id: "rulesHtml", key: "rulesHTML"}
         ];               
 
         elements.forEach(el => {
             var element = document.getElementById(el.id);
             if (element != null) {
-                element.innerText = ` ${this.get(el.key)}`;
+                element.innerHTML = ` ${this.get(el.key)}`;
             } else {
                 console.warn(`${el.id} was null (would have assigned ${this.get(el.key)})`)
             }

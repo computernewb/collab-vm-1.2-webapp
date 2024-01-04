@@ -7,9 +7,11 @@ import doCaptcha from "./captcha";
 import i18n from "./i18n";
 
 // i18n
-window.i18n = new i18n(navigator.language.split("-")[0]);
+window.i18n = new i18n(localStorage.getItem("cvm-lang") || navigator.language.split("-")[0]);
 window.i18n.init().then(() => {
     window.i18n.replaceAllInDOM();
+}).catch(() => {
+    window.i18n.change("en");
 });
 
 // None = -1
