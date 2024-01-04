@@ -687,13 +687,13 @@ function chatMessage(user, msg) {
         }
         else userclass = "text-light";
         td.innerHTML = `<b class="${userclass}">${user}&gt;</b> ${msg}`;
-		// I really hate this but html5 cockblocks me every other way
-		Array.prototype.slice.call(td.children).forEach((curr) => {
-			if (curr.nodeName === "SCRIPT") {
-				eval(curr.text)
-			}
-		});
     }
+    // I really hate this but html5 cockblocks me every other way
+    Array.prototype.slice.call(td.children).forEach((curr) => {
+        if (curr.nodeName === "SCRIPT") {
+            eval(curr.text)
+        }
+    });
     tr.appendChild(td);
     chatList.appendChild(tr);
 }
@@ -899,3 +899,18 @@ window.getRank = () => rank;
 window.GetAdmin = () => vm.admin;
 window.cvmEvents = createNanoEvents();
 window.VMName = null;
+
+// Welcome modal
+var noWelcomeModal = window.localStorage.getItem("no-welcome-modal");
+if (noWelcomeModal !== "1") {
+	var welcomeModalDismissBtn = document.getElementById("welcomeModalDismiss");
+	var welcomeModal = new bootstrap.Modal(document.getElementById("welcomeModal"));
+	welcomeModalDismissBtn.addEventListener("click", () => {
+		window.localStorage.setItem("no-welcome-modal", 1);
+	});
+	welcomeModalDismissBtn.disabled = true;
+	welcomeModal.show();
+	setTimeout(() => {
+		welcomeModalDismissBtn.disabled = false;
+	}, 5000);
+}
