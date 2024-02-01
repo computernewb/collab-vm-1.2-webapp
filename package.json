@@ -4,21 +4,22 @@
   "description": "kill me",
   "private": true,
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "serve": "serve dist/"
+    "build": "parcel build --dist-dir dist src/html/index.html",
+    "serve": "parcel src/html/index.html"
   },
   "author": "Elijah R",
   "license": "GPL-3.0",
   "dependencies": {
     "@hcaptcha/types": "^1.0.3",
-    "nanoevents": "^7.0.1",
-    "serve": "^14.2.0",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.2",
+    "nanoevents": "^7.0.1"
+  },
+  "overrides": {
+    "@parcel/watcher": "~2.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/preset-env": "^7.20.2",
-    "babel-loader": "^9.1.2"
+    "parcel": "^2.11.0",
+    "typescript": "^5.3.3"
   }
 }
