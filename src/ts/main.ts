@@ -28,6 +28,10 @@ var turn = -1;
 // Listed VMs
 const vms : VM[] = [];
 const cards : HTMLDivElement[] = [];
+const users : {
+    user : User,
+    element : HTMLTableRowElement
+}[] = [];
 
 // Active VM
 var VM : CollabVMClient | null = null;
@@ -126,6 +130,7 @@ function closeVM() {
     elements.vmlist.style.display = "block";
     elements.vmview.style.display = "none";
     // Clear users
+    users.splice(0, users.length);
     elements.userlist.innerHTML = "";
 }
 
@@ -151,17 +156,16 @@ function sortVMList() {
 }
 
 function sortUserList() {
-    const users = Array.prototype.slice.call(elements.userlist.children);
     users.sort((a, b) => {
-        if (parseInt(a.getAttribute("data-cvm-turn")) === parseInt(b.getAttribute("data-cvm-turn"))) return 0;
-        if (parseInt(a.getAttribute("data-cvm-turn")) === -1) return 1;
-        if (parseInt(b.getAttribute("data-cvm-turn")) === -1) return -1;
-        if (parseInt(a.getAttribute("data-cvm-turn")) < parseInt(b.getAttribute("data-cvm-turn"))) return -1;
+        if (a.user.turn === b.user.turn) return 0;
+        if (a.user.turn === -1) return 1;
+        if (b.user.turn === -1) return -1;
+        if (a.user.turn < b.user.turn) return -1;
         else return 1;
     });
     for (const user of users) {
-        elements.userlist.removeChild(user);
-        elements.userlist.appendChild(user);
+        elements.userlist.removeChild(user.element);
+        elements.userlist.appendChild(user.element);
     }
 }
 
@@ -206,8 +210,8 @@ function chatMessage(username : string, message : string) {
 }
 
 function addUser(user : User) {
-    var olduser = Array.prototype.slice.call(elements.userlist.children).find((u : HTMLTableRowElement) => u.children[0].innerHTML === user.username);
-    if (olduser !== undefined) elements.userlist.removeChild(olduser);
+    var olduser = users.find(u => u.user === user);
+    if (olduser !== undefined) elements.userlist.removeChild(olduser.element);
     var tr = document.createElement('tr');
     tr.setAttribute("data-cvm-turn", "-1");
     var td = document.createElement('td');
@@ -225,19 +229,22 @@ function addUser(user : User) {
     }
     tr.appendChild(td);
     elements.userlist.appendChild(tr);
+    if (olduser !== undefined) olduser.element = tr;
+    else users.push({user: user, element: tr});
     elements.onlineusercount.innerHTML = VM!.getUsers().length.toString();
 }
 
 function remUser(user : User) {
-    var olduser = Array.prototype.slice.call(elements.userlist.children).find((u : HTMLTableRowElement) => u.children[0].innerHTML === user.username);
-    if (olduser !== undefined) elements.userlist.removeChild(olduser);
+    var olduser = users.findIndex(u => u.user === user);
+    if (olduser !== undefined) elements.userlist.removeChild(users[olduser].element);
     elements.onlineusercount.innerHTML = VM!.getUsers().length.toString();
+    users.splice(olduser, 1);
 }
 
 function userRenamed(oldname : string, newname : string, selfrename : boolean) {
-    var user = Array.prototype.slice.call(elements.userlist.children).find((u : HTMLTableRowElement) => u.children[0].innerHTML === oldname);
+    var user = users.find(u => u.user.username === newname);
     if (user) {
-        user.children[0].innerHTML = newname;
+        user.element.children[0].innerHTML = newname;
     }
     if (selfrename) {
         w.username = newname;
@@ -247,23 +254,22 @@ function userRenamed(oldname : string, newname : string, selfrename : boolean) {
 }
 
 function turnUpdate(status : TurnStatus) {
-    const users = Array.prototype.slice.call(elements.userlist.children);
     // Clear all turn data
     turn = -1;
     for (const user of users) {
-        user.classList.remove("user-turn", "user-waiting");
-        user.setAttribute("data-cvm-turn", "-1");
+        user.element.classList.remove("user-turn", "user-waiting");
+        user.element.setAttribute("data-cvm-turn", "-1");
     }
     elements.turnBtnText.innerHTML = "Take Turn";
     if (status.user !== null) {
-        var el = users.find((e : HTMLTableRowElement) => e.children[0].innerHTML === status.user!.username);
+        var el = users.find(u => u.user === status.user)!.element;
         el!.classList.add("user-turn");
         el!.setAttribute("data-cvm-turn", "0");
     }
     for (const user of status.queue) {
-        var el = users.find((e : HTMLTableRowElement) => e.children[0].innerHTML === user.username);
+        var el = users.find(u => u.user === user)!.element;
         el!.classList.add("user-waiting");
-        el.setAttribute("data-cvm-turn", status.queue.indexOf(user))
+        el.setAttribute("data-cvm-turn", status.queue.indexOf(user).toString(10))
     }
     if (status.user?.username === w.username) {
         turn = 0;
