@@ -125,6 +125,7 @@ function closeVM() {
     VM.close();
     VM = null;
     document.title = "CollabVM";
+    turn = -1;
     // Remove the canvas
     elements.vmDisplay.innerHTML = "";
     // Switch to the VM list
