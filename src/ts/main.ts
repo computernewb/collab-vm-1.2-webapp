@@ -124,6 +124,7 @@ function closeVM() {
     // Close the VM
     VM.close();
     VM = null;
+    document.title = "CollabVM";
     // Remove the canvas
     elements.vmDisplay.innerHTML = "";
     // Switch to the VM list
@@ -183,15 +184,15 @@ function chatMessage(username : string, message : string) {
         var msgclass;
         switch (rank) {
             case Rank.Unregistered:
-                userclass = "user-unregistered";
+                userclass = "chat-username-unregistered";
                 msgclass = "chat-unregistered";
                 break;
             case Rank.Admin:
-                userclass = "user-admin";
+                userclass = "chat-username-admin";
                 msgclass = "chat-admin";
                 break;
             case Rank.Moderator:
-                userclass = "user-mod";
+                userclass = "chat-username-moderator";
                 msgclass = "chat-moderator";
                 break;
         }

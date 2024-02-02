@@ -87,26 +87,34 @@
     display: none;
 }
 
-tr.user-admin > td {
+tr.user-admin > td, .chat-username-admin {
     color: #FF0000 !important;
 }
 
-tr.user-moderator > td {
+tr.user-moderator > td, .chat-username-moderator {
     color: #00FF00 !important;
 }
 
 tr.user-turn > td {
     background-color: #cfe2ff !important;
+    --bs-table-bg-state: #cfe2ff !important;
+    color: #000000;
+    --bs-table-color: #000000;
 }
 
-tr.user-turn > td:hover, tr.user-turn > td:active {
+tr.user-turn:hover, tr.user-turn > td:hover {
     background-color: #bacbe6 !important;
+    --bs-table-bg-state: #bacbe6 !important;
 }
 
 tr.user-waiting > td {
     background-color: #fff3cd !important;
+    --bs-table-bg-state: #fff3cd !important;
+    color: #000000;
+    --bs-table-color: #000000;
 }
 
-.tr.user-waiting > td:hover, .tr.user-waiting > td:active {
-    background-color: #ece1be;
+.tr.user-waiting:hover, tr.user-waiting > td:hover {
+    background-color: #ece1be !important;
+    --bs-table-bg-state: #ece1be !important;
 }
