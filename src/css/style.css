@@ -12,7 +12,7 @@
     display: block;
     padding: 4px;
 }*/
-#display, #btns {
+#vmDisplay, #btns {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -85,4 +85,12 @@
 
 #forceVotePanel {
     display: none;
+}
+
+.user-admin {
+    color: #FF0000 !important;
+}
+
+.user-moderator {
+    color: #00FF00 !important;
 }
