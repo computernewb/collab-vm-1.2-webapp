@@ -118,3 +118,7 @@ tr.user-waiting > td {
     background-color: #ece1be !important;
     --bs-table-bg-state: #ece1be !important;
 }
+
+.user-current {
+    font-style: italic;
+}

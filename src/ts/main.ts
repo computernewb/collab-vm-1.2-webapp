@@ -159,6 +159,8 @@ function sortVMList() {
 
 function sortUserList() {
     users.sort((a, b) => {
+        if (a.user.username === w.username && (a.user.turn >= b.user.turn)) return -1;
+        if (b.user.username === w.username && (b.user.turn >= a.user.turn)) return 1;
         if (a.user.turn === b.user.turn) return 0;
         if (a.user.turn === -1) return 1;
         if (b.user.turn === -1) return -1;
@@ -229,6 +231,8 @@ function addUser(user : User) {
             tr.classList.add("user-unregistered");
             break;
     }
+    if (user.username === w.username)
+        tr.classList.add("user-current");
     tr.appendChild(td);
     elements.userlist.appendChild(tr);
     if (olduser !== undefined) olduser.element = tr;
