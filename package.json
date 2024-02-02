@@ -16,7 +16,8 @@
     "@hcaptcha/types": "^1.0.3",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
-    "nanoevents": "^7.0.1"
+    "nanoevents": "^7.0.1",
+    "simple-keyboard": "^3.7.53"
   },
   "overrides": {
     "@parcel/watcher": "~2.1.0"

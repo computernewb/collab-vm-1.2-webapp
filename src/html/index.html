@@ -130,6 +130,7 @@
             </div>
             <div id="btns">
                 <button class="btn btn-secondary" id="takeTurnBtn"><i class="fa-solid fa-computer-mouse"></i> <span id="turnBtnText"></span></button>
+                <button class="btn btn-secondary" id="oskBtn"><i class="fa-solid fa-keyboard"></i> Keyboard</button>
                 <button class="btn btn-secondary" id="changeUsernameBtn"><i class="fa-solid fa-signature"></i> Change Username</button>
                 <button class="btn btn-secondary" id="voteResetButton"><i class="fa-solid fa-rotate-left"></i> Vote for Reset</button>
                 <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i> Screenshot</button>
@@ -143,6 +144,19 @@
                     <button class="btn btn-secondary" id="qemuMonitorBtn" data-bs-toggle="modal" data-bs-target="#qemuMonitorModal"><i class="fa-solid fa-terminal"></i> QEMU Monitor</button>
                 </div>
             </div>
+			<div class="osk-container d-none" id="osk-container">
+			  <div class="osk-main"></div>
+
+			  <div class="controlArrows">
+				<div class="osk-control"></div>
+				<div class="osk-arrows"></div>
+			  </div>
+
+			  <div class="numPad">
+				<div class="osk-numpad"></div>
+				<div class="osk-numpadEnd"></div>
+			  </div>
+			</div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="table-responsive username-table">
