@@ -238,5 +238,15 @@ export default class CollabVMClient {
         else this.send("rename");
     }
 
+    // Send key
+    key(keysym: number, down: boolean) {
+        this.send("key", keysym.toString(), down ? "1" : "0");
+    }
+
+    // Take turn
+    turn(state: number) {
+        this.send("turn", state.toString());
+    }
+
     on = (event : string | number, cb: (...args: any) => void) => this.publicEmitter.on(event, cb);
 }
