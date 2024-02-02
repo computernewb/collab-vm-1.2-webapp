@@ -173,6 +173,7 @@ let commonKeyboardOptions = {
   
   
   function onKeyPress(button: string) {
+    if (VM === null) return;
     let keysym = OSK_buttonToKeysym(button);
     if (!keysym) {
       console.error(`no keysym for ${button}, report this!`);
@@ -182,27 +183,27 @@ let commonKeyboardOptions = {
     switch (true) {
       case button.startsWith("{shift"):
         shiftHeld = !shiftHeld;
-        VM!.key(keysym, shiftHeld);
+        VM.key(keysym, shiftHeld);
         break;
       case button.startsWith("{control"):
         ctrlHeld = !ctrlHeld;
-        VM!.key(keysym, ctrlHeld);
+        VM.key(keysym, ctrlHeld);
         break;
       case button === "{capslock}":
         capsHeld = !capsHeld;
-        VM!.key(keysym, capsHeld);
+        VM.key(keysym, capsHeld);
         break;
       case button.startsWith("{alt"):
         altHeld = !altHeld;
-        VM!.key(keysym, altHeld);
+        VM.key(keysym, altHeld);
         break;
       case button.startsWith("{meta"):
         metaHeld = !metaHeld;
-        VM!.key(keysym, metaHeld);
+        VM.key(keysym, metaHeld);
         break;
       default:
-        VM!.key(keysym, true);
-        VM!.key(keysym, false);
+        VM.key(keysym, true);
+        VM.key(keysym, false);
     }
   
     keyboard.setOptions({
