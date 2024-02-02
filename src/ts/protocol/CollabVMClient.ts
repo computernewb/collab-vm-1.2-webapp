@@ -5,7 +5,7 @@ import { User } from "./User.js";
 import { Rank } from "./Permissions.js";
 import TurnStatus from "./TurnStatus.js";
 import Mouse from "./mouse.js";
-import GetKeysym from '../../js/keyboard';
+import GetKeysym from '../keyboard.js';
 
 export default class CollabVMClient {
     // Fields
@@ -65,7 +65,7 @@ export default class CollabVMClient {
         this.canvas.addEventListener('keydown', (e : KeyboardEvent) => {
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
             var keysym = GetKeysym(e.keyCode, e.key, e.location);
-            if (keysym === undefined) return;
+            if (keysym === null) return;
             this.key(keysym, true);
         }, {
             capture: true
@@ -73,7 +73,7 @@ export default class CollabVMClient {
         this.canvas.addEventListener('keyup', (e : KeyboardEvent) => {
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
             var keysym = GetKeysym(e.keyCode, e.key, e.location);
-            if (keysym === undefined) return;
+            if (keysym === null) return;
             this.key(keysym, false);
         }, {
             capture: true
