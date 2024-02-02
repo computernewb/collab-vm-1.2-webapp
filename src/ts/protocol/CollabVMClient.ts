@@ -3,6 +3,7 @@ import * as Guacutils from './Guacutils.js';
 import VM from "./VM.js";
 import { User } from "./User.js";
 import { Rank } from "./Permissions.js";
+import TurnStatus from "./TurnStatus.js";
 
 export default class CollabVMClient {
     // Fields
@@ -35,6 +36,7 @@ export default class CollabVMClient {
         // Add the event listeners
         this.socket.addEventListener('open', () => this.onOpen());
         this.socket.addEventListener('message', (event) => this.onMessage(event));
+        this.socket.addEventListener('close', () => this.publicEmitter.emit('close'));
     }
 
     // Fires when the WebSocket connection is opened
@@ -138,6 +140,37 @@ export default class CollabVMClient {
                 this.publicEmitter.emit('rename', oldusername, msgArr[3], selfrename);
                 break;
             }
+            case "turn": {
+                // Reset all turn data
+                for (var user of this.users) user.turn = -1;
+                var queuedUsers = parseInt(msgArr[2]);
+                if (queuedUsers === 0) {
+                    this.publicEmitter.emit('turn', {
+                        user: null,
+                        queue: [],
+                        turnTime: null,
+                        queueTime: null,
+                    } as TurnStatus);
+                    return;
+                }
+                var currentTurn = this.users.find(u => u.username === msgArr[3])!;
+                currentTurn.turn = 0;
+                var queue : User[] = [];
+                if (queuedUsers > 1) {
+                    for (var i = 1; i < queuedUsers; i++) {
+                        var user = this.users.find(u => u.username === msgArr[i+3])!;
+                        queue.push(user);
+                        user.turn = i;
+                    }
+                }
+                this.publicEmitter.emit('turn', {
+                    user: currentTurn,
+                    queue: queue,
+                    turnTime: currentTurn.username === this.username ? parseInt(msgArr[1]) : null,
+                    queueTime: queue.some(u => u.username === this.username) ? parseInt(msgArr[msgArr.length - 1]) : null,
+                } as TurnStatus)
+                break;
+            }
         }
     }
 
@@ -185,13 +218,24 @@ export default class CollabVMClient {
     // Close the connection
     close() {
         this.connectedToVM = false;
-        this.socket.close();
+        if (this.socket.readyState === WebSocket.OPEN) this.socket.close();
     }
 
     // Get users
     getUsers() : User[] {
         // Return a copy of the array
         return this.users.slice();
+    }
+
+    // Send a chat message
+    chat(message : string) {
+        this.send("chat", message);
+    }
+
+    // Rename
+    rename(username : string | null = null) {
+        if (username) this.send("rename", username);
+        else this.send("rename");
     }
 
     on = (event : string | number, cb: (...args: any) => void) => this.publicEmitter.on(event, cb);

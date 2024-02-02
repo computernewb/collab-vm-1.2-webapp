@@ -87,10 +87,26 @@
     display: none;
 }
 
-.user-admin {
+tr.user-admin > td {
     color: #FF0000 !important;
 }
 
-.user-moderator {
+tr.user-moderator > td {
     color: #00FF00 !important;
+}
+
+tr.user-turn > td {
+    background-color: #cfe2ff !important;
+}
+
+tr.user-turn > td:hover, tr.user-turn > td:active {
+    background-color: #bacbe6 !important;
+}
+
+tr.user-waiting > td {
+    background-color: #fff3cd !important;
+}
+
+.tr.user-waiting > td:hover, .tr.user-waiting > td:active {
+    background-color: #ece1be;
 }

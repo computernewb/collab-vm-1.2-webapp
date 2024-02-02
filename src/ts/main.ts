@@ -3,6 +3,7 @@ import VM from "./protocol/VM.js";
 import { Config } from "../../Config.js";
 import { Rank } from "./protocol/Permissions.js";
 import { User } from "./protocol/User.js";
+import TurnStatus from "./protocol/TurnStatus.js";
 
 // Elements
 const w = window as any;
@@ -16,7 +17,14 @@ const elements = {
     userlist: document.getElementById('userlist') as HTMLTableSectionElement,
     onlineusercount: document.getElementById("onlineusercount") as HTMLSpanElement,
     username: document.getElementById("username") as HTMLSpanElement,
+    chatinput: document.getElementById("chat-input") as HTMLInputElement,
+    sendChatBtn: document.getElementById("sendChatBtn") as HTMLButtonElement,
+    changeUsernameBtn: document.getElementById("changeUsernameBtn") as HTMLButtonElement,
+    turnBtnText: document.getElementById("turnBtnText") as HTMLSpanElement,
+    turnstatus: document.getElementById("turnstatus") as HTMLParagraphElement,
 }
+var expectedClose = false;
+var turn = -1;
 // Listed VMs
 const vms : VM[] = [];
 const cards : HTMLDivElement[] = [];
@@ -61,22 +69,31 @@ function openVM(vm : VM) {
     return new Promise<void>(async (res, rej) => {
         // If there's an active VM it must be closed before opening another
         if (VM !== null) return;
+        expectedClose = false;
         // Set hash
         location.hash = vm.id;
         // Create the client
         VM = new CollabVMClient(vm.url);
         // Register event listeners
-        VM!.on('chat', (username, message) => chatMessage(username, message));
-        VM!.on('adduser', (user) => addUser(user));
-        VM!.on('remuser', (user) => remUser(user));
-        VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename));
-        VM!.on('renamestatus', (status) => {
+        // An array to keep track of all listeners, and remove them when the VM is closed. Might not be necessary, but it's good practice.
+        var listeners : (() => void)[] = [];
+        listeners.push(VM!.on('chat', (username, message) => chatMessage(username, message)));
+        listeners.push(VM!.on('adduser', (user) => addUser(user)));
+        listeners.push(VM!.on('remuser', (user) => remUser(user)));
+        listeners.push(VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename)));
+        listeners.push(VM!.on('renamestatus', (status) => {
             switch (status) {
                 case 'taken': alert("That username is already taken"); break;
                 case 'invalid': alert("Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters."); break;
                 case 'blacklisted': alert("That username has been blacklisted."); break;
             }
-        });
+        }));
+        listeners.push(VM!.on('turn', status => turnUpdate(status)));
+        listeners.push(VM!.on('close', () => {
+            if (!expectedClose) alert("You have been disconnected from the server");
+            for (var l of listeners) l();
+            closeVM();
+        }));
         // Wait for the client to open
         await new Promise<void>(res => VM!.on('open', () => res()));
         // Connect to node
@@ -99,6 +116,7 @@ function openVM(vm : VM) {
 
 function closeVM() {
     if (VM === null) return;
+    expectedClose = true;
     // Close the VM
     VM.close();
     VM = null;
@@ -118,7 +136,7 @@ function loadList() {
             p.push(multicollab(url));
         }
         await Promise.all(p);
-        var v = vms.find(v => v.id === window.location.hash.slice(1));
+        var v = vms.find(v => v.id === window.location.hash.substring(1));
         if (v !== undefined) openVM(v);
         res();
     });
@@ -130,6 +148,21 @@ function sortVMList() {
     });
     elements.vmlist.children[0].innerHTML = "";
     cards.forEach((c) => elements.vmlist.children[0].appendChild(c));
+}
+
+function sortUserList() {
+    const users = Array.prototype.slice.call(elements.userlist.children);
+    users.sort((a, b) => {
+        if (parseInt(a.getAttribute("data-cvm-turn")) === parseInt(b.getAttribute("data-cvm-turn"))) return 0;
+        if (parseInt(a.getAttribute("data-cvm-turn")) === -1) return 1;
+        if (parseInt(b.getAttribute("data-cvm-turn")) === -1) return -1;
+        if (parseInt(a.getAttribute("data-cvm-turn")) < parseInt(b.getAttribute("data-cvm-turn"))) return -1;
+        else return 1;
+    });
+    for (const user of users) {
+        elements.userlist.removeChild(user);
+        elements.userlist.appendChild(user);
+    }
 }
 
 function chatMessage(username : string, message : string) {
@@ -176,17 +209,18 @@ function addUser(user : User) {
     var olduser = Array.prototype.slice.call(elements.userlist.children).find((u : HTMLTableRowElement) => u.children[0].innerHTML === user.username);
     if (olduser !== undefined) elements.userlist.removeChild(olduser);
     var tr = document.createElement('tr');
+    tr.setAttribute("data-cvm-turn", "-1");
     var td = document.createElement('td');
     td.innerHTML = user.username;
     switch (user.rank) {
         case Rank.Admin:
-            td.classList.add("user-admin");
+            tr.classList.add("user-admin");
             break;
         case Rank.Moderator:
-            td.classList.add("user-moderator");
+            tr.classList.add("user-moderator");
             break;
         case Rank.Unregistered:
-            td.classList.add("user-unregistered");
+            tr.classList.add("user-unregistered");
             break;
     }
     tr.appendChild(td);
@@ -212,8 +246,55 @@ function userRenamed(oldname : string, newname : string, selfrename : boolean) {
     }
 }
 
+function turnUpdate(status : TurnStatus) {
+    const users = Array.prototype.slice.call(elements.userlist.children);
+    // Clear all turn data
+    turn = -1;
+    for (const user of users) {
+        user.classList.remove("user-turn", "user-waiting");
+        user.setAttribute("data-cvm-turn", "-1");
+    }
+    elements.turnBtnText.innerHTML = "Take Turn";
+    if (status.user !== null) {
+        var el = users.find((e : HTMLTableRowElement) => e.children[0].innerHTML === status.user!.username);
+        el!.classList.add("user-turn");
+        el!.setAttribute("data-cvm-turn", "0");
+    }
+    for (const user of status.queue) {
+        var el = users.find((e : HTMLTableRowElement) => e.children[0].innerHTML === user.username);
+        el!.classList.add("user-waiting");
+        el.setAttribute("data-cvm-turn", status.queue.indexOf(user))
+    }
+    if (status.user?.username === w.username) {
+        turn = 0;
+        elements.turnBtnText.innerHTML = "End Turn";
+    }
+    if (status.queue.some(u => u.username === w.username)) {
+        turn = status.queue.findIndex(u => u.username === w.username) + 1;
+        elements.turnBtnText.innerHTML = "End Turn";
+    }
+    sortUserList();
+}
+
+function sendChat() {
+    if (VM === null) return;
+    VM.chat(elements.chatinput.value);
+    elements.chatinput.value = "";
+}
+
 // Bind list buttons
 elements.homeBtn.addEventListener('click', () => closeVM());
+
+// Bind VM view buttons
+elements.sendChatBtn.addEventListener('click', sendChat);
+elements.chatinput.addEventListener('keypress', (e) => {
+    if (e.key === "Enter") sendChat();
+});
+elements.changeUsernameBtn.addEventListener('click', () => {
+    var newname = prompt("Enter new username, or leave blank to be assigned a guest username", w.username);
+    if (newname === w.username) return;
+    VM?.rename(newname);
+})
 
 // Public API
 w.collabvm = {
