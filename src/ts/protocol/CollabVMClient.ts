@@ -1,13 +1,18 @@
 import {createNanoEvents } from "nanoevents";
 import * as Guacutils from './Guacutils.js';
 import VM from "./VM.js";
+import { User } from "./User.js";
+import { Rank } from "./Permissions.js";
 
 export default class CollabVMClient {
     // Fields
     private socket : WebSocket;
-    private canvas : HTMLCanvasElement;
+    canvas : HTMLCanvasElement;
     private ctx : CanvasRenderingContext2D;
     private url : string;
+    private connectedToVM : boolean = false;
+    private users : User[] = [];
+    private username : string | null = null;
     // events that are used internally and not exposed
     private emitter;
     // public events
@@ -56,6 +61,82 @@ export default class CollabVMClient {
                 // pass msgarr to the emitter for processing by list()
                 console.log("got list")
                 this.emitter.emit('list', msgArr.slice(1));
+                break;
+            }
+            case "connect": {
+                this.connectedToVM = msgArr[1] === "1";
+                this.emitter.emit('connect', this.connectedToVM);
+                break;
+            }
+            case "size": {
+                if (msgArr[1] !== "0") return;
+                this.canvas.width = parseInt(msgArr[2]);
+                this.canvas.height = parseInt(msgArr[3]);
+                break;
+            }
+            case "png": {
+                // Despite the opcode name, this is actually JPEG, because old versions of the server used PNG and yknow backwards compatibility
+                var img = new Image();
+                img.addEventListener('load', () => {
+                    this.ctx.drawImage(img, parseInt(msgArr[3]), parseInt(msgArr[4]));
+                });
+                img.src = "data:image/jpeg;base64," + msgArr[5];
+                break;
+            }
+            case "chat": {
+                for (var i = 1; i < msgArr.length; i += 2) {
+                    this.publicEmitter.emit('chat', msgArr[i], msgArr[i + 1]);
+                }
+                break;
+            }
+            case "adduser": {
+                for (var i = 2; i < msgArr.length; i += 2) {
+                    var user = new User(msgArr[i], parseInt(msgArr[i + 1]) as Rank);
+                    this.users.push(user);
+                    this.publicEmitter.emit('adduser', user);
+                }
+                break;
+            }
+            case "remuser": {
+                for (var i = 2; i < msgArr.length; i++) {
+                    var _user = this.users.find(u => u.username === msgArr[i]);
+                    if (_user === undefined) continue;
+                    this.users.splice(this.users.indexOf(_user), 1);
+                    this.publicEmitter.emit('remuser', _user);
+                }
+            }
+            case "rename": {
+                var selfrename = false;
+                var oldusername : string | null = null;
+                // We've been renamed
+                if (msgArr[1] === "0") {
+                    selfrename = true;
+                    oldusername = this.username;
+                    // msgArr[2] is the status of the rename
+                    // Anything other than 0 is an error, however the server will still rename us to a guest name
+                    switch (msgArr[2]) {
+                        case "1":
+                            // The username we wanted was taken
+                            this.publicEmitter.emit('renamestatus', 'taken');
+                            break;
+                        case "2":
+                            // The username we wanted was invalid
+                            this.publicEmitter.emit('renamestatus', 'invalid');
+                            break;
+                        case "3":
+                            // The username we wanted is blacklisted
+                            this.publicEmitter.emit('renamestatus', 'blacklisted');
+                            break;
+                    }
+                    this.username = msgArr[3];
+                }
+                else oldusername = msgArr[2];
+                var _user = this.users.find(u => u.username === oldusername);
+                if (_user) {
+                    _user.username = msgArr[3];
+                }
+                this.publicEmitter.emit('rename', oldusername, msgArr[3], selfrename);
+                break;
             }
         }
     }
@@ -86,6 +167,31 @@ export default class CollabVMClient {
             });
             this.send("list");
         });
+    }
+
+    // Connect to a node
+    connect(id : string, username : string | null = null) : Promise<boolean> {
+        return new Promise(res => {
+            var u = this.emitter.on('connect', (success : boolean) => {
+                u();
+                res(success);
+            });
+            if (username === null) this.send("rename");
+            else this.send("rename", username);
+            this.send("connect", id);
+        })
+    }
+
+    // Close the connection
+    close() {
+        this.connectedToVM = false;
+        this.socket.close();
+    }
+
+    // Get users
+    getUsers() : User[] {
+        // Return a copy of the array
+        return this.users.slice();
     }
 
     on = (event : string | number, cb: (...args: any) => void) => this.publicEmitter.on(event, cb);
