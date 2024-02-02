@@ -44,6 +44,10 @@ function multicollab(url : string) {
         await new Promise<void>(res => client.on('open', () => res()));
         // Get the list of VMs
         var list = await client.list();
+        // Get the number of online users
+        var online = client.getUsers().length;
+        // Close the client
+        client.close();
         // Add to the list
         vms.push(...list);
         // Add to the DOM
@@ -59,7 +63,10 @@ function multicollab(url : string) {
             cardBody.classList.add("card-body");
             var cardTitle = document.createElement('h5');
             cardTitle.innerHTML = vm.displayName;
+            var usersOnline = document.createElement("span");
+            usersOnline.innerHTML = `(<i class="fa-solid fa-users"></i> ${online})`;
             cardBody.appendChild(cardTitle);
+            cardBody.appendChild(usersOnline);
             card.appendChild(vm.thumbnail);
             card.appendChild(cardBody);
             div.appendChild(card);
