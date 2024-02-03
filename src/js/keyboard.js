@@ -3,12 +3,9 @@
 // shitty but it works so /shrug
 // THIS SUCKS SO BAD AND I HATE IT PLEASE REWRITE ALL OF THIS
 
-export default function GetKeysym(keyCode, keyIdentifier, key, location) {
+export default function GetKeysym(keyCode, key, location) {
     var keysym =  keysym_from_key_identifier(key, location)
         || keysym_from_keycode(keyCode, location);
-
-    if (!keysym && key_identifier_sane(keyCode, keyIdentifier))
-        keysym = keysym_from_key_identifier(keyIdentifier, location);
 
     return keysym;
 }
