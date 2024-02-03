@@ -22,6 +22,7 @@ const elements = {
     changeUsernameBtn: document.getElementById("changeUsernameBtn") as HTMLButtonElement,
     turnBtnText: document.getElementById("turnBtnText") as HTMLSpanElement,
     turnstatus: document.getElementById("turnstatus") as HTMLParagraphElement,
+    takeTurnBtn: document.getElementById("takeTurnBtn") as HTMLButtonElement,
 }
 var expectedClose = false;
 var turn = -1;
@@ -32,6 +33,8 @@ const users : {
     user : User,
     element : HTMLTableRowElement
 }[] = [];
+var turnInterval : number | undefined = undefined;;
+var turnTimer = 0;
 
 // Active VM
 var VM : CollabVMClient | null = null;
@@ -166,8 +169,8 @@ function sortVMList() {
 
 function sortUserList() {
     users.sort((a, b) => {
-        if (a.user.username === w.username && (a.user.turn >= b.user.turn)) return -1;
-        if (b.user.username === w.username && (b.user.turn >= a.user.turn)) return 1;
+        if (a.user.username === w.username && (a.user.turn >= b.user.turn) && b.user.turn !== 0) return -1;
+        if (b.user.username === w.username && (b.user.turn >= a.user.turn) && a.user.turn !== 0) return 1;
         if (a.user.turn === b.user.turn) return 0;
         if (a.user.turn === -1) return 1;
         if (b.user.turn === -1) return -1;
@@ -269,6 +272,9 @@ function userRenamed(oldname : string, newname : string, selfrename : boolean) {
 function turnUpdate(status : TurnStatus) {
     // Clear all turn data
     turn = -1;
+    VM!.canvas.classList.remove("focused", "waiting");
+    clearInterval(turnInterval);
+    turnTimer = 0;
     for (const user of users) {
         user.element.classList.remove("user-turn", "user-waiting");
         user.element.setAttribute("data-cvm-turn", "-1");
@@ -286,13 +292,34 @@ function turnUpdate(status : TurnStatus) {
     }
     if (status.user?.username === w.username) {
         turn = 0;
+        turnTimer = status.turnTime! / 1000;
         elements.turnBtnText.innerHTML = "End Turn";
+        VM!.canvas.classList.add("focused");
     }
     if (status.queue.some(u => u.username === w.username)) {
         turn = status.queue.findIndex(u => u.username === w.username) + 1;
+        turnTimer = status.queueTime! / 1000;
         elements.turnBtnText.innerHTML = "End Turn";
+        VM!.canvas.classList.add("waiting");
+    }
+    if (turn === -1) elements.turnstatus.innerText = "";
+    else {
+        turnInterval = setInterval(() => turnIntervalCb(), 1000);
+        setTurnStatus();
     }
     sortUserList();
+}
+
+function turnIntervalCb() {
+    turnTimer--;
+    setTurnStatus();
+}
+
+function setTurnStatus() {
+    if (turn === 0)
+        elements.turnstatus.innerText = `Turn expires in ${turnTimer} seconds`;
+    else
+        elements.turnstatus.innerText = `Waiting for turn in ${turnTimer} seconds`;
 }
 
 function sendChat() {
@@ -313,7 +340,10 @@ elements.changeUsernameBtn.addEventListener('click', () => {
     var newname = prompt("Enter new username, or leave blank to be assigned a guest username", w.username);
     if (newname === w.username) return;
     VM?.rename(newname);
-})
+});
+elements.takeTurnBtn.addEventListener('click', () => {
+    VM?.turn(turn === -1);
+});
 
 // Public API
 w.collabvm = {

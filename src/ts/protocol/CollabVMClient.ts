@@ -4,6 +4,8 @@ import VM from "./VM.js";
 import { User } from "./User.js";
 import { Rank } from "./Permissions.js";
 import TurnStatus from "./TurnStatus.js";
+import Mouse from "./mouse.js";
+import GetKeysym from '../../js/keyboard';
 
 export default class CollabVMClient {
     // Fields
@@ -14,6 +16,8 @@ export default class CollabVMClient {
     private connectedToVM : boolean = false;
     private users : User[] = [];
     private username : string | null = null;
+    private mouse : Mouse = new Mouse();
+    private rank : Rank = Rank.Unregistered;
     // events that are used internally and not exposed
     private emitter;
     // public events
@@ -31,6 +35,50 @@ export default class CollabVMClient {
         this.canvas.tabIndex = -1;
         // Get the 2D context
         this.ctx = this.canvas.getContext('2d')!;
+        // Bind canvas click
+        this.canvas.addEventListener('click', e => {
+            if (this.users.find(u => u.username === this.username)?.turn === -1)
+                this.turn(true);
+        });
+        // Bind keyboard and mouse
+        this.canvas.addEventListener('mousedown', (e : MouseEvent) => {
+            if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+            this.mouse.processEvent(e, true);
+            this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
+        }, {
+            capture: true
+        });
+        this.canvas.addEventListener('mouseup', (e : MouseEvent) => {
+            if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+            this.mouse.processEvent(e, false);
+            this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
+        }, {
+            capture: true
+        });
+        this.canvas.addEventListener('mousemove', (e : MouseEvent) => {
+            if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+            this.mouse.processEvent(e, null);
+            this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
+        }, {
+            capture: true
+        });
+        this.canvas.addEventListener('keydown', (e : KeyboardEvent) => {
+            if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+            var keysym = GetKeysym(e.keyCode, e.key, e.location);
+            if (keysym === undefined) return;
+            this.key(keysym, true);
+        }, {
+            capture: true
+        });
+        this.canvas.addEventListener('keyup', (e : KeyboardEvent) => {
+            if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+            var keysym = GetKeysym(e.keyCode, e.key, e.location);
+            if (keysym === undefined) return;
+            this.key(keysym, false);
+        }, {
+            capture: true
+        });
+        this.canvas.addEventListener('contextmenu', e => e.preventDefault());
         // Create the WebSocket
         this.socket = new WebSocket(url, "guacamole");
         // Add the event listeners
@@ -61,7 +109,6 @@ export default class CollabVMClient {
             }
             case "list": {
                 // pass msgarr to the emitter for processing by list()
-                console.log("got list")
                 this.emitter.emit('list', msgArr.slice(1));
                 break;
             }
@@ -194,7 +241,6 @@ export default class CollabVMClient {
                         displayName: list[i + 1],
                         thumbnail: th,
                     });
-                    console.log("pushed", list[i]);
                 }
                 res(vms);
             });
@@ -236,6 +282,21 @@ export default class CollabVMClient {
     rename(username : string | null = null) {
         if (username) this.send("rename", username);
         else this.send("rename");
+    }
+
+    // Take or drop turn
+    turn(taketurn : boolean) {
+        this.send("turn", taketurn ? "1" : "0");
+    }
+
+    // Send mouse instruction
+    sendmouse(x : number, y : number, mask : number) {
+        this.send("mouse", x.toString(), y.toString(), mask.toString());
+    }
+
+    // Send key
+    key(keysym : number, down : boolean) {
+        this.send("key", keysym.toString(), down ? "1" : "0");
     }
 
     on = (event : string | number, cb: (...args: any) => void) => this.publicEmitter.on(event, cb);
