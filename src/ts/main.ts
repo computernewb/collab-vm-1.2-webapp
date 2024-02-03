@@ -352,7 +352,7 @@ function loadList() {
 
 function sortVMList() {
     cards.sort(function(a, b) {
-        return a.children[0].getAttribute("data-cvm-node")! > b.id ? 1 : -1;
+        return a.getAttribute("data-cvm-node")! > b.getAttribute("data-cvm-node")! ? 1 : -1;
     });
     elements.vmlist.children[0].innerHTML = "";
     cards.forEach((c) => elements.vmlist.children[0].appendChild(c));
