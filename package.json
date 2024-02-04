@@ -4,7 +4,7 @@
   "description": "kill me",
   "private": true,
   "scripts": {
-    "build": "parcel build --no-source-maps --dist-dir dist src/html/index.html",
+    "build": "parcel build --no-source-maps --dist-dir dist --public-url '.' src/html/index.html",
     "serve": "parcel src/html/index.html",
     "clean": "run-script-os",
     "clean:darwin:linux": "rm -rf dist .parcel-cache",
