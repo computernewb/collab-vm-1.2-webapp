@@ -54,6 +54,7 @@ const elements = {
     endTurnBtn: document.getElementById("endTurnBtn") as HTMLButtonElement,
     qemuMonitorBtn: document.getElementById("qemuMonitorBtn") as HTMLButtonElement,
     xssCheckboxContainer: document.getElementById("xssCheckboxContainer") as HTMLDivElement,
+    xssCheckbox: document.getElementById("xssCheckbox") as HTMLInputElement,
     forceVotePanel: document.getElementById("forceVotePanel") as HTMLDivElement,
     forceVoteYesBtn: document.getElementById("forceVoteYesBtn") as HTMLButtonElement,
     forceVoteNoBtn: document.getElementById("forceVoteNoBtn") as HTMLButtonElement,
@@ -382,6 +383,21 @@ function closeVM() {
     rank = Rank.Unregistered;
     perms = new Permissions(0);
     w.VMName = null;
+    // Reset admin and vote panels
+    elements.staffbtns.style.display = "none";
+    elements.restoreBtn.style.display = "none";
+    elements.rebootBtn.style.display = "none";
+    elements.bypassTurnBtn.style.display = "none";
+    elements.endTurnBtn.style.display = "none";
+    elements.clearQueueBtn.style.display = "none";
+    elements.qemuMonitorBtn.style.display = "none";
+    elements.indefTurnBtn.style.display = "none";
+    elements.xssCheckboxContainer.style.display = "none";
+    elements.forceVotePanel.style.display = "none";
+    elements.voteResetPanel.style.display = "none";
+    elements.voteYesLabel.innerText = "0";
+    elements.voteNoLabel.innerText = "0";
+    elements.xssCheckbox.checked = false;
 }
 
 function loadList() {
@@ -589,7 +605,8 @@ function setTurnStatus() {
 
 function sendChat() {
     if (VM === null) return;
-    VM.chat(elements.chatinput.value);
+    if (elements.xssCheckbox.checked) VM.xss(elements.chatinput.value);
+    else VM.chat(elements.chatinput.value);
     elements.chatinput.value = "";
 }
 
