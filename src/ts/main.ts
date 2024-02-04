@@ -7,6 +7,7 @@ import TurnStatus from "./protocol/TurnStatus.js";
 import Keyboard from "simple-keyboard";
 import { OSK_buttonToKeysym } from "./keyboard";
 import "simple-keyboard/build/css/index.css";
+import VoteStatus from "./protocol/VoteStatus.js";
 
 // Elements
 const w = window as any;
@@ -27,7 +28,15 @@ const elements = {
     turnBtnText: document.getElementById("turnBtnText") as HTMLSpanElement,
     turnstatus: document.getElementById("turnstatus") as HTMLParagraphElement,
     osk: window.document.getElementById("oskBtn") as HTMLButtonElement,
-    oskContainer: document.getElementById("osk-container") as HTMLDivElement
+    oskContainer: document.getElementById("osk-container") as HTMLDivElement,
+    screenshotButton: document.getElementById("screenshotButton") as HTMLButtonElement,
+    voteResetButton: document.getElementById("voteResetButton") as HTMLButtonElement,
+    voteResetPanel: document.getElementById("voteResetPanel") as HTMLDivElement,
+    voteYesBtn: document.getElementById("voteYesBtn") as HTMLButtonElement,
+    voteNoBtn: document.getElementById("voteNoBtn") as HTMLButtonElement,
+    voteYesLabel: document.getElementById("voteYesLabel") as HTMLSpanElement,
+    voteNoLabel: document.getElementById("voteNoLabel") as HTMLSpanElement,
+    votetime: document.getElementById("votetime") as HTMLSpanElement,
 }
 
 /* Start OSK */
@@ -224,8 +233,10 @@ const users : {
     user : User,
     element : HTMLTableRowElement
 }[] = [];
-var turnInterval : number | undefined = undefined;;
+var turnInterval : number | undefined = undefined;
+var voteInterval : number | undefined = undefined;
 var turnTimer = 0;
+var voteTimer = 0;
 
 // Active VM
 var VM : CollabVMClient | null = null;
@@ -294,6 +305,9 @@ function openVM(vm : VM) {
             }
         }));
         listeners.push(VM!.on('turn', status => turnUpdate(status)));
+        listeners.push(VM!.on('vote', (status : VoteStatus) => voteUpdate(status)));
+        listeners.push(VM!.on('voteend', () => voteEnd()));
+        listeners.push(VM!.on('votecd', cd => window.alert(`Please wait ${cd} seconds before starting another vote.`)));
         listeners.push(VM!.on('close', () => {
             if (!expectedClose) alert("You have been disconnected from the server");
             for (var l of listeners) l();
@@ -352,7 +366,7 @@ function loadList() {
 
 function sortVMList() {
     cards.sort(function(a, b) {
-        return a.getAttribute("data-cvm-node")! > b.getAttribute("data-cvm-node")! ? 1 : -1;
+        return a.children[0].getAttribute("data-cvm-node")! > b.children[0].getAttribute("data-cvm-node")! ? 1 : -1;
     });
     elements.vmlist.children[0].innerHTML = "";
     cards.forEach((c) => elements.vmlist.children[0].appendChild(c));
@@ -408,10 +422,10 @@ function chatMessage(username : string, message : string) {
                 eval(curr.text)
             }
         });
-        tr.appendChild(td);
-        elements.chatList.appendChild(tr);
-        elements.chatListDiv.scrollTop = elements.chatListDiv.scrollHeight;
     }
+    tr.appendChild(td);
+    elements.chatList.appendChild(tr);
+    elements.chatListDiv.scrollTop = elements.chatListDiv.scrollHeight;
 }
 
 function addUser(user : User) {
@@ -504,6 +518,27 @@ function turnUpdate(status : TurnStatus) {
     sortUserList();
 }
 
+function voteUpdate(status : VoteStatus) {
+  clearInterval(voteInterval);
+  elements.voteResetPanel.style.display = "block";
+  elements.voteYesLabel.innerText = status.yesVotes.toString();
+  elements.voteNoLabel.innerText = status.noVotes.toString();
+  voteTimer = Math.floor(status.timeToEnd / 1000);
+  voteInterval = setInterval(() => updateVoteEndTime(), 1000);
+  updateVoteEndTime();
+}
+
+function updateVoteEndTime() {
+  voteTimer--;
+  elements.votetime.innerText = voteTimer.toString();
+  if (voteTimer === 0) clearInterval(voteInterval);
+}
+
+function voteEnd() {
+  clearInterval(voteInterval);
+  elements.voteResetPanel.style.display = "none";
+}
+
 function turnIntervalCb() {
     turnTimer--;
     setTurnStatus();
@@ -538,6 +573,15 @@ elements.changeUsernameBtn.addEventListener('click', () => {
 elements.takeTurnBtn.addEventListener('click', () => {
     VM?.turn(turn === -1);
 });
+elements.screenshotButton.addEventListener('click', () => {
+  if (!VM) return;
+  VM.canvas.toBlob(blob => {
+    open(URL.createObjectURL(blob!), '_blank');
+  })
+});
+elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
+elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
+elements.voteNoBtn.addEventListener('click', () => VM?.vote(false));
 
 elements.osk.addEventListener('click', () => elements.oskContainer.classList.toggle('d-none'));
 
