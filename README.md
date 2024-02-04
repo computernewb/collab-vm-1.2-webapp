@@ -5,7 +5,7 @@
 The CollabVM Web App is the viewer for the CollabVM Server, currently in beta
 
 ## Building
-Make sure you filled out common.js, then:
+Edit Config.ts to your needs, then:
 1. `npm i`
 2. `npm run build`
 
