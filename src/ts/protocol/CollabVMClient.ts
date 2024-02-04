@@ -272,7 +272,7 @@ export default class CollabVMClient {
                                 this.perms = new Permissions(65535);
                                 this.rank = Rank.Admin;
                                 break;
-                            case "2":
+                            case "3":
                                 this.perms = new Permissions(parseInt(msgArr[3]));
                                 this.rank = Rank.Moderator;
                                 break;
@@ -288,6 +288,7 @@ export default class CollabVMClient {
                     case "2": {
                         // QEMU
                         this.emitter.emit('qemu', msgArr[2]);
+                        break;
                     }
                 }
             }
