@@ -1,13 +1,15 @@
 import CollabVMClient from "./protocol/CollabVMClient.js";
 import VM from "./protocol/VM.js";
 import { Config } from "../../Config.js";
-import { Rank } from "./protocol/Permissions.js";
+import { Permissions, Rank } from "./protocol/Permissions.js";
 import { User } from "./protocol/User.js";
 import TurnStatus from "./protocol/TurnStatus.js";
 import Keyboard from "simple-keyboard";
 import { OSK_buttonToKeysym } from "./keyboard";
 import "simple-keyboard/build/css/index.css";
 import VoteStatus from "./protocol/VoteStatus.js";
+import * as bootstrap from "bootstrap";
+import MuteState from "./protocol/MuteState.js";
 
 // Elements
 const w = window as any;
@@ -37,6 +39,28 @@ const elements = {
     voteYesLabel: document.getElementById("voteYesLabel") as HTMLSpanElement,
     voteNoLabel: document.getElementById("voteNoLabel") as HTMLSpanElement,
     votetime: document.getElementById("votetime") as HTMLSpanElement,
+    loginModal: document.getElementById("loginModal") as HTMLDivElement,
+    adminPassword: document.getElementById("adminPassword") as HTMLInputElement,
+    loginButton: document.getElementById("loginButton") as HTMLButtonElement,
+    adminInputVMID: document.getElementById("adminInputVMID") as HTMLInputElement,
+    badPasswordAlert: document.getElementById("badPasswordAlert") as HTMLDivElement,
+    incorrectPasswordDismissBtn: document.getElementById("incorrectPasswordDismissBtn") as HTMLButtonElement,
+    // Admin
+    staffbtns: document.getElementById("staffbtns") as HTMLDivElement,
+    restoreBtn: document.getElementById("restoreBtn") as HTMLButtonElement,
+    rebootBtn: document.getElementById("rebootBtn") as HTMLButtonElement,
+    clearQueueBtn: document.getElementById("clearQueueBtn") as HTMLButtonElement,
+    bypassTurnBtn: document.getElementById("bypassTurnBtn") as HTMLButtonElement,
+    endTurnBtn: document.getElementById("endTurnBtn") as HTMLButtonElement,
+    qemuMonitorBtn: document.getElementById("qemuMonitorBtn") as HTMLButtonElement,
+    xssCheckboxContainer: document.getElementById("xssCheckboxContainer") as HTMLDivElement,
+    forceVotePanel: document.getElementById("forceVotePanel") as HTMLDivElement,
+    forceVoteYesBtn: document.getElementById("forceVoteYesBtn") as HTMLButtonElement,
+    forceVoteNoBtn: document.getElementById("forceVoteNoBtn") as HTMLButtonElement,
+    indefTurnBtn: document.getElementById("indefTurnBtn") as HTMLButtonElement,
+    qemuMonitorInput: document.getElementById("qemuMonitorInput") as HTMLInputElement,
+    qemuMonitorSendBtn: document.getElementById("qemuMonitorSendBtn") as HTMLButtonElement,
+    qemuMonitorOutput: document.getElementById("qemuMonitorOutput") as HTMLTextAreaElement,
 }
 
 /* Start OSK */
@@ -237,6 +261,8 @@ var turnInterval : number | undefined = undefined;
 var voteInterval : number | undefined = undefined;
 var turnTimer = 0;
 var voteTimer = 0;
+var rank : Rank = Rank.Unregistered;
+var perms : Permissions = new Permissions(0);
 
 // Active VM
 var VM : CollabVMClient | null = null;
@@ -308,6 +334,7 @@ function openVM(vm : VM) {
         listeners.push(VM!.on('vote', (status : VoteStatus) => voteUpdate(status)));
         listeners.push(VM!.on('voteend', () => voteEnd()));
         listeners.push(VM!.on('votecd', cd => window.alert(`Please wait ${cd} seconds before starting another vote.`)));
+        listeners.push(VM!.on('login', (rank : Rank, perms : Permissions) => onLogin(rank, perms)));
         listeners.push(VM!.on('close', () => {
             if (!expectedClose) alert("You have been disconnected from the server");
             for (var l of listeners) l();
@@ -316,8 +343,10 @@ function openVM(vm : VM) {
         // Wait for the client to open
         await new Promise<void>(res => VM!.on('open', () => res()));
         // Connect to node
-        chatMessage("", vm.id);
+        chatMessage("", `<b>${vm.id}</b><hr>`);
         var connected = await VM.connect(vm.id);
+        elements.adminInputVMID.value = vm.id;
+        w.VMName = vm.id;
         if (!connected) {
             VM.close();
             VM = null;
@@ -349,6 +378,9 @@ function closeVM() {
     // Clear users
     users.splice(0, users.length);
     elements.userlist.innerHTML = "";
+    rank = Rank.Unregistered;
+    perms = new Permissions(0);
+    w.VMName = null;
 }
 
 function loadList() {
@@ -449,9 +481,11 @@ function addUser(user : User) {
     if (user.username === w.username)
         tr.classList.add("user-current");
     tr.appendChild(td);
+    var u = {user: user, element: tr};
+    if (rank !== Rank.Unregistered) userModOptions(u);
     elements.userlist.appendChild(tr);
     if (olduser !== undefined) olduser.element = tr;
-    else users.push({user: user, element: tr});
+    else users.push(u);
     elements.onlineusercount.innerHTML = VM!.getUsers().length.toString();
 }
 
@@ -582,6 +616,125 @@ elements.screenshotButton.addEventListener('click', () => {
 elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
 elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
 elements.voteNoBtn.addEventListener('click', () => VM?.vote(false));
+// Login
+var usernameClick = false;
+const loginModal = new bootstrap.Modal(elements.loginModal);
+elements.loginModal.addEventListener('shown.bs.modal', () => elements.adminPassword.focus());
+elements.username.addEventListener('click', () => {
+  if (!usernameClick) {
+    usernameClick = true;
+    setInterval(() => usernameClick = false, 1000);
+    return;
+  }
+  loginModal.show();
+});
+elements.loginButton.addEventListener('click', () => doLogin());
+elements.adminPassword.addEventListener('keypress', (e) => e.key === "Enter" && doLogin());
+elements.incorrectPasswordDismissBtn.addEventListener('click', () => elements.badPasswordAlert.style.display = "none");
+function doLogin() {
+  var adminPass = elements.adminPassword.value;
+  if (adminPass === "") return;
+  VM?.login(adminPass);
+  elements.adminPassword.value = "";
+  var u = VM?.on('login', () => {
+    u!();
+    loginModal.hide();
+    elements.badPasswordAlert.style.display = "none";
+  });
+  var _u = VM?.on('badpw', () => {
+    _u!();
+    elements.badPasswordAlert.style.display = "block";
+  });
+}
+
+function onLogin(_rank : Rank, _perms : Permissions) {
+  rank = _rank;
+  perms = _perms;
+  elements.staffbtns.style.display = "block";
+  if (_perms.restore) elements.restoreBtn.style.display = "inline-block";
+  if (_perms.reboot) elements.rebootBtn.style.display = "inline-block";
+  if (_perms.bypassturn) {
+    elements.bypassTurnBtn.style.display = "inline-block";
+    elements.endTurnBtn.style.display = "inline-block";
+    elements.clearQueueBtn.style.display = "inline-block";
+  }
+  if (_rank === Rank.Admin) {
+    elements.qemuMonitorBtn.style.display = "inline-block";
+    elements.indefTurnBtn.style.display = "inline-block";
+  }
+  if (_perms.xss) elements.xssCheckboxContainer.style.display = "inline-block";
+  if (_perms.forcevote) elements.forceVotePanel.style.display = "block";
+  for (const user of users) userModOptions(user);
+}
+
+function userModOptions(user : {
+  user : User,
+  element : HTMLTableRowElement
+}) {
+  var tr = user.element;
+  var td = tr.children[0] as HTMLTableCellElement;
+  tr.classList.add("dropdown");
+  td.classList.add("dropdown-toggle");
+  td.setAttribute("data-bs-toggle", "dropdown");
+  td.setAttribute("role", "button");
+  td.setAttribute("aria-expanded", "false");
+  var ul = document.createElement('ul');
+  ul.classList.add("dropdown-menu", "dropdown-menu-dark", "table-dark", "text-light");
+  if (perms.bypassturn) addUserDropdownItem(ul, "End Turn", () => VM!.endTurn(user.user.username));
+  if (perms.ban) addUserDropdownItem(ul, "Ban", () => VM!.ban(user.user.username));
+  if (perms.kick) addUserDropdownItem(ul, "Kick", () => VM!.kick(user.user.username));
+  if (perms.rename) addUserDropdownItem(ul, "Rename", () => {
+    var newname = prompt(`Enter new username for ${user.user.username}`);
+    if (!newname) return;
+    VM!.renameUser(user.user.username, newname);
+  });
+  if (perms.mute) {
+    addUserDropdownItem(ul, "Temporary Mute", () => VM!.mute(user.user.username, MuteState.Temp));
+    addUserDropdownItem(ul, "Indefinite Mute", () => VM!.mute(user.user.username, MuteState.Perma));
+    addUserDropdownItem(ul, "Unmute", () => VM!.mute(user.user.username, MuteState.Unmuted));
+  }
+  if (perms.grabip) addUserDropdownItem(ul, "Get IP", async () => {
+    var ip = await VM!.getip(user.user.username);
+    alert(ip);
+  });
+  tr.appendChild(ul);
+}
+
+function addUserDropdownItem(ul : HTMLUListElement, text : string, func : () => void) {
+  var li = document.createElement('li');
+  var a = document.createElement('a');
+  a.href = "#";
+  a.classList.add("dropdown-item");
+  a.innerHTML = text;
+  a.addEventListener('click', () => func());
+  li.appendChild(a);
+  ul.appendChild(li);
+}
+
+// Admin buttons
+elements.restoreBtn.addEventListener('click', () => window.confirm("Are you sure you want to restore the VM?") && VM?.restore());
+elements.rebootBtn.addEventListener('click', () => VM?.reboot());
+elements.clearQueueBtn.addEventListener('click', () => VM?.clearQueue());
+elements.bypassTurnBtn.addEventListener('click', () => VM?.bypassTurn());
+elements.endTurnBtn.addEventListener('click', () => {
+  var user = VM?.getUsers().find(u => u.turn === 0);
+  if (user) VM?.endTurn(user.username);
+});
+elements.forceVoteNoBtn.addEventListener('click', () => VM?.forceVote(false));
+elements.forceVoteYesBtn.addEventListener('click', () => VM?.forceVote(true));
+elements.indefTurnBtn.addEventListener('click', () => VM?.indefiniteTurn());
+
+async function sendQEMUCommand() {
+  if (!elements.qemuMonitorInput.value) return;
+  var cmd = elements.qemuMonitorInput.value;
+  elements.qemuMonitorOutput.innerHTML += `&gt; ${cmd}\n`;
+  elements.qemuMonitorInput.value = "";
+  var response = await VM?.qemuMonitor(cmd);
+  elements.qemuMonitorOutput.innerHTML += `${response}\n`;
+  elements.qemuMonitorOutput.scrollTop = elements.qemuMonitorOutput.scrollHeight;
+}
+elements.qemuMonitorSendBtn.addEventListener('click', () => sendQEMUCommand());
+elements.qemuMonitorInput.addEventListener('keypress', (e) => e.key === "Enter" && sendQEMUCommand());
 
 elements.osk.addEventListener('click', () => elements.oskContainer.classList.toggle('d-none'));
 
@@ -590,12 +743,42 @@ w.collabvm = {
     openVM: openVM,
     closeVM: closeVM,
     loadList: loadList,
-    multicollab: multicollab
+    multicollab: multicollab,
+    getVM: () => VM,
 }
 // Multicollab will stay in the global scope for backwards compatibility
 w.multicollab = multicollab;
 // Same goes for GetAdmin
-// w.GetAdmin = () => VM.admin;
+w.GetAdmin = () => {
+  if (VM === null) return;
+  return {
+    adminInstruction: (...args : string[]) => {
+      args.unshift("admin");
+      VM?.send(...args);
+    },
+    restore: () => VM!.restore(),
+    reboot: () => VM!.reboot(),
+    clearQueue: () => VM!.clearQueue(),
+    bypassTurn: () => VM!.bypassTurn(),
+    endTurn: (username : string) => VM!.endTurn(username),
+    ban: (username : string) => VM!.ban(username),
+    kick: (username : string) => VM!.kick(username),
+    renameUser: (oldname : string, newname : string) => VM!.renameUser(oldname, newname),
+    mute: (username : string, state : number) => VM!.mute(username, state),
+    getip: (username : string) => VM!.getip(username),
+    qemuMonitor: (cmd : string) => {VM?.qemuMonitor(cmd); return;},
+    globalXss: (msg : string) => VM!.xss(msg),
+    forceVote: (result : boolean) => VM!.forceVote(result),
+  }
+};
+// more backwards compatibility
+w.cvmEvents = {
+  on: (event : string | number, cb: (...args: any) => void) => {
+    if (VM === null) return;
+    VM.on('message', (...args : any) => cb(...args));
+  }
+}
+w.VMName = null;
 
 // Load all VMs
 loadList();

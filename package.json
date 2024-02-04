@@ -7,7 +7,7 @@
     "build": "parcel build --dist-dir dist src/html/index.html",
     "serve": "parcel src/html/index.html",
     "clean": "run-script-os",
-    "clean:darwin:linux": "rm -rf dist .parcel-cache", 
+    "clean:darwin:linux": "rm -rf dist .parcel-cache",
     "clean:win32": "rd /s /q dist .parcel-cache"
   },
   "author": "Elijah R",
@@ -23,6 +23,7 @@
     "@parcel/watcher": "~2.1.0"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
     "parcel": "^2.11.0",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "run-script-os": "^1.1.6",

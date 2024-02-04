@@ -74,6 +74,31 @@
 			</div>
 		</div>
 	</div>
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-md">
+			<div class="modal-content bg-dark text-light">
+				<div class="modal-header">
+					<h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+                    <div class="alert alert-danger alert-dismissible" id="badPasswordAlert" role="alert">
+                        Incorrect password.
+                        <button type="button" class="btn-close" aria-label="Close" id="incorrectPasswordDismissBtn"></button>
+                    </div>
+                    <div class="input-group">
+                        <input type="hidden" name="username" id="adminInputVMID"/>
+                        <span class="input-group-text bg-dark text-light">Password</span>
+                        <input id="adminPassword" type="password" class="form-control bg-dark text-light" placeholder="Password" name="password"/>   
+                    </div>
+
+				</div>
+				<div class="modal-footer">
+				    <button type="button" id="loginButton" class="btn btn-primary">Login</button>
+				</div>
+			</div>
+		</div>
+	</div>
         <div class="modal fade" id="hcaptchaModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content bg-dark text-light">
@@ -140,6 +165,7 @@
                     <button class="btn btn-secondary" id="clearQueueBtn"><i class="fa-solid fa-eraser"></i> Clear Turn Queue</button>
                     <button class="btn btn-secondary" id="bypassTurnBtn"><i class="fa-solid fa-forward"></i> Bypass Turn</button>
                     <button class="btn btn-secondary" id="endTurnBtn"><i class="fa-solid fa-ban"></i> End Turn</button>
+                    <button class="btn btn-secondary" id="indefTurnBtn"><i class="fa-solid fa-infinity"></i> Indefinite Turn</button>
                     <button class="btn btn-secondary" id="qemuMonitorBtn" data-bs-toggle="modal" data-bs-target="#qemuMonitorModal"><i class="fa-solid fa-terminal"></i> QEMU Monitor</button>
                 </div>
             </div>
@@ -188,7 +214,6 @@
             </div>
         </div>
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-        <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script type="module" src="../ts/main.ts" type="application/javascript"></script>
     </body>
 </html>
