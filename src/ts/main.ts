@@ -346,7 +346,8 @@ function openVM(vm : VM) {
         await new Promise<void>(res => VM!.on('open', () => res()));
         // Connect to node
         chatMessage("", `<b>${vm.id}</b><hr>`);
-        var connected = await VM.connect(vm.id);
+        var username = localStorage.getItem("username");
+        var connected = await VM.connect(vm.id, username);
         elements.adminInputVMID.value = vm.id;
         w.VMName = vm.id;
         if (!connected) {
