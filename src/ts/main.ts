@@ -263,6 +263,7 @@ var turnTimer = 0;
 var voteTimer = 0;
 var rank : Rank = Rank.Unregistered;
 var perms : Permissions = new Permissions(0);
+const chatsound = new Audio(Config.ChatSound);
 
 // Active VM
 var VM : CollabVMClient | null = null;
@@ -458,6 +459,7 @@ function chatMessage(username : string, message : string) {
     tr.appendChild(td);
     elements.chatList.appendChild(tr);
     elements.chatListDiv.scrollTop = elements.chatListDiv.scrollHeight;
+    chatsound.play();
 }
 
 function addUser(user : User) {
