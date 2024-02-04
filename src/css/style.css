@@ -87,11 +87,11 @@
   display: none;
 }
 
-tr.user-admin > td, .chat-username-admin {
+tr.user-admin > td, .chat-username-admin, .username-admin {
   color: #FF0000 !important;
 }
 
-tr.user-moderator > td, .chat-username-moderator {
+tr.user-moderator > td, .chat-username-moderator, .username-moderator {
   color: #00FF00 !important;
 }
 
@@ -279,3 +279,7 @@ color: white;
 }
 
 /* End OSK */
+
+#badPasswordAlert {
+  display: none;
+}

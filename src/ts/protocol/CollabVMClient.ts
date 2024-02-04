@@ -2,11 +2,12 @@ import {createNanoEvents } from "nanoevents";
 import * as Guacutils from './Guacutils.js';
 import VM from "./VM.js";
 import { User } from "./User.js";
-import { Rank } from "./Permissions.js";
+import { Permissions, Rank } from "./Permissions.js";
 import TurnStatus from "./TurnStatus.js";
 import Mouse from "./mouse.js";
 import GetKeysym from '../keyboard.js';
 import VoteStatus from "./VoteStatus.js";
+import MuteState from "./MuteState.js";
 
 export default class CollabVMClient {
     // Fields
@@ -19,7 +20,9 @@ export default class CollabVMClient {
     private username : string | null = null;
     private mouse : Mouse = new Mouse();
     private rank : Rank = Rank.Unregistered;
+    private perms : Permissions = new Permissions(0);
     private voteStatus : VoteStatus | null = null;
+    private node : string | null = null;
     // events that are used internally and not exposed
     private emitter;
     // public events
@@ -105,6 +108,7 @@ export default class CollabVMClient {
             console.error(`Server sent invalid message (${e})`);
             return;
         }
+        this.publicEmitter.emit('message', ...msgArr);
         switch (msgArr[0]) {
             case "nop": {
                 // Send a NOP back
@@ -144,9 +148,14 @@ export default class CollabVMClient {
             }
             case "adduser": {
                 for (var i = 2; i < msgArr.length; i += 2) {
-                    var user = new User(msgArr[i], parseInt(msgArr[i + 1]) as Rank);
-                    this.users.push(user);
-                    this.publicEmitter.emit('adduser', user);
+                    var _user = this.users.find(u => u.username === msgArr[i]);
+                    if (_user !== undefined) {
+                        _user.rank = parseInt(msgArr[i + 1]) as Rank;
+                    } else {
+                        _user = new User(msgArr[i], parseInt(msgArr[i + 1]) as Rank);
+                        this.users.push(_user);
+                    }
+                    this.publicEmitter.emit('adduser', _user);
                 }
                 break;
             }
@@ -251,6 +260,37 @@ export default class CollabVMClient {
                         break;
                 }
             }
+            case "admin": {
+                switch (msgArr[1]) {
+                    case "0": {
+                        // Login
+                        switch (msgArr[2]) {
+                            case "0":
+                                this.publicEmitter.emit('badpw');
+                                return;
+                            case "1":
+                                this.perms = new Permissions(65535);
+                                this.rank = Rank.Admin;
+                                break;
+                            case "2":
+                                this.perms = new Permissions(parseInt(msgArr[3]));
+                                this.rank = Rank.Moderator;
+                                break;
+                        }
+                        this.publicEmitter.emit('login', this.rank, this.perms);
+                        break;
+                    }
+                    case "19": {
+                        // IP
+                        this.emitter.emit('ip', msgArr[2], msgArr[3]);
+                        break;
+                    }
+                    case "2": {
+                        // QEMU
+                        this.emitter.emit('qemu', msgArr[2]);
+                    }
+                }
+            }
         }
     }
 
@@ -291,6 +331,7 @@ export default class CollabVMClient {
             if (username === null) this.send("rename");
             else this.send("rename", username);
             this.send("connect", id);
+            this.node = id;
         })
     }
 
@@ -341,6 +382,111 @@ export default class CollabVMClient {
     vote(vote : boolean) {
         this.send("vote", vote ? "1" : "0");
     }
+
+    // Try to login using the specified password
+    login(password : string) {
+        this.send("admin", "2", password);
+    }
+
+    /* Admin commands */
+
+    // Restore
+    restore() {
+        if (!this.node) return;
+        this.send("admin", "8", this.node!);
+    }
+
+    // Reboot
+    reboot() {
+        if (!this.node) return;
+        this.send("admin", "10", this.node!);
+    }
+
+    // Clear turn queue
+    clearQueue() {
+        if (!this.node) return;
+        this.send("admin", "17", this.node!);
+    }
+
+    // Bypass turn
+    bypassTurn() {
+        this.send("admin", "20");
+    }
+
+    // End turn
+    endTurn(user : string) {
+        this.send("admin", "16", user);
+    }
+
+    // Ban
+    ban(user : string) {
+        this.send("admin", "12", user);
+    }
+
+    // Kick
+    kick(user : string) {
+        this.send("admin", "15", user);
+    }
+
+    // Rename user
+    renameUser(oldname : string, newname : string) {
+        this.send("admin", "18", oldname, newname);
+    }
+
+    // Mute user
+    mute(user : string, state : MuteState) {
+        this.send("admin", "14", user, state.toString());
+    }
+
+    // Grab IP
+    getip(user : string) {
+        if (this.users.find(u => u.username === user) === undefined) return false;
+        return new Promise<string>(res => {
+            var u = this.emitter.on('ip', (username : string, ip : string) => {
+                if (username !== user) return;
+                u();
+                res(ip);
+            })
+            this.send("admin", "19", user);
+        });
+    }
+
+    // QEMU Monitor
+    qemuMonitor(cmd : string) {
+        return new Promise<string>(res => {
+            var u = this.emitter.on('qemu', output => {
+                u();
+                res(output);
+            })
+            this.send("admin", "5", this.node!, cmd);
+        });
+    }
+
+    // XSS
+    xss(msg : string) {
+        this.send("admin", "21", msg);
+    }
+
+    // Force vote
+    forceVote(result : boolean) {
+        this.send("admin", "13", result ? "1" : "0");
+    }
+
+    // Toggle turns
+    turns(enabled : boolean) {
+        this.send("admin", "22", enabled ? "1" : "0");
+    }
+
+    // Indefinite turn
+    indefiniteTurn() {
+        this.send("admin", "23");
+    }
+
+    // Hide screen
+    hideScreen(hidden : boolean) {
+        this.send("admin", "24", hidden ? "1" : "0");
+    }
+
 
     on = (event : string | number, cb: (...args: any) => void) => this.publicEmitter.on(event, cb);
 }
