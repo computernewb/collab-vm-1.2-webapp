@@ -669,6 +669,9 @@ function doLogin() {
 function onLogin(_rank : Rank, _perms : Permissions) {
   rank = _rank;
   perms = _perms;
+  elements.username.classList.remove("text-dark", "text-light");
+  if (rank === Rank.Admin) elements.username.classList.add("username-admin");
+  if (rank === Rank.Moderator) elements.username.classList.add("username-moderator");
   elements.staffbtns.style.display = "block";
   if (_perms.restore) elements.restoreBtn.style.display = "inline-block";
   if (_perms.reboot) elements.rebootBtn.style.display = "inline-block";
