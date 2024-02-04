@@ -6,6 +6,7 @@ import { Rank } from "./Permissions.js";
 import TurnStatus from "./TurnStatus.js";
 import Mouse from "./mouse.js";
 import GetKeysym from '../keyboard.js';
+import VoteStatus from "./VoteStatus.js";
 
 export default class CollabVMClient {
     // Fields
@@ -18,6 +19,7 @@ export default class CollabVMClient {
     private username : string | null = null;
     private mouse : Mouse = new Mouse();
     private rank : Rank = Rank.Unregistered;
+    private voteStatus : VoteStatus | null = null;
     // events that are used internally and not exposed
     private emitter;
     // public events
@@ -63,6 +65,7 @@ export default class CollabVMClient {
             capture: true
         });
         this.canvas.addEventListener('keydown', (e : KeyboardEvent) => {
+            e.preventDefault();
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
             var keysym = GetKeysym(e.keyCode, e.key, e.location);
             if (keysym === null) return;
@@ -71,6 +74,7 @@ export default class CollabVMClient {
             capture: true
         });
         this.canvas.addEventListener('keyup', (e : KeyboardEvent) => {
+            e.preventDefault();
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
             var keysym = GetKeysym(e.keyCode, e.key, e.location);
             if (keysym === null) return;
@@ -218,6 +222,35 @@ export default class CollabVMClient {
                 } as TurnStatus)
                 break;
             }
+            case "vote": {
+                switch (msgArr[1]) {
+                    case "0":
+                        // Vote started
+                    case "1":
+                        // Vote updated
+                        var timeToEnd = parseInt(msgArr[2]);
+                        var yesVotes = parseInt(msgArr[3]);
+                        var noVotes = parseInt(msgArr[4]);
+                        // Some server implementations dont send data for status 0, and some do
+                        if (Number.isNaN(timeToEnd) || Number.isNaN(yesVotes) || Number.isNaN(noVotes)) return;
+                        this.voteStatus = {
+                            timeToEnd: timeToEnd,
+                            yesVotes: yesVotes,
+                            noVotes: noVotes,
+                        };
+                        this.publicEmitter.emit('vote', this.voteStatus);
+                        break;
+                    case "2":
+                        // Vote ended
+                        this.voteStatus = null;
+                        this.publicEmitter.emit('voteend');
+                        break;
+                    case "3":
+                        // Cooldown
+                        this.publicEmitter.emit('votecd', parseInt(msgArr[2]));
+                        break;
+                }
+            }
         }
     }
 
@@ -297,6 +330,16 @@ export default class CollabVMClient {
     // Send key
     key(keysym : number, down : boolean) {
         this.send("key", keysym.toString(), down ? "1" : "0");
+    }
+
+    // Get vote status
+    getVoteStatus() : VoteStatus | null {
+        return this.voteStatus;
+    }
+
+    // Start a vote, or vote
+    vote(vote : boolean) {
+        this.send("vote", vote ? "1" : "0");
     }
 
     on = (event : string | number, cb: (...args: any) => void) => this.publicEmitter.on(event, cb);
