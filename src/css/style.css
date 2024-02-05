@@ -283,3 +283,10 @@ color: white;
 #badPasswordAlert {
   display: none;
 }
+
+/* VM0 Blur */
+div[data-cvm-node=vm0b0t] {
+  img { 
+    filter:blur(40px)!important; 
+  } 
+}
