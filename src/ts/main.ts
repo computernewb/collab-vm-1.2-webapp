@@ -400,6 +400,8 @@ function closeVM() {
     elements.voteYesLabel.innerText = "0";
     elements.voteNoLabel.innerText = "0";
     elements.xssCheckbox.checked = false;
+    elements.username.classList.remove("username-admin", "username-moderator");
+    elements.username.classList.add("text-light");
 }
 
 function loadList() {
