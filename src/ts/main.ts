@@ -45,6 +45,7 @@ const elements = {
     adminInputVMID: document.getElementById("adminInputVMID") as HTMLInputElement,
     badPasswordAlert: document.getElementById("badPasswordAlert") as HTMLDivElement,
     incorrectPasswordDismissBtn: document.getElementById("incorrectPasswordDismissBtn") as HTMLButtonElement,
+    ctrlAltDelBtn: document.getElementById("ctrlAltDelBtn") as HTMLButtonElement,
     // Admin
     staffbtns: document.getElementById("staffbtns") as HTMLDivElement,
     restoreBtn: document.getElementById("restoreBtn") as HTMLButtonElement,
@@ -632,6 +633,21 @@ elements.screenshotButton.addEventListener('click', () => {
   VM.canvas.toBlob(blob => {
     open(URL.createObjectURL(blob!), '_blank');
   })
+});
+elements.ctrlAltDelBtn.addEventListener('click', () => {
+  if (!VM) return;
+    // Ctrl
+    VM?.key(0xffe3, true);
+    // Alt
+    VM?.key(0xffe9, true);
+    // Del
+    VM?.key(0xffff, true);
+    // Ctrl
+    VM?.key(0xffe3, false);
+    // Alt
+    VM?.key(0xffe9, false);
+    // Del
+    VM?.key(0xffff, false);
 });
 elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
 elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
