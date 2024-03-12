@@ -215,9 +215,9 @@ export default class CollabVMClient {
                 for (var i = 2; i < msgArr.length; i += 2) {
                     var _user = this.users.find(u => u.username === msgArr[i]);
                     if (_user !== undefined) {
-                        _user.rank = parseInt(msgArr[i + 1]) as Rank;
+                        _user.rank = parseInt(msgArr[i + 1]);
                     } else {
-                        _user = new User(msgArr[i], parseInt(msgArr[i + 1]) as Rank);
+                        _user = new User(msgArr[i], parseInt(msgArr[i + 1]));
                         this.users.push(_user);
                     }
                     this.publicEmitter.emit('adduser', _user);
@@ -275,7 +275,7 @@ export default class CollabVMClient {
                         queue: [],
                         turnTime: null,
                         queueTime: null,
-                    } as TurnStatus);
+                    });
                     return;
                 }
                 var currentTurn = this.users.find(u => u.username === msgArr[3])!;
@@ -293,7 +293,7 @@ export default class CollabVMClient {
                     queue: queue,
                     turnTime: currentTurn.username === this.username ? parseInt(msgArr[1]) : null,
                     queueTime: queue.some(u => u.username === this.username) ? parseInt(msgArr[msgArr.length - 1]) : null,
-                } as TurnStatus)
+                })
                 break;
             }
             case "vote": {
