@@ -9,6 +9,15 @@ import GetKeysym from '../keyboard.js';
 import VoteStatus from "./VoteStatus.js";
 import MuteState from "./MuteState.js";
 
+// TODO: `Object` has a toString(), but we should probably gate that off
+/// Interface for things that can be turned into strings
+interface ToStringable {
+    toString() : string
+}
+
+/// A type for strings, or things that can (in a valid manner) be turned into strings
+type StringLike = string | ToStringable;
+
 export default class CollabVMClient {
     // Fields
     private socket : WebSocket;
@@ -318,8 +327,15 @@ export default class CollabVMClient {
     }
 
     // Sends a message to the server
-    send(...args : string[]) {
-        this.socket.send(Guacutils.encode(...args));
+    send(...args : StringLike[]) {
+        let guacElements = [...args].map((el) => {
+            // This catches cases where the thing already is a string
+            if(el instanceof String)
+                return (el as string);
+            return el.toString();
+        });
+
+        this.socket.send(Guacutils.encode(...guacElements));
     }
 
     // Get a list of all VMs
@@ -388,12 +404,12 @@ export default class CollabVMClient {
 
     // Send mouse instruction
     sendmouse(x : number, y : number, mask : number) {
-        this.send("mouse", x.toString(), y.toString(), mask.toString());
+        this.send("mouse", x, y, mask);
     }
 
     // Send key
     key(keysym : number, down : boolean) {
-        this.send("key", keysym.toString(), down ? "1" : "0");
+        this.send("key", keysym, down ? "1" : "0");
     }
 
     // Get vote status
@@ -458,7 +474,7 @@ export default class CollabVMClient {
 
     // Mute user
     mute(user : string, state : MuteState) {
-        this.send("admin", AdminOpcode.MuteUser, user, state.toString());
+        this.send("admin", AdminOpcode.MuteUser, user, state);
     }
 
     // Grab IP
