@@ -18,6 +18,40 @@ interface ToStringable {
 /// A type for strings, or things that can (in a valid manner) be turned into strings
 type StringLike = string | ToStringable;
 
+export interface CollabVMClientEvents {
+    open: () => void;
+    close: () => void;
+
+    message: (...args: string[]) => void;
+
+    // Protocol stuff
+    chat: (username: string, message: string) => void;
+
+    adduser: (user: User) => void;
+    remuser: (user: User) => void;
+
+    renamestatus: (status: 'taken' | 'invalid' | 'blacklisted') => void;
+    turn: (status: TurnStatus) => void;
+
+    rename: (oldUsername: string, newUsername: string, selfRename: boolean) => void;
+
+    vote: (status: VoteStatus) => void;
+    voteend: () => void;
+    votecd: (coolDownTime: number) => void;
+
+
+    badpw: () => void;
+    login: (rank: Rank, perms: Permissions) => void;
+}
+
+// types for private emitter
+interface CollabVMClientPrivateEvents {
+    list: (listEntries: string[]) => void;
+    connect: (connectedToVM: boolean) => void;
+    ip: (username: string, ip: string) => void;
+    qemu: (qemuResponse: string) => void;
+}
+
 export default class CollabVMClient {
     // Fields
     private socket : WebSocket;
@@ -33,15 +67,15 @@ export default class CollabVMClient {
     private voteStatus : VoteStatus | null = null;
     private node : string | null = null;
     // events that are used internally and not exposed
-    private emitter : Emitter<DefaultEvents>;
+    private internalEmitter : Emitter<CollabVMClientPrivateEvents>;
     // public events
-    private publicEmitter : Emitter<DefaultEvents>;
+    private publicEmitter : Emitter<CollabVMClientEvents>;
 
     constructor(url : string) {
         // Save the URL
         this.url = url;
         // Create the events
-        this.emitter = createNanoEvents();
+        this.internalEmitter = createNanoEvents();
         this.publicEmitter = createNanoEvents();
         // Create the canvas
         this.canvas = document.createElement('canvas');
@@ -148,12 +182,12 @@ export default class CollabVMClient {
             }
             case "list": {
                 // pass msgarr to the emitter for processing by list()
-                this.emitter.emit('list', msgArr.slice(1));
+                this.internalEmitter.emit('list', msgArr.slice(1));
                 break;
             }
             case "connect": {
                 this.connectedToVM = msgArr[1] === "1";
-                this.emitter.emit('connect', this.connectedToVM);
+                this.internalEmitter.emit('connect', this.connectedToVM);
                 break;
             }
             case "size": {
@@ -228,7 +262,7 @@ export default class CollabVMClient {
                 if (_user) {
                     _user.username = msgArr[3];
                 }
-                this.publicEmitter.emit('rename', oldusername, msgArr[3], selfrename);
+                this.publicEmitter.emit('rename', oldusername!, msgArr[3], selfrename);
                 break;
             }
             case "turn": {
@@ -313,12 +347,12 @@ export default class CollabVMClient {
                     }
                     case "19": {
                         // IP
-                        this.emitter.emit('ip', msgArr[2], msgArr[3]);
+                        this.internalEmitter.emit('ip', msgArr[2], msgArr[3]);
                         break;
                     }
                     case "2": {
                         // QEMU
-                        this.emitter.emit('qemu', msgArr[2]);
+                        this.internalEmitter.emit('qemu', msgArr[2]);
                         break;
                     }
                 }
@@ -341,7 +375,7 @@ export default class CollabVMClient {
     // Get a list of all VMs
     list() : Promise<VM[]> {
         return new Promise((res, rej) => {
-            var u = this.emitter.on('list', (list : string[]) => {
+            var u = this.onInternal('list', (list : string[]) => {
                 u();
                 var vms : VM[] = [];
                 for (var i = 0; i < list.length; i += 3) {
@@ -363,7 +397,7 @@ export default class CollabVMClient {
     // Connect to a node
     connect(id : string, username : string | null = null) : Promise<boolean> {
         return new Promise(res => {
-            var u = this.emitter.on('connect', (success : boolean) => {
+            var u = this.onInternal('connect', (success : boolean) => {
                 u();
                 res(success);
             });
@@ -481,7 +515,7 @@ export default class CollabVMClient {
     getip(user : string) {
         if (this.users.find(u => u.username === user) === undefined) return false;
         return new Promise<string>(res => {
-            var u = this.emitter.on('ip', (username : string, ip : string) => {
+            var u = this.onInternal('ip', (username : string, ip : string) => {
                 if (username !== user) return;
                 u();
                 res(ip);
@@ -493,7 +527,7 @@ export default class CollabVMClient {
     // QEMU Monitor
     qemuMonitor(cmd : string) {
         return new Promise<string>(res => {
-            var u = this.emitter.on('qemu', output => {
+            var u = this.onInternal('qemu', output => {
                 u();
                 res(output);
             })
@@ -526,6 +560,11 @@ export default class CollabVMClient {
         this.send("admin", AdminOpcode.HideScreen, hidden ? "1" : "0");
     }
 
+    private onInternal<E extends keyof CollabVMClientPrivateEvents>(event: E, callback: CollabVMClientPrivateEvents[E]) {
+        return this.internalEmitter.on(event, callback)
+    }
 
-    on = (event : string | number, cb: (...args: any) => void) => this.publicEmitter.on(event, cb);
+    on<E extends keyof CollabVMClientEvents>(event: E, callback: CollabVMClientEvents[E]) {
+        return this.publicEmitter.on(event, callback)
+    }
 }

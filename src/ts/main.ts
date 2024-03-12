@@ -10,6 +10,7 @@ import "simple-keyboard/build/css/index.css";
 import VoteStatus from "./protocol/VoteStatus.js";
 import * as bootstrap from "bootstrap";
 import MuteState from "./protocol/MuteState.js";
+import { Unsubscribe } from "nanoevents";
 
 // Elements
 const w = window as any;
@@ -321,7 +322,7 @@ function openVM(vm : VM) {
         VM = new CollabVMClient(vm.url);
         // Register event listeners
         // An array to keep track of all listeners, and remove them when the VM is closed. Might not be necessary, but it's good practice.
-        var listeners : (() => void)[] = [];
+        var listeners : Unsubscribe[] = [];
         listeners.push(VM!.on('chat', (username, message) => chatMessage(username, message)));
         listeners.push(VM!.on('adduser', (user) => addUser(user)));
         listeners.push(VM!.on('remuser', (user) => remUser(user)));
