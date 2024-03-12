@@ -1,0 +1,28 @@
+{
+	"languageName": "Pirate",
+	"translatedLanguageName": "Arrrghh, matey!",
+	"author": "Computernewb",
+
+	"stringKeys": {
+		"kSiteName": "Argh, matey, it's CollabVM!",
+		"kHomeButton": "Arrrghh, set sail",
+		"kFAQButton": "Arrrgh, get your Map",
+		"kRulesButton": "Arrrrghh, get the Etiquette Book",
+		"kVMResetTitle": "Argh, matey, this VM is broken. Would you like to particpate in the VM War?",
+		"kGenericYes": "Arrrghh, yay!",
+		"kGenericNo": "Arrrrgh, nay!",
+		"kVMVoteTime": "Argghh, the cannon fight ends in {0} seconds",
+		"kPassVoteButton": "Rig the vote",
+		"kCancelVoteButton": "Ignore the vote",
+		"kTakeTurnButton": "Take the Wheel",
+		"kEndTurnButton": "Give Up the Wheel",
+		"kChangeUsernameButton": "Argh, select a new pirate name",
+		"kVoteButton": "Argh, my matey, it's broken...",
+		"kScreenshotButton": "Take a Polaroid",
+		"kUsersOnlineHeading": "Pirate Friends Online:",
+		"kTurnTime": "Arrrrgh, your wheel rights expire in {0} seconds.",
+		"kWaitingTurnTime": "Waiting for the wheel in {0} seconds.",
+		"kVoteCooldown": "Arrgh matey, you need to wait {0} seconds to vote again.",
+		"kEnterNewUsername": "Arggghh, matey, what would you like to be known as?"
+	}
+}

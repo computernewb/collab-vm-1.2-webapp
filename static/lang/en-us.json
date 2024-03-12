@@ -1,0 +1,28 @@
+{
+	"languageName": "English (US)",
+	"translatedLanguageName": "English (US)",
+	"author": "Computernewb",
+
+	"stringKeys": {
+		"kSiteName": "CollabVM",
+		"kHomeButton": "Home",
+		"kFAQButton": "FAQ",
+		"kRulesButton": "Rules",
+		"kVMResetTitle": "Do you want to reset the VM?",
+		"kGenericYes": "Yes",
+		"kGenericNo": "No",
+		"kVMVoteTime": "Vote ends in {0} seconds",
+		"kPassVoteButton": "Pass Vote",
+		"kCancelVoteButton": "Cancel Vote",
+		"kTakeTurnButton": "Take Turn",
+		"kEndTurnButton": "End Turn",
+		"kChangeUsernameButton": "Change Username",
+		"kVoteButton": "Vote For Reset",
+		"kScreenshotButton": "Screenshot",
+		"kUsersOnlineHeading": "Users Online:",
+		"kTurnTime": "Turn expires in {0} seconds.",
+		"kWaitingTurnTime": "Waiting for turn in {0} seconds.",
+		"kVoteCooldown": "Please wait {0} seconds before starting another vote.",
+		"kEnterNewUsername": "Enter a new username, or leave the field blank to be assigned a guest username"
+	}
+}

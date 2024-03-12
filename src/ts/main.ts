@@ -11,6 +11,7 @@ import VoteStatus from './protocol/VoteStatus.js';
 import * as bootstrap from 'bootstrap';
 import MuteState from './protocol/MuteState.js';
 import { Unsubscribe } from 'nanoevents';
+import { I18nStringKey, TheI18n } from './i18n.js';
 
 // Elements
 const w = window as any;
@@ -39,7 +40,7 @@ const elements = {
 	voteNoBtn: document.getElementById('voteNoBtn') as HTMLButtonElement,
 	voteYesLabel: document.getElementById('voteYesLabel') as HTMLSpanElement,
 	voteNoLabel: document.getElementById('voteNoLabel') as HTMLSpanElement,
-	votetime: document.getElementById('votetime') as HTMLSpanElement,
+	voteTimeText: document.getElementById('voteTimeText') as HTMLSpanElement,
 	loginModal: document.getElementById('loginModal') as HTMLDivElement,
 	adminPassword: document.getElementById('adminPassword') as HTMLInputElement,
 	loginButton: document.getElementById('loginButton') as HTMLButtonElement,
@@ -323,6 +324,7 @@ async function openVM(vm: VM): Promise<void> {
 	unsubscribeCallbacks.push(VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename)));
 	unsubscribeCallbacks.push(
 		VM!.on('renamestatus', (status) => {
+      // TODO: i18n these
 			switch (status) {
 				case 'taken':
 					alert('That username is already taken');
@@ -339,7 +341,7 @@ async function openVM(vm: VM): Promise<void> {
 	unsubscribeCallbacks.push(VM!.on('turn', (status) => turnUpdate(status)));
 	unsubscribeCallbacks.push(VM!.on('vote', (status: VoteStatus) => voteUpdate(status)));
 	unsubscribeCallbacks.push(VM!.on('voteend', () => voteEnd()));
-	unsubscribeCallbacks.push(VM!.on('votecd', (cd) => window.alert(`Please wait ${cd} seconds before starting another vote.`)));
+	unsubscribeCallbacks.push(VM!.on('votecd', (voteCooldown) => window.alert(TheI18n.GetString(I18nStringKey.kVoteCooldown, voteCooldown))));
 	unsubscribeCallbacks.push(VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms)));
 	unsubscribeCallbacks.push(
 		VM!.on('close', () => {
@@ -554,7 +556,7 @@ function turnUpdate(status: TurnStatus) {
 		user.element.classList.remove('user-turn', 'user-waiting');
 		user.element.setAttribute('data-cvm-turn', '-1');
 	}
-	elements.turnBtnText.innerHTML = 'Take Turn';
+	elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kTakeTurnButton);
 	enableOSK(false);
 
 	if (status.user !== null) {
@@ -570,14 +572,14 @@ function turnUpdate(status: TurnStatus) {
 	if (status.user?.username === w.username) {
 		turn = 0;
 		turnTimer = status.turnTime! / 1000;
-		elements.turnBtnText.innerHTML = 'End Turn';
+		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kEndTurnButton);
 		VM!.canvas.classList.add('focused');
 		enableOSK(true);
 	}
 	if (status.queue.some((u) => u.username === w.username)) {
 		turn = status.queue.findIndex((u) => u.username === w.username) + 1;
 		turnTimer = status.queueTime! / 1000;
-		elements.turnBtnText.innerHTML = 'End Turn';
+		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kEndTurnButton);
 		VM!.canvas.classList.add('waiting');
 	}
 	if (turn === -1) elements.turnstatus.innerText = '';
@@ -600,7 +602,7 @@ function voteUpdate(status: VoteStatus) {
 
 function updateVoteEndTime() {
 	voteTimer--;
-	elements.votetime.innerText = voteTimer.toString();
+	elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVMVoteTime, voteTimer);
 	if (voteTimer === 0) clearInterval(voteInterval);
 }
 
@@ -615,8 +617,8 @@ function turnIntervalCb() {
 }
 
 function setTurnStatus() {
-	if (turn === 0) elements.turnstatus.innerText = `Turn expires in ${turnTimer} seconds`;
-	else elements.turnstatus.innerText = `Waiting for turn in ${turnTimer} seconds`;
+	if (turn === 0) elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kTurnTime, turnTimer);
+	else elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kWaitingTurnTime, turnTimer);
 }
 
 function sendChat() {
@@ -635,7 +637,7 @@ elements.chatinput.addEventListener('keypress', (e) => {
 	if (e.key === 'Enter') sendChat();
 });
 elements.changeUsernameBtn.addEventListener('click', () => {
-	let newname = prompt('Enter new username, or leave blank to be assigned a guest username', w.username);
+	let newname = prompt(TheI18n.GetString(I18nStringKey.kEnterNewUsername), w.username);
 	if (newname === w.username) return;
 	VM?.rename(newname);
 });
@@ -730,7 +732,7 @@ function userModOptions(user: { user: User; element: HTMLTableRowElement }) {
 	td.setAttribute('aria-expanded', 'false');
 	let ul = document.createElement('ul');
 	ul.classList.add('dropdown-menu', 'dropdown-menu-dark', 'table-dark', 'text-light');
-	if (perms.bypassturn) addUserDropdownItem(ul, 'End Turn', () => VM!.endTurn(user.user.username));
+	if (perms.bypassturn) addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kEndTurnButton), () => VM!.endTurn(user.user.username));
 	if (perms.ban) addUserDropdownItem(ul, 'Ban', () => VM!.ban(user.user.username));
 	if (perms.kick) addUserDropdownItem(ul, 'Kick', () => VM!.kick(user.user.username));
 	if (perms.rename)
@@ -837,6 +839,16 @@ w.VMName = null;
 
 // Load all VMs
 loadList();
+
+// Set a default internationalization language if not specified
+let lang = window.localStorage.getItem('i18n-lang');
+if (lang == null) {
+  lang = 'en-us';
+	window.localStorage.setItem('i18n-lang', lang);
+}
+
+// Initalize the internationalization system
+TheI18n.initWithLanguage(lang);
 
 // Welcome modal
 let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');

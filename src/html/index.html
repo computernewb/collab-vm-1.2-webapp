@@ -15,9 +15,7 @@
         <meta property="og:url" content="https://computernewb.com/collab-vm/"/>
         <meta property="og:description" content="A website that lets you take turns controlling online virtual machines with complete strangers!"/>
         <meta property="og:site_name" content="Computernewb"/>
-        <!-- Using github for now until we have a canonical url -->
-        <meta property="og:image" content="https://raw.githubusercontent.com/computernewb/collab-vm-1.2-webapp/master/dist/desktop.png"/>
-        <!---->
+        <meta property="og:image" content="https://computernewb.com/collab-vm/desktop.png"/>
     </head>
     <body class="bg-dark">
         <div class="modal fade" id="qemuMonitorModal" tabindex="-1" aria-hidden="true">
@@ -110,20 +108,20 @@
         </div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">CollabVM</a>
+                <a class="navbar-brand" href="#"><span id="siteNameText"></span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a id="homeBtn" href="#" class="nav-link active" aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
+                            <a id="homeBtn" href="#" class="nav-link active" aria-current="page"><i class="fa-solid fa-house"></i> <span id="homeBtnText"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://computernewb.com/collab-vm/faq/" class="nav-link"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+                            <a href="https://computernewb.com/collab-vm/faq/" class="nav-link"><i class="fa-solid fa-circle-question"></i> <span id="faqBtnText"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://computernewb.com/collab-vm/rules" class="nav-link"><i class="fa-solid fa-clipboard-check"></i> Rules</a>
+                            <a href="https://computernewb.com/collab-vm/rules" class="nav-link"><i class="fa-solid fa-clipboard-check"></i> <span id="rulesBtnText"></span></a>
                         </li>
 			            <li class="nav-item">
                             <a href="https://discord.gg/a4kqb4mGyX" class="nav-link"><i class="fa-brands fa-discord"></i> Discord</a>
@@ -148,20 +146,20 @@
             <div id="vmDisplay"></div>
             <p id="turnstatus" class="text-light"></p>
             <div id="voteResetPanel" class="bg-dark text-light" style="display:none;">
-                Do you want to reset the vm?<br/>
-                <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i> Yes<span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i> No<span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
-                Vote ends in <span id="votetime"></span> seconds<br/>
+                <span id="voteResetHeaderText"></span><br/>
+                <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i> <span id="voteYesBtnText"></span><span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i> <span id="voteNoBtnText"></span><span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
+                <span id="voteTimeText"></span>
                 <div id="forceVotePanel">
-                    <button class="btn btn-info" id="forceVoteYesBtn"><i class="fa-solid fa-check"></i> Pass Vote</button>
-                    <button class="btn btn-info" id="forceVoteNoBtn"><i class="fa-solid fa-ban"></i> Cancel Vote</button>
+                    <button class="btn btn-info" id="forceVoteYesBtn"><i class="fa-solid fa-check"></i> <span id="passVoteBtnText"></span></button>
+                    <button class="btn btn-info" id="forceVoteNoBtn"><i class="fa-solid fa-ban"></i> <span id="cancelVoteBtnText"></span></button>
                 </div>
             </div>
             <div id="btns">
                 <button class="btn btn-secondary" id="takeTurnBtn"><i class="fa-solid fa-computer-mouse"></i> <span id="turnBtnText"></span></button>
                 <button class="btn btn-secondary" id="oskBtn"><i class="fa-solid fa-keyboard"></i> Keyboard</button>
-                <button class="btn btn-secondary" id="changeUsernameBtn"><i class="fa-solid fa-signature"></i> Change Username</button>
-                <button class="btn btn-secondary" id="voteResetButton"><i class="fa-solid fa-rotate-left"></i> Vote for Reset</button>
-                <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i> Screenshot</button>
+                <button class="btn btn-secondary" id="changeUsernameBtn"><i class="fa-solid fa-signature"></i> <span id="changeUsernameBtnText"></span></button>
+                <button class="btn btn-secondary" id="voteResetButton"><i class="fa-solid fa-rotate-left"></i> <span id="voteForResetBtnText"></span></button>
+                <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i> <span id="screenshotBtnText"></span></button>
                 <button class="btn btn-secondary" id="ctrlAltDelBtn"><i class="fa-solid fa-gear"></i> Ctrl+Alt+Del</button>
                 <div id="staffbtns">
                     <button class="btn btn-secondary" id="restoreBtn"><i class="fa-solid fa-rotate-left"></i> Restore</button>
@@ -191,7 +189,7 @@
                     <div class="table-responsive username-table">
                         <table class="table table-hover table-dark table-borderless">
                             <thead>
-                                <th><i class="fa-solid fa-user"></i> Users Online (<span id="onlineusercount"></span>)</th>
+                                <th><i class="fa-solid fa-user"></i> <span id="usersOnlineText"></span> (<span id="onlineusercount"></span>)</th>
                             </thead>
                             <tbody id="userlist"></tbody>
                         </table>

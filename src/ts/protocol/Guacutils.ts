@@ -28,7 +28,7 @@ export function decode(string: string): string[] {
 export function encode(...string: string[]): string {
 	let command = '';
 
-	for (var i = 0; i < string.length; i++) {
+	for (let i = 0; i < string.length; i++) {
 		let current = string[i];
 		command += current.toString().length + '.' + current;
 		command += i < string.length - 1 ? ',' : ';';

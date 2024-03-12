@@ -1,4 +1,4 @@
-import { createNanoEvents, Emitter, DefaultEvents } from 'nanoevents';
+import { createNanoEvents, Emitter, DefaultEvents, Unsubscribe } from 'nanoevents';
 import * as Guacutils from './Guacutils.js';
 import VM from './VM.js';
 import { User } from './User.js';
@@ -8,15 +8,7 @@ import Mouse from './mouse.js';
 import GetKeysym from '../keyboard.js';
 import VoteStatus from './VoteStatus.js';
 import MuteState from './MuteState.js';
-
-// TODO: `Object` has a toString(), but we should probably gate that off
-/// Interface for things that can be turned into strings
-interface ToStringable {
-	toString(): string;
-}
-
-/// A type for strings, or things that can (in a valid manner) be turned into strings
-type StringLike = string | ToStringable;
+import { StringLike } from '../StringLike.js';
 
 export interface CollabVMClientEvents {
 	open: () => void;
@@ -580,11 +572,11 @@ export default class CollabVMClient {
 		this.send('admin', AdminOpcode.HideScreen, hidden ? '1' : '0');
 	}
 
-	private onInternal<E extends keyof CollabVMClientPrivateEvents>(event: E, callback: CollabVMClientPrivateEvents[E]) {
+	private onInternal<E extends keyof CollabVMClientPrivateEvents>(event: E, callback: CollabVMClientPrivateEvents[E]): Unsubscribe {
 		return this.internalEmitter.on(event, callback);
 	}
 
-	on<E extends keyof CollabVMClientEvents>(event: E, callback: CollabVMClientEvents[E]) {
+	on<E extends keyof CollabVMClientEvents>(event: E, callback: CollabVMClientEvents[E]): Unsubscribe {
 		return this.publicEmitter.on(event, callback);
 	}
 }
