@@ -330,7 +330,7 @@ export default class CollabVMClient {
     send(...args : StringLike[]) {
         let guacElements = [...args].map((el) => {
             // This catches cases where the thing already is a string
-            if(el instanceof String)
+            if(typeof el == "string")
                 return (el as string);
             return el.toString();
         });
