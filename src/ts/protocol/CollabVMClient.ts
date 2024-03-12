@@ -1,4 +1,4 @@
-import {createNanoEvents } from "nanoevents";
+import {createNanoEvents, Emitter, DefaultEvents } from "nanoevents";
 import * as Guacutils from './Guacutils.js';
 import VM from "./VM.js";
 import { User } from "./User.js";
@@ -24,9 +24,9 @@ export default class CollabVMClient {
     private voteStatus : VoteStatus | null = null;
     private node : string | null = null;
     // events that are used internally and not exposed
-    private emitter;
+    private emitter : Emitter<DefaultEvents>;
     // public events
-    private publicEmitter;
+    private publicEmitter : Emitter<DefaultEvents>;
 
     constructor(url : string) {
         // Save the URL
@@ -45,28 +45,32 @@ export default class CollabVMClient {
             if (this.users.find(u => u.username === this.username)?.turn === -1)
                 this.turn(true);
         });
+
         // Bind keyboard and mouse
         this.canvas.addEventListener('mousedown', (e : MouseEvent) => {
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
-            this.mouse.processEvent(e, true);
+            this.mouse.initFromMouseEvent(e);
             this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
         }, {
             capture: true
         });
+
         this.canvas.addEventListener('mouseup', (e : MouseEvent) => {
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
-            this.mouse.processEvent(e, false);
+            this.mouse.initFromMouseEvent(e);
             this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
         }, {
             capture: true
         });
+
         this.canvas.addEventListener('mousemove', (e : MouseEvent) => {
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
-            this.mouse.processEvent(e, null);
+            this.mouse.initFromMouseEvent(e);
             this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
         }, {
             capture: true
         });
+
         this.canvas.addEventListener('keydown', (e : KeyboardEvent) => {
             e.preventDefault();
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
@@ -76,6 +80,7 @@ export default class CollabVMClient {
         }, {
             capture: true
         });
+
         this.canvas.addEventListener('keyup', (e : KeyboardEvent) => {
             e.preventDefault();
             if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
@@ -85,6 +90,23 @@ export default class CollabVMClient {
         }, {
             capture: true
         });
+
+        this.canvas.addEventListener('wheel', (ev: WheelEvent) => {
+            ev.preventDefault();
+            if (this.users.find(u => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+            this.mouse.initFromWheelEvent(ev);
+
+            this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
+
+            // this is a very, very ugly hack but it seems to work so /shrug
+            if(this.mouse.scrollUp)
+                this.mouse.scrollUp = false;
+            else if(this.mouse.scrollDown)
+                this.mouse.scrollDown = false;
+
+            this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
+        }, { capture: true });
+
         this.canvas.addEventListener('contextmenu', e => e.preventDefault());
         // Create the WebSocket
         this.socket = new WebSocket(url, "guacamole");
