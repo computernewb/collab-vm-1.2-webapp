@@ -32,21 +32,21 @@ export enum Rank {
 
 // All used admin opcodes as a enum
 export enum AdminOpcode {
-	Login = '2',
-	MonitorCommand = '5',
-	Restore = '8',
-	Reboot = '10',
-	BanUser = '12',
-	ForceVote = '13',
-	MuteUser = '14',
-	KickUser = '15',
-	EndTurn = '16',
-	ClearTurns = '17',
-	RenameUser = '18',
-	GetIP = '19',
-	BypassTurn = '20',
-	ChatXSS = '21',
-	ToggleTurns = '22',
-	IndefiniteTurn = '23',
-	HideScreen = '24'
+	Login = 2,
+	MonitorCommand = 5,
+	Restore = 8,
+	Reboot = 10,
+	BanUser = 12,
+	ForceVote = 13,
+	MuteUser = 14,
+	KickUser = 15,
+	EndTurn = 16,
+	ClearTurns = 17,
+	RenameUser = 18,
+	GetIP = 19,
+	BypassTurn = 20,
+	ChatXSS = 21,
+	ToggleTurns = 22,
+	IndefiniteTurn = 23,
+	HideScreen = 24
 }
