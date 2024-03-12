@@ -2,7 +2,7 @@ import {createNanoEvents, Emitter, DefaultEvents } from "nanoevents";
 import * as Guacutils from './Guacutils.js';
 import VM from "./VM.js";
 import { User } from "./User.js";
-import { Permissions, Rank } from "./Permissions.js";
+import { AdminOpcode, Permissions, Rank } from "./Permissions.js";
 import TurnStatus from "./TurnStatus.js";
 import Mouse from "./mouse.js";
 import GetKeysym from '../keyboard.js';
@@ -408,7 +408,7 @@ export default class CollabVMClient {
 
     // Try to login using the specified password
     login(password : string) {
-        this.send("admin", "2", password);
+        this.send("admin", AdminOpcode.Login, password);
     }
 
     /* Admin commands */
@@ -416,49 +416,49 @@ export default class CollabVMClient {
     // Restore
     restore() {
         if (!this.node) return;
-        this.send("admin", "8", this.node!);
+        this.send("admin", AdminOpcode.Restore, this.node!);
     }
 
     // Reboot
     reboot() {
         if (!this.node) return;
-        this.send("admin", "10", this.node!);
+        this.send("admin", AdminOpcode.Reboot, this.node!);
     }
 
     // Clear turn queue
     clearQueue() {
         if (!this.node) return;
-        this.send("admin", "17", this.node!);
+        this.send("admin", AdminOpcode.ClearTurns, this.node!);
     }
 
     // Bypass turn
     bypassTurn() {
-        this.send("admin", "20");
+        this.send("admin", AdminOpcode.BypassTurn);
     }
 
     // End turn
     endTurn(user : string) {
-        this.send("admin", "16", user);
+        this.send("admin", AdminOpcode.EndTurn, user);
     }
 
     // Ban
     ban(user : string) {
-        this.send("admin", "12", user);
+        this.send("admin", AdminOpcode.BanUser, user);
     }
 
     // Kick
     kick(user : string) {
-        this.send("admin", "15", user);
+        this.send("admin", AdminOpcode.KickUser, user);
     }
 
     // Rename user
     renameUser(oldname : string, newname : string) {
-        this.send("admin", "18", oldname, newname);
+        this.send("admin", AdminOpcode.RenameUser, oldname, newname);
     }
 
     // Mute user
     mute(user : string, state : MuteState) {
-        this.send("admin", "14", user, state.toString());
+        this.send("admin", AdminOpcode.MuteUser, user, state.toString());
     }
 
     // Grab IP
@@ -470,7 +470,7 @@ export default class CollabVMClient {
                 u();
                 res(ip);
             })
-            this.send("admin", "19", user);
+            this.send("admin", AdminOpcode.GetIP, user);
         });
     }
 
@@ -481,33 +481,33 @@ export default class CollabVMClient {
                 u();
                 res(output);
             })
-            this.send("admin", "5", this.node!, cmd);
+            this.send("admin", AdminOpcode.MonitorCommand, this.node!, cmd);
         });
     }
 
     // XSS
     xss(msg : string) {
-        this.send("admin", "21", msg);
+        this.send("admin", AdminOpcode.ChatXSS, msg);
     }
 
     // Force vote
     forceVote(result : boolean) {
-        this.send("admin", "13", result ? "1" : "0");
+        this.send("admin", AdminOpcode.ForceVote, result ? "1" : "0");
     }
 
     // Toggle turns
     turns(enabled : boolean) {
-        this.send("admin", "22", enabled ? "1" : "0");
+        this.send("admin", AdminOpcode.ToggleTurns, enabled ? "1" : "0");
     }
 
     // Indefinite turn
     indefiniteTurn() {
-        this.send("admin", "23");
+        this.send("admin", AdminOpcode.IndefiniteTurn);
     }
 
     // Hide screen
     hideScreen(hidden : boolean) {
-        this.send("admin", "24", hidden ? "1" : "0");
+        this.send("admin", AdminOpcode.HideScreen, hidden ? "1" : "0");
     }
 
 
