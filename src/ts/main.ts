@@ -240,8 +240,8 @@ function onKeyPress(button: string) {
 
 /* End OSK */
 
-var expectedClose = false;
-var turn = -1;
+let expectedClose = false;
+let turn = -1;
 // Listed VMs
 const vms: VM[] = [];
 const cards: HTMLDivElement[] = [];
@@ -249,130 +249,137 @@ const users: {
 	user: User;
 	element: HTMLTableRowElement;
 }[] = [];
-var turnInterval: number | undefined = undefined;
-var voteInterval: number | undefined = undefined;
-var turnTimer = 0;
-var voteTimer = 0;
-var rank: Rank = Rank.Unregistered;
-var perms: Permissions = new Permissions(0);
+let turnInterval: number | undefined = undefined;
+let voteInterval: number | undefined = undefined;
+let turnTimer = 0;
+let voteTimer = 0;
+let rank: Rank = Rank.Unregistered;
+let perms: Permissions = new Permissions(0);
 const chatsound = new Audio(Config.ChatSound);
 
 // Active VM
-var VM: CollabVMClient | null = null;
+let VM: CollabVMClient | null = null;
 
-function multicollab(url: string) {
-	return new Promise<void>(async (res, rej) => {
-		// Create the client
-		var client = new CollabVMClient(url);
-		// Wait for the client to open
-		await new Promise<void>((res) => client.on('open', () => res()));
-		// Get the list of VMs
-		var list = await client.list();
-		// Get the number of online users
-		var online = client.getUsers().length;
-		// Close the client
-		client.close();
-		// Add to the list
-		vms.push(...list);
-		// Add to the DOM
-		for (var vm of list) {
-			var div = document.createElement('div');
-			div.classList.add('col-sm-5', 'col-md-3');
-			var card = document.createElement('div');
-			card.classList.add('card', 'bg-dark', 'text-light');
-			card.setAttribute('data-cvm-node', vm.id);
-			card.addEventListener('click', () => openVM(vm));
-			vm.thumbnail.classList.add('card-img-top');
-			var cardBody = document.createElement('div');
-			cardBody.classList.add('card-body');
-			var cardTitle = document.createElement('h5');
-			cardTitle.innerHTML = vm.displayName;
-			var usersOnline = document.createElement('span');
-			usersOnline.innerHTML = `(<i class="fa-solid fa-users"></i> ${online})`;
-			cardBody.appendChild(cardTitle);
-			cardBody.appendChild(usersOnline);
-			card.appendChild(vm.thumbnail);
-			card.appendChild(cardBody);
-			div.appendChild(card);
-			cards.push(div);
-			sortVMList();
-		}
-		res();
-	});
+async function multicollab(url: string) {
+	// Create the client
+	let client = new CollabVMClient(url);
+	// Wait for the client to open
+	await new Promise<void>((res) => client.on('open', () => res()));
+	// Get the list of VMs
+	let list = await client.list();
+	// Get the number of online users
+	let online = client.getUsers().length;
+	// Close the client
+	client.close();
+	// Add to the list
+	vms.push(...list);
+	// Add to the DOM
+	for (let vm of list) {
+		let div = document.createElement('div');
+		div.classList.add('col-sm-5', 'col-md-3');
+		let card = document.createElement('div');
+		card.classList.add('card', 'bg-dark', 'text-light');
+		card.setAttribute('data-cvm-node', vm.id);
+		card.addEventListener('click', async () => {
+			try {
+				await openVM(vm);
+			} catch (e) {
+				alert((e as Error).message);
+			}
+		});
+		vm.thumbnail.classList.add('card-img-top');
+		let cardBody = document.createElement('div');
+		cardBody.classList.add('card-body');
+		let cardTitle = document.createElement('h5');
+		cardTitle.innerHTML = vm.displayName;
+		let usersOnline = document.createElement('span');
+		usersOnline.innerHTML = `(<i class="fa-solid fa-users"></i> ${online})`;
+		cardBody.appendChild(cardTitle);
+		cardBody.appendChild(usersOnline);
+		card.appendChild(vm.thumbnail);
+		card.appendChild(cardBody);
+		div.appendChild(card);
+		cards.push(div);
+		sortVMList();
+	}
 }
 
-function openVM(vm: VM) {
-	return new Promise<void>(async (res, rej) => {
-		// If there's an active VM it must be closed before opening another
-		if (VM !== null) return;
-		expectedClose = false;
-		// Set hash
-		location.hash = vm.id;
-		// Create the client
-		VM = new CollabVMClient(vm.url);
-		// Register event listeners
+async function openVM(vm: VM): Promise<void> {
+	// If there's an active VM it must be closed before opening another
+	if (VM !== null) return;
+	expectedClose = false;
+	// Set hash
+	location.hash = vm.id;
+	// Create the client
+	VM = new CollabVMClient(vm.url);
+	// Register event listeners
 
-		// An array of nanoevent unsubscribe callbacks. These are called when the VM is closed to cleanup nanoevent state.
-		var unsubscribeCallbacks: Unsubscribe[] = [];
+	// An array of nanoevent unsubscribe callbacks. These are called when the VM is closed to cleanup nanoevent state.
+	let unsubscribeCallbacks: Unsubscribe[] = [];
 
-		unsubscribeCallbacks.push(VM!.on('chat', (username, message) => chatMessage(username, message)));
-		unsubscribeCallbacks.push(VM!.on('adduser', (user) => addUser(user)));
-		unsubscribeCallbacks.push(VM!.on('remuser', (user) => remUser(user)));
-		unsubscribeCallbacks.push(VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename)));
-		unsubscribeCallbacks.push(
-			VM!.on('renamestatus', (status) => {
-				switch (status) {
-					case 'taken':
-						alert('That username is already taken');
-						break;
-					case 'invalid':
-						alert('Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.');
-						break;
-					case 'blacklisted':
-						alert('That username has been blacklisted.');
-						break;
-				}
-			})
-		);
-		unsubscribeCallbacks.push(VM!.on('turn', (status) => turnUpdate(status)));
-		unsubscribeCallbacks.push(VM!.on('vote', (status: VoteStatus) => voteUpdate(status)));
-		unsubscribeCallbacks.push(VM!.on('voteend', () => voteEnd()));
-		unsubscribeCallbacks.push(VM!.on('votecd', (cd) => window.alert(`Please wait ${cd} seconds before starting another vote.`)));
-		unsubscribeCallbacks.push(VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms)));
-		unsubscribeCallbacks.push(
-			VM!.on('close', () => {
-				if (!expectedClose) alert('You have been disconnected from the server');
+	unsubscribeCallbacks.push(VM!.on('chat', (username, message) => chatMessage(username, message)));
+	unsubscribeCallbacks.push(VM!.on('adduser', (user) => addUser(user)));
+	unsubscribeCallbacks.push(VM!.on('remuser', (user) => remUser(user)));
+	unsubscribeCallbacks.push(VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename)));
+	unsubscribeCallbacks.push(
+		VM!.on('renamestatus', (status) => {
+			switch (status) {
+				case 'taken':
+					alert('That username is already taken');
+					break;
+				case 'invalid':
+					alert('Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.');
+					break;
+				case 'blacklisted':
+					alert('That username has been blacklisted.');
+					break;
+			}
+		})
+	);
+	unsubscribeCallbacks.push(VM!.on('turn', (status) => turnUpdate(status)));
+	unsubscribeCallbacks.push(VM!.on('vote', (status: VoteStatus) => voteUpdate(status)));
+	unsubscribeCallbacks.push(VM!.on('voteend', () => voteEnd()));
+	unsubscribeCallbacks.push(VM!.on('votecd', (cd) => window.alert(`Please wait ${cd} seconds before starting another vote.`)));
+	unsubscribeCallbacks.push(VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms)));
+	unsubscribeCallbacks.push(
+		VM!.on('close', () => {
+			if (!expectedClose) alert('You have been disconnected from the server');
 
-				// Call all the unsubscribe callbacks.
-				for (var l of unsubscribeCallbacks) l();
-				unsubscribeCallbacks = [];
-				closeVM();
-			})
-		);
-		// Wait for the client to open
-		await new Promise<void>((res) => VM!.on('open', () => res()));
-		// Connect to node
-		chatMessage('', `<b>${vm.id}</b><hr>`);
-		var username = localStorage.getItem('username');
-		var connected = await VM.connect(vm.id, username);
-		elements.adminInputVMID.value = vm.id;
-		w.VMName = vm.id;
-		if (!connected) {
-			VM.close();
-			VM = null;
-			rej('Failed to connect to node');
-		}
-		// Set the title
-		document.title = vm.id + ' - CollabVM';
-		// Append canvas
-		elements.vmDisplay.appendChild(VM!.canvas);
-		// Switch to the VM view
-		elements.vmlist.style.display = 'none';
-		elements.vmview.style.display = 'block';
+			// Call all the unsubscribe callbacks.
+			for (let l of unsubscribeCallbacks) l();
+			unsubscribeCallbacks = [];
+			closeVM();
+		})
+	);
+
+	// Wait for the client to open
+	await new Promise<void>((res) => {
+		unsubscribeCallbacks.push(VM!.on('open', () => res()));
 	});
+
+	// Connect to node
+	chatMessage('', `<b>${vm.id}</b><hr>`);
+	let username = localStorage.getItem('username');
+	let connected = await VM.connect(vm.id, username);
+	elements.adminInputVMID.value = vm.id;
+	w.VMName = vm.id;
+	if (!connected) {
+		// just give up
+		closeVM();
+		throw new Error('Failed to connect to node');
+	}
+	// Set the title
+	document.title = vm.id + ' - CollabVM';
+	// Append canvas
+	elements.vmDisplay.appendChild(VM!.canvas);
+	// Switch to the VM view
+	elements.vmlist.style.display = 'none';
+	elements.vmview.style.display = 'block';
+	return;
 }
 
 function closeVM() {
+	console.log('closeVM() called');
 	if (VM === null) return;
 	expectedClose = true;
 	// Close the VM
@@ -410,21 +417,24 @@ function closeVM() {
 	elements.username.classList.add('text-light');
 }
 
-function loadList() {
-	return new Promise<void>(async (res) => {
-		var p = [];
-		for (var url of Config.ServerAddresses) {
-			p.push(multicollab(url));
-		}
-		await Promise.all(p);
-		var v = vms.find((v) => v.id === window.location.hash.substring(1));
-		if (v !== undefined) openVM(v);
-		res();
-	});
+async function loadList() {
+	let p = [];
+	for (let url of Config.ServerAddresses) {
+		p.push(multicollab(url));
+	}
+	await Promise.all(p);
+
+	// automatically join the vm that's in the url if it exists in the node list
+	let v = vms.find((v) => v.id === window.location.hash.substring(1));
+	try {
+		if (v !== undefined) await openVM(v);
+	} catch (e) {
+		alert((e as Error).message);
+	}
 }
 
 function sortVMList() {
-	cards.sort(function (a, b) {
+	cards.sort((a, b) => {
 		return a.children[0].getAttribute('data-cvm-node')! > b.children[0].getAttribute('data-cvm-node')! ? 1 : -1;
 	});
 	elements.vmlist.children[0].innerHTML = '';
@@ -448,17 +458,17 @@ function sortUserList() {
 }
 
 function chatMessage(username: string, message: string) {
-	var tr = document.createElement('tr');
-	var td = document.createElement('td');
+	let tr = document.createElement('tr');
+	let td = document.createElement('td');
 	// System message
 	if (username === '') td.innerHTML = message;
 	else {
-		var user = VM!.getUsers().find((u) => u.username === username);
-		var rank;
+		let user = VM!.getUsers().find((u) => u.username === username);
+		let rank;
 		if (user !== undefined) rank = user.rank;
 		else rank = Rank.Unregistered;
-		var userclass;
-		var msgclass;
+		let userclass;
+		let msgclass;
 		switch (rank) {
 			case Rank.Unregistered:
 				userclass = 'chat-username-unregistered';
@@ -489,11 +499,11 @@ function chatMessage(username: string, message: string) {
 }
 
 function addUser(user: User) {
-	var olduser = users.find((u) => u.user === user);
+	let olduser = users.find((u) => u.user === user);
 	if (olduser !== undefined) elements.userlist.removeChild(olduser.element);
-	var tr = document.createElement('tr');
+	let tr = document.createElement('tr');
 	tr.setAttribute('data-cvm-turn', '-1');
-	var td = document.createElement('td');
+	let td = document.createElement('td');
 	td.innerHTML = user.username;
 	switch (user.rank) {
 		case Rank.Admin:
@@ -508,7 +518,7 @@ function addUser(user: User) {
 	}
 	if (user.username === w.username) tr.classList.add('user-current');
 	tr.appendChild(td);
-	var u = { user: user, element: tr };
+	let u = { user: user, element: tr };
 	if (rank !== Rank.Unregistered) userModOptions(u);
 	elements.userlist.appendChild(tr);
 	if (olduser !== undefined) olduser.element = tr;
@@ -517,14 +527,14 @@ function addUser(user: User) {
 }
 
 function remUser(user: User) {
-	var olduser = users.findIndex((u) => u.user === user);
+	let olduser = users.findIndex((u) => u.user === user);
 	if (olduser !== undefined) elements.userlist.removeChild(users[olduser].element);
 	elements.onlineusercount.innerHTML = VM!.getUsers().length.toString();
 	users.splice(olduser, 1);
 }
 
 function userRenamed(oldname: string, newname: string, selfrename: boolean) {
-	var user = users.find((u) => u.user.username === newname);
+	let user = users.find((u) => u.user.username === newname);
 	if (user) {
 		user.element.children[0].innerHTML = newname;
 	}
@@ -549,12 +559,12 @@ function turnUpdate(status: TurnStatus) {
 	enableOSK(false);
 
 	if (status.user !== null) {
-		var el = users.find((u) => u.user === status.user)!.element;
+		let el = users.find((u) => u.user === status.user)!.element;
 		el!.classList.add('user-turn');
 		el!.setAttribute('data-cvm-turn', '0');
 	}
 	for (const user of status.queue) {
-		var el = users.find((u) => u.user === user)!.element;
+		let el = users.find((u) => u.user === user)!.element;
 		el!.classList.add('user-waiting');
 		el.setAttribute('data-cvm-turn', status.queue.indexOf(user).toString(10));
 	}
@@ -626,7 +636,7 @@ elements.chatinput.addEventListener('keypress', (e) => {
 	if (e.key === 'Enter') sendChat();
 });
 elements.changeUsernameBtn.addEventListener('click', () => {
-	var newname = prompt('Enter new username, or leave blank to be assigned a guest username', w.username);
+	let newname = prompt('Enter new username, or leave blank to be assigned a guest username', w.username);
 	if (newname === w.username) return;
 	VM?.rename(newname);
 });
@@ -658,7 +668,7 @@ elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
 elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
 elements.voteNoBtn.addEventListener('click', () => VM?.vote(false));
 // Login
-var usernameClick = false;
+let usernameClick = false;
 const loginModal = new bootstrap.Modal(elements.loginModal);
 elements.loginModal.addEventListener('shown.bs.modal', () => elements.adminPassword.focus());
 elements.username.addEventListener('click', () => {
@@ -673,16 +683,16 @@ elements.loginButton.addEventListener('click', () => doLogin());
 elements.adminPassword.addEventListener('keypress', (e) => e.key === 'Enter' && doLogin());
 elements.incorrectPasswordDismissBtn.addEventListener('click', () => (elements.badPasswordAlert.style.display = 'none'));
 function doLogin() {
-	var adminPass = elements.adminPassword.value;
+	let adminPass = elements.adminPassword.value;
 	if (adminPass === '') return;
 	VM?.login(adminPass);
 	elements.adminPassword.value = '';
-	var u = VM?.on('login', () => {
+	let u = VM?.on('login', () => {
 		u!();
 		loginModal.hide();
 		elements.badPasswordAlert.style.display = 'none';
 	});
-	var _u = VM?.on('badpw', () => {
+	let _u = VM?.on('badpw', () => {
 		_u!();
 		elements.badPasswordAlert.style.display = 'block';
 	});
@@ -712,21 +722,21 @@ function onLogin(_rank: Rank, _perms: Permissions) {
 }
 
 function userModOptions(user: { user: User; element: HTMLTableRowElement }) {
-	var tr = user.element;
-	var td = tr.children[0] as HTMLTableCellElement;
+	let tr = user.element;
+	let td = tr.children[0] as HTMLTableCellElement;
 	tr.classList.add('dropdown');
 	td.classList.add('dropdown-toggle');
 	td.setAttribute('data-bs-toggle', 'dropdown');
 	td.setAttribute('role', 'button');
 	td.setAttribute('aria-expanded', 'false');
-	var ul = document.createElement('ul');
+	let ul = document.createElement('ul');
 	ul.classList.add('dropdown-menu', 'dropdown-menu-dark', 'table-dark', 'text-light');
 	if (perms.bypassturn) addUserDropdownItem(ul, 'End Turn', () => VM!.endTurn(user.user.username));
 	if (perms.ban) addUserDropdownItem(ul, 'Ban', () => VM!.ban(user.user.username));
 	if (perms.kick) addUserDropdownItem(ul, 'Kick', () => VM!.kick(user.user.username));
 	if (perms.rename)
 		addUserDropdownItem(ul, 'Rename', () => {
-			var newname = prompt(`Enter new username for ${user.user.username}`);
+			let newname = prompt(`Enter new username for ${user.user.username}`);
 			if (!newname) return;
 			VM!.renameUser(user.user.username, newname);
 		});
@@ -737,15 +747,15 @@ function userModOptions(user: { user: User; element: HTMLTableRowElement }) {
 	}
 	if (perms.grabip)
 		addUserDropdownItem(ul, 'Get IP', async () => {
-			var ip = await VM!.getip(user.user.username);
+			let ip = await VM!.getip(user.user.username);
 			alert(ip);
 		});
 	tr.appendChild(ul);
 }
 
 function addUserDropdownItem(ul: HTMLUListElement, text: string, func: () => void) {
-	var li = document.createElement('li');
-	var a = document.createElement('a');
+	let li = document.createElement('li');
+	let a = document.createElement('a');
 	a.href = '#';
 	a.classList.add('dropdown-item');
 	a.innerHTML = text;
@@ -760,7 +770,7 @@ elements.rebootBtn.addEventListener('click', () => VM?.reboot());
 elements.clearQueueBtn.addEventListener('click', () => VM?.clearQueue());
 elements.bypassTurnBtn.addEventListener('click', () => VM?.bypassTurn());
 elements.endTurnBtn.addEventListener('click', () => {
-	var user = VM?.getUsers().find((u) => u.turn === 0);
+	let user = VM?.getUsers().find((u) => u.turn === 0);
 	if (user) VM?.endTurn(user.username);
 });
 elements.forceVoteNoBtn.addEventListener('click', () => VM?.forceVote(false));
@@ -769,10 +779,10 @@ elements.indefTurnBtn.addEventListener('click', () => VM?.indefiniteTurn());
 
 async function sendQEMUCommand() {
 	if (!elements.qemuMonitorInput.value) return;
-	var cmd = elements.qemuMonitorInput.value;
+	let cmd = elements.qemuMonitorInput.value;
 	elements.qemuMonitorOutput.innerHTML += `&gt; ${cmd}\n`;
 	elements.qemuMonitorInput.value = '';
-	var response = await VM?.qemuMonitor(cmd);
+	let response = await VM?.qemuMonitor(cmd);
 	elements.qemuMonitorOutput.innerHTML += `${response}\n`;
 	elements.qemuMonitorOutput.scrollTop = elements.qemuMonitorOutput.scrollHeight;
 }
@@ -830,10 +840,10 @@ w.VMName = null;
 loadList();
 
 // Welcome modal
-var noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
+let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
 if (noWelcomeModal !== '1') {
-	var welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
-	var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
+	let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
+	let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
 	welcomeModalDismissBtn.addEventListener('click', () => {
 		window.localStorage.setItem('no-welcome-modal', '1');
 	});
