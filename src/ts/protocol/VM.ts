@@ -1,10 +1,9 @@
 export default interface VM {
-    url : string;
+	url: string;
 
-    id : string;
+	id: string;
 
-    displayName : string;
+	displayName: string;
 
-    thumbnail : HTMLImageElement;
-
+	thumbnail: HTMLImageElement;
 }
