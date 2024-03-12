@@ -75,7 +75,7 @@ interface KeyCodeKeysyms {
 	[key: number]: number[] | null;
 }
 
-var keycodeKeysyms: KeyCodeKeysyms = {
+const keycodeKeysyms: KeyCodeKeysyms = {
 	8: [0xff08], // backspace
 	9: [0xff09], // tab
 	12: [0xff0b, 0xff0b, 0xff0b, 0xffb5], // clear       / KP 5
@@ -132,7 +132,7 @@ var keycodeKeysyms: KeyCodeKeysyms = {
 	225: [0xfe03] // altgraph (iso_level3_shift)
 };
 
-var keyidentifier_keysym: KeyIdentifierKeysym = {
+const keyidentifier_keysym: KeyIdentifierKeysym = {
 	Again: [0xff66],
 	AllCandidates: [0xff3d],
 	Alphanumeric: [0xff30],

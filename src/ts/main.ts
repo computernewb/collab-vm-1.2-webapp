@@ -395,7 +395,7 @@ function closeVM() {
 	users.splice(0, users.length);
 	elements.userlist.innerHTML = '';
 	rank = Rank.Unregistered;
-	perms = new Permissions(0);
+	perms.set(0);
 	w.VMName = null;
 	// Reset admin and vote panels
 	elements.staffbtns.style.display = 'none';

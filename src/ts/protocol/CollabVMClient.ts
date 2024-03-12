@@ -129,7 +129,7 @@ export default class CollabVMClient {
 			(e: KeyboardEvent) => {
 				e.preventDefault();
 				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
-				var keysym = GetKeysym(e.keyCode, e.key, e.location);
+				let keysym = GetKeysym(e.keyCode, e.key, e.location);
 				if (keysym === null) return;
 				this.key(keysym, true);
 			},
@@ -143,7 +143,7 @@ export default class CollabVMClient {
 			(e: KeyboardEvent) => {
 				e.preventDefault();
 				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
-				var keysym = GetKeysym(e.keyCode, e.key, e.location);
+				let keysym = GetKeysym(e.keyCode, e.key, e.location);
 				if (keysym === null) return;
 				this.key(keysym, false);
 			},
@@ -188,7 +188,7 @@ export default class CollabVMClient {
 
 	// Fires on WebSocket message
 	private onMessage(event: MessageEvent) {
-		var msgArr: string[];
+		let msgArr: string[];
 		try {
 			msgArr = Guacutils.decode(event.data);
 		} catch (e) {
@@ -220,7 +220,7 @@ export default class CollabVMClient {
 			}
 			case 'png': {
 				// Despite the opcode name, this is actually JPEG, because old versions of the server used PNG and yknow backwards compatibility
-				var img = new Image();
+				let img = new Image();
 				img.addEventListener('load', () => {
 					this.ctx.drawImage(img, parseInt(msgArr[3]), parseInt(msgArr[4]));
 				});
@@ -228,14 +228,14 @@ export default class CollabVMClient {
 				break;
 			}
 			case 'chat': {
-				for (var i = 1; i < msgArr.length; i += 2) {
+				for (let i = 1; i < msgArr.length; i += 2) {
 					this.publicEmitter.emit('chat', msgArr[i], msgArr[i + 1]);
 				}
 				break;
 			}
 			case 'adduser': {
-				for (var i = 2; i < msgArr.length; i += 2) {
-					var _user = this.users.find((u) => u.username === msgArr[i]);
+				for (let i = 2; i < msgArr.length; i += 2) {
+					let _user = this.users.find((u) => u.username === msgArr[i]);
 					if (_user !== undefined) {
 						_user.rank = parseInt(msgArr[i + 1]);
 					} else {
@@ -247,16 +247,16 @@ export default class CollabVMClient {
 				break;
 			}
 			case 'remuser': {
-				for (var i = 2; i < msgArr.length; i++) {
-					var _user = this.users.find((u) => u.username === msgArr[i]);
+				for (let i = 2; i < msgArr.length; i++) {
+					let _user = this.users.find((u) => u.username === msgArr[i]);
 					if (_user === undefined) continue;
 					this.users.splice(this.users.indexOf(_user), 1);
 					this.publicEmitter.emit('remuser', _user);
 				}
 			}
 			case 'rename': {
-				var selfrename = false;
-				var oldusername: string | null = null;
+				let selfrename = false;
+				let oldusername: string | null = null;
 				// We've been renamed
 				if (msgArr[1] === '0') {
 					selfrename = true;
@@ -279,7 +279,7 @@ export default class CollabVMClient {
 					}
 					this.username = msgArr[3];
 				} else oldusername = msgArr[2];
-				var _user = this.users.find((u) => u.username === oldusername);
+				let _user = this.users.find((u) => u.username === oldusername);
 				if (_user) {
 					_user.username = msgArr[3];
 				}
@@ -288,8 +288,8 @@ export default class CollabVMClient {
 			}
 			case 'turn': {
 				// Reset all turn data
-				for (var user of this.users) user.turn = -1;
-				var queuedUsers = parseInt(msgArr[2]);
+				for (let user of this.users) user.turn = -1;
+				let queuedUsers = parseInt(msgArr[2]);
 				if (queuedUsers === 0) {
 					this.publicEmitter.emit('turn', {
 						user: null,
@@ -299,12 +299,12 @@ export default class CollabVMClient {
 					});
 					return;
 				}
-				var currentTurn = this.users.find((u) => u.username === msgArr[3])!;
+				let currentTurn = this.users.find((u) => u.username === msgArr[3])!;
 				currentTurn.turn = 0;
-				var queue: User[] = [];
+				let queue: User[] = [];
 				if (queuedUsers > 1) {
-					for (var i = 1; i < queuedUsers; i++) {
-						var user = this.users.find((u) => u.username === msgArr[i + 3])!;
+					for (let i = 1; i < queuedUsers; i++) {
+						let user = this.users.find((u) => u.username === msgArr[i + 3])!;
 						queue.push(user);
 						user.turn = i;
 					}
@@ -323,9 +323,9 @@ export default class CollabVMClient {
 					// Vote started
 					case '1':
 						// Vote updated
-						var timeToEnd = parseInt(msgArr[2]);
-						var yesVotes = parseInt(msgArr[3]);
-						var noVotes = parseInt(msgArr[4]);
+						let timeToEnd = parseInt(msgArr[2]);
+						let yesVotes = parseInt(msgArr[3]);
+						let noVotes = parseInt(msgArr[4]);
 						// Some server implementations dont send data for status 0, and some do
 						if (Number.isNaN(timeToEnd) || Number.isNaN(yesVotes) || Number.isNaN(noVotes)) return;
 						this.voteStatus = {
@@ -355,11 +355,11 @@ export default class CollabVMClient {
 								this.publicEmitter.emit('badpw');
 								return;
 							case '1':
-								this.perms = new Permissions(65535);
+								this.perms.set(65535);
 								this.rank = Rank.Admin;
 								break;
 							case '3':
-								this.perms = new Permissions(parseInt(msgArr[3]));
+								this.perms.set(parseInt(msgArr[3]));
 								this.rank = Rank.Moderator;
 								break;
 						}
@@ -395,11 +395,11 @@ export default class CollabVMClient {
 	// Get a list of all VMs
 	list(): Promise<VM[]> {
 		return new Promise((res, rej) => {
-			var u = this.onInternal('list', (list: string[]) => {
+			let u = this.onInternal('list', (list: string[]) => {
 				u();
-				var vms: VM[] = [];
-				for (var i = 0; i < list.length; i += 3) {
-					var th = new Image();
+				let vms: VM[] = [];
+				for (let i = 0; i < list.length; i += 3) {
+					let th = new Image();
 					th.src = 'data:image/jpeg;base64,' + list[i + 2];
 					vms.push({
 						url: this.url,
@@ -417,7 +417,7 @@ export default class CollabVMClient {
 	// Connect to a node
 	connect(id: string, username: string | null = null): Promise<boolean> {
 		return new Promise((res) => {
-			var u = this.onInternal('connect', (success: boolean) => {
+			let u = this.onInternal('connect', (success: boolean) => {
 				u();
 				res(success);
 			});
@@ -535,9 +535,9 @@ export default class CollabVMClient {
 	getip(user: string) {
 		if (this.users.find((u) => u.username === user) === undefined) return false;
 		return new Promise<string>((res) => {
-			var u = this.onInternal('ip', (username: string, ip: string) => {
+			let unsubscribe = this.onInternal('ip', (username: string, ip: string) => {
 				if (username !== user) return;
-				u();
+				unsubscribe();
 				res(ip);
 			});
 			this.send('admin', AdminOpcode.GetIP, user);
@@ -547,8 +547,8 @@ export default class CollabVMClient {
 	// QEMU Monitor
 	qemuMonitor(cmd: string) {
 		return new Promise<string>((res) => {
-			var u = this.onInternal('qemu', (output) => {
-				u();
+			let unsubscribe = this.onInternal('qemu', (output) => {
+				unsubscribe();
 				res(output);
 			});
 			this.send('admin', AdminOpcode.MonitorCommand, this.node!, cmd);

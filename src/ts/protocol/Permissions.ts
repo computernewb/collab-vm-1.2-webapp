@@ -11,6 +11,10 @@ export class Permissions {
 	xss: boolean = false;
 
 	constructor(mask: number) {
+        this.set(mask);
+	}
+
+    set(mask: number) {
 		this.restore = (mask & 1) !== 0;
 		this.reboot = (mask & 2) !== 0;
 		this.ban = (mask & 4) !== 0;
@@ -21,7 +25,7 @@ export class Permissions {
 		this.rename = (mask & 128) !== 0;
 		this.grabip = (mask & 256) !== 0;
 		this.xss = (mask & 512) !== 0;
-	}
+    }
 }
 
 export enum Rank {
