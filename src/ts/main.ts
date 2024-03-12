@@ -379,7 +379,6 @@ async function openVM(vm: VM): Promise<void> {
 }
 
 function closeVM() {
-	console.log('closeVM() called');
 	if (VM === null) return;
 	expectedClose = true;
 	// Close the VM
