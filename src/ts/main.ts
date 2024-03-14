@@ -324,7 +324,7 @@ async function openVM(vm: VM): Promise<void> {
 	unsubscribeCallbacks.push(VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename)));
 	unsubscribeCallbacks.push(
 		VM!.on('renamestatus', (status) => {
-      // TODO: i18n these
+			// TODO: i18n these
 			switch (status) {
 				case 'taken':
 					alert('That username is already taken');
@@ -837,30 +837,25 @@ w.cvmEvents = {
 };
 w.VMName = null;
 
-// Load all VMs
-loadList();
+document.addEventListener('DOMContentLoaded', async () => {
+	// Initalize the i18n system
+	await TheI18n.Init();
 
-// Set a default internationalization language if not specified
-let lang = window.localStorage.getItem('i18n-lang');
-if (lang == null) {
-  lang = 'en-us';
-	window.localStorage.setItem('i18n-lang', lang);
-}
+	// Load all VMs
+	await loadList();
 
-// Initalize the internationalization system
-TheI18n.initWithLanguage(lang);
-
-// Welcome modal
-let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
-if (noWelcomeModal !== '1') {
-	let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
-	let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
-	welcomeModalDismissBtn.addEventListener('click', () => {
-		window.localStorage.setItem('no-welcome-modal', '1');
-	});
-	welcomeModalDismissBtn.disabled = true;
-	welcomeModal.show();
-	setTimeout(() => {
-		welcomeModalDismissBtn.disabled = false;
-	}, 5000);
-}
+	// Welcome modal
+	let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
+	if (noWelcomeModal !== '1') {
+		let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
+		let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
+		welcomeModalDismissBtn.addEventListener('click', () => {
+			window.localStorage.setItem('no-welcome-modal', '1');
+		});
+		welcomeModalDismissBtn.disabled = true;
+		welcomeModal.show();
+		setTimeout(() => {
+			welcomeModalDismissBtn.disabled = false;
+		}, 5000);
+	}
+});

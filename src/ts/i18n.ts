@@ -1,6 +1,6 @@
 import { StringLike } from './StringLike';
 
-// Nice little string key helper
+/// All string keys.
 export enum I18nStringKey {
 	kSiteName = 'kSiteName',
 	kHomeButton = 'kHomeButton',
@@ -49,7 +49,7 @@ const fallbackLanguage: Language = {
 	author: 'Computernewb',
 
 	stringKeys: {
-		kTitle: 'CollabVM',
+		kSiteName: 'CollabVM',
 		kHomeButton: 'Home',
 		kFAQButton: 'FAQ',
 		kRulesButton: 'Rules',
@@ -72,8 +72,8 @@ const fallbackLanguage: Language = {
 	}
 };
 
-interface StringMap {
-	[k: string]: string;
+interface StringKeyMap {
+	[k: string]: I18nStringKey;
 }
 
 /// our fancy internationalization helper.
@@ -84,27 +84,47 @@ export class I18n {
 	// the ID of the language
 	private langId: string = fallbackId;
 
-	async LoadLanguageFile(id: string) {
+	private async LoadLanguageFile(id: string) {
 		let languageData = await I18n.LoadLanguageFileImpl(id);
 		this.SetLanguage(languageData, id);
 	}
 
-	async initWithLanguage(id: string) {
+	async LoadAndSetLanguage(id: string) {
 		try {
 			await this.LoadLanguageFile(id);
-            console.log("i18n initalized for", id, "sucessfully!");
+			console.log('i18n initalized for', id, 'sucessfully!');
 		} catch (e) {
-			alert(`There was an error loading the language file for \"${id}\". Please tell a site admin this happened, and give them the following information: \"${(e as Error).message}\"`);
-			// force set the language to fallback
+			alert(
+				`There was an error loading the language file for the language \"${id}\". Please tell a site admin this happened, and give them the following information: \"${(e as Error).message}\"`
+			);
+			// force set the language to fallback and replace all strings.
+			// (this is done because we initialize with fallback, so SetLanguage will
+			// refuse to replace static strings. Hacky but it should work)
 			this.SetLanguage(fallbackLanguage, fallbackId);
+			this.ReplaceStaticStrings();
 		}
+	}
+
+	async Init() {
+		let lang = window.localStorage.getItem('i18n-lang');
+
+		// Set a default language if not specified
+		if (lang == null) {
+			lang = 'en-us';
+			window.localStorage.setItem('i18n-lang', lang);
+		}
+
+		await this.LoadAndSetLanguage(lang);
 	}
 
 	private static async LoadLanguageFileImpl(id: string): Promise<Language> {
 		let path = `./lang/${id}.json`;
 		let res = await fetch(path);
 
-		if (!res.ok) throw new Error(res.statusText);
+		if (!res.ok) {
+			if (res.statusText != '') throw new Error(`Failed to load lang/${id}.json: ${res.statusText}`);
+			else throw new Error(`Failed to load lang/${id}.json: HTTP status code ${res.status}`);
+		}
 
 		return (await res.json()) as Language;
 	}
@@ -116,11 +136,16 @@ export class I18n {
 
 		// Only replace static strings
 		if (this.langId != lastId) this.ReplaceStaticStrings();
+
+		// Set the language ID localstorage entry
+		if (this.langId !== fallbackId) {
+			window.localStorage.setItem('i18n-lang', this.langId);
+		}
 	}
 
 	// Replaces static strings that we don't recompute
 	private ReplaceStaticStrings() {
-		const kDomIdtoStringMap: StringMap = {
+		const kDomIdtoStringMap: StringKeyMap = {
 			siteNameText: I18nStringKey.kSiteName,
 			homeBtnText: I18nStringKey.kHomeButton,
 			faqBtnText: I18nStringKey.kFAQButton,
@@ -154,7 +179,7 @@ export class I18n {
 	}
 
 	// Gets a string, which also allows replacing by index with the given replacements.
-	GetString(key: string, ...replacements: StringLike[]): string {
+	GetString(key: I18nStringKey, ...replacements: StringLike[]): string {
 		let replacementStringArray: Array<string> = [...replacements].map((el) => {
 			// This catches cases where the thing already is a string
 			if (typeof el == 'string') return el as string;
@@ -163,38 +188,65 @@ export class I18n {
 
 		let val = this.lang.stringKeys[key];
 
-		if (val == null) {
+		// Helper to throw a more descriptive error (including the looked-up string in question)
+		let throwError = (desc: string) => {
+			throw new Error(`Invalid replacement "${val}": ${desc}`);
+		};
+
+		// Look up the fallback language by default if the language doesn't
+		// have that string key yet; if the fallback doesn't have it either,
+		// then just return the string key and a bit of a notice things have gone wrong
+		if (val == undefined) {
 			let fallback = fallbackLanguage.stringKeys[key];
-			if (fallback == null) return 'UH OH WORM';
-			else return fallback;
+			if (fallback !== undefined) val = fallback;
+			else return `${key} (ERROR)`;
 		}
 
+		// Handle replacement ("{0} {1} {2} {3} {4} {5}" syntax) in string keys
+		// which allows us to just specify arguments we want to format into the final string,
+		// instead of hacky replacements hardcoded at the source. It's more flexible that way.
 		for (let i = 0; i < val.length; ++i) {
 			if (val[i] == '{') {
 				let replacementStart = i;
 				let foundReplacementEnd = false;
 
+				// Make sure the replacement is not cut off (the last character of the string)
 				if (i + 1 > val.length) {
-					throw new Error('Cutoff/invalid replacement');
+					throwError('Cutoff/invalid replacement');
 				}
 
-				// Try and find the replacement end
+				// Try and find the replacement end ('}').
+				// Whitespace and a '{' are considered errors.
 				for (let j = i + 1; j < val.length; ++j) {
-					if (val[j] == '}') {
-						foundReplacementEnd = true;
-						i = j;
-						break;
+					switch (val[j]) {
+						case '}':
+							foundReplacementEnd = true;
+							i = j;
+							break;
+
+						case '{':
+							throwError('Cannot start a replacement in an existing replacement');
+							break;
+
+						case ' ':
+							throwError('Whitespace inside replacement');
+							break;
+
+						default:
+							break;
 					}
+
+					if (foundReplacementEnd) break;
 				}
 
-				if (!foundReplacementEnd) throw new Error('Invalid replacement, has no "}" to terminate it');
+				if (!foundReplacementEnd) throwError('No terminating "}" character found');
 
 				// Get the beginning and trailer
 				let beginning = val.substring(0, replacementStart);
 				let trailer = val.substring(replacementStart + 3);
 
 				let replacementIndex = parseInt(val.substring(replacementStart + 1, i));
-				if (Number.isNaN(replacementIndex) || replacementIndex > replacementStringArray.length) throw new Error('Invalid replacement');
+				if (Number.isNaN(replacementIndex) || replacementIndex > replacementStringArray.length) throwError('Replacement index out of bounds');
 
 				// This is seriously the only decent way to do this in javascript
 				// thanks brendan eich (replace this thanking with more choice words in your head)
