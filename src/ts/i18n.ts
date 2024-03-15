@@ -1,33 +1,55 @@
 import { StringLike } from './StringLike';
+import { Format } from './format';
 
 /// All string keys.
 export enum I18nStringKey {
-	kSiteName = 'kSiteName',
-	kHomeButton = 'kHomeButton',
-	kFAQButton = 'kFAQButton',
-	kRulesButton = 'kRulesButton',
-	kVMResetTitle = 'kVMResetTitle',
-	kGenericYes = 'kGenericYes',
-	kGenericNo = 'kGenericNo',
-	kVMVoteTime = 'kVMVoteTime',
-	kPassVoteButton = 'kPassVoteButton',
-	kCancelVoteButton = 'kCancelVoteButton',
-	kTakeTurnButton = 'kTakeTurnButton',
-	kEndTurnButton = 'kEndTurnButton',
-	kChangeUsernameButton = 'kChangeUsernameButton',
-	kVoteButton = 'kVoteButton',
-	kScreenshotButton = 'kScreenshotButton',
-	kUsersOnlineHeading = 'kUsersOnlineHeading',
-	kTurnTime = 'kTurnTime',
-	kWaitingTurnTime = 'kWaitingTurnTime',
-	kVoteCooldown = 'kVoteCooldown',
-	kEnterNewUsername = 'kEnterNewUsername'
+	// Generic things
+	kGeneric_CollabVM = 'kGeneric_CollabVM',
+	kGeneric_Yes = 'kGeneric_Yes',
+	kGeneric_No = 'kGeneric_No',
+	kGeneric_Ok = 'kGeneric_Ok',
+	kGeneric_Cancel = 'kGeneric_Cancel',
+
+	kSiteButtons_Home = 'kSiteButtons_Home',
+	kSiteButtons_FAQ = 'kSiteButtons_FAQ',
+	kSiteButtons_Rules = 'kSiteButtons_Rules',
+
+	kVM_UsersOnlineText = 'kVM_UsersOnlineText',
+
+	kVM_TurnTimeTimer = 'kVM_TurnTimeTimer',
+	kVM_WaitingTurnTimer = 'kVM_WaitingTurnTimer',
+	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
+
+	kVM_VoteForResetTitle = 'kVM_VoteForResetTitle',
+	kVM_VoteForResetTimer = 'kVM_VoteForResetTimer',
+
+	kVMButtons_TakeTurn = 'kVMButtons_TakeTurn',
+	kVMButtons_EndTurn = 'kVMButtons_EndTurn',
+	kVMButtons_ChangeUsername = 'kVMButtons_ChangeUsername',
+
+	kVMButtons_VoteForReset = 'kVMButtons_VoteForReset',
+	kVMButtons_Screenshot = 'kVMButtons_Screenshot',
+
+	// Admin VM buttons
+	kAdminVMButtons_PassVote = 'kAdminVMButtons_PassVote',
+	kAdminVMButtons_CancelVote = 'kAdminVMButtons_CancelVote',
+
+	// prompts
+	kVMPrompts_EnterNewUsernamePrompt = 'kVMPrompts_EnterNewUsernamePrompt',
+
+	// error messages
+	kError_UnexpectedDisconnection = 'kError_UnexpectedDisconnection',
+
+	kError_UsernameTaken = 'kError_UsernameTaken',
+	kError_UsernameInvalid = 'kError_UsernameInvalid',
+	kError_UsernameBlacklisted = 'kError_UsernameBlacklisted',
 }
 
 // This models the JSON structure.
-export type Language = {
+type Language = {
 	languageName: string;
 	translatedLanguageName: string;
+	flag: string; // country flag, can be blank if not applicable. will be displayed in language dropdown
 	author: string;
 
 	stringKeys: {
@@ -39,36 +61,61 @@ export type Language = {
 	};
 };
 
+// `languages.json`
+type LanguagesJson = {
+	// Array of language IDs to allow loading
+	languages: Array<string>;
+
+	// The default language (set if a invalid language not in the languages array is set, or no language is set)
+	defaultLanguage: string;
+}
+
 // ID for fallback language
-const fallbackId = 'fallback';
+const fallbackId = '!!fallback';
 
 // This language is provided in the webapp itself just in case language stuff fails
 const fallbackLanguage: Language = {
 	languageName: 'Fallback',
 	translatedLanguageName: 'Fallback',
+	flag: "no",
 	author: 'Computernewb',
 
 	stringKeys: {
-		kSiteName: 'CollabVM',
-		kHomeButton: 'Home',
-		kFAQButton: 'FAQ',
-		kRulesButton: 'Rules',
-		kVMResetTitle: 'Do you want to reset the VM?',
-		kGenericYes: 'Yes',
-		kGenericNo: 'No',
-		kVMVoteTime: 'Vote ends in {0} seconds',
-		kPassVoteButton: 'Pass Vote',
-		kCancelVoteButton: 'Cancel Vote',
-		kTakeTurnButton: 'Take Turn',
-		kEndTurnButton: 'End Turn',
-		kChangeUsernameButton: 'Change Username',
-		kVoteButton: 'Vote For Reset',
-		kScreenshotButton: 'Screenshot',
-		kUsersOnlineHeading: 'Users Online:',
-		kTurnTime: 'Turn expires in {0} seconds.',
-		kWaitingTurnTime: 'Waiting for turn in {0} seconds.',
-		kVoteCooldown: 'Please wait {0} seconds before starting another vote.',
-		kEnterNewUsername: 'Enter a new username, or leave the field blank to be assigned a guest username'
+		kGeneric_CollabVM: 'CollabVM',
+		kGeneric_Yes: 'Yes',
+		kGeneric_No: 'No',
+		kGeneric_Ok: 'OK',
+		kGeneric_Cancel: 'Cancel',
+
+		kSiteButtons_Home: 'Home',
+		kSiteButtons_FAQ: 'FAQ',
+		kSiteButtons_Rules: 'Rules',
+
+		kVM_UsersOnlineText: 'Users Online:',
+
+		kVM_TurnTimeTimer: 'Turn expires in {0} seconds.',
+		kVM_WaitingTurnTimer: 'Waiting for turn in {0} seconds.',
+		kVM_VoteCooldownTimer: 'Please wait {0} seconds before starting another vote.',
+
+		kVM_VoteForResetTitle: 'Do you want to reset the VM?',
+		kVM_VoteForResetTimer: 'Vote ends in {0} seconds',
+
+		kVMButtons_TakeTurn: 'Take Turn',
+		kVMButtons_EndTurn: 'End Turn',
+		kVMButtons_ChangeUsername: 'Change Username',
+
+		kVMButtons_VoteForReset: 'Vote For Reset',
+		kVMButtons_Screenshot: 'Screenshot',
+
+		kAdminVMButtons_PassVoteButton: 'Pass Vote',
+		kAdminVMButtons_CancelVoteButton: 'Cancel Vote',
+
+		kVMPrompts_EnterNewUsernamePrompt: 'Enter a new username, or leave the field blank to be assigned a guest username',
+
+		kError_UnexpectedDisconnection: 'You have been disconnected from the server.',
+		kError_UsernameTaken: 'That username is already taken',
+		kError_UsernameInvalid: 'Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.',
+		kError_UsernameBlacklisted: 'That username has been blacklisted.'
 	}
 };
 
@@ -106,6 +153,8 @@ export class I18n {
 	}
 
 	async Init() {
+		// TODO: load languages.json, add selections, and if an invalid language (not in the languages array) is specified,
+		// set it to the defaultLanguage in there.
 		let lang = window.localStorage.getItem('i18n-lang');
 
 		// Set a default language if not specified
@@ -146,24 +195,25 @@ export class I18n {
 	// Replaces static strings that we don't recompute
 	private ReplaceStaticStrings() {
 		const kDomIdtoStringMap: StringKeyMap = {
-			siteNameText: I18nStringKey.kSiteName,
-			homeBtnText: I18nStringKey.kHomeButton,
-			faqBtnText: I18nStringKey.kFAQButton,
-			rulesBtnText: I18nStringKey.kRulesButton,
+			siteNameText: I18nStringKey.kGeneric_CollabVM,
+			homeBtnText: I18nStringKey.kSiteButtons_Home,
+			faqBtnText: I18nStringKey.kSiteButtons_FAQ,
+			rulesBtnText: I18nStringKey.kSiteButtons_Rules,
 
-			usersOnlineText: I18nStringKey.kUsersOnlineHeading,
+			usersOnlineText: I18nStringKey.kVM_UsersOnlineText,
 
-			voteResetHeaderText: I18nStringKey.kVMResetTitle,
-			voteYesBtnText: I18nStringKey.kGenericYes,
-			voteNoBtnText: I18nStringKey.kGenericNo,
+			voteResetHeaderText: I18nStringKey.kVM_VoteForResetTitle,
+			voteYesBtnText: I18nStringKey.kGeneric_Yes,
+			voteNoBtnText: I18nStringKey.kGeneric_No,
 
-			changeUsernameBtnText: I18nStringKey.kChangeUsernameButton,
-			voteForResetBtnText: I18nStringKey.kVoteButton,
-			screenshotBtnText: I18nStringKey.kScreenshotButton,
+			changeUsernameBtnText: I18nStringKey.kVMButtons_ChangeUsername,
+			voteForResetBtnText: I18nStringKey.kVMButtons_VoteForReset,
+			screenshotBtnText: I18nStringKey.kVMButtons_Screenshot,
 
 			// admin stuff
-			passVoteBtnText: I18nStringKey.kPassVoteButton,
-			cancelVoteBtnText: I18nStringKey.kCancelVoteButton
+			passVoteBtnText: I18nStringKey.kAdminVMButtons_PassVote,
+			cancelVoteBtnText: I18nStringKey.kAdminVMButtons_CancelVote,
+			endTurnBtnText: I18nStringKey.kVMButtons_EndTurn
 		};
 
 		for (let domId of Object.keys(kDomIdtoStringMap)) {
@@ -174,24 +224,16 @@ export class I18n {
 			}
 
 			// Do the magic.
-			element.innerText = this.GetString(kDomIdtoStringMap[domId]);
+			// N.B: For now, we assume all strings in this map are not formatted.
+			// If this assumption changes, then we should just use GetString() again
+			// and maybe include arguments, but for now this is okay
+			element.innerText = this.GetStringRaw(kDomIdtoStringMap[domId]);
 		}
 	}
 
-	// Gets a string, which also allows replacing by index with the given replacements.
-	GetString(key: I18nStringKey, ...replacements: StringLike[]): string {
-		let replacementStringArray: Array<string> = [...replacements].map((el) => {
-			// This catches cases where the thing already is a string
-			if (typeof el == 'string') return el as string;
-			return el.toString();
-		});
-
+	// Returns a (raw, unformatted) string. Currently only used if we don't need formatting.
+	GetStringRaw(key: I18nStringKey): string {
 		let val = this.lang.stringKeys[key];
-
-		// Helper to throw a more descriptive error (including the looked-up string in question)
-		let throwError = (desc: string) => {
-			throw new Error(`Invalid replacement "${val}": ${desc}`);
-		};
 
 		// Look up the fallback language by default if the language doesn't
 		// have that string key yet; if the fallback doesn't have it either,
@@ -199,62 +241,15 @@ export class I18n {
 		if (val == undefined) {
 			let fallback = fallbackLanguage.stringKeys[key];
 			if (fallback !== undefined) val = fallback;
-			else return `${key} (ERROR)`;
-		}
-
-		// Handle replacement ("{0} {1} {2} {3} {4} {5}" syntax) in string keys
-		// which allows us to just specify arguments we want to format into the final string,
-		// instead of hacky replacements hardcoded at the source. It's more flexible that way.
-		for (let i = 0; i < val.length; ++i) {
-			if (val[i] == '{') {
-				let replacementStart = i;
-				let foundReplacementEnd = false;
-
-				// Make sure the replacement is not cut off (the last character of the string)
-				if (i + 1 > val.length) {
-					throwError('Cutoff/invalid replacement');
-				}
-
-				// Try and find the replacement end ('}').
-				// Whitespace and a '{' are considered errors.
-				for (let j = i + 1; j < val.length; ++j) {
-					switch (val[j]) {
-						case '}':
-							foundReplacementEnd = true;
-							i = j;
-							break;
-
-						case '{':
-							throwError('Cannot start a replacement in an existing replacement');
-							break;
-
-						case ' ':
-							throwError('Whitespace inside replacement');
-							break;
-
-						default:
-							break;
-					}
-
-					if (foundReplacementEnd) break;
-				}
-
-				if (!foundReplacementEnd) throwError('No terminating "}" character found');
-
-				// Get the beginning and trailer
-				let beginning = val.substring(0, replacementStart);
-				let trailer = val.substring(replacementStart + 3);
-
-				let replacementIndex = parseInt(val.substring(replacementStart + 1, i));
-				if (Number.isNaN(replacementIndex) || replacementIndex > replacementStringArray.length) throwError('Replacement index out of bounds');
-
-				// This is seriously the only decent way to do this in javascript
-				// thanks brendan eich (replace this thanking with more choice words in your head)
-				val = beginning + replacementStringArray[replacementIndex] + trailer;
-			}
+			else return `${key} (ERROR LOOKING UP TRANSLATION!!!)`;
 		}
 
 		return val;
+	}
+
+	// Returns a formatted localized string.
+	GetString(key: I18nStringKey, ...replacements: StringLike[]): string {
+		return Format(this.GetStringRaw(key), ...replacements);
 	}
 }
 

@@ -11,7 +11,7 @@ import MuteState from './MuteState.js';
 import { StringLike } from '../StringLike.js';
 
 export interface CollabVMClientEvents {
-	open: () => void;
+	//open: () => void;
 	close: () => void;
 
 	message: (...args: string[]) => void;
@@ -37,6 +37,7 @@ export interface CollabVMClientEvents {
 
 // types for private emitter
 interface CollabVMClientPrivateEvents {
+	open: () => void;
 	list: (listEntries: string[]) => void;
 	connect: (connectedToVM: boolean) => void;
 	ip: (username: string, ip: string) => void;
@@ -175,7 +176,7 @@ export default class CollabVMClient {
 
 	// Fires when the WebSocket connection is opened
 	private onOpen() {
-		this.publicEmitter.emit('open');
+		this.internalEmitter.emit('open');
 	}
 
 	// Fires on WebSocket message
@@ -371,6 +372,16 @@ export default class CollabVMClient {
 				}
 			}
 		}
+	}
+
+	async WaitForOpen() {
+		return new Promise<void>((res) => {
+			// TODO: should probably reject on close
+			let unsub = this.onInternal('open', () => {
+				unsub();
+				res();
+			});
+		});
 	}
 
 	// Sends a message to the server

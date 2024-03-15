@@ -264,16 +264,21 @@ let VM: CollabVMClient | null = null;
 async function multicollab(url: string) {
 	// Create the client
 	let client = new CollabVMClient(url);
-	// Wait for the client to open
-	await new Promise<void>((res) => client.on('open', () => res()));
+
+	await client.WaitForOpen();
+
 	// Get the list of VMs
 	let list = await client.list();
+
 	// Get the number of online users
 	let online = client.getUsers().length;
+
 	// Close the client
 	client.close();
+
 	// Add to the list
 	vms.push(...list);
+
 	// Add to the DOM
 	for (let vm of list) {
 		let div = document.createElement('div');
@@ -327,13 +332,13 @@ async function openVM(vm: VM): Promise<void> {
 			// TODO: i18n these
 			switch (status) {
 				case 'taken':
-					alert('That username is already taken');
+					alert(TheI18n.GetString(I18nStringKey.kError_UsernameTaken));
 					break;
 				case 'invalid':
-					alert('Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.');
+					alert(TheI18n.GetString(I18nStringKey.kError_UsernameInvalid));
 					break;
 				case 'blacklisted':
-					alert('That username has been blacklisted.');
+					alert(TheI18n.GetString(I18nStringKey.kError_UsernameBlacklisted));
 					break;
 			}
 		})
@@ -341,11 +346,11 @@ async function openVM(vm: VM): Promise<void> {
 	unsubscribeCallbacks.push(VM!.on('turn', (status) => turnUpdate(status)));
 	unsubscribeCallbacks.push(VM!.on('vote', (status: VoteStatus) => voteUpdate(status)));
 	unsubscribeCallbacks.push(VM!.on('voteend', () => voteEnd()));
-	unsubscribeCallbacks.push(VM!.on('votecd', (voteCooldown) => window.alert(TheI18n.GetString(I18nStringKey.kVoteCooldown, voteCooldown))));
+	unsubscribeCallbacks.push(VM!.on('votecd', (voteCooldown) => window.alert(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown))));
 	unsubscribeCallbacks.push(VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms)));
 	unsubscribeCallbacks.push(
 		VM!.on('close', () => {
-			if (!expectedClose) alert('You have been disconnected from the server');
+			if (!expectedClose) alert(TheI18n.GetString(I18nStringKey.kError_UnexpectedDisconnection));
 
 			// Call all the unsubscribe callbacks.
 			for (let l of unsubscribeCallbacks) l();
@@ -355,9 +360,7 @@ async function openVM(vm: VM): Promise<void> {
 	);
 
 	// Wait for the client to open
-	await new Promise<void>((res) => {
-		unsubscribeCallbacks.push(VM!.on('open', () => res()));
-	});
+	await VM!.WaitForOpen();
 
 	// Connect to node
 	chatMessage('', `<b>${vm.id}</b><hr>`);
@@ -419,11 +422,11 @@ function closeVM() {
 }
 
 async function loadList() {
-	let p = [];
-	for (let url of Config.ServerAddresses) {
-		p.push(multicollab(url));
-	}
-	await Promise.all(p);
+	await Promise.all(
+		Config.ServerAddresses.map((url) => {
+			return multicollab(url);
+		})
+	);
 
 	// automatically join the vm that's in the url if it exists in the node list
 	let v = vms.find((v) => v.id === window.location.hash.substring(1));
@@ -556,7 +559,7 @@ function turnUpdate(status: TurnStatus) {
 		user.element.classList.remove('user-turn', 'user-waiting');
 		user.element.setAttribute('data-cvm-turn', '-1');
 	}
-	elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kTakeTurnButton);
+	elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kVMButtons_TakeTurn);
 	enableOSK(false);
 
 	if (status.user !== null) {
@@ -572,14 +575,14 @@ function turnUpdate(status: TurnStatus) {
 	if (status.user?.username === w.username) {
 		turn = 0;
 		turnTimer = status.turnTime! / 1000;
-		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kEndTurnButton);
+		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kVMButtons_EndTurn);
 		VM!.canvas.classList.add('focused');
 		enableOSK(true);
 	}
 	if (status.queue.some((u) => u.username === w.username)) {
 		turn = status.queue.findIndex((u) => u.username === w.username) + 1;
 		turnTimer = status.queueTime! / 1000;
-		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kEndTurnButton);
+		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kVMButtons_EndTurn);
 		VM!.canvas.classList.add('waiting');
 	}
 	if (turn === -1) elements.turnstatus.innerText = '';
@@ -602,7 +605,7 @@ function voteUpdate(status: VoteStatus) {
 
 function updateVoteEndTime() {
 	voteTimer--;
-	elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVMVoteTime, voteTimer);
+	elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteForResetTimer, voteTimer);
 	if (voteTimer === 0) clearInterval(voteInterval);
 }
 
@@ -617,8 +620,8 @@ function turnIntervalCb() {
 }
 
 function setTurnStatus() {
-	if (turn === 0) elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kTurnTime, turnTimer);
-	else elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kWaitingTurnTime, turnTimer);
+	if (turn === 0) elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_TurnTimeTimer, turnTimer);
+	else elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_WaitingTurnTimer, turnTimer);
 }
 
 function sendChat() {
@@ -637,7 +640,7 @@ elements.chatinput.addEventListener('keypress', (e) => {
 	if (e.key === 'Enter') sendChat();
 });
 elements.changeUsernameBtn.addEventListener('click', () => {
-	let newname = prompt(TheI18n.GetString(I18nStringKey.kEnterNewUsername), w.username);
+	let newname = prompt(TheI18n.GetString(I18nStringKey.kVMPrompts_EnterNewUsernamePrompt), w.username);
 	if (newname === w.username) return;
 	VM?.rename(newname);
 });
@@ -732,7 +735,7 @@ function userModOptions(user: { user: User; element: HTMLTableRowElement }) {
 	td.setAttribute('aria-expanded', 'false');
 	let ul = document.createElement('ul');
 	ul.classList.add('dropdown-menu', 'dropdown-menu-dark', 'table-dark', 'text-light');
-	if (perms.bypassturn) addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kEndTurnButton), () => VM!.endTurn(user.user.username));
+	if (perms.bypassturn) addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kVMButtons_EndTurn), () => VM!.endTurn(user.user.username));
 	if (perms.ban) addUserDropdownItem(ul, 'Ban', () => VM!.ban(user.user.username));
 	if (perms.kick) addUserDropdownItem(ul, 'Kick', () => VM!.kick(user.user.username));
 	if (perms.rename)

@@ -2,17 +2,38 @@
 
 ![CollabVM Web App](/webapp.png)
 
-The CollabVM Web App is the viewer for the CollabVM Server, currently in beta
+The CollabVM Web App is the viewer for the CollabVM Server.
 
 ## Building
-Edit Config.ts to your needs, then:
-1. `npm i`
-2. `npm run build`
 
-The build output directory is `dist/`
+Edit Config.ts to your needs, then:
+
+## yarn
+- `yarn`
+- `yarn build`
+
+## npm
+- `npm i`
+- `npm run build`
+
+The build output directory is `dist/`.
+
+## Unit testing
+
+This is very minimal and only tests a single standalone part at the moment:
+
+- `yarn test`
 
 ## Serving
 
-Just drop the contents of `dist/` somewhere into our webroot. For testing purposes, you can throw up a quick test webserver with the following command
+Just drop the contents of `dist/` somewhere into your webroot. 
+
+For **testing or development purposes only**, you can throw up a quick test webserver with the following command:
+
+## yarn
+
+`yarn serve`
+
+## npm
 
 `npm run serve`

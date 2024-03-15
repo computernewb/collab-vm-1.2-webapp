@@ -1,28 +1,44 @@
 {
 	"languageName": "English (US)",
 	"translatedLanguageName": "English (US)",
+	"flag": "🇺🇸",
 	"author": "Computernewb",
 
 	"stringKeys": {
-		"kSiteName": "CollabVM",
-		"kHomeButton": "Home",
-		"kFAQButton": "FAQ",
-		"kRulesButton": "Rules",
-		"kVMResetTitle": "Do you want to reset the VM?",
-		"kGenericYes": "Yes",
-		"kGenericNo": "No",
-		"kVMVoteTime": "Vote ends in {0} seconds",
-		"kPassVoteButton": "Pass Vote",
-		"kCancelVoteButton": "Cancel Vote",
-		"kTakeTurnButton": "Take Turn",
-		"kEndTurnButton": "End Turn",
-		"kChangeUsernameButton": "Change Username",
-		"kVoteButton": "Vote For Reset",
-		"kScreenshotButton": "Screenshot",
-		"kUsersOnlineHeading": "Users Online:",
-		"kTurnTime": "Turn expires in {0} seconds.",
-		"kWaitingTurnTime": "Waiting for turn in {0} seconds.",
-		"kVoteCooldown": "Please wait {0} seconds before starting another vote.",
-		"kEnterNewUsername": "Enter a new username, or leave the field blank to be assigned a guest username"
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Yes",
+		"kGeneric_No": "No",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Cancel",
+
+		"kSiteButtons_Home": "Home",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Rules",
+
+		"kVM_UsersOnlineText": "Users Online:",
+
+		"kVM_TurnTimeTimer": "Turn expires in {0} seconds.",
+		"kVM_WaitingTurnTimer": "Waiting for turn in {0} seconds.",
+		"kVM_VoteCooldownTimer": "Please wait {0} seconds before starting another vote.",
+
+		"kVM_VoteForResetTitle": "Do you want to reset the VM?",
+		"kVM_VoteForResetTimer": "Vote ends in {0} seconds",
+
+		"kVMButtons_TakeTurn": "Take Turn",
+		"kVMButtons_EndTurn": "End Turn",
+		"kVMButtons_ChangeUsername": "Change Username",
+
+		"kVMButtons_VoteForReset": "Vote For Reset",
+		"kVMButtons_Screenshot": "Screenshot",
+
+		"kAdminVMButtons_PassVoteButton": "Pass Vote",
+		"kAdminVMButtons_CancelVoteButton": "Cancel Vote",
+
+		"kVMPrompts_EnterNewUsernamePrompt": "Enter a new username, or leave the field blank to be assigned a guest username",
+
+		"kError_UnexpectedDisconnection": "You have been disconnected from the server.",
+		"kError_UsernameTaken": "That username is already taken",
+		"kError_UsernameInvalid": "Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
+		"kError_UsernameBlacklisted": "That username has been blacklisted."
 	}
 }
