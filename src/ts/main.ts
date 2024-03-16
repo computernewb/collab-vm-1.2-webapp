@@ -12,6 +12,7 @@ import * as bootstrap from 'bootstrap';
 import MuteState from './protocol/MuteState.js';
 import { Unsubscribe } from 'nanoevents';
 import { I18nStringKey, TheI18n } from './i18n.js';
+import { Format } from './format.js';
 
 // Elements
 const w = window as any;
@@ -318,46 +319,39 @@ async function openVM(vm: VM): Promise<void> {
 	location.hash = vm.id;
 	// Create the client
 	VM = new CollabVMClient(vm.url);
+
 	// Register event listeners
 
-	// An array of nanoevent unsubscribe callbacks. These are called when the VM is closed to cleanup nanoevent state.
-	let unsubscribeCallbacks: Unsubscribe[] = [];
+	VM!.on('chat', (username, message) => chatMessage(username, message));
+	VM!.on('adduser', (user) => addUser(user));
+	VM!.on('remuser', (user) => remUser(user));
+	VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename));
 
-	unsubscribeCallbacks.push(VM!.on('chat', (username, message) => chatMessage(username, message)));
-	unsubscribeCallbacks.push(VM!.on('adduser', (user) => addUser(user)));
-	unsubscribeCallbacks.push(VM!.on('remuser', (user) => remUser(user)));
-	unsubscribeCallbacks.push(VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename)));
-	unsubscribeCallbacks.push(
-		VM!.on('renamestatus', (status) => {
-			// TODO: i18n these
-			switch (status) {
-				case 'taken':
-					alert(TheI18n.GetString(I18nStringKey.kError_UsernameTaken));
-					break;
-				case 'invalid':
-					alert(TheI18n.GetString(I18nStringKey.kError_UsernameInvalid));
-					break;
-				case 'blacklisted':
-					alert(TheI18n.GetString(I18nStringKey.kError_UsernameBlacklisted));
-					break;
-			}
-		})
-	);
-	unsubscribeCallbacks.push(VM!.on('turn', (status) => turnUpdate(status)));
-	unsubscribeCallbacks.push(VM!.on('vote', (status: VoteStatus) => voteUpdate(status)));
-	unsubscribeCallbacks.push(VM!.on('voteend', () => voteEnd()));
-	unsubscribeCallbacks.push(VM!.on('votecd', (voteCooldown) => window.alert(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown))));
-	unsubscribeCallbacks.push(VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms)));
-	unsubscribeCallbacks.push(
-		VM!.on('close', () => {
-			if (!expectedClose) alert(TheI18n.GetString(I18nStringKey.kError_UnexpectedDisconnection));
+	VM!.on('renamestatus', (status) => {
+		// TODO: i18n these
+		switch (status) {
+			case 'taken':
+				alert(TheI18n.GetString(I18nStringKey.kError_UsernameTaken));
+				break;
+			case 'invalid':
+				alert(TheI18n.GetString(I18nStringKey.kError_UsernameInvalid));
+				break;
+			case 'blacklisted':
+				alert(TheI18n.GetString(I18nStringKey.kError_UsernameBlacklisted));
+				break;
+		}
+	});
 
-			// Call all the unsubscribe callbacks.
-			for (let l of unsubscribeCallbacks) l();
-			unsubscribeCallbacks = [];
-			closeVM();
-		})
-	);
+	VM!.on('turn', (status) => turnUpdate(status));
+	VM!.on('vote', (status: VoteStatus) => voteUpdate(status));
+	VM!.on('voteend', () => voteEnd());
+	VM!.on('votecd', (voteCooldown) => window.alert(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown)));
+	VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms));
+
+	VM!.on('close', () => {
+		if (!expectedClose) alert(TheI18n.GetString(I18nStringKey.kError_UnexpectedDisconnection));
+		closeVM();
+	});
 
 	// Wait for the client to open
 	await VM!.WaitForOpen();
@@ -374,7 +368,7 @@ async function openVM(vm: VM): Promise<void> {
 		throw new Error('Failed to connect to node');
 	}
 	// Set the title
-	document.title = vm.id + ' - CollabVM';
+	document.title = Format("{0} - {1}", vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
 	// Append canvas
 	elements.vmDisplay.appendChild(VM!.canvas);
 	// Switch to the VM view
@@ -389,7 +383,7 @@ function closeVM() {
 	// Close the VM
 	VM.close();
 	VM = null;
-	document.title = 'CollabVM';
+	document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 	turn = -1;
 	// Remove the canvas
 	elements.vmDisplay.innerHTML = '';
@@ -843,6 +837,8 @@ w.VMName = null;
 document.addEventListener('DOMContentLoaded', async () => {
 	// Initalize the i18n system
 	await TheI18n.Init();
+
+	document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 
 	// Load all VMs
 	await loadList();

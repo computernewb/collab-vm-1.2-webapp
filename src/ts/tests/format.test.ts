@@ -13,6 +13,12 @@ test('a cut off format specifier throws', () => {
 });
 
 test('a malformed format specifier throws', () => {
+	expect(() => Format('a{-0}', 1)).toThrow('Malformed format specifier');
+	expect(() => Format('a{0-}', 1)).toThrow('Malformed format specifier');
+	expect(() => Format('a{0ab}', 1)).toThrow('Malformed format specifier');
+	expect(() => Format('a{ab0ab}', 1)).toThrow('Malformed format specifier');
+
+	// Whitespace is not permitted inside a format specifier
 	expect(() => Format('a{0 }', 1)).toThrow('Whitespace inside format specifier');
 	expect(() => Format('a{ 0}', 1)).toThrow('Whitespace inside format specifier');
 	expect(() => Format('a{ 0 }', 1)).toThrow('Whitespace inside format specifier');

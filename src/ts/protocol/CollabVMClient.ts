@@ -63,6 +63,8 @@ export default class CollabVMClient {
 	// public events
 	private publicEmitter: Emitter<CollabVMClientEvents>;
 
+	private unsubscribeCallbacks: Array<Unsubscribe> = [];
+
 	constructor(url: string) {
 		// Save the URL
 		this.url = url;
@@ -434,6 +436,13 @@ export default class CollabVMClient {
 	// Close the connection
 	close() {
 		this.connectedToVM = false;
+
+		// call all unsubscribe callbacks explicitly
+		for(let cb of this.unsubscribeCallbacks) {
+			cb();
+		}
+		this.unsubscribeCallbacks = [];
+
 		if (this.socket.readyState === WebSocket.OPEN) this.socket.close();
 	}
 
@@ -588,6 +597,8 @@ export default class CollabVMClient {
 	}
 
 	on<E extends keyof CollabVMClientEvents>(event: E, callback: CollabVMClientEvents[E]): Unsubscribe {
-		return this.publicEmitter.on(event, callback);
+		let unsub = this.publicEmitter.on(event, callback);
+		this.unsubscribeCallbacks.push(unsub);
+		return unsub;
 	}
 }

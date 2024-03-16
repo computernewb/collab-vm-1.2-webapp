@@ -1,5 +1,9 @@
 import { StringLike } from './StringLike';
 
+function isalpha(char: number) {
+	return RegExp(/^\p{L}/, 'u').test(String.fromCharCode(char));
+}
+
 /// A simple function for formatting strings in a more expressive manner.
 /// While JavaScript *does* have string interpolation, it's not a total replacement
 /// for just formatting strings, and a method like this is better for data independent formatting.
@@ -25,8 +29,8 @@ export function Format(pattern: string, ...args: Array<StringLike>) {
 			let foundSpecifierEnd = false;
 
 			// Make sure the specifier is not cut off (the last character of the string)
-			if (i + 3 >= pat.length) {
-                throw new Error(`Error in format pattern "${pat}": Cutoff/invalid format specifier`);
+			if (i + 3 > pat.length) {
+				throw new Error(`Error in format pattern "${pat}": Cutoff/invalid format specifier`);
 			}
 
 			// Try and find the specifier end ('}').
@@ -40,13 +44,14 @@ export function Format(pattern: string, ...args: Array<StringLike>) {
 
 					case '{':
 						throw new Error(`Error in format pattern "${pat}": Cannot start a format specifier in an existing replacement`);
-						break;
-
 					case ' ':
 						throw new Error(`Error in format pattern "${pat}": Whitespace inside format specifier`);
-						break;
+
+					case '-':
+						throw new Error(`Error in format pattern "${pat}": Malformed format specifier`);
 
 					default:
+						if (isalpha(pat.charCodeAt(j))) throw new Error(`Error in format pattern "${pat}": Malformed format specifier`);
 						break;
 				}
 
