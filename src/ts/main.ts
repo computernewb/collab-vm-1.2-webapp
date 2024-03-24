@@ -8,9 +8,7 @@ import Keyboard from 'simple-keyboard';
 import { OSK_buttonToKeysym } from './keyboard';
 import 'simple-keyboard/build/css/index.css';
 import VoteStatus from './protocol/VoteStatus.js';
-import * as bootstrap from 'bootstrap';
 import MuteState from './protocol/MuteState.js';
-import { Unsubscribe } from 'nanoevents';
 import { I18nStringKey, TheI18n } from './i18n.js';
 import { Format } from './format.js';
 
@@ -246,7 +244,7 @@ let expectedClose = false;
 let turn = -1;
 // Listed VMs
 const vms: VM[] = [];
-const cards: HTMLDivElement[] = [];
+const cards: HTMLLIElement[] = [];
 const users: {
 	user: User;
 	element: HTMLTableRowElement;
@@ -282,22 +280,19 @@ async function multicollab(url: string) {
 
 	// Add to the DOM
 	for (let vm of list) {
-		let div = document.createElement('div');
-		div.classList.add('col-sm-5', 'col-md-3');
-		let card = document.createElement('div');
-		card.classList.add('card', 'bg-dark', 'text-light');
+		// can we have jsx please........ please... i hate thisssss
+		let div = document.createElement('li');
+
+		let card = document.createElement('a');
+		card.classList.add('card');
 		card.setAttribute('data-cvm-node', vm.id);
-		card.addEventListener('click', async () => {
-			try {
-				await openVM(vm);
-			} catch (e) {
-				alert((e as Error).message);
-			}
-		});
-		vm.thumbnail.classList.add('card-img-top');
+		card.href = `#${vm.id}`;
+
+		vm.thumbnail.classList.add('card-image');
 		let cardBody = document.createElement('div');
 		cardBody.classList.add('card-body');
 		let cardTitle = document.createElement('h5');
+		cardTitle.classList.add('card-heading');
 		cardTitle.innerHTML = vm.displayName;
 		let usersOnline = document.createElement('span');
 		usersOnline.innerHTML = `(<i class="fa-solid fa-users"></i> ${online})`;
@@ -315,8 +310,7 @@ async function openVM(vm: VM): Promise<void> {
 	// If there's an active VM it must be closed before opening another
 	if (VM !== null) return;
 	expectedClose = false;
-	// Set hash
-	location.hash = vm.id;
+
 	// Create the client
 	VM = new CollabVMClient(vm.url);
 
@@ -360,7 +354,7 @@ async function openVM(vm: VM): Promise<void> {
 	chatMessage('', `<b>${vm.id}</b><hr>`);
 	let username = localStorage.getItem('username');
 	let connected = await VM.connect(vm.id, username);
-	elements.adminInputVMID.value = vm.id;
+	//elements.adminInputVMID.value = vm.id;
 	w.VMName = vm.id;
 	if (!connected) {
 		// just give up
@@ -368,7 +362,7 @@ async function openVM(vm: VM): Promise<void> {
 		throw new Error('Failed to connect to node');
 	}
 	// Set the title
-	document.title = Format("{0} - {1}", vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
+	document.title = Format('{0} - {1}', vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
 	// Append canvas
 	elements.vmDisplay.appendChild(VM!.canvas);
 	// Switch to the VM view
@@ -388,7 +382,7 @@ function closeVM() {
 	// Remove the canvas
 	elements.vmDisplay.innerHTML = '';
 	// Switch to the VM list
-	elements.vmlist.style.display = 'block';
+	elements.vmlist.style.display = '';
 	elements.vmview.style.display = 'none';
 	// Clear users
 	users.splice(0, users.length);
@@ -415,13 +409,7 @@ function closeVM() {
 	elements.username.classList.add('text-light');
 }
 
-async function loadList() {
-	await Promise.all(
-		Config.ServerAddresses.map((url) => {
-			return multicollab(url);
-		})
-	);
-
+async function openHash() {
 	// automatically join the vm that's in the url if it exists in the node list
 	let v = vms.find((v) => v.id === window.location.hash.substring(1));
 	try {
@@ -431,12 +419,22 @@ async function loadList() {
 	}
 }
 
+async function loadList() {
+	await Promise.all(
+		Config.ServerAddresses.map((url) => {
+			return multicollab(url);
+		})
+	);
+
+	await openHash();
+}
+
 function sortVMList() {
 	cards.sort((a, b) => {
 		return a.children[0].getAttribute('data-cvm-node')! > b.children[0].getAttribute('data-cvm-node')! ? 1 : -1;
 	});
-	elements.vmlist.children[0].innerHTML = '';
-	cards.forEach((c) => elements.vmlist.children[0].appendChild(c));
+	//elements.vmlist.children[0].innerHTML = '';
+	cards.forEach((c) => elements.vmlist.appendChild(c));
 }
 
 function sortUserList() {
@@ -667,6 +665,8 @@ elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
 elements.voteNoBtn.addEventListener('click', () => VM?.vote(false));
 // Login
 let usernameClick = false;
+
+/*
 const loginModal = new bootstrap.Modal(elements.loginModal);
 elements.loginModal.addEventListener('shown.bs.modal', () => elements.adminPassword.focus());
 elements.username.addEventListener('click', () => {
@@ -687,7 +687,7 @@ function doLogin() {
 	elements.adminPassword.value = '';
 	let u = VM?.on('login', () => {
 		u!();
-		loginModal.hide();
+		//loginModal.hide();
 		elements.badPasswordAlert.style.display = 'none';
 	});
 	let _u = VM?.on('badpw', () => {
@@ -695,6 +695,8 @@ function doLogin() {
 		elements.badPasswordAlert.style.display = 'block';
 	});
 }
+
+*/
 
 function onLogin(_rank: Rank, _perms: Permissions) {
 	rank = _rank;
@@ -775,6 +777,7 @@ elements.forceVoteNoBtn.addEventListener('click', () => VM?.forceVote(false));
 elements.forceVoteYesBtn.addEventListener('click', () => VM?.forceVote(true));
 elements.indefTurnBtn.addEventListener('click', () => VM?.indefiniteTurn());
 
+/*
 async function sendQEMUCommand() {
 	if (!elements.qemuMonitorInput.value) return;
 	let cmd = elements.qemuMonitorInput.value;
@@ -786,6 +789,7 @@ async function sendQEMUCommand() {
 }
 elements.qemuMonitorSendBtn.addEventListener('click', () => sendQEMUCommand());
 elements.qemuMonitorInput.addEventListener('keypress', (e) => e.key === 'Enter' && sendQEMUCommand());
+*/
 
 elements.osk.addEventListener('click', () => elements.oskContainer.classList.toggle('d-none'));
 
@@ -834,6 +838,11 @@ w.cvmEvents = {
 };
 w.VMName = null;
 
+// could be a neat feature?
+window.addEventListener('hashchange', async () => {
+	await openHash();
+});
+
 document.addEventListener('DOMContentLoaded', async () => {
 	// Initalize the i18n system
 	await TheI18n.Init();
@@ -843,6 +852,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Load all VMs
 	await loadList();
 
+	/*
 	// Welcome modal
 	let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
 	if (noWelcomeModal !== '1') {
@@ -857,4 +867,5 @@ document.addEventListener('DOMContentLoaded', async () => {
 			welcomeModalDismissBtn.disabled = false;
 		}, 5000);
 	}
+	*/
 });

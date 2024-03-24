@@ -1,0 +1,15 @@
+// TODO: Maybe we *should* use CSS variables, so the user can pick any theme
+// and maybe put in hooks for that.. but for now this is fine!
+
+$root-bg-color: rgb(32, 32, 32);
+$root-fg-color: rgb(180, 180, 180);
+
+/** Cards **/
+$card-background-color: rgb(48, 48, 48);
+$card-border-color: rgb(58, 58, 58);
+$card-box-shadow-color: rgb(0, 0, 0);
+/* I have to do different syntax here because you can only do divisors with rgb() ahahah GRRRR */
+$card-image-background-color: #ffffff10;
+
+$link-color: rgb(100, 140, 200);
+$link-visited-color: rgb(160, 140, 200);

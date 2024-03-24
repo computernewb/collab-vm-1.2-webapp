@@ -4,7 +4,7 @@
   "description": "kill me",
   "private": true,
   "scripts": {
-    "build": "parcel build --no-source-maps --dist-dir dist --public-url '.' src/html/index.html",
+    "build": "parcel build --dist-dir dist --public-url '.' src/html/index.html",
     "serve": "parcel src/html/index.html",
     "test": "jest",
     "clean": "run-script-os",
@@ -16,7 +16,6 @@
   "dependencies": {
     "@hcaptcha/types": "^1.0.3",
     "@popperjs/core": "^2.11.8",
-    "bootstrap": "^5.3.2",
     "nanoevents": "^7.0.1",
     "simple-keyboard": "^3.7.53"
   },
@@ -24,6 +23,7 @@
     "@parcel/watcher": "~2.1.0"
   },
   "devDependencies": {
+    "@parcel/transformer-sass": "2.12.0",
     "@types/bootstrap": "^5.2.10",
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
