@@ -1,4 +1,4 @@
 dist
 *.md
-*.html
+#*.html
 *.css

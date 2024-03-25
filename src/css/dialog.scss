@@ -1,0 +1,44 @@
+// for our new <dialog> based modals
+@import 'colors-dark';
+
+/* a bit of a "lazy" curve. should probably be in a shared file */
+@keyframes dialogFadeIn {
+	0% {
+		opacity: 0;
+	}
+	35% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+// don't really know how i can animate "out",
+// at least without hacks, but oh well
+//
+// this will also probably be snappier than the mess that is
+// the bootstrap modals..
+
+dialog::backdrop {
+	animation: dialogFadeIn 0.3s;
+	background-color: rgba(0, 0, 0, 0.65);
+}
+
+dialog {
+	@extend .root;
+
+	color: inherit;
+	background-color: $root-fg-color $card-background-color;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0px 0px 8px 0px $root-fg-color $card-box-shadow-color;
+}
+
+:modal {
+	animation: dialogFadeIn 0.2s;
+}
+
+.dialog-alignright {
+	float: right;
+}

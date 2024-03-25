@@ -1,0 +1,58 @@
+// Module for element styling
+// THIS IS NOT DONE!
+@import 'colors-dark';
+
+.button-default {
+	@extend .root;
+
+	background-color: $button-bg-color !important;
+	border-radius: 6px;
+	border-width: 0;
+	color: #ffffff !important;
+
+	cursor: pointer;
+	display: inline-block;
+
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 20px;
+
+	list-style: none;
+	margin: 0;
+
+	padding: 10px 12px;
+
+	text-align: center;
+	transition: all 200ms;
+	vertical-align: baseline;
+	white-space: nowrap;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+}
+
+button {
+	@extend .button-default;
+}
+
+.button-red {
+	background-color: $button-red-bg-color !important;
+}
+
+.button-green {
+	background-color: $button-green-bg-color !important;
+}
+
+
+input[type='text'] {
+	padding: 0.1em;
+	height: 1.75em;
+	//position: relative;
+
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	background-color: $input-bg-color;
+	font-size: 16px;
+	color: #ffffff;
+}
+

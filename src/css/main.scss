@@ -2,13 +2,14 @@
 @import 'colors-dark';
 
 // modules
+@import 'elements';
 @import 'cards';
+
+
 
 html,
 body {
-	background-color: $root-bg-color;
-	color: $root-fg-color;
-	font-family: 'Segoe UI', Tahoma, Cantarell, sans-serif;
+	@extend .root;
 	margin: unset;
 }
 
@@ -331,32 +332,8 @@ a[data-cvm-node='vm0b0t'] {
 	}
 }
 
-// for our new <dialog> based modals
-// This should probably be put into a more uniform file
-
-/* a bit of a "lazy" curve */
-@keyframes dialogFadeIn {
-	0% {
-		opacity: 0;
-	}
-	35% {
-		opacity: 0.75;
-	}
-	100% {
-		opacity: 1;
-	}
+// shitty bootstrap polyfill
+.d-none {
+	display: none;
 }
 
-// don't really know how i can animate "out",
-// at least without hacks, but oh well
-//
-// this will also probably be snappier than the mess that is
-// the bootstrap modals..
-
-dialog::backdrop {
-	animation: dialogFadeIn 0.7s;
-}
-
-:modal {
-	animation: dialogFadeIn 0.4s;
-}

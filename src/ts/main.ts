@@ -11,6 +11,8 @@ import VoteStatus from './protocol/VoteStatus.js';
 import MuteState from './protocol/MuteState.js';
 import { I18nStringKey, TheI18n } from './i18n.js';
 import { Format } from './format.js';
+import { ChangeUsername_Modal } from './modals/change_username_modal.js';
+import { Alert_Modal } from './modals/alert_modal.js';
 
 // Elements
 const w = window as any;
@@ -325,13 +327,13 @@ async function openVM(vm: VM): Promise<void> {
 		// TODO: i18n these
 		switch (status) {
 			case 'taken':
-				alert(TheI18n.GetString(I18nStringKey.kError_UsernameTaken));
+				Alert_Modal(TheI18n.GetString(I18nStringKey.kError_UsernameTaken));
 				break;
 			case 'invalid':
-				alert(TheI18n.GetString(I18nStringKey.kError_UsernameInvalid));
+				Alert_Modal(TheI18n.GetString(I18nStringKey.kError_UsernameInvalid));
 				break;
 			case 'blacklisted':
-				alert(TheI18n.GetString(I18nStringKey.kError_UsernameBlacklisted));
+				Alert_Modal(TheI18n.GetString(I18nStringKey.kError_UsernameBlacklisted));
 				break;
 		}
 	});
@@ -339,11 +341,11 @@ async function openVM(vm: VM): Promise<void> {
 	VM!.on('turn', (status) => turnUpdate(status));
 	VM!.on('vote', (status: VoteStatus) => voteUpdate(status));
 	VM!.on('voteend', () => voteEnd());
-	VM!.on('votecd', (voteCooldown) => window.alert(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown)));
+	VM!.on('votecd', (voteCooldown) => window.Alert_Modal(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown)));
 	VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms));
 
 	VM!.on('close', () => {
-		if (!expectedClose) alert(TheI18n.GetString(I18nStringKey.kError_UnexpectedDisconnection));
+		if (!expectedClose) Alert_Modal(TheI18n.GetString(I18nStringKey.kError_UnexpectedDisconnection));
 		closeVM();
 	});
 
@@ -415,7 +417,7 @@ async function openHash() {
 	try {
 		if (v !== undefined) await openVM(v);
 	} catch (e) {
-		alert((e as Error).message);
+		Alert_Modal((e as Error).message);
 	}
 }
 
@@ -631,8 +633,13 @@ elements.sendChatBtn.addEventListener('click', sendChat);
 elements.chatinput.addEventListener('keypress', (e) => {
 	if (e.key === 'Enter') sendChat();
 });
-elements.changeUsernameBtn.addEventListener('click', () => {
-	let newname = prompt(TheI18n.GetString(I18nStringKey.kVMPrompts_EnterNewUsernamePrompt), w.username);
+elements.changeUsernameBtn.addEventListener('click', async () => {
+	let newname = await ChangeUsername_Modal(w.username);
+
+	// cancelled
+	if(newname == null)
+		return;
+
 	if (newname === w.username) return;
 	VM?.rename(newname);
 });
@@ -748,7 +755,7 @@ function userModOptions(user: { user: User; element: HTMLTableRowElement }) {
 	if (perms.grabip)
 		addUserDropdownItem(ul, 'Get IP', async () => {
 			let ip = await VM!.getip(user.user.username);
-			alert(ip);
+			Alert_Modal(ip);
 		});
 	tr.appendChild(ul);
 }

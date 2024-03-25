@@ -1,10 +1,19 @@
 // TODO: Maybe we *should* use CSS variables, so the user can pick any theme
 // and maybe put in hooks for that.. but for now this is fine!
+// (this really should be called _style-dark @ this point..)
 
 $root-bg-color: rgb(32, 32, 32);
 $root-fg-color: rgb(180, 180, 180);
 
-/** Cards **/
+// Elements
+$input-bg-color: rgb(51, 51, 51);
+// Resist the urge to make these radioactive. I made them kinda grungy
+// on purpose, and it seems to be okay.
+$button-bg-color: rgb(51, 107, 145);
+$button-red-bg-color: rgb(159, 51, 51);
+$button-green-bg-color: rgb(61, 151, 43);
+
+// Cards
 $card-background-color: rgb(48, 48, 48);
 $card-border-color: rgb(58, 58, 58);
 $card-box-shadow-color: rgb(0, 0, 0);
@@ -13,3 +22,10 @@ $card-image-background-color: #ffffff10;
 
 $link-color: rgb(100, 140, 200);
 $link-visited-color: rgb(160, 140, 200);
+
+// Root mixin
+.root {
+	background-color: $root-bg-color;
+	color: $root-fg-color;
+	font-family: 'Segoe UI', Tahoma, Cantarell, sans-serif;
+}
