@@ -341,7 +341,7 @@ async function openVM(vm: VM): Promise<void> {
 	VM!.on('turn', (status) => turnUpdate(status));
 	VM!.on('vote', (status: VoteStatus) => voteUpdate(status));
 	VM!.on('voteend', () => voteEnd());
-	VM!.on('votecd', (voteCooldown) => window.Alert_Modal(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown)));
+	VM!.on('votecd', (voteCooldown) => Alert_Modal(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown)));
 	VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms));
 
 	VM!.on('close', () => {
