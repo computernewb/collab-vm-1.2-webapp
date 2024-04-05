@@ -10,5 +10,9 @@ export const Config = {
         "wss://computernewb.com/collab-vm/vm6",
         "wss://computernewb.com/collab-vm/vm7",
         "wss://computernewb.com/collab-vm/vm8",
-    ]
+    ],
+    Auth: {
+        Enabled: false,
+        APIEndpoint: "http://127.0.0.1:5858"
+    }
 }

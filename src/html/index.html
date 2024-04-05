@@ -97,15 +97,74 @@
 			</div>
 		</div>
 	</div>
-        <div class="modal fade" id="hcaptchaModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-dark text-light">
-                    <div class="modal-body">
-                        <div id="captcha-box"></div>
+    <div class="modal fade" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content bg-dark text-light">
+				<div class="modal-header">
+					<h5 class="modal-title" id="accountModalTitle">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+                    <div class="alert alert-danger alert-dismissible" id="accountModalError" role="alert">
+                        <span id="accountModalErrorText"></span>
+                        <button type="button" class="btn-close" aria-label="Close" id="accountModalErrorDismiss"></button>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div id="accountLoginSection">
+                        <form id="accountLoginForm">
+                            <label for="accountLoginUsername">Username</label><br/>
+                            <input id="accountLoginUsername" type="text" class="form-control bg-dark text-light" placeholder="Username" name="username" required/><br>
+                            <label for="accountLoginPassword">Password</label><br/>
+                            <input id="accountLoginPassword" type="password" class="form-control bg-dark text-light" placeholder="Password" name="password" required><br>
+                            <div id="accountLoginCaptcha"></div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                    <div id="accountRegisterSection">
+                        <form id="accountRegisterForm">
+                            <label for="accountRegisterEmail">E-Mail</label><br/>
+                            <input id="accountRegisterEmail" type="email" class="form-control bg-dark text-light" placeholder="E-Mail" name="email" required/><br>
+                            <label for="accountRegisterUsername">Username</label><br/>
+                            <input id="accountRegisterUsername" type="text" class="form-control bg-dark text-light" placeholder="Username" name="username" required/><br>
+                            <label for="accountRegisterPassword">Password</label><br/>
+                            <input id="accountRegisterPassword" type="password" class="form-control bg-dark text-light" placeholder="Password" name="password" required><br>
+                            <label for="accountRegisterConfirmPassword">Confirm Password</label><br/>
+                            <input id="accountRegisterConfirmPassword" type="password" class="form-control bg-dark text-light" placeholder="Confirm Password" name="confirmpassword" required><br>
+                            <div id="accountRegisterCaptcha"></div>
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </form>
+                    </div>
+                    <div id="accountVerifyEmailSection">
+                        <center>
+                            <i class="fa-solid fa-envelope" style="font-size: 12rem"></i>
+                            <p id="accountVerifyEmailText"></p>
+                            <form id="accountVerifyEmailForm">
+                                <label for="accountVerifyEmailCode">Code</label><br>
+                                <input id="accountVerifyEmailCode" type="text" class="form-control bg-dark text-light" name="code" required><br>
+                                <label for="accountVerifyEmailPassword">Your password</label><br>
+                                <input id="accountVerifyEmailPassword" type="password" class="form-control bg-dark text-light" placeholder="Password" name="password" required/><br/>
+                                <button type="submit" class="btn btn-primary">Verify</button>
+                            </form>
+                        </center>
+                    </div>
+                    <div id="accountSettingsSection">
+                        <form id="accountSettingsForm">
+                            <label for="accountSettingsEmail">E-Mail</label><br>
+                            <input id="accountSettingsEmail" type="email" class="form-control bg-dark text-light" placeholder="E-Mail" name="email" required/><br/>
+                            <label for="accountSettingsUsername">Username</label><br>
+                            <input id="accountSettingsUsername" type="text" class="form-control bg-dark text-light" placeholder="Username" name="username" required/><br/>
+                            <label for="accountSettingsNewPassword">New Password</label>
+                            <input id="accountSettingsNewPassword" type="password" class="form-control bg-dark text-light" placeholder="New Password" name="password"/><br/>
+                            <label for="accountSettingsConfirmNewPassword">Confirm New Password</label>
+                            <input id="accountSettingsConfirmNewPassword" type="password" class="form-control bg-dark text-light" placeholder="Confirm New Password" name="confirmpassword"/><br/>
+                            <label for="accountSettingsCurrentPassword">Current Password</label>
+                            <input id="accountSettingsCurrentPassword" type="password" class="form-control bg-dark text-light" placeholder="Current Password" name="currentpassword" required/><br/>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><span id="siteNameText"></span></a>
@@ -113,7 +172,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a id="homeBtn" href="#" class="nav-link active" aria-current="page"><i class="fa-solid fa-house"></i> <span id="homeBtnText"></span></a>
                         </li>
@@ -136,6 +195,17 @@
                             <a href="https://computernewb.com/collab-vm/user-vm" class="nav-link"><i class="fa-solid fa-user"></i> UserVM</a>
                         </li>
                     </ul>
+                    <div class="navbar-text dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i> <span id="accountDropdownUsername">Not Logged in</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-dark text-light" aria-labelledby="accountDropdownMenuLink">
+                            <a class="dropdown-item bg-dark text-light" href="#" id="accountLoginButton">Log in</a>
+                            <a class="dropdown-item bg-dark text-light" href="#" id="accountRegisterButton">Register</a>
+                            <a class="dropdown-item bg-dark text-light" href="#" id="accountSettingsButton">Account Settings</a>
+                            <a class="dropdown-item bg-dark text-light" href="#" id="accountLogoutButton">Logout</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -204,7 +274,7 @@
                         </table>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text bg-dark text-light" id="username">Username</span>
+                        <span class="input-group-text bg-dark username-unregistered" id="username">Username</span>
                         <input type="text" class="form-control bg-dark text-light" id="chat-input"/>
                         <div class="input-group-text bg-dark text-light" id="xssCheckboxContainer">
                             <input class="form-check-input" type="checkbox" value="" id="xssCheckbox"/>
@@ -215,7 +285,7 @@
                 </div>
             </div>
         </div>
-        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+        <script src="https://js.hcaptcha.com/1/api.js"></script>
         <script type="module" src="../ts/main.ts" type="application/javascript"></script>
     </body>
 </html>

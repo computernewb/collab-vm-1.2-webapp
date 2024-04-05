@@ -43,6 +43,18 @@ export enum I18nStringKey {
 	kError_UsernameTaken = 'kError_UsernameTaken',
 	kError_UsernameInvalid = 'kError_UsernameInvalid',
 	kError_UsernameBlacklisted = 'kError_UsernameBlacklisted',
+
+	// Auth
+	kAccountModal_Login = 'kAccountModal_Login',
+	kAccountModal_Register = 'kAccountModal_Register',
+	kAccountModal_Verify = 'kAccountModal_Verify',
+	kAccountModal_AccountSettings = 'kAccountModal_AccountSettings',
+
+	kAccountModal_VerifyText = 'kAccountModal_VerifyText',
+	kMissingCaptcha = 'kMissingCaptcha',
+	kPasswordsMustMatch = 'kPasswordsMustMatch',
+
+	kNotLoggedIn = 'kNotLoggedIn',
 }
 
 // This models the JSON structure.

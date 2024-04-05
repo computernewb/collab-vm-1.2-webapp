@@ -39,6 +39,17 @@
 		"kError_UnexpectedDisconnection": "You have been disconnected from the server.",
 		"kError_UsernameTaken": "That username is already taken",
 		"kError_UsernameInvalid": "Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
-		"kError_UsernameBlacklisted": "That username has been blacklisted."
+		"kError_UsernameBlacklisted": "That username has been blacklisted.",
+
+		"kAccountModal_Login": "Login",
+		"kAccountModal_Register": "Register",
+		"kAccountModal_Verify": "Verify E-Mail",
+		"kAccountModal_AccountSettings": "Account Settings",
+
+		"kMissingCaptcha": "Please fill out the captcha.",
+		"kPasswordsMustMatch": "Passwords must match.",
+		"kAccountModal_VerifyText": "We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
+
+		"kNotLoggedIn": "Not Logged in"
 	}
 }
