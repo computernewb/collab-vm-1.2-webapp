@@ -42,7 +42,7 @@ export enum I18nStringKey {
 
 	kError_UsernameTaken = 'kError_UsernameTaken',
 	kError_UsernameInvalid = 'kError_UsernameInvalid',
-	kError_UsernameBlacklisted = 'kError_UsernameBlacklisted',
+	kError_UsernameBlacklisted = 'kError_UsernameBlacklisted'
 }
 
 // This models the JSON structure.
@@ -68,7 +68,7 @@ type LanguagesJson = {
 
 	// The default language (set if a invalid language not in the languages array is set, or no language is set)
 	defaultLanguage: string;
-}
+};
 
 // ID for fallback language
 const fallbackId = '!!fallback';
@@ -77,7 +77,7 @@ const fallbackId = '!!fallback';
 const fallbackLanguage: Language = {
 	languageName: 'Fallback',
 	translatedLanguageName: 'Fallback',
-	flag: "no",
+	flag: 'no',
 	author: 'Computernewb',
 
 	stringKeys: {

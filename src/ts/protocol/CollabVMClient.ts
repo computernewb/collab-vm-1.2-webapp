@@ -438,7 +438,7 @@ export default class CollabVMClient {
 		this.connectedToVM = false;
 
 		// call all unsubscribe callbacks explicitly
-		for(let cb of this.unsubscribeCallbacks) {
+		for (let cb of this.unsubscribeCallbacks) {
 			cb();
 		}
 		this.unsubscribeCallbacks = [];

@@ -1,7 +1,7 @@
 import { Format } from '../format';
 
 test('a string without any format specifiers in it is unaltered', () => {
-    expect(Format("Hello World")).toBe("Hello World");
+	expect(Format('Hello World')).toBe('Hello World');
 });
 
 test('formatting a string works', () => {

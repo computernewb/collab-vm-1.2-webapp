@@ -368,7 +368,7 @@ async function openVM(vm: VM): Promise<void> {
 		throw new Error('Failed to connect to node');
 	}
 	// Set the title
-	document.title = Format("{0} - {1}", vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
+	document.title = Format('{0} - {1}', vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
 	// Append canvas
 	elements.vmDisplay.appendChild(VM!.canvas);
 	// Switch to the VM view
