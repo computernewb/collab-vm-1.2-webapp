@@ -1,3 +1,5 @@
+import * as dayjs from 'dayjs';
+
 export default class AuthManager {
     apiEndpoint : string;
     info : AuthServerInformation | null;
@@ -67,7 +69,7 @@ export default class AuthManager {
         })
     }
 
-    register(username : string, password : string, email : string, captchaToken : string | undefined) : Promise<AccountRegisterResult> {
+    register(username : string, password : string, email : string, dateOfBirth : dayjs.Dayjs, captchaToken : string | undefined) : Promise<AccountRegisterResult> {
         return new Promise(async (res, rej) => {
             if (!this.info) throw new Error("Cannot login before fetching API information.");
             if (!captchaToken && this.info.hcaptcha.required) throw new Error("This API requires a valid hCaptcha token.");
@@ -80,6 +82,7 @@ export default class AuthManager {
                     username: username,
                     password: password,
                     email: email,
+                    dateOfBirth: dateOfBirth.format("YYYY-MM-DD"),
                     captchatoken: captchaToken
                 })
             });

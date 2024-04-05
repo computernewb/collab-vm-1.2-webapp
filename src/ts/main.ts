@@ -14,6 +14,7 @@ import { Unsubscribe } from 'nanoevents';
 import { I18nStringKey, TheI18n } from './i18n.js';
 import { Format } from './format.js';
 import AuthManager from './AuthManager.js';
+import dayjs from 'dayjs';
 
 // Elements
 const w = window as any;
@@ -95,6 +96,7 @@ const elements = {
 	accountRegisterUsername: document.getElementById("accountRegisterUsername") as HTMLInputElement,
 	accountRegisterPassword: document.getElementById("accountRegisterPassword") as HTMLInputElement,
 	accountRegisterConfirmPassword: document.getElementById("accountRegisterConfirmPassword") as HTMLInputElement,
+	accountRegisterDateOfBirth: document.getElementById("accountRegisterDateOfBirth") as HTMLInputElement,
 	accountVerifyEmailCode: document.getElementById("accountVerifyEmailCode") as HTMLInputElement,
 	accountVerifyEmailPassword: document.getElementById("accountVerifyEmailPassword") as HTMLInputElement,
 
@@ -993,18 +995,20 @@ elements.accountRegisterForm.addEventListener('submit', async (e) => {
 	var username = elements.accountRegisterUsername.value;
 	var password = elements.accountRegisterPassword.value;
 	var email = elements.accountRegisterEmail.value;
+	var dob = dayjs(elements.accountRegisterDateOfBirth.valueAsDate);
 	if (password !== elements.accountRegisterConfirmPassword.value) {
 		elements.accountModalErrorText.innerHTML = TheI18n.GetString(I18nStringKey.kPasswordsMustMatch);
 		elements.accountModalError.style.display = "block";
 		return false;
 	}
-	var result = await auth!.register(username, password, email, hcaptchaToken);
+	var result = await auth!.register(username, password, email, dob, hcaptchaToken);
 	if (auth!.info!.hcaptcha.required) hcaptcha.reset(hcaptchaID);
 	if (result.success) {
 		elements.accountRegisterUsername.value = "";
 		elements.accountRegisterEmail.value = "";
 		elements.accountRegisterPassword.value = "";
 		elements.accountRegisterConfirmPassword.value = "";
+		elements.accountRegisterDateOfBirth.value = "";
 		if (result.verificationRequired) {
 			accountBeingVerified = result.username;
 			elements.accountVerifyEmailText.innerText = TheI18n.GetString(I18nStringKey.kAccountModal_VerifyText, result.email!);
