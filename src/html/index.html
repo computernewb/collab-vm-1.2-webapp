@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html prefix="og: https://ogp.me/ns#">
+<html prefix="og: https://ogp.me/ns#" data-bs-theme="dark">
     <head>
         <title>CollabVM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,19 +17,19 @@
         <meta property="og:site_name" content="Computernewb"/>
         <meta property="og:image" content="https://computernewb.com/collab-vm/desktop.png"/>
     </head>
-    <body class="bg-dark">
+    <body>
         <div class="modal fade" id="qemuMonitorModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content bg-dark text-light">
+                <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">QEMU Monitor</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <textarea id="qemuMonitorOutput" readonly="" class="form-control bg-dark text-light"></textarea>
+                        <textarea id="qemuMonitorOutput" readonly="" class="form-control"></textarea>
                         <div class="input-group">
-                            <input type="text" id="qemuMonitorInput" class="form-control bg-dark text-light" placeholder="Command"/>
-                            <button class="btn btn-outline-secondary btn-primary text-light" type="button" id="qemuMonitorSendBtn">Send</button>
+                            <input type="text" id="qemuMonitorInput" class="form-control" placeholder="Command"/>
+                            <button class="btn btn-outline-secondary btn-primary" type="button" id="qemuMonitorSendBtn">Send</button>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
         </div>
     <div class="modal fade" id="welcomeModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="welcomeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content bg-dark text-light">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h1>Welcome to CollabVM</h1>
                 </div>
@@ -74,7 +74,7 @@
     </div>
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md">
-            <div class="modal-content bg-dark text-light">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Login</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -86,8 +86,8 @@
                     </div>
                     <div class="input-group">
                         <input type="hidden" name="username" id="adminInputVMID"/>
-                        <span class="input-group-text bg-dark text-light">Password</span>
-                        <input id="adminPassword" type="password" class="form-control bg-dark text-light" placeholder="Password" name="password"/>   
+                        <span class="input-group-text">Password</span>
+                        <input id="adminPassword" type="password" class="form-control" placeholder="Password" name="password"/>   
                     </div>
 
                 </div>
@@ -99,14 +99,14 @@
     </div>
         <div class="modal fade" id="hcaptchaModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content bg-dark text-light">
+                <div class="modal-content">
                     <div class="modal-body">
                         <div id="captcha-box"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><span id="siteNameText"></span></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,8 +144,8 @@
         </div>
         <div class="container-fluid" id="vmview">
             <div id="vmDisplay"></div>
-            <p id="turnstatus" class="text-light"></p>
-            <div id="voteResetPanel" class="bg-dark text-light" style="display:none;">
+            <p id="turnstatus"></p>
+            <div id="voteResetPanel" style="display:none;">
                 <span id="voteResetHeaderText"></span><br/>
                 <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i> <span id="voteYesBtnText"></span><span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i> <span id="voteNoBtnText"></span><span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
                 <span id="voteTimeText"></span>
@@ -187,9 +187,9 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="table-responsive username-table">
-                        <table class="table table-hover table-dark table-borderless">
+                        <table class="table table-hover table-borderless">
                             <thead>
-                                <th><i class="fa-solid fa-user"></i> <span id="usersOnlineText"></span> (<span id="onlineusercount"></span>)</th>
+                                <th class="bg-body-tertiary"><i class="fa-solid fa-user"></i> <span id="usersOnlineText"></span> (<span id="onlineusercount"></span>)</th>
                             </thead>
                             <tbody id="userlist"></tbody>
                         </table>
@@ -197,20 +197,20 @@
                 </div>
                 <div class="col-md-8">
                     <div class="table-responsive chat-table" id="chatListDiv">
-                        <table class="table table-hover table-dark table-borderless">
+                        <table class="table table-hover table-borderless">
                             <tbody id="chatList">
 
                             </tbody>
                         </table>
                     </div>
                     <div class="input-group">
-                        <span class="input-group-text bg-dark text-light" id="username">Username</span>
-                        <input type="text" class="form-control bg-dark text-light" id="chat-input"/>
-                        <div class="input-group-text bg-dark text-light" id="xssCheckboxContainer">
+                        <span class="input-group-text" id="username">Username</span>
+                        <input type="text" class="form-control" id="chat-input"/>
+                        <div class="input-group-text" id="xssCheckboxContainer">
                             <input class="form-check-input" type="checkbox" value="" id="xssCheckbox"/>
                             <label class="form-check-label" for="xssCheckbox">XSS</label>
                         </div>
-                        <button class="btn btn-primary text-light" type="button" id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
+                        <button class="btn btn-primary" type="button" id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
