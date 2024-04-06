@@ -299,6 +299,6 @@ div[data-cvm-node=vm0b0t] {
   } 
 }
 
-#accountDropdownMenuLink, #accountModalError {
+#accountDropdownMenuLink, #accountModalError, #accountModalSuccess {
   display: none;
 }

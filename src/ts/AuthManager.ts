@@ -153,6 +153,43 @@ export default class AuthManager {
             res(json);
         });
     }
+
+    sendPasswordResetEmail(username : string, email : string, captchaToken : string | undefined) {
+        return new Promise<PasswordResetResult>(async res => {
+            if (!this.info) throw new Error("Cannot send password reset email without fetching API information.");
+            if (!captchaToken && this.info.hcaptcha.required) throw new Error("This API requires a valid hCaptcha token.");
+            var data = await fetch(this.apiEndpoint + "/api/v1/sendreset", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    captchaToken: captchaToken
+                })
+            });
+            res(await data.json() as PasswordResetResult);
+        });
+    }
+
+    resetPassword(username : string, email : string, code : string, newPassword : string) {
+        return new Promise<PasswordResetResult>(async res => {
+            var data = await fetch(this.apiEndpoint + "/api/v1/reset", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    code: code,
+                    newPassword: newPassword
+                })
+            });
+            res(await data.json() as PasswordResetResult);
+        });
+    }
 }
 
 export interface AuthServerInformation {
@@ -211,4 +248,9 @@ export interface UpdateAccountResult {
     error : string | undefined;
     verificationRequired : boolean | undefined;
     sessionExpired : boolean | undefined;
+}
+
+export interface PasswordResetResult {
+    success : boolean;
+    error : string | undefined;
 }

@@ -49,8 +49,11 @@ export enum I18nStringKey {
 	kAccountModal_Register = 'kAccountModal_Register',
 	kAccountModal_Verify = 'kAccountModal_Verify',
 	kAccountModal_AccountSettings = 'kAccountModal_AccountSettings',
+	kAccountModal_ResetPassword = 'kAccountModal_ResetPassword',
 
 	kAccountModal_VerifyText = 'kAccountModal_VerifyText',
+	kAccountModal_VerifyPasswordResetText = 'kAccountModal_VerifyPasswordResetText',
+	kAccountModal_PasswordResetSuccess = 'kAccountModal_PasswordResetSuccess',
 	kMissingCaptcha = 'kMissingCaptcha',
 	kPasswordsMustMatch = 'kPasswordsMustMatch',
 

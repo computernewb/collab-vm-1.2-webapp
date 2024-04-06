@@ -45,10 +45,13 @@
 		"kAccountModal_Register": "Register",
 		"kAccountModal_Verify": "Verify E-Mail",
 		"kAccountModal_AccountSettings": "Account Settings",
+		"kAccountModal_ResetPassword": "Reset Password",
 
 		"kMissingCaptcha": "Please fill out the captcha.",
 		"kPasswordsMustMatch": "Passwords must match.",
 		"kAccountModal_VerifyText": "We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_VerifyPasswordResetText": "We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_PasswordResetSuccess": "Your password has been changed successfully. You can now log in with your new password.",
 
 		"kNotLoggedIn": "Not Logged in"
 	}

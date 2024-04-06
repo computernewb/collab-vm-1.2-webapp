@@ -109,6 +109,10 @@
                         <span id="accountModalErrorText"></span>
                         <button type="button" class="btn-close" aria-label="Close" id="accountModalErrorDismiss"></button>
                     </div>
+                    <div class="alert alert-success alert-dismissible" id="accountModalSuccess" role="alert">
+                        <span id="accountModalSuccessText"></span>
+                        <button type="button" class="btn-close" aria-label="Close" id="accountModalSuccessDismiss"></button>
+                    </div>
                     <div id="accountLoginSection">
                         <form id="accountLoginForm">
                             <label for="accountLoginUsername">Username</label><br/>
@@ -116,7 +120,7 @@
                             <label for="accountLoginPassword">Password</label><br/>
                             <input id="accountLoginPassword" type="password" class="form-control" placeholder="Password" name="password" required><br>
                             <div id="accountLoginCaptcha"></div>
-                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="submit" class="btn btn-primary">Login</button> <button type="button" class="btn btn-secondary" id="accountForgotPasswordButton">Forgot Password</button>
                         </form>
                     </div>
                     <div id="accountRegisterSection">
@@ -141,7 +145,7 @@
                             <p id="accountVerifyEmailText"></p>
                             <form id="accountVerifyEmailForm">
                                 <label for="accountVerifyEmailCode">Code</label><br>
-                                <input id="accountVerifyEmailCode" type="text" class="form-control" name="code" required><br>
+                                <input id="accountVerifyEmailCode" type="text" class="form-control" name="code" placeholder="Code" required><br>
                                 <label for="accountVerifyEmailPassword">Your password</label><br>
                                 <input id="accountVerifyEmailPassword" type="password" class="form-control" placeholder="Password" name="password" required/><br/>
                                 <button type="submit" class="btn btn-primary">Verify</button>
@@ -162,6 +166,30 @@
                             <input id="accountSettingsCurrentPassword" type="password" class="form-control" placeholder="Current Password" name="currentpassword" required/><br/>
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
+                    </div>
+                    <div id="accountResetPasswordSection">
+                        <form id="accountResetPasswordForm">
+                            <label for="accountResetPasswordEmail">E-Mail</label><br>
+                            <input id="accountResetPasswordEmail" type="email" class="form-control" placeholder="E-Mail" name="email" required/><br/>
+                            <label for="accountResetPasswordUsername">Username</label>
+                            <input id="accountResetPasswordUsername" type="text" class="form-control" placeholder="Username" name="username" required/><br/>
+                            <div id="accountResetPasswordCaptcha"></div>
+                            <button type="submit" class="btn btn-primary">Reset</button>
+                    </div>
+                    <div id="accountResetPasswordVerifySection">
+                        <center>
+                            <i class="fa-solid fa-envelope" style="font-size: 12rem"></i>
+                            <p id="accountVerifyPasswordResetText"></p>
+                            <form id="accountResetPasswordVerifyForm">
+                                <label for="accountResetPasswordCode">Code</label><br>
+                                <input id="accountResetPasswordCode" type="text" class="form-control" name="code" placeholder="Code" required><br>
+                                <label for="accountResetPasswordNewPassword">New Password</label><br>
+                                <input id="accountResetPasswordNewPassword" type="password" class="form-control" placeholder="New Password" name="password" required/><br/>
+                                <label for="accountResetPasswordConfirmNewPassword">Confirm New Password</label><br>
+                                <input id="accountResetPasswordConfirmNewPassword" type="password" class="form-control" placeholder="Confirm New Password" name="confirmpassword" required/><br/>
+                                <button type="submit" class="btn btn-primary">Reset</button>
+                            </form>
+                        </center>
                     </div>
 				</div>
 			</div>
