@@ -429,7 +429,7 @@ async function openVM(vm: VM): Promise<void> {
 
 	// Connect to node
 	chatMessage('', `<b>${vm.id}</b><hr>`);
-	let username = Config.Auth.Enabled ? null : localStorage.getItem('username');
+	let username = Config.Auth.Enabled ? (auth!.account?.username ?? null) : localStorage.getItem('username');
 	let connected = await VM.connect(vm.id, username);
 	elements.adminInputVMID.value = vm.id;
 	w.VMName = vm.id;
