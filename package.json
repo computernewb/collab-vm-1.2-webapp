@@ -20,9 +20,6 @@
     "nanoevents": "^7.0.1",
     "simple-keyboard": "^3.7.53"
   },
-  "overrides": {
-    "@parcel/watcher": "~2.1.0"
-  },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@types/jest": "^29.5.12",
