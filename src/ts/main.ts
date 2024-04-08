@@ -790,7 +790,7 @@ function doLogin() {
 function onLogin(_rank: Rank, _perms: Permissions) {
 	rank = _rank;
 	perms = _perms;
-	elements.username.classList.remove('text-dark', 'text-light');
+	elements.username.classList.remove('username-unregistered', 'username-registered');
 	if (rank === Rank.Admin) elements.username.classList.add('username-admin');
 	if (rank === Rank.Moderator) elements.username.classList.add('username-moderator');
 	if (rank === Rank.Registered) elements.username.classList.add('username-registered');

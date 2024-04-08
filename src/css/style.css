@@ -122,6 +122,16 @@ tr.user-waiting > td {
   --bs-table-color: #000000;
 }
 
+tr.user-registered.user-turn > td, tr.user-registered.user-waiting > td {
+  color: #000000 !important;
+  --bs-table-color: #000000 !important;
+}
+
+tr.user-unregistered.user-turn > td, tr.user-unregistered.user-waiting > td {
+  color: #585858 !important;
+  --bs-table-color: #585858 !important;
+}
+
 .tr.user-waiting:hover, tr.user-waiting > td:hover {
   background-color: #ece1be !important;
   --bs-table-bg-state: #ece1be !important;
