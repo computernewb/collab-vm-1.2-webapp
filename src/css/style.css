@@ -95,6 +95,14 @@ tr.user-moderator > td, .chat-username-moderator, .username-moderator {
   color: #00FF00 !important;
 }
 
+tr.user-unregistered > td, .chat-username-unregistered, .username-unregistered {
+  color: #b1b1b1 !important;
+}
+
+tr.user-registered > td, .chat-username-registered, .username-registered {
+  color: #FFFFFF !important;
+}
+
 tr.user-turn > td {
   background-color: #cfe2ff !important;
   --bs-table-bg-state: #cfe2ff !important;
@@ -112,6 +120,16 @@ tr.user-waiting > td {
   --bs-table-bg-state: #fff3cd !important;
   color: #000000;
   --bs-table-color: #000000;
+}
+
+tr.user-registered.user-turn > td, tr.user-registered.user-waiting > td {
+  color: #000000 !important;
+  --bs-table-color: #000000 !important;
+}
+
+tr.user-unregistered.user-turn > td, tr.user-unregistered.user-waiting > td {
+  color: #585858 !important;
+  --bs-table-color: #585858 !important;
 }
 
 .tr.user-waiting:hover, tr.user-waiting > td:hover {
@@ -289,4 +307,8 @@ div[data-cvm-node=vm0b0t] {
   img { 
     filter:blur(40px)!important; 
   } 
+}
+
+#accountDropdownMenuLink, #accountModalError, #accountModalSuccess {
+  display: none;
 }

@@ -33,6 +33,10 @@ export interface CollabVMClientEvents {
 
 	badpw: () => void;
 	login: (rank: Rank, perms: Permissions) => void;
+
+	// Auth stuff
+	auth: (server: string) => void;
+	accountlogin: (success: boolean) => void;
 }
 
 // types for private emitter
@@ -58,6 +62,7 @@ export default class CollabVMClient {
 	private perms: Permissions = new Permissions(0);
 	private voteStatus: VoteStatus | null = null;
 	private node: string | null = null;
+	private auth: boolean = false;
 	// events that are used internally and not exposed
 	private internalEmitter: Emitter<CollabVMClientPrivateEvents>;
 	// public events
@@ -341,6 +346,20 @@ export default class CollabVMClient {
 						break;
 				}
 			}
+			// auth stuff
+			case 'auth': {
+				this.publicEmitter.emit('auth', msgArr[1]);
+				this.auth = true;
+				break;
+			}
+			case 'login': {
+				if (msgArr[1] === "1") {
+					this.rank = Rank.Registered;
+					this.publicEmitter.emit('login', Rank.Registered, new Permissions(0));
+				}
+				this.publicEmitter.emit('accountlogin', msgArr[1] === "1");
+				break;
+			}
 			case 'admin': {
 				switch (msgArr[1]) {
 					case '0': {
@@ -590,6 +609,15 @@ export default class CollabVMClient {
 	// Hide screen
 	hideScreen(hidden: boolean) {
 		this.send('admin', AdminOpcode.HideScreen, hidden ? '1' : '0');
+	}
+
+	// Login to account
+	loginAccount(token: string) {
+		this.send('login', token);
+	}
+
+	usesAccountAuth() {
+		return this.auth;
 	}
 
 	private onInternal<E extends keyof CollabVMClientPrivateEvents>(event: E, callback: CollabVMClientPrivateEvents[E]): Unsubscribe {

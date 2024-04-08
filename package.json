@@ -17,6 +17,7 @@
     "@hcaptcha/types": "^1.0.3",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
+    "dayjs": "^1.11.10",
     "nanoevents": "^7.0.1",
     "simple-keyboard": "^3.7.53"
   },
