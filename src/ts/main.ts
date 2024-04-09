@@ -51,6 +51,9 @@ const elements = {
 	badPasswordAlert: document.getElementById('badPasswordAlert') as HTMLDivElement,
 	incorrectPasswordDismissBtn: document.getElementById('incorrectPasswordDismissBtn') as HTMLButtonElement,
 	ctrlAltDelBtn: document.getElementById('ctrlAltDelBtn') as HTMLButtonElement,
+	toggleThemeBtn: document.getElementById('toggleThemeBtn') as HTMLAnchorElement,
+	toggleThemeIcon: document.getElementById('toggleThemeIcon') as HTMLElement,
+	toggleThemeBtnText: document.getElementById('toggleThemeBtnText') as HTMLSpanElement,
 	// Admin
 	staffbtns: document.getElementById('staffbtns') as HTMLDivElement,
 	restoreBtn: document.getElementById('restoreBtn') as HTMLButtonElement,
@@ -345,7 +348,7 @@ async function multicollab(url: string) {
 		let div = document.createElement('div');
 		div.classList.add('col-sm-5', 'col-md-3');
 		let card = document.createElement('div');
-		card.classList.add('card', 'bg-dark', 'text-light');
+		card.classList.add('card');
 		card.setAttribute('data-cvm-node', vm.id);
 		card.addEventListener('click', async () => {
 			try {
@@ -1175,6 +1178,29 @@ elements.accountResetPasswordVerifyForm.addEventListener('submit', async e => {
 	return false;
 });
 
+let darkTheme = true;
+function loadColorTheme(dark : boolean) {
+	if (dark) {
+		darkTheme = true;
+		document.children[0].setAttribute("data-bs-theme", "dark");
+		elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_LightMode);
+		elements.toggleThemeIcon.classList.remove("fa-moon");
+		elements.toggleThemeIcon.classList.add("fa-sun");
+	} else {
+		darkTheme = false;
+		document.children[0].setAttribute("data-bs-theme", "light");
+		elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_DarkMode);
+		elements.toggleThemeIcon.classList.remove("fa-sun");
+		elements.toggleThemeIcon.classList.add("fa-moon");
+	}
+}
+elements.toggleThemeBtn.addEventListener('click', e => {
+	e.preventDefault();
+	loadColorTheme(!darkTheme);
+	localStorage.setItem("cvm-dark-theme", darkTheme ? "1" : "0");
+	return false;
+});
+
 // Public API
 w.collabvm = {
 	openVM: openVM,
@@ -1223,6 +1249,12 @@ w.VMName = null;
 document.addEventListener('DOMContentLoaded', async () => {
 	// Initalize the i18n system
 	await TheI18n.Init();
+	// Load theme
+	var _darktheme : boolean;
+	if (localStorage.getItem("cvm-dark-theme") === "0")
+		loadColorTheme(false);
+	else
+		loadColorTheme(true);
 
 	// Initialize authentication if enabled
 	if (Config.Auth.Enabled) {

@@ -13,6 +13,8 @@ export enum I18nStringKey {
 	kSiteButtons_Home = 'kSiteButtons_Home',
 	kSiteButtons_FAQ = 'kSiteButtons_FAQ',
 	kSiteButtons_Rules = 'kSiteButtons_Rules',
+	kSiteButtons_DarkMode = 'kSiteButtons_DarkMode',
+	kSiteButtons_LightMode = 'kSiteButtons_LightMode',
 
 	kVM_UsersOnlineText = 'kVM_UsersOnlineText',
 
@@ -214,6 +216,7 @@ export class I18n {
 			homeBtnText: I18nStringKey.kSiteButtons_Home,
 			faqBtnText: I18nStringKey.kSiteButtons_FAQ,
 			rulesBtnText: I18nStringKey.kSiteButtons_Rules,
+			
 
 			usersOnlineText: I18nStringKey.kVM_UsersOnlineText,
 

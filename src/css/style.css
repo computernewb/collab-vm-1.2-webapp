@@ -95,12 +95,34 @@ tr.user-moderator > td, .chat-username-moderator, .username-moderator {
   color: #00FF00 !important;
 }
 
-tr.user-unregistered > td, .chat-username-unregistered, .username-unregistered {
-  color: #b1b1b1 !important;
+html[data-bs-theme="dark"] {
+  tr.user-unregistered > td, .chat-username-unregistered, .username-unregistered {
+    color: #b1b1b1 !important;
+  }
+  
+  tr.user-registered > td, .chat-username-registered, .username-registered {
+    color: #FFFFFF !important;
+  }
+
+  tr.user-registered.user-turn > td, tr.user-registered.user-waiting > td {
+    color: #000000 !important;
+    --bs-table-color: #000000 !important;
+  }
+  
+  tr.user-unregistered.user-turn > td, tr.user-unregistered.user-waiting > td {
+    color: #585858 !important;
+    --bs-table-color: #585858 !important;
+  }
 }
 
-tr.user-registered > td, .chat-username-registered, .username-registered {
-  color: #FFFFFF !important;
+html[data-bs-theme="light"] {
+  tr.user-unregistered > td, .chat-username-unregistered, .username-unregistered {
+    color: #6b6b6b !important;
+  }
+  
+  tr.user-registered > td, .chat-username-registered, .username-registered {
+    color: #000 !important;
+  }
 }
 
 tr.user-turn > td {
@@ -120,16 +142,6 @@ tr.user-waiting > td {
   --bs-table-bg-state: #fff3cd !important;
   color: #000000;
   --bs-table-color: #000000;
-}
-
-tr.user-registered.user-turn > td, tr.user-registered.user-waiting > td {
-  color: #000000 !important;
-  --bs-table-color: #000000 !important;
-}
-
-tr.user-unregistered.user-turn > td, tr.user-unregistered.user-waiting > td {
-  color: #585858 !important;
-  --bs-table-color: #585858 !important;
 }
 
 .tr.user-waiting:hover, tr.user-waiting > td:hover {
