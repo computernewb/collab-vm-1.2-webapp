@@ -74,7 +74,7 @@
 
 		"kError_UnexpectedDisconnection": "Vous avez été déconnecté du serveur.",
 		"kError_UsernameTaken": "Ce nom d'utilisateur est déjà pris",
-		"kError_UsernameInvalid": "Les noms d'utilisateurs ne peuvent que contenirs des chiffres, lettres, éspaces, tirets, tirets du bas, et des points, et il doit avoir une longueur entre 3 et 20.",
+		"kError_UsernameInvalid": "Les noms d'utilisateurs ne peuvent que contenirs des chiffres, lettres, éspaces, tirets, tirets du bas, et des points, et ils doivent avoir une longueur entre 3 et 20.",
 		"kError_UsernameBlacklisted": "Ce nom d'utilisateur est interdit.",
 		"kError_IncorrectPassword": "Mot de passe incorrect.",
 
