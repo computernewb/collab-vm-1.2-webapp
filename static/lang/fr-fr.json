@@ -24,7 +24,7 @@
 		"kGeneric_Logout": "Déconnection",
 		
 		"kWelcomeModal_Header": "Bienvenue sur CollabVM",
-		"kWelcomeModal_Body": "<p>Avant de continuer, veuillez vous familiariser avec nos règles:</p> <h3>R1. Respecter la Loi.</h3> N'utilisez pas le réseau CollabVM pour violez les lois fédéral des Etats-Unis, lois de New-York, ou les lois International. Si CollabVM trouve qu'un crime a été commis vous allez etre immédiatement bannis, et vos activités peuvent être signaler aux authorités si nécessaire.<br><br>CollabVM se vera de notifier des agences d'enforcement des lois si il trouve de la présence de pédo-pornographie sur ou étant transmis par le réseau.<br><br>COPPA est aussi mis en place, n'utilisez pas CollabVM si vous avez moins de 13 ans. <h3>R2. N'utilisez pas d'outils de DS/DDoS.</h3> N'utilisez pas CollabVM pour Dos/DDoS un individu, un business, une entreprise ou n'importe qui d'autre. <h3>R3. Pas de spam.</h3> Ne spammez pas d'email à l'aide de ce service. <h3>R4. N'abusez pas d'exploits.</h3> N'abusez pas d'exploits, et si vous voyez quelq'un abusez d'exploits ou avez besoin d'en signaler un, veuillez me contacter à : computernewbab@gmail.com <h3>R5. N'usurpez pas l'identité d'autres utilisateurs.</h3> N'usurpez pas d'autres membres de CollabVM. Si vous êtes pris sur le fait vous allez être temporairement déconnecté, et bannis si nécessaire. <h3>R6. Un seul vote par personne.</h3> N'utilisez pas de méthodes ou d'outils pour bypasser les restrictions du système de votes. Un seul vote par personne est autorisé, peu importe quoi. N'importe qui trouvé a faire cela cera bannis. <h3>R7. Pas d'outils d'accès a distance.</h3> N'utilisez pas d'outils d'accès a distance (ex: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, etc.) <h3>R8. Ne bypasser pas CollabNet.</h3> N'éssayer pas de bypasser le bloquage par CollabNet, surtout si ces pour briser les régles 1, 2 et 7 (ou utiliser des choses trop utilisés). <h3>R9. Ne faite pas d'actions destructives constamment.</h3> Un utilisateur ne dois pas détruire un VM (le rendant inutilisable constamment), installer/réinstaller le système d'exploitation (a part sur VM7 et sur VM8), ou faire des bots qui le font. Cela inclus aussi les bots qui spam le clavier et la souris (\"kitting\"). <h3>R10. Pas de minage de cryptomonnaie</h3> Vous allez vous faire kick si vous tentez de miner de la cryptomonnaie sur un des VMs, puis un ban permanent si vous persister. Mais de toute façon ces pas comme si ca vous rapportera de l'argent. <h3>Attention NSFW</h3> Attention veuillez noter que le contenu NSFW est autorisé sur le VM anarchie (VM0b0t), et est vue réguilièrement. En plus, nous faisons des efforts pour tenir le contenu NSFW hors des VMs général, mais les gens vont parfois quand même réussir à en montrer.",
+		"kWelcomeModal_Body": "<p>Avant de continuer, veuillez vous familiariser avec nos règles:</p> <h3>R1. Respecter la Loi.</h3> N'utilisez pas le réseau CollabVM pour violez les lois fédéral des Etats-Unis, lois de New-York, ou les lois International. Si CollabVM trouve qu'un crime a été commis vous allez etre immédiatement bannis, et vos activités peuvent être signaler aux authorités si nécessaire.<br><br>CollabVM se vera de notifier des agences d'enforcement des lois si il trouve de la présence de pédo-pornographie sur ou étant transmis par le réseau.<br><br>Les lois COPPA sont aussi misent en place, n'utilisez pas CollabVM si vous avez moins de 13 ans. <h3>R2. N'utilisez pas d'outils de DoS/DDoS.</h3> N'utilisez pas CollabVM pour Dos/DDoS un individu, un business, une entreprise ou n'importe qui d'autre. <h3>R3. Pas de spam.</h3> Ne spammez pas d'email à l'aide de ce service. <h3>R4. N'abusez pas d'exploits.</h3> N'abusez pas d'exploits, et si vous voyez quelq'un abusez d'exploits ou que vous avez besoin d'en signaler un, veuillez me contacter à : computernewbab@gmail.com <h3>R5. N'usurpez pas l'identité d'autres utilisateurs.</h3> N'usurpez pas d'autres membres de CollabVM. Si vous êtes pris sur le fait vous allez être temporairement déconnecté, et bannis si nécessaire. <h3>R6. Un seul vote par personne.</h3> N'utilisez pas de méthodes ou d'outils pour bypasser les restrictions du système de votes. Un seul vote par personne est autorisé, peu importe quoi. N'importe qui trouvé a faire cela sera bannis. <h3>R7. Pas d'outils d'accès a distance.</h3> N'utilisez pas d'outils d'accès a distance (ex: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, etc.) <h3>R8. Ne bypasser pas CollabNet.</h3> N'éssayer pas de bypasser le bloquage introduis par CollabNet, surtout si ces pour briser les régles 1, 2 et 7 (ou utiliser des choses trop utilisés). <h3>R9. Ne faites pas d'actions destructives constamment.</h3> Les utilisateurs ne doivent pas détruire un VM (le rendant inutilisable constamment), installer/réinstaller le système d'exploitation (a part sur VM7 et sur VM8), ou faire des bots qui le font. Cela inclus aussi les bots qui spam le clavier et la souris (\"kitting\"). <h3>R10. Pas de minage de cryptomonnaie</h3> Vous allez vous faire exclure si vous tentez de miner de la cryptomonnaie sur un des VMs, puis un ban permanent si vous persister. Mais de toute façon ces pas comme si vous allez vous faire de l'argent comme ça. <h3>Attention NSFW</h3> Attention veuillez noter que le contenu NSFW est autorisé sur le VM anarchie (VM0b0t), et est vue réguilièrement. De plus, nous faisons des efforts pour tenir le contenu NSFW hors des VMs général, mais des utilisateurs arrivent quand même parfois à en montrer.",
 
 		"kSiteButtons_Home": "Menu",
 		"kSiteButtons_FAQ": "FAQ",
@@ -35,15 +35,15 @@
 
 		"kVM_UsersOnlineText": "Utilisateurs en ligne:",
 
-		"kVM_TurnTimeTimer": "Votre tour se termine dans {0} secondes.",
-		"kVM_WaitingTurnTimer": "Votre tour sera dans {0} secondes.",
+		"kVM_TurnTimeTimer": "Vôtre tour se termine dans {0} secondes.",
+		"kVM_WaitingTurnTimer": "Vôtre tour sera dans {0} secondes.",
 		"kVM_VoteCooldownTimer": "Veuillez attendre {0} secondes avant de commencer un autre vote.",
 
 		"kVM_VoteForResetTitle": "Voulez vous réinitialiser le VM ?",
 		"kVM_VoteForResetTimer": "Le vote se termine dans {0} secondes",
 
-		"kVMButtons_TakeTurn": "Commencer votre tour",
-		"kVMButtons_EndTurn": "Terminner votre tour",
+		"kVMButtons_TakeTurn": "Commencer vôtre tour",
+		"kVMButtons_EndTurn": "Terminer vôtre tour",
 		"kVMButtons_ChangeUsername": "Changer de nom d'utilisateur",
 		"kVMButtons_Keyboard": "Clavier",
 		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
@@ -58,7 +58,7 @@
 		"kAdminVMButtons_Restore": "Rétablir",
 		"kAdminVMButtons_Reboot": "Redémarrer",
 		"kAdminVMButtons_ClearTurnQueue": "Supprimer la queue pour un tour",
-		"kAdminVMButtons_BypassTurn": "Bypasser votre tour",
+		"kAdminVMButtons_BypassTurn": "Bypasser vôtre tour",
 		"kAdminVMButtons_IndefiniteTurn": "Tour indéfinis",
 
 		"kAdminVMButtons_Ban": "Ban",
@@ -74,7 +74,7 @@
 
 		"kError_UnexpectedDisconnection": "Vous avez été déconnecté du serveur.",
 		"kError_UsernameTaken": "Ce nom d'utilisateur est déjà pris",
-		"kError_UsernameInvalid": "Les noms d'utilisateurs ne peuvent que contenirs des chiffres, lettres, éspaces, tirets, tirets du bas, et des points, et ils doivent avoir une longueur entre 3 et 20.",
+		"kError_UsernameInvalid": "Les noms d'utilisateurs ne peuvent que contenirs des chiffres, lettres, éspaces, tirets, tirets du bas, et des points, et ils doivent êtres d'une longueur entre 3 et 20.",
 		"kError_UsernameBlacklisted": "Ce nom d'utilisateur est interdit.",
 		"kError_IncorrectPassword": "Mot de passe incorrect.",
 
@@ -87,11 +87,11 @@
 		"kAccountModal_CurrentPassword": "Mot de passe actuel",
 		"kAccountModal_ConfirmPassword": "Confirmer le nouveau Mot de passe",
 
-		"kMissingCaptcha": "Veuillez compléter ce captcha.",
-		"kPasswordsMustMatch": "Les Mot de passes doivent correspondre.",
-		"kAccountModal_VerifyText": "Nous avons envoyez un E-mail à {0}. Pouv vérifier votre compte, veuillez entrer le mot de passe à 8 chiffre envoyer par E-mail.",
-		"kAccountModal_VerifyPasswordResetText": "Nous avons envoyez un E-mail à {0}. Pour réinitialiser votre Mot de passe, veuillez entrer le mot de passe à 8 chiffre envoyer par E-mail.",
-		"kAccountModal_PasswordResetSuccess": "Votre Mot de passe a été reinitialiser avec succès. Vous pouvez maintenant vous connecté avec votre nouveau Mot de passe.",
+		"kMissingCaptcha": "Veuillez compléter ce Captcha.",
+		"kPasswordsMustMatch": "Les Mot de passes doivent se corréspondre.",
+		"kAccountModal_VerifyText": "Nous avons envoyez un E-mail à {0}. Pour vérifier votre compte, veuillez entrer le mot de passe à 8 chiffre envoyé par E-mail.",
+		"kAccountModal_VerifyPasswordResetText": "Nous avons envoyez un E-mail à {0}. Pour réinitialiser votre Mot de passe, veuillez entrer le mot de passe à 8 chiffre envoyé par E-mail.",
+		"kAccountModal_PasswordResetSuccess": "Vôtre Mot de passe à été réinitialiser avec succès. Vous pouvez maintenant vous connecter avec votre nouveau Mot de passe.",
 
 		"kNotLoggedIn": "Non connecté"
 	}
