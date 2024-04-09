@@ -30,6 +30,7 @@ export enum I18nStringKey {
 	kSiteButtons_Rules = 'kSiteButtons_Rules',
 	kSiteButtons_DarkMode = 'kSiteButtons_DarkMode',
 	kSiteButtons_LightMode = 'kSiteButtons_LightMode',
+	kSiteButtons_Languages = 'kSiteButtons_Languages',
 
 	kVM_UsersOnlineText = 'kVM_UsersOnlineText',
 
@@ -116,7 +117,7 @@ export type Language = {
 };
 
 // `languages.json`
-type LanguagesJson = {
+export type LanguagesJson = {
 	// Array of language IDs to allow loading
 	languages: Array<string>;
 
@@ -137,56 +138,52 @@ interface StringKeyMap {
 /// our fancy internationalization helper.
 export class I18n {
 	// The language data itself
+	private langs : Map<string, Language> = new Map<string, Language>();
 	private lang: Language = fallbackLanguage;
+	private languageDropdown: HTMLDivElement = document.getElementById('languageDropdown') as HTMLDivElement;
 
 	// the ID of the language
 	private langId: string = fallbackId;
-
-	private async LoadLanguageFile(id: string) {
-		let languageData = await I18n.LoadLanguageFileImpl(id);
-		this.SetLanguage(languageData, id);
-	}
-
-	async LoadAndSetLanguage(id: string) {
-		try {
-			await this.LoadLanguageFile(id);
-			console.log('i18n initalized for', id, 'sucessfully!');
-		} catch (e) {
-			alert(
-				`There was an error loading the language file for the language \"${id}\". Please tell a site admin this happened, and give them the following information: \"${(e as Error).message}\"`
-			);
-			// force set the language to fallback and replace all strings.
-			// (this is done because we initialize with fallback, so SetLanguage will
-			// refuse to replace static strings. Hacky but it should work)
-			this.SetLanguage(fallbackLanguage, fallbackId);
-			this.ReplaceStaticStrings();
-		}
-	}
-
+	
 	async Init() {
-		// TODO: load languages.json, add selections, and if an invalid language (not in the languages array) is specified,
-		// set it to the defaultLanguage in there.
 		let lang = window.localStorage.getItem('i18n-lang');
 
-		// Set a default language if not specified
-		if (lang == null) {
-			lang = 'en-us';
-			window.localStorage.setItem('i18n-lang', lang);
-		}
-
-		await this.LoadAndSetLanguage(lang);
-	}
-
-	private static async LoadLanguageFileImpl(id: string): Promise<Language> {
-		let path = `./lang/${id}.json`;
-		let res = await fetch(path);
-
+		// Load language list
+		var res = await fetch("lang/languages.json");
 		if (!res.ok) {
-			if (res.statusText != '') throw new Error(`Failed to load lang/${id}.json: ${res.statusText}`);
-			else throw new Error(`Failed to load lang/${id}.json: HTTP status code ${res.status}`);
+			alert("Failed to load languages.json: " + res.statusText);
+			this.SetLanguage(fallbackLanguage, fallbackId);
+			this.ReplaceStaticStrings();
+			return;
 		}
-
-		return (await res.json()) as Language;
+		var langData = await res.json() as LanguagesJson;
+		if (lang === null) lang = langData.defaultLanguage;
+		for (const langId of langData.languages) {
+			let path = `./lang/${langId}.json`;
+			let res = await fetch(path);
+			if (!res.ok) {
+				console.error(`Failed to load lang/${langId}.json: ${res.statusText}`);
+				continue;
+			}
+			let _lang = await res.json() as Language;
+			this.langs.set(langId, _lang);
+		}
+		this.langs.forEach((_lang, langId) => {
+			// Add to language dropdown
+			var a = document.createElement('a');
+			a.classList.add('dropdown-item');
+			a.href = '#';
+			a.innerText = `${_lang.flag} ${_lang.languageName}`;
+			a.addEventListener('click', (e) => {
+				e.preventDefault();
+				this.SetLanguage(_lang, langId);
+				this.ReplaceStaticStrings();
+			});
+			this.languageDropdown.appendChild(a);
+		});
+		if (!this.langs.has(lang)) lang = langData.defaultLanguage;
+		this.SetLanguage(this.langs.get(lang) as Language, lang);
+		this.ReplaceStaticStrings();
 	}
 
 	private SetLanguage(lang: Language, id: string) {
@@ -201,6 +198,7 @@ export class I18n {
 		if (this.langId !== fallbackId) {
 			window.localStorage.setItem('i18n-lang', this.langId);
 		}
+		console.log('i18n initalized for', id, 'sucessfully!');
 	}
 
 	// Replaces static strings that we don't recompute
@@ -215,6 +213,7 @@ export class I18n {
 			accountRegisterButton: I18nStringKey.kGeneric_Register,
 			accountSettingsButton: I18nStringKey.kAccountModal_AccountSettings,
 			accountLogoutButton: I18nStringKey.kGeneric_Logout,
+			languageDropdownText: I18nStringKey.kSiteButtons_Languages,
 			
 			welcomeModalHeader: I18nStringKey.kWelcomeModal_Header,
 			welcomeModalBody: I18nStringKey.kWelcomeModal_Body,
