@@ -1,5 +1,6 @@
 import { StringLike } from './StringLike';
 import { Format } from './format';
+import { Emitter, Unsubscribe, createNanoEvents } from 'nanoevents';
 
 /// All string keys.
 export enum I18nStringKey {
@@ -100,6 +101,11 @@ export enum I18nStringKey {
 	kNotLoggedIn = 'kNotLoggedIn',
 }
 
+export interface I18nEvents {
+	// Called when the language is changed
+	languageChanged: (lang: string) => void;
+}
+
 // This models the JSON structure.
 export type Language = {
 	languageName: string;
@@ -141,6 +147,7 @@ export class I18n {
 	private langs : Map<string, Language> = new Map<string, Language>();
 	private lang: Language = fallbackLanguage;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
+	private emitter: Emitter<I18nEvents> = createNanoEvents();
 
 	CurrentLanguage = () => this.langId;
 
@@ -200,6 +207,8 @@ export class I18n {
 		if (this.langId !== fallbackId) {
 			window.localStorage.setItem('i18n-lang', this.langId);
 		}
+
+		this.emitter.emit('languageChanged', this.langId);
 		console.log('i18n initalized for', id, 'sucessfully!');
 	}
 
@@ -210,7 +219,6 @@ export class I18n {
 			homeBtnText: I18nStringKey.kSiteButtons_Home,
 			faqBtnText: I18nStringKey.kSiteButtons_FAQ,
 			rulesBtnText: I18nStringKey.kSiteButtons_Rules,
-			accountDropdownUsername: I18nStringKey.kNotLoggedIn,
 			accountLoginButton: I18nStringKey.kGeneric_Login,
 			accountRegisterButton: I18nStringKey.kGeneric_Register,
 			accountSettingsButton: I18nStringKey.kAccountModal_AccountSettings,
@@ -339,6 +347,17 @@ export class I18n {
 			},
 		};
 
+		const kDomClassToStringMap: StringKeyMap = {
+			"mod-end-turn-btn": I18nStringKey.kVMButtons_EndTurn,
+			"mod-ban-btn": I18nStringKey.kAdminVMButtons_Ban,
+			"mod-kick-btn": I18nStringKey.kAdminVMButtons_Kick,
+			"mod-change-username-btn": I18nStringKey.kVMButtons_ChangeUsername,
+			"mod-temp-mute-btn": I18nStringKey.kAdminVMButtons_TempMute,
+			"mod-indef-mute-btn": I18nStringKey.kAdminVMButtons_IndefMute,
+			"mod-unmute-btn": I18nStringKey.kAdminVMButtons_Unmute,
+			"mod-get-ip-btn": I18nStringKey.kAdminVMButtons_GetIP,
+		}
+
 		for (let domId of Object.keys(kDomIdtoStringMap)) {
 			let element = document.getElementById(domId);
 			if (element == null) {
@@ -367,6 +386,13 @@ export class I18n {
 				element.setAttribute(attr, this.GetStringRaw(attributes[attr] as I18nStringKey));
 			}
 		}
+
+		for (let domClass of Object.keys(kDomClassToStringMap)) {
+			let elements = document.getElementsByClassName(domClass);
+			for (let element of elements) {
+				element.innerHTML = this.GetStringRaw(kDomClassToStringMap[domClass]);
+			}
+		}
 	}
 
 	// Returns a (raw, unformatted) string. Currently only used if we don't need formatting.
@@ -388,6 +414,10 @@ export class I18n {
 	// Returns a formatted localized string.
 	GetString(key: I18nStringKey, ...replacements: StringLike[]): string {
 		return Format(this.GetStringRaw(key), ...replacements);
+	}
+
+	on<e extends keyof I18nEvents>(event: e, cb: I18nEvents[e]): Unsubscribe {
+		return this.emitter.on(event, cb);
 	}
 }
 

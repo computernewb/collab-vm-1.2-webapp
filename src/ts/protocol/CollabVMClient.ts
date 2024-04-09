@@ -620,6 +620,10 @@ export default class CollabVMClient {
 		return this.auth;
 	}
 
+	getNode() {
+		return this.node;
+	}
+
 	private onInternal<E extends keyof CollabVMClientPrivateEvents>(event: E, callback: CollabVMClientPrivateEvents[E]): Unsubscribe {
 		return this.internalEmitter.on(event, callback);
 	}
