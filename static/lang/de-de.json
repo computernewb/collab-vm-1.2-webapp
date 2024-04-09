@@ -1,0 +1,98 @@
+{
+	"languageName": "Deutsch",
+	"translatedLanguageName": "German",
+	"flag": "🇩🇪",
+	"author": "julias.zone",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Ja",
+		"kGeneric_No": "Nein",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Abbrechen",
+		"kGeneric_Send": "Senden Sie",
+		"kGeneric_Understood": "Verstanden",
+		"kGeneric_Username": "Benutzername",
+		"kGeneric_Password": "Passwort",
+		"kGeneric_Login": "Einloggen",
+		"kGeneric_Register": "Register",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Geburtsdatum",
+		"kGeneric_VerificationCode": "Verifizierungscode",
+		"kGeneric_Verify": "Überprüfen Sie",
+		"kGeneric_Update": "Update",
+		"kGeneric_Logout": "Abmelden",
+		
+		"kWelcomeModal_Header": "Willkommen zu CollabVM",
+		"kWelcomeModal_Body": "<p>Bevor Sie fortfahren, machen Sie sich bitte mit unseren Regeln vertraut:</p> <h3>R1. Verbrechen Sie nicht das Gesetz.</h3> Verwenden Sie CollabVM oder das CollabVM-Netzwerk nicht, um das Bundesgesetz der Vereinigten Staaten, das Gesetz des Staates New York oder internationales Recht zu verletzen. Wenn CollabVM erfährt, dass eine Straftat durch seinen Dienst begangen wurde, werden Sie sofort gesperrt und Ihre Aktivitäten können den Behörden gemeldet werden, falls erforderlich.<br/> CollabVM ist gesetzlich verpflichtet, die Strafverfolgungsbehörden zu benachrichtigen, wenn es Kenntnis vom Vorhandensein von Kinderpornographie in seinem Netzwerk oder deren Übertragung erhält.<br/> COPPA wird auch durchgesetzt, bitte benutzen Sie CollabVM nicht, wenn Sie unter 13 Jahre alt sind. <h3>R2. Keine DoS/DDoS-Tools.</h3> Benutzen Sie CollabVM nicht, um DoS/DDoS gegen eine Einzelperson, ein Geschäft, ein Unternehmen oder eine andere Person zu betreiben.<h3>R3. Kein Spam-Versand.</h3> Verwenden Sie diesen Dienst nicht zum Versenden von Spam-E-Mails oder zum Versenden von Spam im Allgemeinen.<h3>R4. Keinen Missbrauch von Exploits.</h3> Missbrauche keine Exploits. Wenn Sie jemanden sehen, der Exploits missbraucht, oder wenn Sie einen Exploit melden möchtest, kontaktiere mich bitte unter: computernewbab@gmail.com <h3>R5. Geben Sie sich nicht als andere Benutzer aus.</h3> Geben Sie sich nicht als andere Mitglieder von CollabVM aus. Wenn Sie erwischt werden, werden Sie vorübergehend von der Verbindung getrennt und gegebenenfalls gesperrt. <h3>R6. Eine Stimme pro Person.</h3> Verwenden Sie keine Methoden oder Hilfsmittel, um die Abstimmungsbeschränkung zu umgehen. Es ist nur eine Stimme pro Person erlaubt, egal wie. Jeder, der dabei erwischt wird, wird gebannt. <h3>R7. Keine Fernadministrations-Tools.</h3> Es dürfen keine Fernadministrations-Tools verwendet werden (z.B. DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, uzw.)<h3>R8. Kein Umgehen von CollabNet</h3> Versuchen Sie nicht, die von CollabNet bereitgestellten Sperren zu umgehen, insbesondere dann nicht, wenn sie dazu benutzt werden, Regel 1, Regel 2 oder Regel 7 zu brechen (oder dumme, übermäßige Dinge auszuführen).<h3>R9. Keine ständigen destruktiven Aktionen durchführen.</h3> Jeder Nutzer darf die VM nicht zerstören (was es ständig unbrauchbar macht), ein anderes Betriebssystem installieren oder das Betriebssystem neu installieren (außer auf VM7 oder VM8) oder Bots ausführen, die dies tun. Dies schließt Bots ein, die massive Mengen an Tastatur-/Mauseingaben spammen (so genanntes \"Kitting\"). <h3>R10. Kein Cryptomining</h3> Der Versuch, auf den VMs Kryptowährungen zu \"schürfen\", führt zu einem Kick und dann zu einem permanenten Bann, wenn Sie es weiter versuchen. Außerdem ist es ja nicht so, dass Sie damit Geld verdienen würden.<h3>NSFW-Warnung</h3> Bitte beachten Sie, dass NSFW-Inhalte auf unserer Anarcho-VM (VM0b0t) erlaubt sind und regelmäßig angesehen werden. Obwohl wir uns bemühen, NSFW von den Haupt-VMs fernzuhalten, kann es vorkommen, dass was durchrutscht. </div>",
+
+		"kSiteButtons_Home": "Hauptseite",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Regeln",
+		"kSiteButtons_DarkMode": "TODO Dark Mode",
+		"kSiteButtons_LightMode": "TODO Light Mode",
+		"kSiteButtons_Languages": "Sprachen",
+
+		"kVM_UsersOnlineText": "Nutzer online:",
+
+		"kVM_TurnTimeTimer": "Ihre Zeit läuft in {0} Sekunden aus.",
+		"kVM_WaitingTurnTimer": "In der Reihe warten für {0} Sekunden.",
+		"kVM_VoteCooldownTimer": "Bitte warten Sie {0} Sekunden bevor Sie noch eine Abstimmung starten.",
+
+		"kVM_VoteForResetTitle": "Möchten Sie die VM zurücksetzen?",
+		"kVM_VoteForResetTimer": "Abstimmung endet in {0} Sekunden",
+
+		"kVMButtons_TakeTurn": "In Reihe stellen.",
+		"kVMButtons_EndTurn": "Aus der Reihe kommen",
+		"kVMButtons_ChangeUsername": "Nutzername ändern",
+		"kVMButtons_Keyboard": "Tastatur",
+		"KVMButtons_CtrlAltDel": "Strg+Alt+Entf",
+
+		"kVMButtons_VoteForReset": "Für Zurücksetzung abstimmen",
+		"kVMButtons_Screenshot": "Screenshot",
+
+		"kQEMUMonitor": "QEMU-Überwachung",
+		"kAdminVMButtons_PassVote": "TODO Pass Vote",
+		"kAdminVMButtons_CancelVote": "TODO Cancel Vote",
+
+		"kAdminVMButtons_Restore": "TODO Restore",
+		"kAdminVMButtons_Reboot": "TODO Reboot",
+		"kAdminVMButtons_ClearTurnQueue": "TODO Clear Turn Queue",
+		"kAdminVMButtons_BypassTurn": "TODO Bypass Turn",
+		"kAdminVMButtons_IndefiniteTurn": "TODO Indefinite Turn",
+
+		"kAdminVMButtons_Ban": "Verbot",
+		"kAdminVMButtons_Kick": "TODO Kick",
+		"kAdminVMButtons_TempMute": "TODO Temporary Mute",
+		"kAdminVMButtons_IndefMute": "TODO Indefinite Mute",
+		"kAdminVMButtons_Unmute": "TODO Unmute",
+		"kAdminVMButtons_GetIP": "TODO Get IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "TODO Enter new username for {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Are you sure you want to restore the VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Geben Sie Ihren neuen Nutzername ein.",
+
+		"kError_UnexpectedDisconnection": "TODO You have been disconnected from the server.",
+		"kError_UsernameTaken": "TODO That username is already taken",
+		"kError_UsernameInvalid": "TODO Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
+		"kError_UsernameBlacklisted": "TODO That username has been blacklisted.",
+		"kError_IncorrectPassword": "TODO Incorrect password.",
+
+		"kAccountModal_Verify": "TODO Verify E-Mail",
+		"kAccountModal_AccountSettings": "TODO Account Settings",
+		"kAccountModal_ResetPassword": "TODO Reset Password",
+
+		"kAccountModal_NewPassword": "TODO New Password",
+		"kAccountModal_ConfirmNewPassword": "TODO Confirm New Password",
+		"kAccountModal_CurrentPassword": "TODO Current Password",
+		"kAccountModal_ConfirmPassword": "TODO Confirm Password",
+
+		"kMissingCaptcha": "TODO Please fill out the captcha.",
+		"kPasswordsMustMatch": "TODO Passwords must match.",
+		"kAccountModal_VerifyText": "TODO We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_VerifyPasswordResetText": "TODO We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_PasswordResetSuccess": "TODO Your password has been changed successfully. You can now log in with your new password.",
+
+		"kNotLoggedIn": "TODO Not Logged in"
+	}
+}
