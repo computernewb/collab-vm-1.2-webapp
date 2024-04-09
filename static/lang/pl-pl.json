@@ -1,0 +1,98 @@
+{
+	"languageName": "Polski",
+	"translatedLanguageName": "Polish",
+	"flag": "🇵🇱",
+	"author": "Mattx",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Tak",
+		"kGeneric_No": "Nie",
+		"kGeneric_Ok": "TODO OK",
+		"kGeneric_Cancel": "TODO Cancel",
+		"kGeneric_Send": "TODO Send",
+		"kGeneric_Understood": "Zrozumiane",
+		"kGeneric_Username": "TODO Username",
+		"kGeneric_Password": "TODO Password",
+		"kGeneric_Login": "TODO Log in",
+		"kGeneric_Register": "TODO Register",
+		"kGeneric_EMail": "TODO E-Mail",
+		"kGeneric_DateOfBirth": "TODO Date of Birth",
+		"kGeneric_VerificationCode": "TODO Verification Code",
+		"kGeneric_Verify": "TODO Verify",
+		"kGeneric_Update": "TODO Update",
+		"kGeneric_Logout": "TODO Log out",
+		
+		"kWelcomeModal_Header": "Witamy na CollabVM.",
+		"kWelcomeModal_Body": "<p>Zanim rozpoczniesz, prosimy o przeczytanie regulaminu:</p> <h3>R1. Nie łam prawa.</h3> Nie korzystaj z CollabVM czy sieci CollabVM aby łamać prawo federalne w Stanach Zjednoczonych, prawo stanu w Nowym Jorku czy międzynarodowych praw. W razie, że CollabVM dowie się o przestępstwie popełnionym za pośrednictwem jego usług, twój dostęp zostanie zablokowany i twoja działalność może być w razie potrzeby zgłoszona władzom.<br><br>CollabVM jest zobowiązany prawnie do zawiadomienia organów ścigania jeśli dowie się o obecności pornografii dziecięcej na, lub transmitowanej przez jego sieć.<br><br>Akt COPPA jest także egzekwowany, prosimy o nie korzystanie z CollabVM jeśli nie ukończyłeś 13 lat. <h3>R2. Zakaz narzędzi DoS/DDoS.</h3> Nie używaj CollabVM aby wykonywać ataki DoS/DDoS na osoby prywatne, działalności, firmy czy na kogokolwiek innego. <h3>R3. Zakaz rozpowszechniania spamu.</h3>Nie spamuj żadnych emaili korzystając z tej usługi, ani nie wysyłaj żadnego innego rodzaju spamu. <h3>R4. Nie nadużywaj exploitów.</h3> Nie używaj żadnych exploitów, w przypadku gdy zobaczysz że ktoś je wykorzystuje lub potrzebujesz zgłosić exploit, proszę o kontakt na emailu: computernewbab@gmail.com <h3>R5. Nie podszywaj się pod innych.</h3> Nie podszywaj się pod innych użytkowników CollabVM. Jeśli zostaniesz złapany, zostaniesz tymczasowo odłączony i zbanowany w razie potrzeby. <h3>R6. Jeden głos na osobę.</h3> Nie wykorzystuj żadnych metod lub narzędzi aby obejść ograniczenie na głosach. Tylko jeden głos na osobę jest zezwolony, niezależnie od sytuacji. Każdy, kto jest przyłapany na obchodzenie głosów zostanie natychmiast zbanowany. <h3>R7. Zakaz narzędzi zdalnej kontroli/administracji i narzędzi typu RAT</h3> Nie korzystaj z narzędzi zdalnej administracji (przykładowo: DarkComet, NanoCore, AnyDesk, TeamViewer, Orcus, itp.) <h3>R8. Zakaz obchodzenia systemu CollabNet.</h3> Nie próbuj obejść blokad zapewnionych przez CollabNet, zwłaszcza jeśli jest to aby łamać zasady R1, R2 lub R7 (albo żeby uruchamiać głupie, nadużyte rzeczy). <h3>R9. Nie wykonuj stale działań niszczących.</h3> Żaden użytkownik nie może stale niszczyć wirtualnej maszyny (co powoduje, że wirtualna maszyna jest stale niemożliwa do wykorzystania), instalować/ponownie instalować systemu operacyjnego (oprócz na wirtualnych maszynach VM7 i VM8), ani uruchamiać boty, które wykonują takie czynności. Ta zasada też obejmuje boty, które wysyłają dużą ilość losowych wejść klawiatury/myszki (często nazywane \"kitting\"). <h3>R10. Zakaz kopania kryptowalut.</h3> Wszystkie próby kopania kryptowalut na wirtualnych maszynach będzie skutkować wyrzuceniem, a potem stałym banem jeśli będziesz próbować dalej. I tak nawet nie zrobiłbyś żadnych pieniędzy z robienia tego. <h3>Uwaga o nieodpowiednich treściach</h3> Proszę o zwrócenie uwagi na to, że nieodpowiednie treści są zezwolone na naszej anarchicznej maszynie wirtualnej (VM0b0t) i są wyświetlane regularnie. W dodatku, wkładamy wysiłek w zapobieganiu wyświetlania nieodpowiednich treści na naszych głównych wirtualnych maszynach, czasami użytkownicy mogą prześlizgnąć je.",
+
+		"kSiteButtons_Home": "Strona domowa",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Regulamin",
+		"kSiteButtons_DarkMode": "TODO Dark Mode",
+		"kSiteButtons_LightMode": "TODO Light Mode",
+		"kSiteButtons_Languages": "TODO Languages",
+
+		"kVM_UsersOnlineText": "Użytkownicy online:",
+
+		"kVM_TurnTimeTimer": "Kolejka wygasa za {0} sekund.",
+		"kVM_WaitingTurnTimer": "Czekanie na kolejkę za {0} sekund.",
+		"kVM_VoteCooldownTimer": "Prosimy zaczekać {0} sekund przed rozpoczęciem następnego głosowania.",
+
+		"kVM_VoteForResetTitle": "Czy chcesz zresetować wirtualną maszynę?",
+		"kVM_VoteForResetTimer": "Głosowanie kończy się za {0} sekund.",
+
+		"kVMButtons_TakeTurn": "Weź kolej",
+		"kVMButtons_EndTurn": "Zakończ kolej",
+		"kVMButtons_ChangeUsername": "Zmień nazwę użytkownika",
+		"kVMButtons_Keyboard": "TODO Keyboard",
+		"KVMButtons_CtrlAltDel": "TODO Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Zagłosuj o reset",
+		"kVMButtons_Screenshot": "Zrzut ekranu",
+
+		"kQEMUMonitor": "TODO QEMU Monitor",
+		"kAdminVMButtons_PassVote": "TODO Pass Vote",
+		"kAdminVMButtons_CancelVote": "TODO Cancel Vote",
+
+		"kAdminVMButtons_Restore": "TODO Restore",
+		"kAdminVMButtons_Reboot": "TODO Reboot",
+		"kAdminVMButtons_ClearTurnQueue": "TODO Clear Turn Queue",
+		"kAdminVMButtons_BypassTurn": "TODO Bypass Turn",
+		"kAdminVMButtons_IndefiniteTurn": "TODO Indefinite Turn",
+
+		"kAdminVMButtons_Ban": "TODO Ban",
+		"kAdminVMButtons_Kick": "TODO Kick",
+		"kAdminVMButtons_TempMute": "TODO Temporary Mute",
+		"kAdminVMButtons_IndefMute": "TODO Indefinite Mute",
+		"kAdminVMButtons_Unmute": "TODO Unmute",
+		"kAdminVMButtons_GetIP": "TODO Get IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "TODO Enter new username for {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "TODO Are you sure you want to restore the VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Wpisz nową nazwę użytkownika",
+
+		"kError_UnexpectedDisconnection": "TODO You have been disconnected from the server.",
+		"kError_UsernameTaken": "TODO That username is already taken",
+		"kError_UsernameInvalid": "TODO Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
+		"kError_UsernameBlacklisted": "TODO That username has been blacklisted.",
+		"kError_IncorrectPassword": "TODO Incorrect password.",
+
+		"kAccountModal_Verify": "TODO Verify E-Mail",
+		"kAccountModal_AccountSettings": "TODO Account Settings",
+		"kAccountModal_ResetPassword": "TODO Reset Password",
+
+		"kAccountModal_NewPassword": "TODO New Password",
+		"kAccountModal_ConfirmNewPassword": "TODO Confirm New Password",
+		"kAccountModal_CurrentPassword": "TODO Current Password",
+		"kAccountModal_ConfirmPassword": "TODO Confirm Password",
+
+		"kMissingCaptcha": "TODO Please fill out the captcha.",
+		"kPasswordsMustMatch": "TODO Passwords must match.",
+		"kAccountModal_VerifyText": "TODO We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_VerifyPasswordResetText": "TODO We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_PasswordResetSuccess": "TODO Your password has been changed successfully. You can now log in with your new password.",
+
+		"kNotLoggedIn": "TODO Not Logged in"
+	}
+}
