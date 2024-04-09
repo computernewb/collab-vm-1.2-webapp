@@ -33,8 +33,8 @@
 		"kVMButtons_VoteForReset": "Vote For Reset",
 		"kVMButtons_Screenshot": "Screenshot",
 
-		"kAdminVMButtons_PassVoteButton": "Pass Vote",
-		"kAdminVMButtons_CancelVoteButton": "Cancel Vote",
+		"kAdminVMButtons_PassVote": "Pass Vote",
+		"kAdminVMButtons_CancelVote": "Cancel Vote",
 
 		"kVMPrompts_EnterNewUsernamePrompt": "Enter a new username, or leave the field blank to be assigned a guest username",
 
