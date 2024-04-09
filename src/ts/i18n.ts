@@ -155,8 +155,6 @@ export class I18n {
 	private langId: string = fallbackId;
 	
 	async Init() {
-		let lang = window.localStorage.getItem('i18n-lang');
-
 		// Load language list
 		var res = await fetch("lang/languages.json");
 		if (!res.ok) {
@@ -166,7 +164,6 @@ export class I18n {
 			return;
 		}
 		var langData = await res.json() as LanguagesJson;
-		if (lang === null) lang = langData.defaultLanguage;
 		for (const langId of langData.languages) {
 			let path = `./lang/${langId}.json`;
 			let res = await fetch(path);
@@ -190,7 +187,24 @@ export class I18n {
 			});
 			this.languageDropdown.appendChild(a);
 		});
-		if (!this.langs.has(lang)) lang = langData.defaultLanguage;
+		let lang = null;
+		let lsLang = window.localStorage.getItem('i18n-lang');
+		var browserLang = navigator.language.toLowerCase();
+		// If the language is set in localstorage, use that
+		if (lsLang !== null && this.langs.has(lsLang)) lang = lsLang;
+		// If the browser language is in the list, use that
+		else if (this.langs.has(browserLang)) lang = browserLang;
+		else {
+			// If the exact browser language isn't in the list, try to find a language with the same prefix
+			for (let langId of langData.languages) {
+				if (langId.split('-')[0] === browserLang.split('-')[0]) {
+					lang = langId;
+					break;
+				}
+			}
+		}
+		// If all else fails, use the default language
+		if (lang === null) lang = langData.defaultLanguage;
 		this.SetLanguage(this.langs.get(lang) as Language, lang);
 		this.ReplaceStaticStrings();
 	}
