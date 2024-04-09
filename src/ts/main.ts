@@ -826,21 +826,21 @@ function userModOptions(user: { user: User; element: HTMLTableRowElement }) {
 	let ul = document.createElement('ul');
 	ul.classList.add('dropdown-menu', 'dropdown-menu-dark', 'table-dark', 'text-light');
 	if (perms.bypassturn) addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kVMButtons_EndTurn), () => VM!.endTurn(user.user.username));
-	if (perms.ban) addUserDropdownItem(ul, 'Ban', () => VM!.ban(user.user.username));
-	if (perms.kick) addUserDropdownItem(ul, 'Kick', () => VM!.kick(user.user.username));
+	if (perms.ban) addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kAdminVMButtons_Ban), () => VM!.ban(user.user.username));
+	if (perms.kick) addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kAdminVMButtons_Kick), () => VM!.kick(user.user.username));
 	if (perms.rename)
-		addUserDropdownItem(ul, 'Rename', () => {
-			let newname = prompt(`Enter new username for ${user.user.username}`);
+		addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kVMButtons_ChangeUsername), () => {
+			let newname = prompt(TheI18n.GetString(I18nStringKey.kVMPrompts_AdminChangeUsernamePrompt, user.user.username));
 			if (!newname) return;
 			VM!.renameUser(user.user.username, newname);
 		});
 	if (perms.mute) {
-		addUserDropdownItem(ul, 'Temporary Mute', () => VM!.mute(user.user.username, MuteState.Temp));
-		addUserDropdownItem(ul, 'Indefinite Mute', () => VM!.mute(user.user.username, MuteState.Perma));
-		addUserDropdownItem(ul, 'Unmute', () => VM!.mute(user.user.username, MuteState.Unmuted));
+		addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kAdminVMButtons_TempMute), () => VM!.mute(user.user.username, MuteState.Temp));
+		addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kAdminVMButtons_IndefMute), () => VM!.mute(user.user.username, MuteState.Perma));
+		addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kAdminVMButtons_Unmute), () => VM!.mute(user.user.username, MuteState.Unmuted));
 	}
 	if (perms.grabip)
-		addUserDropdownItem(ul, 'Get IP', async () => {
+		addUserDropdownItem(ul, TheI18n.GetString(I18nStringKey.kAdminVMButtons_GetIP), async () => {
 			let ip = await VM!.getip(user.user.username);
 			alert(ip);
 		});
@@ -859,7 +859,7 @@ function addUserDropdownItem(ul: HTMLUListElement, text: string, func: () => voi
 }
 
 // Admin buttons
-elements.restoreBtn.addEventListener('click', () => window.confirm('Are you sure you want to restore the VM?') && VM?.restore());
+elements.restoreBtn.addEventListener('click', () => window.confirm(TheI18n.GetString(I18nStringKey.kVMPrompts_AdminRestoreVMPrompt)) && VM?.restore());
 elements.rebootBtn.addEventListener('click', () => VM?.reboot());
 elements.clearQueueBtn.addEventListener('click', () => VM?.clearQueue());
 elements.bypassTurnBtn.addEventListener('click', () => VM?.bypassTurn());
@@ -929,7 +929,7 @@ const accountModal = new bootstrap.Modal(elements.accountModal);
 elements.accountModalErrorDismiss.addEventListener('click', () => elements.accountModalError.style.display = "none");
 elements.accountModalSuccessDismiss.addEventListener('click', () => elements.accountModalSuccess.style.display = "none");
 elements.accountLoginButton.addEventListener("click", () => {
-	elements.accountModalTitle.innerText = TheI18n.GetString(I18nStringKey.kAccountModal_Login);
+	elements.accountModalTitle.innerText = TheI18n.GetString(I18nStringKey.kGeneric_Login);
 	elements.accountRegisterSection.style.display = "none";
 	elements.accountVerifyEmailSection.style.display = "none";
 	elements.accountLoginSection.style.display = "block";
@@ -939,7 +939,7 @@ elements.accountLoginButton.addEventListener("click", () => {
 	accountModal.show();
 });
 elements.accountRegisterButton.addEventListener("click", () => {
-	elements.accountModalTitle.innerText = TheI18n.GetString(I18nStringKey.kAccountModal_Register);
+	elements.accountModalTitle.innerText = TheI18n.GetString(I18nStringKey.kGeneric_Register);
 	elements.accountRegisterSection.style.display = "block";
 	elements.accountVerifyEmailSection.style.display = "none";
 	elements.accountLoginSection.style.display = "none";

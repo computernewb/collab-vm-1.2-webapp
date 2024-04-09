@@ -1,4 +1,6 @@
-{
+import { Language } from "./i18n.js";
+
+const fallbackLanguage : Language = {
 	"languageName": "English (US)",
 	"translatedLanguageName": "English (US)",
 	"flag": "🇺🇸",
@@ -95,3 +97,5 @@
 		"kNotLoggedIn": "Not Logged in"
 	}
 }
+
+export default fallbackLanguage;
