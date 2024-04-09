@@ -23,6 +23,7 @@ const elements = {
 	vmview: document.getElementById('vmview') as HTMLDivElement,
 	vmDisplay: document.getElementById('vmDisplay') as HTMLDivElement,
 	homeBtn: document.getElementById('homeBtn') as HTMLAnchorElement,
+	rulesBtn: document.getElementById('rulesBtn') as HTMLAnchorElement,
 	chatList: document.getElementById('chatList') as HTMLTableSectionElement,
 	chatListDiv: document.getElementById('chatListDiv') as HTMLDivElement,
 	userlist: document.getElementById('userlist') as HTMLTableSectionElement,
@@ -1268,10 +1269,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 	await loadList();
 
 	// Welcome modal
+	let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
 	let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
 	if (noWelcomeModal !== '1') {
 		let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
-		let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
 		welcomeModalDismissBtn.addEventListener('click', () => {
 			window.localStorage.setItem('no-welcome-modal', '1');
 		});
@@ -1281,4 +1282,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 			welcomeModalDismissBtn.disabled = false;
 		}, 5000);
 	}
+	elements.rulesBtn.addEventListener('click', e => {
+		if (TheI18n.CurrentLanguage() !== "en-us") {
+			e.preventDefault();
+			welcomeModal.show();
+		}
+	});
 });

@@ -142,6 +142,8 @@ export class I18n {
 	private lang: Language = fallbackLanguage;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 
+	CurrentLanguage = () => this.langId;
+
 	// the ID of the language
 	private langId: string = fallbackId;
 	
