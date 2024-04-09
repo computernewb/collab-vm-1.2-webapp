@@ -140,7 +140,7 @@ export class I18n {
 	// The language data itself
 	private langs : Map<string, Language> = new Map<string, Language>();
 	private lang: Language = fallbackLanguage;
-	private languageDropdown: HTMLDivElement = document.getElementById('languageDropdown') as HTMLDivElement;
+	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 
 	// the ID of the language
 	private langId: string = fallbackId;
