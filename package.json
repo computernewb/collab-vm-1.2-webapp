@@ -14,7 +14,6 @@
   "author": "Elijah R",
   "license": "GPL-3.0",
   "dependencies": {
-    "@hcaptcha/types": "^1.0.3",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
     "dayjs": "^1.11.10",
@@ -22,6 +21,7 @@
     "simple-keyboard": "^3.7.53"
   },
   "devDependencies": {
+    "@hcaptcha/types": "^1.0.3",
     "@types/bootstrap": "^5.2.10",
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
