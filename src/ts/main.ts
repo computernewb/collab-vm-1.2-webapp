@@ -1275,11 +1275,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 	});
 	// Load theme
 	var _darktheme : boolean;
-	if (localStorage.getItem("cvm-dark-theme") === "0")
-		loadColorTheme(false);
-	else
+	// Check if dark theme is set in local storage
+	if (localStorage.getItem("cvm-dark-theme") !== null)
+		loadColorTheme(localStorage.getItem("cvm-dark-theme") === "1");
+	// Otherwise, try to detect the system theme
+	else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
 		loadColorTheme(true);
-
+	else
+		loadColorTheme(false);
 	// Initialize authentication if enabled
 	if (Config.Auth.Enabled) {
 		auth = new AuthManager(Config.Auth.APIEndpoint);
