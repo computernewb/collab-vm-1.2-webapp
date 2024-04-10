@@ -416,11 +416,15 @@ export default class CollabVMClient {
 	}
 
 	private onWindowResize(e: Event) {
-		var copyctx = (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height) ? this.unscaledCanvas : this.canvas;
-		this.recalculateCanvasScale(this.actualScreenSize.width, this.actualScreenSize.height);
-		this.canvas.width = this.canvasScale.width;
-		this.canvas.height = this.canvasScale.height;
-		this.ctx.drawImage(copyctx, 0, 0, this.actualScreenSize.width, this.actualScreenSize.height, 0, 0, this.canvas.width, this.canvas.height);
+		var t = setTimeout(() => {
+			if (!this.connectedToVM) return;
+			var copyctx = (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height) ? this.unscaledCanvas : this.canvas;
+			this.recalculateCanvasScale(this.actualScreenSize.width, this.actualScreenSize.height);
+			this.canvas.width = this.canvasScale.width;
+			this.canvas.height = this.canvasScale.height;
+			this.ctx.drawImage(copyctx, 0, 0, this.actualScreenSize.width, this.actualScreenSize.height, 0, 0, this.canvas.width, this.canvas.height);
+		}, 500);
+		window.addEventListener('resize', () => clearTimeout(t), {once: true});
 	}
 
 	private recalculateCanvasScale(width: number, height: number) {
