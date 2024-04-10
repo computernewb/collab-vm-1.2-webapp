@@ -1,5 +1,7 @@
 #vmview {
   display: none;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
 }
 /*.vmtile {
   text-decoration: none;
@@ -13,8 +15,6 @@
   padding: 4px;
 }*/
 #vmDisplay, #btns {
-  margin-left: auto;
-  margin-right: auto;
   text-align: center;
   display: block;
   margin-bottom: 10px;

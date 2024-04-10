@@ -52,6 +52,11 @@ export default class CollabVMClient {
 	// Fields
 	private socket: WebSocket;
 	canvas: HTMLCanvasElement;
+	// A secondary canvas that is not scaled
+	unscaledCanvas: HTMLCanvasElement;
+	canvasScale : { width : number, height : number } = { width: 0, height: 0 };
+	actualScreenSize : { width : number, height : number } = { width: 0, height: 0 };
+	private unscaledCtx: CanvasRenderingContext2D;
 	private ctx: CanvasRenderingContext2D;
 	private url: string;
 	private connectedToVM: boolean = false;
@@ -78,10 +83,12 @@ export default class CollabVMClient {
 		this.publicEmitter = createNanoEvents();
 		// Create the canvas
 		this.canvas = document.createElement('canvas');
+		this.unscaledCanvas = document.createElement('canvas');
 		// Set tab index so it can be focused
 		this.canvas.tabIndex = -1;
 		// Get the 2D context
 		this.ctx = this.canvas.getContext('2d')!;
+		this.unscaledCtx = this.unscaledCanvas.getContext('2d')!;
 		// Bind canvas click
 		this.canvas.addEventListener('click', (e) => {
 			if (this.users.find((u) => u.username === this.username)?.turn === -1) this.turn(true);
@@ -171,7 +178,7 @@ export default class CollabVMClient {
 				capture: true
 			}
 		);
-
+		window.addEventListener('resize', (e) => this.onWindowResize(e));
 		this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 		// Create the WebSocket
 		this.socket = new WebSocket(url, 'guacamole');
@@ -214,15 +221,28 @@ export default class CollabVMClient {
 			}
 			case 'size': {
 				if (msgArr[1] !== '0') return;
-				this.canvas.width = parseInt(msgArr[2]);
-				this.canvas.height = parseInt(msgArr[3]);
+				this.recalculateCanvasScale(parseInt(msgArr[2]), parseInt(msgArr[3]));
+				this.unscaledCanvas.width = this.actualScreenSize.width;
+				this.unscaledCanvas.height = this.actualScreenSize.height;
+				this.canvas.width = this.canvasScale.width;
+				this.canvas.height = this.canvasScale.height;
 				break;
 			}
 			case 'png': {
 				// Despite the opcode name, this is actually JPEG, because old versions of the server used PNG and yknow backwards compatibility
 				let img = new Image();
+				var x = parseInt(msgArr[3]);
+				var y = parseInt(msgArr[4]);
 				img.addEventListener('load', () => {
-					this.ctx.drawImage(img, parseInt(msgArr[3]), parseInt(msgArr[4]));
+					if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height)
+						this.unscaledCtx.drawImage(img, x, y);
+					// Scale the image to the canvas
+					this.ctx.drawImage(img, 0, 0, img.width, img.height, 
+						(x / this.actualScreenSize.width) * this.canvas.width, 
+						(y / this.actualScreenSize.height) * this.canvas.height, 
+						(img.width / this.actualScreenSize.width) * this.canvas.width, 
+						(img.height / this.actualScreenSize.height) * this.canvas.height
+					);
 				});
 				img.src = 'data:image/jpeg;base64,' + msgArr[5];
 				break;
@@ -395,6 +415,28 @@ export default class CollabVMClient {
 		}
 	}
 
+	private onWindowResize(e: Event) {
+		var copyctx = (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height) ? this.unscaledCanvas : this.canvas;
+		this.recalculateCanvasScale(this.actualScreenSize.width, this.actualScreenSize.height);
+		this.canvas.width = this.canvasScale.width;
+		this.canvas.height = this.canvasScale.height;
+		this.ctx.drawImage(copyctx, 0, 0, this.actualScreenSize.width, this.actualScreenSize.height, 0, 0, this.canvas.width, this.canvas.height);
+	}
+
+	private recalculateCanvasScale(width: number, height: number) {
+		this.actualScreenSize.width = width;
+		this.actualScreenSize.height = height;
+		// If the screen is bigger than the canvas, don't downscale
+		if (window.innerWidth >= this.actualScreenSize.width) {
+			this.canvasScale.width = this.actualScreenSize.width;
+			this.canvasScale.height = this.actualScreenSize.height;
+		} else {
+			// If the canvas is bigger than the screen, downscale
+			this.canvasScale.width = window.innerWidth;
+			this.canvasScale.height = (window.innerWidth / this.actualScreenSize.width) * this.actualScreenSize.height;
+		}
+	}
+
 	async WaitForOpen() {
 		return new Promise<void>((res) => {
 			// TODO: should probably reject on close
@@ -488,7 +530,9 @@ export default class CollabVMClient {
 	}
 
 	// Send mouse instruction
-	sendmouse(x: number, y: number, mask: number) {
+	sendmouse(_x: number, _y: number, mask: number) {
+		let x = Math.round((_x / this.canvas.width) * this.actualScreenSize.width);
+		let y = Math.round((_y / this.canvas.height) * this.actualScreenSize.height);
 		this.send('mouse', x, y, mask);
 	}
 
