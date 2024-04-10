@@ -6,7 +6,7 @@ The CollabVM Web App is the viewer for the CollabVM Server.
 
 ## Building
 
-Edit Config.ts to your needs, then:
+Copy config.example.json to config.json and edit to your needs, then:
 
 ## yarn
 - `yarn`

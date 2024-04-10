@@ -1,6 +1,6 @@
 import CollabVMClient from './protocol/CollabVMClient.js';
 import VM from './protocol/VM.js';
-import { Config } from '../../Config.js';
+import Config from '../../config.json';
 import { Permissions, Rank } from './protocol/Permissions.js';
 import { User } from './protocol/User.js';
 import TurnStatus from './protocol/TurnStatus.js';
