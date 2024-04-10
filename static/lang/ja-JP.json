@@ -1,0 +1,98 @@
+{
+	"languageName": "日本語",
+	"translatedLanguageName": "Japanese",
+	"flag": "�ｺ�ｸ",
+	"author": "pap",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "はい",
+		"kGeneric_No": "いいえ",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "キャンセル",
+		"kGeneric_Send": "送信",
+		"kGeneric_Understood": "理解しました",
+		"kGeneric_Username": "ユーザー名",
+		"kGeneric_Password": "パスワード",
+		"kGeneric_Login": "ログイン",
+		"kGeneric_Register": "登録",
+		"kGeneric_EMail": "Eメール/メールアドレス",
+		"kGeneric_DateOfBirth": "生年月日",
+		"kGeneric_VerificationCode": "認証コード",
+		"kGeneric_Verify": "認証",
+		"kGeneric_Update": "更新",
+		"kGeneric_Logout": "ログアウト",
+		
+		"kWelcomeModal_Header": "CollabVMへようこそ",
+		"kWelcomeModal_Body": "<p>続行する前に、これらのルールをよく理解してください:</p> <h3>R1. 法律を守ること</h3> 米国連邦法、ニューヨーク州法、または国際法に違反するためにCollabVMまたはCollabVMのネットワークを使用しないでください。 CollabVMがそのサービスを通じて犯罪が行われたことを認識した場合、利用者は直ちに利用を禁止され、必要に応じて利用者の活動が当局に報告されることがあります。<br><br>CollabVMは、そのネットワーク上に児童ポルノが存在すること、またはそのネットワークを通じて児童ポルノが送信されていることに気付いた場合、法執行機関に通知することが法律で義務付けられています。<br><br>COPPAも施行されていますので、13歳未満の方はCollabVMを使用しないでください。<h3>R2. DoS/DDoSツールを実行しないこと。</h3> CollabVMを使用して、個人、企業、会社、または他の誰かをDoS/DDoSしないでください。<h3>R3. 他サービスへのスパム(連投)は禁止。</h3> このサービスを利用したスパムメールや、一般的なプッシュスパムはご遠慮ください。<h3>R4. エクスプロイトの乱用は禁止。</h3> 誰かが悪用しているのを見たり、悪用を報告する必要がある場合は computernewbab@gmail.com までご連絡ください。英語でのみサポートを受け付けています。<h3>R5. 他のユーザーになりすますのは禁止。</h3> CollabVMの他のメンバーになりすまさないでください。もし見つかった場合、一時的に接続を切られ、必要であれば禁止されます。<h3>R6. 一人1投票まで。</h3> 投票制限を迂回する方法やツールを使用しないでください。何があっても、1人1票しか投票できません。このような行為が発覚した場合は出入り禁止となります。<h3>R7. リモートアクセスツールの実行/インストールは禁止。</h3>VM内でTeamViewer、AnyDesk、Splashtopなどのリモートアクセスツールを実行/インストールしないでください。<h3>R8. CollabNetの回避は禁止。</h3> CollabNetが提供するブロッキングを迂回しようとしないでください。特に、ルール1、2、7を破るためにアクセスする場合はもってのほか。<h3>R9. 常にマシンを破壊/使用不能にするような行動をとらないこと。</h3> どのユーザーもマシンを（常に）使用不能にする、またはOSの（再）インストール（VM6/7は例外）、ボットの実行は禁止されています。 これには、大量のキーボード/マウス入力をスパムするボットも含まれます。<h3>R10. 仮想通貨のマイニングは禁止。</h3> マシン上で暗号通貨を採掘しようとするとキックされ、それでも続けると禁止となります。というか、1円すら掘れないと思います。やめてね。<h3>NSFW（R18）についての警告</h3> NSFWコンテンツはアナーキーマシン (VM0b0t) で許可されており、 それらはなんの警告もなしに普通に見ることができます。加えて、私たちはNSFWをメインVMに表示しないよう努力していますが、時折、それをすり抜ける人もいます。",
+
+		"kSiteButtons_Home": "ホーム",
+		"kSiteButtons_FAQ": "FAQ（よくある質問）",
+		"kSiteButtons_Rules": "ルール",
+		"kSiteButtons_DarkMode": "ダークモード",
+		"kSiteButtons_LightMode": "ライトモード",
+		"kSiteButtons_Languages": "言語",
+
+		"kVM_UsersOnlineText": "ユーザー数:",
+
+		"kVM_TurnTimeTimer": "{0} 秒後にあなたのターンが終了します。",
+		"kVM_WaitingTurnTimer": "{0} 秒後にあなたのターンが来ます。",
+		"kVM_VoteCooldownTimer": "次の投票を開始する前に、{0} 秒間お待ちください。",
+
+		"kVM_VoteForResetTitle": "マシンの再起動を行いますか？",
+		"kVM_VoteForResetTimer": "投票は {0} 秒後に終了します。",
+
+		"kVMButtons_TakeTurn": "ターンを得る",
+		"kVMButtons_EndTurn": "ターンを終了する",
+		"kVMButtons_ChangeUsername": "ユーザー名の変更",
+		"kVMButtons_Keyboard": "仮想キーボード",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "再起動の投票",
+		"kVMButtons_Screenshot": "スクリーンショット",
+
+		"kQEMUMonitor": "QEMU Monitor",
+		"kAdminVMButtons_PassVote": "投票をスキップ",
+		"kAdminVMButtons_CancelVote": "投票をキャンセル",
+
+		"kAdminVMButtons_Restore": "復元",
+		"kAdminVMButtons_Reboot": "再起動",
+		"kAdminVMButtons_ClearTurnQueue": "ターンのキューをクリア",
+		"kAdminVMButtons_BypassTurn": "ターンをスキップ",
+		"kAdminVMButtons_IndefiniteTurn": "無期限ターン",
+
+		"kAdminVMButtons_Ban": "禁止(Ban)",
+		"kAdminVMButtons_Kick": "追放",
+		"kAdminVMButtons_TempMute": "一時的なミュート",
+		"kAdminVMButtons_IndefMute": "無期限ミュート",
+		"kAdminVMButtons_Unmute": "ミュート解除",
+		"kAdminVMButtons_GetIP": "IPの入手",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "{0} の新しいユーザー名を入力してください:",
+		"kVMPrompts_AdminRestoreVMPrompt": "マシンの復元をしますか？",
+		"kVMPrompts_EnterNewUsernamePrompt": "ユーザー名を入力するか、フィールドを空白にしてOKをクリックしてください。(空白にした場合、ゲストユーザーになります。)",
+
+		"kError_UnexpectedDisconnection": "サーバーから切断されました。",
+		"kError_UsernameTaken": "ユーザー名はすでに存在しています。",
+		"kError_UsernameInvalid": "ユーザーネームは3文字から20文字以内にしなければいけず、かつユーザーネームに入れられる文字は数字、アルファベット、スペース(半角)、ダッシュ記号、アンダースコア、ドットのみです。",
+		"kError_UsernameBlacklisted": "そのユーザー名はブラックリストに入っています。",
+		"kError_IncorrectPassword": "パスワードが間違っています。",
+
+		"kAccountModal_Verify": "Eメールの確認",
+		"kAccountModal_AccountSettings": "アカウントの設定",
+		"kAccountModal_ResetPassword": "パスワードの再設定",
+
+		"kAccountModal_NewPassword": "新しいパスワード",
+		"kAccountModal_ConfirmNewPassword": "新しいパスワードの再確認",
+		"kAccountModal_CurrentPassword": "現在のパスワード",
+		"kAccountModal_ConfirmPassword": "パスワードの再確認",
+
+		"kMissingCaptcha": "Captcha認証を完了してください。",
+		"kPasswordsMustMatch": "「新しいパスワード」と「新しいパスワードの再確認」が一致していません。",
+		"kAccountModal_VerifyText": "{0} へ確認メールを送信しました。アカウントを認証するために、メールに書いてある8桁のコードを下のボックスへ入力してください。",
+		"kAccountModal_VerifyPasswordResetText": "{0}へ確認メールを送信しました。パスワードをリセットするために、メールに書いてある8桁のコードを下のボックスへ入力してください。",
+		"kAccountModal_PasswordResetSuccess": "パスワードの変更が完了しました。ログイン時には入力した新しいパスワードを使用してください。",
+
+		"kNotLoggedIn": "ログインしていません"
+	}
+}
