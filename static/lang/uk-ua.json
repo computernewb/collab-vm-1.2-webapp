@@ -93,6 +93,6 @@
 		"kAccountModal_VerifyPasswordResetText": "Код надіслано на адресу {0}. Щоб скинути пароль, введіть його нижче.",
 		"kAccountModal_PasswordResetSuccess": "Ваш пароль успішно змінено. Тепер ви можете увійти з новим паролем.",
 
-		"kNotLoggedIn": "Ви не увійшли до системи."
+		"kNotLoggedIn": "Ви не увійшли до системи"
 	}
 }
