@@ -334,3 +334,9 @@ Theme: cvmDisabled
 #accountDropdownMenuLink, #accountModalError, #accountModalSuccess {
   display: none;
 }
+
+/* Emoji font for systems without one */
+@font-face {
+  font-family: 'Noto Color Emoji';
+  src: url('../assets/NotoColorEmoji.ttf');
+}
