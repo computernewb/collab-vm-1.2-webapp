@@ -156,8 +156,9 @@ tr.user-waiting > td {
 /* Start OSK */
 .osk-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  width: 1024px;
+  max-width: 1024px;
   margin: 0 auto;
   margin-bottom: 10px;
   border-radius: 5px;
@@ -168,8 +169,7 @@ tr.user-waiting > td {
 }
 
 .osk-main.simple-keyboard {
-  width: 640px;
-  min-width: 640px;
+  max-width: 640px;
   background: none;
 }
 
@@ -277,6 +277,12 @@ tr.user-waiting > td {
 
 .hg-button.hg-functionBtn.hg-button-space {
   width: 350px;
+}
+
+@media screen and (max-width: 640px) {
+  .hg-button:not(:last-child) {
+    margin-right: 1px !important;
+  }
 }
 
 /*
