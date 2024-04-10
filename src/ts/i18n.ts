@@ -1,6 +1,7 @@
 import { StringLike } from './StringLike';
 import { Format } from './format';
 import { Emitter, Unsubscribe, createNanoEvents } from 'nanoevents';
+import Config from '../../config.json';
 
 /// All string keys.
 export enum I18nStringKey {
@@ -411,6 +412,9 @@ export class I18n {
 
 	// Returns a (raw, unformatted) string. Currently only used if we don't need formatting.
 	GetStringRaw(key: I18nStringKey): string {
+		if (key === I18nStringKey.kGeneric_CollabVM && Config.SiteNameOverride) return Config.SiteNameOverride;
+		if (key === I18nStringKey.kWelcomeModal_Header && Config.WelcomeModalTitleOverride) return Config.WelcomeModalTitleOverride;
+		if (key === I18nStringKey.kWelcomeModal_Body && Config.WelcomeModalBodyOverride) return Config.WelcomeModalBodyOverride;
 		let val = this.lang.stringKeys[key];
 
 		// Look up the fallback language by default if the language doesn't

@@ -350,6 +350,7 @@ async function multicollab(url: string) {
 		div.classList.add('col-sm-5', 'col-md-3');
 		let card = document.createElement('div');
 		card.classList.add('card');
+		if (Config.NSFWVMs.indexOf(vm.id) !== -1) card.classList.add('cvm-nsfw');
 		card.setAttribute('data-cvm-node', vm.id);
 		card.addEventListener('click', async () => {
 			try {
@@ -501,8 +502,9 @@ function closeVM() {
 }
 
 async function loadList() {
+	var jsonVMs = Config.ServerAddressesListURI === null ? [] : await (await fetch(Config.ServerAddressesListURI)).json();
 	await Promise.all(
-		Config.ServerAddresses.map((url) => {
+		[Config.ServerAddresses, jsonVMs].flat().map((url) => {
 			return multicollab(url);
 		})
 	);

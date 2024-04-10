@@ -1,4 +1,7 @@
 {
+    "SiteNameOverride": null,
+    "WelcomeModalTitleOverride": null,
+    "WelcomeModalBodyOverride": null,
     "ChatSound": "//computernewb.com/collab-vm/notify.ogg",
     "ServerAddresses": [
         "wss://computernewb.com/collab-vm/vm0",
@@ -11,6 +14,8 @@
         "wss://computernewb.com/collab-vm/vm7",
         "wss://computernewb.com/collab-vm/vm8"
     ],
+    "ServerAddressesListURI": null,
+    "NSFWVMs": ["vm0b0t"],
     "Auth": {
         "Enabled": false,
         "APIEndpoint": "http://127.0.0.1:5858"

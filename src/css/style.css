@@ -314,11 +314,15 @@ Theme: cvmDisabled
   display: none;
 }
 
-/* VM0 Blur */
-div[data-cvm-node=vm0b0t] {
-  img { 
+/* NSFW Blur */
+.cvm-nsfw {
+  img {
     filter:blur(40px)!important; 
-  } 
+  }
+  h5::before {
+    content: "[NSFW] ";
+    color: #ff0000;
+  }
 }
 
 #accountDropdownMenuLink, #accountModalError, #accountModalSuccess {
