@@ -1296,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 
 	// Load all VMs
-	await loadList();
+	loadList();
 
 	// Welcome modal
 	let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
