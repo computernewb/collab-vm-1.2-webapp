@@ -1300,11 +1300,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Welcome modal
 	let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
-	let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
+	let noWelcomeModal = window.localStorage.getItem(Config.WelcomeModalLocalStorageKey);
 	if (noWelcomeModal !== '1') {
 		let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
 		welcomeModalDismissBtn.addEventListener('click', () => {
-			window.localStorage.setItem('no-welcome-modal', '1');
+			window.localStorage.setItem(Config.WelcomeModalLocalStorageKey, '1');
 		});
 		welcomeModalDismissBtn.disabled = true;
 		welcomeModal.show();

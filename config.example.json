@@ -2,6 +2,7 @@
     "SiteNameOverride": null,
     "WelcomeModalTitleOverride": null,
     "WelcomeModalBodyOverride": null,
+    "WelcomeModalLocalStorageKey": "no-welcome-modal",
     "ChatSound": "//computernewb.com/collab-vm/notify.ogg",
     "ServerAddresses": [
         "wss://computernewb.com/collab-vm/vm0",
