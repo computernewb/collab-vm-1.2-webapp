@@ -15,6 +15,7 @@ import { I18nStringKey, TheI18n } from './i18n.js';
 import { Format } from './format.js';
 import AuthManager from './AuthManager.js';
 import dayjs from 'dayjs';
+import * as dompurify from 'dompurify';
 
 // Elements
 const w = window as any;
@@ -363,7 +364,7 @@ async function multicollab(url: string) {
 		let cardBody = document.createElement('div');
 		cardBody.classList.add('card-body');
 		let cardTitle = document.createElement('h5');
-		cardTitle.innerHTML = vm.displayName;
+		cardTitle.innerHTML = Config.RawMessages.VMTitles ? vm.displayName : dompurify.sanitize(vm.displayName);
 		let usersOnline = document.createElement('span');
 		usersOnline.innerHTML = `(<i class="fa-solid fa-users"></i> ${online})`;
 		cardBody.appendChild(cardTitle);
@@ -545,6 +546,7 @@ function sortUserList() {
 function chatMessage(username: string, message: string) {
 	let tr = document.createElement('tr');
 	let td = document.createElement('td');
+	if (!Config.RawMessages.Messages) message = dompurify.sanitize(message);
 	// System message
 	if (username === '') td.innerHTML = message;
 	else {
@@ -575,7 +577,7 @@ function chatMessage(username: string, message: string) {
 		tr.classList.add(msgclass);
 		td.innerHTML = `<b class="${userclass}">${username}▸</b> ${message}`;
 		// hacky way to allow scripts
-		Array.prototype.slice.call(td.children).forEach((curr) => {
+		if (Config.RawMessages.Messages) Array.prototype.slice.call(td.children).forEach((curr) => {
 			if (curr.nodeName === 'SCRIPT') {
 				eval(curr.text);
 			}

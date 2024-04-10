@@ -16,6 +16,10 @@
     ],
     "ServerAddressesListURI": null,
     "NSFWVMs": ["vm0b0t"],
+    "RawMessages": {
+        "VMTitles": true,
+        "Messages": true
+    },
     "Auth": {
         "Enabled": false,
         "APIEndpoint": "http://127.0.0.1:5858"
