@@ -1,0 +1,98 @@
+{
+	"languageName": "Hrvatski",
+	"translatedLanguageName": "Croatian",
+	"flag": "🇭🇷",
+	"author": "xDLiveRBLX",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Da",
+		"kGeneric_No": "Ne",
+		"kGeneric_Ok": "U redu",
+		"kGeneric_Cancel": "Odkaži",
+		"kGeneric_Send": "Pošalji",
+		"kGeneric_Understood": "Razumljeno",
+		"kGeneric_Username": "Korisničko ime",
+		"kGeneric_Password": "Lozinka",
+		"kGeneric_Login": "Prijavi se",
+		"kGeneric_Register": "Registriraj se",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Datum rođenja",
+		"kGeneric_VerificationCode": "Verifikacijski kod",
+		"kGeneric_Verify": "Potvrdi",
+		"kGeneric_Update": "Ažuriraj",
+		"kGeneric_Logout": "Odjavi se",
+		
+		"kWelcomeModal_Header": "Dobrodošli u CollabVM",
+		"kWelcomeModal_Body": "<p>Prije nastavka, upoznajte se sa našim pravilima:</p> <h3>R1. Nemojte kršiti zakon.</h3> Ne koristite CollabVM da biste kršili federalni zakon SAD-a, zakon savezne države New York ili međunarodni zakon. Ako CollabVM sazna da je preko usluge učinjen zakon, odmah ćete dobiti ban sa usluge a vaše aktivnosti mogu biti prijavljene policiji ako je potrebno.<br><br>CollabVM je dužan po zakonu obavijestiti agencije ako postane svjestan o prisutnosti dječje pornografije ili prijenosa kroz njihovu mrežu.<br><br>COPPA je također provođen, nemojte koristiti CollabVM ako ste mlađi od 13 godina. <h3>R2. Nema pokretanja/korištenja DOS/DDoS alata.</h3> Ne koristite CollabVM za provođenje DOS/DDoS napada na pojedince, tvrtke, kompanije ili bilo koga drugoga. <h3>R3. Ne šaljite neželjenu poštu.</h3> Ne šaljite neželjenu poštu kroz ovu uslugu i općenito ne šaljite neželjene stvari. <h3>R4. Nemojte zlorabiti exploite. </h3> Nemojte zlorabiti bilo kakve exploite, dodatno, ako vidite nekoga da zlorabljuje exploite ili trebate priajviti jedan, molim Vas kontaktirajte me na: computernewbab@gmail.com <h3>R5. Nemojte lažno predstavljati druge korisnike.</h3> Nemojte lažno predstavljati druge korisnike CollabVM-a. Ako ste ulovljeni, biti ćete privremeno odspojeni sa stranice i ban-ani ako potrebno. <h3>R6. Jedan glas po osobi.</h3> Nemojte koristiti nikakve metode ili alate za zaobilaženje ograničenja glasova. Samo jedan glas je dozvoljen po osobi, bez obzira na sve. Svatko tko bude ulovljen biti će ban-an. <h3>R7. Nema alata za daljinski pristup.</h3> Ne koristite nikakve alate za daljinski pristup (npr: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, itd.) <h3>R8. Nema zaobilaženja CollabNet-a.</h3> Ne pokušavajte zaobilaziti blokiranje koje nudi CollabNet, pogotovo ako se koristi za kršenje 1., 2., ili 7., pravila. (ili za pokretanje glupih previše korištenih stvari.). <h3>R9. Nema stalnog izvođenja uništavajućih radnji.</h3> Bilo koji korisnik ne smije uništiti VM (čineći ga stalno neupotrebljivim), instalirati/deinstalirati operativni sustav (osim na VM7 ili VM8), ili pokretati botove koje to čine. Ovo uključuje botove koji unose goleme količine unosa tipkovnice ili miša. (\"kitting\"). <h3>R10. Nema rudarenja kriptovaluta.</h3> Pokušavanje rudarenja kriptovaluta na ovim VM-ovima rezultirati će izbačenjem, a zatim trajnim banom ako nastavite. Osim toga, nije kao da ćete zaraditi ikakve novce na tome. <h3>NSFW upozorenje</h3> Imajte na umu da je NSFW sadržaj dopušten na anarchy VMu (VM0b0t) i da se redovito pregledava. Osim toga, dok se jako trudimo spriječiti NSFW od glavnih VMova, ponekad će se prošuljati.",
+
+		"kSiteButtons_Home": "Glavna stranica",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Pravila",
+		"kSiteButtons_DarkMode": "Tamni način prikaza",
+		"kSiteButtons_LightMode": "Svjetli način prikaza",
+		"kSiteButtons_Languages": "Jezici",
+
+		"kVM_UsersOnlineText": "Korisnici na mreži:",
+
+		"kVM_TurnTimeTimer": "Red isteće za {0} sekundi.",
+		"kVM_WaitingTurnTimer": "Čekanje za red u {0} sekundi.",
+		"kVM_VoteCooldownTimer": "Molim Vas pričekajte {0} sekundi prije početka novog glasanja.",
+
+		"kVM_VoteForResetTitle": "Želite li resetirati VM?",
+		"kVM_VoteForResetTimer": "Glasanje završava za {0} sekundi",
+
+		"kVMButtons_TakeTurn": "Uzmi red",
+		"kVMButtons_EndTurn": "Završi red",
+		"kVMButtons_ChangeUsername": "Promijeni korisničko ime",
+		"kVMButtons_Keyboard": "Tipkovnica",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Glasaj za reset",
+		"kVMButtons_Screenshot": "Screenshot",
+
+		"kQEMUMonitor": "QEMU Monitor",
+		"kAdminVMButtons_PassVote": "Prođi glasovanje",
+		"kAdminVMButtons_CancelVote": "Otkaži glasovanje",
+
+		"kAdminVMButtons_Restore": "Vrati",
+		"kAdminVMButtons_Reboot": "Ponovno pokreni",
+		"kAdminVMButtons_ClearTurnQueue": "Očisti red",
+		"kAdminVMButtons_BypassTurn": "Preskoči red",
+		"kAdminVMButtons_IndefiniteTurn": "Neograničen red",
+
+		"kAdminVMButtons_Ban": "Ban",
+		"kAdminVMButtons_Kick": "Izbačaj",
+		"kAdminVMButtons_TempMute": "Privremeni mute",
+		"kAdminVMButtons_IndefMute": "Trajni mute",
+		"kAdminVMButtons_Unmute": "Maknite mute",
+		"kAdminVMButtons_GetIP": "Dohvati IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Unesi novo korisničko ime za {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Jeste li sigurni da želite vratiti VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Unesite novo korisničko ime ili ostavite prazno za korisničko ime posjetitelja:",
+
+		"kError_UnexpectedDisconnection": "Neočekivano ste se odspojili sa servera.",
+		"kError_UsernameTaken": "Korisničko ime je već zauzeto.",
+		"kError_UsernameInvalid": "Korisničko ime može sadržati samo brojeve, slova, razmak, crte, donje crte, i točke, i mora biti između 3 do 20 znamenaka.",
+		"kError_UsernameBlacklisted": "Ovo korisničko ime je zabranjeno.",
+		"kError_IncorrectPassword": "Netočna lozinka.",
+
+		"kAccountModal_Verify": "Potvrdi E-Mail",
+		"kAccountModal_AccountSettings": "Postavke računa",
+		"kAccountModal_ResetPassword": "Resetiraj lozinku",
+
+		"kAccountModal_NewPassword": "Nova lozinka",
+		"kAccountModal_ConfirmNewPassword": "Potvrdi novu lozinku",
+		"kAccountModal_CurrentPassword": "Trenutna lozinka",
+		"kAccountModal_ConfirmPassword": "Potvrdite lozinku",
+
+		"kMissingCaptcha": "Molim Vas ispunite captchu..",
+		"kPasswordsMustMatch": "Lozinke se moraju podudarati.",
+		"kAccountModal_VerifyText": "Poslali smo E-Mail na {0}. Da biste potvrdili svoj račun, unesite osmero-znamenkasti kod iz poruke ispod.",
+		"kAccountModal_VerifyPasswordResetText": "Poslali smo E-Mail na {0}. Da biste resetirali svoju lozinku, unesite osmero-znamenkasti kod iz poruke ispod.",
+		"kAccountModal_PasswordResetSuccess": "Vaša lozinka je uspješno resetirana. Sada se možete prijaviti sa svojom novom lozinkom.",
+
+		"kNotLoggedIn": "Niste prijavljeni."
+	}
+}
