@@ -2,7 +2,7 @@
 	"languageName": "Русский",
 	"translatedLanguageName": "Russian",
 	"flag": "🇷🇺",
-	"author": "Noname, lua5.3",
+	"author": "Noname",
 
 	"stringKeys": {
 		"kGeneric_CollabVM": "CollabVM",
