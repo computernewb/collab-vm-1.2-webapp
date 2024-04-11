@@ -416,15 +416,16 @@ export default class CollabVMClient {
 	}
 
 	private onWindowResize(e: Event) {
-		var t = setTimeout(() => {
-			if (!this.connectedToVM) return;
-			var copyctx = (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height) ? this.unscaledCanvas : this.canvas;
-			this.recalculateCanvasScale(this.actualScreenSize.width, this.actualScreenSize.height);
-			this.canvas.width = this.canvasScale.width;
-			this.canvas.height = this.canvasScale.height;
-			this.ctx.drawImage(copyctx, 0, 0, this.actualScreenSize.width, this.actualScreenSize.height, 0, 0, this.canvas.width, this.canvas.height);
-		}, 500);
-		window.addEventListener('resize', () => clearTimeout(t), {once: true});
+		if (!this.connectedToVM) return;
+		// If the canvas is the same size as the screen, don't bother redrawing
+		if (window.innerWidth >= this.actualScreenSize.width && this.canvas.width === this.actualScreenSize.width) return;
+		if (this.actualScreenSize.width === this.canvasScale.width && this.actualScreenSize.height === this.canvasScale.height) {
+			this.unscaledCtx.drawImage(this.canvas, 0, 0);
+		}
+		this.recalculateCanvasScale(this.actualScreenSize.width, this.actualScreenSize.height);
+		this.canvas.width = this.canvasScale.width;
+		this.canvas.height = this.canvasScale.height;
+		this.ctx.drawImage(this.unscaledCanvas, 0, 0, this.actualScreenSize.width, this.actualScreenSize.height, 0, 0, this.canvas.width, this.canvas.height);
 	}
 
 	private recalculateCanvasScale(width: number, height: number) {
