@@ -1,0 +1,98 @@
+{
+	"languageName": "Bahasa Indonesia",
+	"translatedLanguageName": "Indonesian",
+	"flag": "🇮🇩",
+	"author": "indonesia1331",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Ya",
+		"kGeneric_No": "Tidak",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Membatalkan",
+		"kGeneric_Send": "Mengirim",
+		"kGeneric_Understood": "Dipahami",
+		"kGeneric_Username": "Nama belakang",
+		"kGeneric_Password": "Kata sandi",
+		"kGeneric_Login": "Gabung",
+		"kGeneric_Register": "Daftar",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Tanggal lahir",
+		"kGeneric_VerificationCode": "Kode verifikasi",
+		"kGeneric_Verify": "Memeriksa",
+		"kGeneric_Update": "Memperbarui",
+		"kGeneric_Logout": "Keluar",
+		
+		"kWelcomeModal_Header": "Selamat datang di CollabVM",
+		"kWelcomeModal_Body": "<p>Sebelum melanjutkan, harap pahami peraturan kami:</p> <h3>R1. Jangan melanggar hukum.</h3> Jangan gunakan CollabVM atau jaringan CollabVM untuk melanggar hukum federal Amerika Serikat, hukum negara bagian New York, atau hukum internasional. Jika CollabVM mengetahui adanya kejahatan yang dilakukan melalui layanannya, Anda akan langsung diblokir, dan aktivitas Anda dapat dilaporkan kepada pihak berwenang jika perlu.<br><br>CollabVM diwajibkan oleh hukum untuk memberi tahu lembaga penegak hukum jika hal itu terjadi menyadari adanya pornografi anak, atau ditransmisikan melalui jaringannya.<br><br>COPPA juga diberlakukan, mohon jangan gunakan CollabVM jika Anda berusia di bawah 13 tahun. <h3>R2. Tidak ada alat DoS/DDoS yang berjalan.</h3> Jangan gunakan CollabVM untuk DoS/DDoS individu, bisnis, perusahaan, atau siapa pun. <h3>R3. Tidak ada distribusi spam.</h3> Jangan mengirim spam ke email apa pun menggunakan layanan ini atau mendorong spam secara umum. <h3>R4. Jangan menyalahgunakan eksploitasi apa pun.</h3> Jangan menyalahgunakan eksploitasi apa pun, selain itu jika Anda melihat seseorang menyalahgunakan eksploitasi atau Anda perlu melaporkannya, silakan hubungi saya di: computernewbab@gmail.com <h3>R5. Jangan meniru identitas pengguna lain.</h3> Jangan meniru identitas anggota CollabVM lainnya. Jika ketahuan, koneksi Anda akan terputus untuk sementara, dan diblokir jika perlu. <h3>R6. Satu suara per orang.</h3> Jangan gunakan metode atau alat apa pun untuk melewati batasan suara. Hanya satu suara per orang yang diperbolehkan, apapun yang terjadi. Siapa pun yang ketahuan melakukan ini akan dilarang. <h3>R7. Tidak Ada Alat Administrasi Jarak Jauh.</h3> Jangan gunakan alat administrasi jarak jauh apa pun (misal: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, dll.) <h3>R8. Tidak boleh melewati CollabNet.</h3> Jangan mencoba menerobos pemblokiran yang disediakan oleh CollabNet, terutama jika pemblokiran tersebut digunakan untuk melanggar Aturan 1, Aturan 2, atau Aturan 7 (atau menjalankan hal-hal bodoh yang sering digunakan). <h3>R9. Dilarang melakukan tindakan merusak secara terus-menerus.</h3> Pengguna mana pun tidak boleh menghancurkan VM (sehingga tidak dapat digunakan terus-menerus), menginstal/menginstal ulang sistem operasi (kecuali pada VM7 atau VM8), atau menjalankan bot yang melakukan tindakan tersebut. Ini termasuk bot yang mengirim spam ke input keyboard/mouse dalam jumlah besar (\"kitting\"). <h3>R10. Tidak Ada Penambangan Kripto</h3> Mencoba menambang mata uang kripto di VM akan menghasilkan tendangan, dan kemudian larangan permanen jika Anda terus mencobanya. Selain itu, Anda tidak akan mendapat uang darinya. <h3>Peringatan NSFW</h3> Harap perhatikan bahwa konten NSFW diizinkan di VM anarki kami (VM0b0t), dan dilihat secara rutin. Selain itu, meskipun kami berupaya keras untuk menjauhkan NSFW dari VM utama, terkadang ada orang yang lolos.",
+
+		"kSiteButtons_Home": "Rumah",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Aturan",
+		"kSiteButtons_DarkMode": "Mode Gelap",
+		"kSiteButtons_LightMode": "Mode Cahaya",
+		"kSiteButtons_Languages": "Bahasa",
+
+		"kVM_UsersOnlineText": "Pengguna Daring:",
+
+		"kVM_TurnTimeTimer": "Gilirannya berakhir dalam {0} detik.",
+		"kVM_WaitingTurnTimer": "Menunggu giliran dalam {0} detik.",
+		"kVM_VoteCooldownTimer": "Harap tunggu {0} detik sebelum memulai pemungutan suara lainnya.",
+
+		"kVM_VoteForResetTitle": "Apakah Anda ingin menyetel ulang VM?",
+		"kVM_VoteForResetTimer": "Pemungutan suara berakhir dalam {0} detik",
+
+		"kVMButtons_TakeTurn": "Mengambil giliran",
+		"kVMButtons_EndTurn": "Akhiri Putaran",
+		"kVMButtons_ChangeUsername": "Ubah Nama Pengguna",
+		"kVMButtons_Keyboard": "Keyboard",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Pilih Reset",
+		"kVMButtons_Screenshot": "Screenshot",
+
+		"kQEMUMonitor": "Pemantau QEMU",
+		"kAdminVMButtons_PassVote": "Lulus pemungutan suara",
+		"kAdminVMButtons_CancelVote": "Batalkan Suara",
+
+		"kAdminVMButtons_Restore": "Memulihkan",
+		"kAdminVMButtons_Reboot": "Menyalakan ulang",
+		"kAdminVMButtons_ClearTurnQueue": "Hapus Antrian Putar",
+		"kAdminVMButtons_BypassTurn": "Lewati Putaran",
+		"kAdminVMButtons_IndefiniteTurn": "Putaran Tidak Terbatas",
+
+		"kAdminVMButtons_Ban": "Ban",
+		"kAdminVMButtons_Kick": "Kick",
+		"kAdminVMButtons_TempMute": "Bisu Sementara",
+		"kAdminVMButtons_IndefMute": "Bisu Tanpa Batas",
+		"kAdminVMButtons_Unmute": "kabut mendung",
+		"kAdminVMButtons_GetIP": "Dapatkan IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Masukkan nama pengguna baru untuk {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Apakah Anda yakin ingin memulihkan VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Masukkan nama pengguna baru, atau biarkan kolom kosong untuk diberi nama pengguna tamu",
+
+		"kError_UnexpectedDisconnection": "Anda telah terputus dari server.",
+		"kError_UsernameTaken": "nama pengguna itu telah terpakai",
+		"kError_UsernameInvalid": "Nama pengguna hanya boleh berisi angka, huruf, spasi, tanda hubung, garis bawah, dan titik, dan harus terdiri dari 3 hingga 20 karakter.",
+		"kError_UsernameBlacklisted": "Nama pengguna itu telah masuk daftar hitam.",
+		"kError_IncorrectPassword": "Kata kunci Salah.",
+
+		"kAccountModal_Verify": "Verifikasi email",
+		"kAccountModal_AccountSettings": "Pengaturan akun",
+		"kAccountModal_ResetPassword": "Atur Ulang Kata Sandi",
+
+		"kAccountModal_NewPassword": "kata sandi baru",
+		"kAccountModal_ConfirmNewPassword": "Konfirmasi password baru",
+		"kAccountModal_CurrentPassword": "kata sandi saat ini",
+		"kAccountModal_ConfirmPassword": "konfirmasi sandi",
+
+		"kMissingCaptcha": "Silakan isi captchanya.",
+		"kPasswordsMustMatch": "Kata sandi harus cocok.",
+		"kAccountModal_VerifyText": "Kami mengirimkan E-Mail ke {0}. Untuk memverifikasi akun Anda, silakan masukkan kode 8 digit dari E-Mail di bawah ini.",
+		"kAccountModal_VerifyPasswordResetText": "Kami mengirimkan E-Mail ke {0}. Untuk mereset kata sandi Anda, silakan masukkan kode 8 digit dari E-Mail di bawah ini.",
+		"kAccountModal_PasswordResetSuccess": "Kata sandi Anda telah berhasil diubah. Anda sekarang dapat masuk dengan kata sandi baru Anda.",
+
+		"kNotLoggedIn": "Belum masuk"
+	}
+}
