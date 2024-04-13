@@ -1,0 +1,98 @@
+{
+	"languageName": "Toki Pona",
+	"translatedLanguageName": "toki pona",
+	"flag": "🌐",
+	"author": "Computernewb",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "ilo CollabVM",
+		"kGeneric_Yes": "lon",
+		"kGeneric_No": "ala",
+		"kGeneric_Ok": "pona",
+		"kGeneric_Cancel": "o ala",
+		"kGeneric_Send": "o pana",
+		"kGeneric_Understood": "mi sona",
+		"kGeneric_Username": "nimi",
+		"kGeneric_Password": "nimi len",
+		"kGeneric_Login": "o lon sijelo",
+		"kGeneric_Register": "o pali e sijelo",
+		"kGeneric_EMail": "o toki E-mail",
+		"kGeneric_DateOfBirth": "tenpo pi kama lon",
+		"kGeneric_VerificationCode": "sitelen pi pona sona",
+		"kGeneric_Verify": "o pona e sona",
+		"kGeneric_Update": "o sin",
+		"kGeneric_Logout": "o weka tan sijelo",
+		
+		"kWelcomeModal_Header": "ilo CollabVM la o kama pona",
+		"kWelcomeModal_Body": "<p>open la o sona e lawa mi:</p> <h3>nanpa wan la o ike ala tawa lawa ma.</h3> kepeken ilo mi la o ike ala tawa lawa pi ma Mewika, tawa lawa pi ma Nujo, tawa lawa pi kulupu ma. mi kama sona e ike ni sina la, mi weka e sina tan ilo. mi o toki tawa kulupu lawa ma la, mi toki.<br><br>mi kama sona e sitelen unpa pi jan lili lon ilo mi la, lawa ma la mi o toki tawa kulupu pi lawa ma.<br><br>sina majuna pi tenpo sike 13 ala la, lawa COPPA la o kepeken ala ilo CollabVM. <h3>nanpa tu la o pakala ala e ilo Internet ante kepeken ilo mi.</h3><!-- Rest omitted because redundant sentences do not translate well in toki pona. --> <h3>nanpa tu la o pana ala e jaki.</h3> kepeken ilo mi la o jaki ala kepeken ilo E-mail, kepeken ilo ante. <h3>nanpa tu tu la o ike ala kepeken pakala ilo.</h3> sina lukin e pakala ilo la, o ike ala kepeken ona. toki tawa mi kepeken nimi E-mail \"computernewbab@gmail.com\" <h3>nanpa luka la nasin ike la o sama ala jan ante.</h3> sina ni la, mi weka e sina lon tenpo lili. mi o weka e sina lon tenpo ale la, mi ni. <h3>nanpa luka wan la jan wan li ken toki e wile lon tenpo wan.</h3> o weka ala tan lawa ni kepeken ilo. sina toki e wile lon tenpo mute la, mi weka e sina. <h3>nanpa luka tu la o kepeken ala ilo pi lawa ilo.</h3> ala la o kepeken ilo DarkComet, kepeken ilo NanoCore, kepeken ilo Anydesk, kepeken ilo TeamViewer, kepeken ilo Orcus, kepeken ilo ante sama ni. <h3>nanpa luka tu wan la mi weka e ken la, o alasa ala e ni.</h3> ni la sina wile pali ike tawa lawa nanpa wan, anu tawa lawa nanpa tu, anu tawa lawa nanpa luka tu la, ni li ike mute. sina wile kepeken ilo jaki pi kepeken mute la, ni li ike mute.<!-- this is a bad translation but it's a badly-written rule --> <h3>lawa nanpa luka tu tu la o pakala suli ala e ilo.</h3> pakala ilo la o weka ala e ken pali ilo. ilo li ilo nanpa luka tu ala, li ilo nanpa luka tu wan ala la, o sin ala e nasin ilo, o kepeken ala ilo pi sin nasin. ilo li kepeken mute ilo sitelen, kepeken mute ilo wile la, ona li ni. <h3>lawa nanpa luka luka la o alasa ala e mani nanpa</h3> sina ni la, mi weka e sina pi tenpo wan. sina awen alasa, mi weka e sina pi tenpo ale. kin sina kama ala jo e mani tan ni. <h3>unpa la</h3> o sona e ni: ilo 0b0t la sitelen unpa li ken, li lon mute. mi alasa weka e sitelen unpa tan ilo ante. taso tenpo la ona li kama.",
+
+		"kSiteButtons_Home": "tomo",
+		"kSiteButtons_FAQ": "wile sona",
+		"kSiteButtons_Rules": "lawa",
+		"kSiteButtons_DarkMode": "pimeja",
+		"kSiteButtons_LightMode": "walo",
+		"kSiteButtons_Languages": "toki",
+
+		"kVM_UsersOnlineText": "jan ni li lon:",
+
+		"kVM_TurnTimeTimer": "ken pali li weka lon tenpo lili {0}.",
+		"kVM_WaitingTurnTimer": "sina ken pali lon tenpo lili {0}.",
+		"kVM_VoteCooldownTimer": "sina wile open sin e toki wile la, o awen lon tenpo lili {0}.",
+
+		"kVM_VoteForResetTitle": "sina wile ala wile sin e ilo?",
+		"kVM_VoteForResetTimer": "toki wile li pini lon tenpo lili {0}",
+
+		"kVMButtons_TakeTurn": "o pali",
+		"kVMButtons_EndTurn": "o pini e pali",
+		"kVMButtons_ChangeUsername": "o ante e nimi",
+		"kVMButtons_Keyboard": "ilo sitelen",
+		"KVMButtons_CtrlAltDel": "sitelen Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "o wile e sin ilo",
+		"kVMButtons_Screenshot": "o jo e sitelen ni",
+
+		"kQEMUMonitor": "sinpin QEMU",
+		"kAdminVMButtons_PassVote": "mi pilin ala",
+		"kAdminVMButtons_CancelVote": "ni li wile mi ala",
+
+		"kAdminVMButtons_Restore": "o sin",
+		"kAdminVMButtons_Reboot": "o pini, o open",
+		"kAdminVMButtons_ClearTurnQueue": "o weka e nasin pali",
+		"kAdminVMButtons_BypassTurn": "o pana ala e pali",
+		"kAdminVMButtons_IndefiniteTurn": "pali pi tenpo ale",
+
+		"kAdminVMButtons_Ban": "o weka pi tenpo ale",
+		"kAdminVMButtons_Kick": "o weka pi tenpo wan",
+		"kAdminVMButtons_TempMute": "tenpo la o weka e ken toki",
+		"kAdminVMButtons_IndefMute": "ale la o weka e ken toki",
+		"kAdminVMButtons_Unmute": "o sin e ken toki",
+		"kAdminVMButtons_GetIP": "o sona e sitelen IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "jan {0} la o pana e nimi sin:",
+		"kVMPrompts_AdminRestoreVMPrompt": "sina wile ala wile sin e ilo?",
+		"kVMPrompts_EnterNewUsernamePrompt": "o pana e nimi. ala la, mi pana e nimi pi jan sin",
+
+		"kError_UnexpectedDisconnection": "sina weka tan ilo.",
+		"kError_UsernameTaken": "jan ante li jo e nimi ni",
+		"kError_UsernameInvalid": "nimi li ken jo taso e sitelen [A-Za-z0-9 \\-_.]. sitelen tu li lili ike. siten mute wan li suli ike.",
+		"kError_UsernameBlacklisted": "nimi ni li ken ala.",
+		"kError_IncorrectPassword": "ni li nimi len sina ala.",
+
+		"kAccountModal_Verify": "nimi E-mail la o pona e sona",
+		"kAccountModal_AccountSettings": "wile sijelo",
+		"kAccountModal_ResetPassword": "o ante e nimi len",
+
+		"kAccountModal_NewPassword": "nimi len sin",
+		"kAccountModal_ConfirmNewPassword": "sin la nimi len sin",
+		"kAccountModal_CurrentPassword": "nimi len lon",
+		"kAccountModal_ConfirmPassword": "sin la nimi len sin",
+
+		"kMissingCaptcha": "o toki e sitelen CAPTCHA.",
+		"kPasswordsMustMatch": "nimi len o sama.",
+		"kAccountModal_VerifyText": "mi toki E-mail tawa nimi {0}. pona sona la o pana e sitelen luka tu wan tan ni.",
+		"kAccountModal_VerifyPasswordResetText": "mi toki E-mail tawa nimi {0}. ante pi nimi len la o pana e sitelen luka tu wan tan ni.",
+		"kAccountModal_PasswordResetSuccess": "nimi len sina li kama ante. sina ken lon sijelo kepeken ona.",
+
+		"kNotLoggedIn": "sina lon sijelo ala"
+	}
+}

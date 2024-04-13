@@ -1,6 +1,6 @@
 import CollabVMClient from './protocol/CollabVMClient.js';
 import VM from './protocol/VM.js';
-import { Config } from '../../Config.js';
+import Config from '../../config.json';
 import { Permissions, Rank } from './protocol/Permissions.js';
 import { User } from './protocol/User.js';
 import TurnStatus from './protocol/TurnStatus.js';
@@ -15,6 +15,7 @@ import { I18nStringKey, TheI18n } from './i18n.js';
 import { Format } from './format.js';
 import AuthManager from './AuthManager.js';
 import dayjs from 'dayjs';
+import * as dompurify from 'dompurify';
 
 // Elements
 const w = window as any;
@@ -350,6 +351,7 @@ async function multicollab(url: string) {
 		div.classList.add('col-sm-5', 'col-md-3');
 		let card = document.createElement('div');
 		card.classList.add('card');
+		if (Config.NSFWVMs.indexOf(vm.id) !== -1) card.classList.add('cvm-nsfw');
 		card.setAttribute('data-cvm-node', vm.id);
 		card.addEventListener('click', async () => {
 			try {
@@ -362,7 +364,7 @@ async function multicollab(url: string) {
 		let cardBody = document.createElement('div');
 		cardBody.classList.add('card-body');
 		let cardTitle = document.createElement('h5');
-		cardTitle.innerHTML = vm.displayName;
+		cardTitle.innerHTML = Config.RawMessages.VMTitles ? vm.displayName : dompurify.sanitize(vm.displayName);
 		let usersOnline = document.createElement('span');
 		usersOnline.innerHTML = `(<i class="fa-solid fa-users"></i> ${online})`;
 		cardBody.appendChild(cardTitle);
@@ -501,8 +503,9 @@ function closeVM() {
 }
 
 async function loadList() {
+	var jsonVMs = Config.ServerAddressesListURI === null ? [] : await (await fetch(Config.ServerAddressesListURI)).json();
 	await Promise.all(
-		Config.ServerAddresses.map((url) => {
+		[Config.ServerAddresses, jsonVMs].flat().map((url) => {
 			return multicollab(url);
 		})
 	);
@@ -543,6 +546,7 @@ function sortUserList() {
 function chatMessage(username: string, message: string) {
 	let tr = document.createElement('tr');
 	let td = document.createElement('td');
+	if (!Config.RawMessages.Messages) message = dompurify.sanitize(message);
 	// System message
 	if (username === '') td.innerHTML = message;
 	else {
@@ -573,7 +577,7 @@ function chatMessage(username: string, message: string) {
 		tr.classList.add(msgclass);
 		td.innerHTML = `<b class="${userclass}">${username}▸</b> ${message}`;
 		// hacky way to allow scripts
-		Array.prototype.slice.call(td.children).forEach((curr) => {
+		if (Config.RawMessages.Messages) Array.prototype.slice.call(td.children).forEach((curr) => {
 			if (curr.nodeName === 'SCRIPT') {
 				eval(curr.text);
 			}
@@ -1292,15 +1296,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 	document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 
 	// Load all VMs
-	await loadList();
+	loadList();
 
 	// Welcome modal
 	let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
-	let noWelcomeModal = window.localStorage.getItem('no-welcome-modal');
+	let noWelcomeModal = window.localStorage.getItem(Config.WelcomeModalLocalStorageKey);
 	if (noWelcomeModal !== '1') {
 		let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
 		welcomeModalDismissBtn.addEventListener('click', () => {
-			window.localStorage.setItem('no-welcome-modal', '1');
+			window.localStorage.setItem(Config.WelcomeModalLocalStorageKey, '1');
 		});
 		welcomeModalDismissBtn.disabled = true;
 		welcomeModal.show();
