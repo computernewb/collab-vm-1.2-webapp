@@ -82,10 +82,10 @@
 		"kAccountModal_AccountSettings": "Pengaturan akun",
 		"kAccountModal_ResetPassword": "Atur Ulang Kata Sandi",
 
-		"kAccountModal_NewPassword": "kata sandi baru",
-		"kAccountModal_ConfirmNewPassword": "Konfirmasi password baru",
-		"kAccountModal_CurrentPassword": "kata sandi saat ini",
-		"kAccountModal_ConfirmPassword": "konfirmasi sandi",
+		"kAccountModal_NewPassword": "Kata Sandi Baru",
+		"kAccountModal_ConfirmNewPassword": "Konfirmasi Password Baru",
+		"kAccountModal_CurrentPassword": "Kata Sandi Saat Ini",
+		"kAccountModal_ConfirmPassword": "Konfirmasi Sandi",
 
 		"kMissingCaptcha": "Silakan isi captchanya.",
 		"kPasswordsMustMatch": "Kata sandi harus cocok.",
