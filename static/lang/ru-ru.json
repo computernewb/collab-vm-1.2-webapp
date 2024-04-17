@@ -15,10 +15,10 @@
 		"kGeneric_Username": "Имя",
 		"kGeneric_Password": "Пароль",
 		"kGeneric_Login": "Войти",
-		"kGeneric_Register": "Зарегистрироватся",
+		"kGeneric_Register": "Зарегистрироваться",
 		"kGeneric_EMail": "Электронная почта",
 		"kGeneric_DateOfBirth": "День рождения",
-		"kGeneric_VerificationCode": "Код верификации",
+		"kGeneric_VerificationCode": "Код подтверждения",
 		"kGeneric_Verify": "Подтвердить",
 		"kGeneric_Update": "Обновить",
 		"kGeneric_Logout": "Выйти из аккаунта",
@@ -33,11 +33,11 @@
 		"kSiteButtons_LightMode": "Светлая тема",
 		"kSiteButtons_Languages": "Языки",
 
-		"kVM_UsersOnlineText": "Пользователи Онлайн",
+		"kVM_UsersOnlineText": "Пользователи в сети",
 
-		"kVM_TurnTimeTimer": "Твой ход закончиться через {0} секунд(у)",
+		"kVM_TurnTimeTimer": "Твой ход закончится через {0} секунд(ы)",
 		"kVM_WaitingTurnTimer": "Твой ход будет через {0} секунд(ы)",
-		"kVM_VoteCooldownTimer": "Пожалуйста подождите {0} секунд(ы) перед началом голосования за сброс",
+		"kVM_VoteCooldownTimer": "Пожалуйста, подождите {0} секунд(ы) перед началом голосования за сброс",
 
 		"kVM_VoteForResetTitle": "Вы хотите сбросить виртуальную машину?",
 		"kVM_VoteForResetTimer": "Голосование закончится через {0} секунд(ы)",
@@ -69,28 +69,28 @@
 		"kAdminVMButtons_GetIP": "Получить IP-адрес",
 
 		"kVMPrompts_AdminChangeUsernamePrompt": "Введите новый никнейм для {0}",
-		"kVMPrompts_AdminRestoreVMPrompt": "Вы уверены что хотите восстановить VM?",
+		"kVMPrompts_AdminRestoreVMPrompt": "Вы уверены, что хотите восстановить виртуальную машину?",
 		"kVMPrompts_EnterNewUsernamePrompt": "Введите новое имя пользователя",
 
 		"kError_UnexpectedDisconnection": "Вы были отключены от сервера",
-		"kError_UsernameTaken": "Этот имя уже существует.",
-		"kError_UsernameInvalid": "Именах могут только иметь цифры, буквы, пробелы, тере, нижнее подчеркивание, и точек, и должны быть от 3 до 20 букв.",
-		"kError_UsernameBlacklisted": "Этот имя запрещёно.",
+		"kError_UsernameTaken": "Это имя занято.",
+		"kError_UsernameInvalid": "Имена могут содержать только цифры, буквы, пробелы, тере, нижнее подчеркивание, и точки, и должны быть от 3 до 20 букв.",
+		"kError_UsernameBlacklisted": "Это имя запрещено.",
 		"kError_IncorrectPassword": "Неверный пароль.",
 
-		"kAccountModal_Verify": "Проверить электронною почту",
+		"kAccountModal_Verify": "Подтвердить электронную почту",
 		"kAccountModal_AccountSettings": "Настройки аккаунта",
 		"kAccountModal_ResetPassword": "Сбросить пароль",
 
 		"kAccountModal_NewPassword": "Новый пароль",
-		"kAccountModal_ConfirmNewPassword": "Принять новый пароль",
+		"kAccountModal_ConfirmNewPassword": "Подтвердить новый пароль",
 		"kAccountModal_CurrentPassword": "Текущий пароль",
 		"kAccountModal_ConfirmPassword": "Подтвердите пароль",
 
 		"kMissingCaptcha": "Пожалуйста, пройдите капчу.",
-		"kPasswordsMustMatch": "Пароли должны быть одинаковы.",
-		"kAccountModal_VerifyText": "Мы отправили письмо на {0}. Чтобы подтвердить нашу аккаунт, пожалуйста веди 8-значный код из письма ниже.",
-		"kAccountModal_VerifyPasswordResetText": "Мы отправили письмо на {0}. Чтобы сбросить ваш пароль, пожалуйста веди 8-значный код из письма ниже.",
+		"kPasswordsMustMatch": "Пароли должны совпадать.",
+		"kAccountModal_VerifyText": "Мы отправили письмо на {0}. Чтобы подтвердить ваш аккаунт, пожалуйста, введи 8-значный код из письма ниже.",
+		"kAccountModal_VerifyPasswordResetText": "Мы отправили письмо на {0}. Чтобы сбросить ваш пароль, пожалуйста, введи 8-значный код из письма ниже.",
 		"kAccountModal_PasswordResetSuccess": "Пароль сброшен успешно! Теперь, вы можёте войти с новым паролем.",
 
 		"kNotLoggedIn": "Не авторизован"
