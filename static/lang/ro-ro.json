@@ -74,7 +74,7 @@
 		"kError_UnexpectedDisconnection": "Ați fost deconectat de la server.",
 		"kError_UsernameTaken": "Acel nume de utilizator este deja luat.",
 		"kError_UsernameInvalid": "Numele de utilizator pot conține doar numere, litere, spații, cratime, sublinieri și puncte, și trebuie să aibă între 3 și 20 de caractere.",
-		"kError_UsernameBlacklisted": "cel nume de utilizator a fost adăugat în lista neagră.",
+		"kError_UsernameBlacklisted": "Acel nume de utilizator a fost adăugat în lista neagră.",
 		"kError_IncorrectPassword": "Parolă incorectă.",
 
 		"kAccountModal_Verify": "Verifică E-mailul",
