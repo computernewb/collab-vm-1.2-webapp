@@ -78,22 +78,22 @@
         "kError_UsernameBlacklisted": "Esse nome de usuário foi colocado na lista negra.",
         "kError_IncorrectPassword": "Senha incorreta.",
 
-		"kAccountModal_Verify": "Verify E-Mail",
-		"kAccountModal_AccountSettings": "Account Settings",
-		"kAccountModal_ResetPassword": "Reset Password",
+		"kAccountModal_Verify": "Verificar E-Mail",
+		"kAccountModal_AccountSettings": "Configurações de Conta",
+		"kAccountModal_ResetPassword": "Redefinir senha",
 
-		"kAccountModal_NewPassword": "New Password",
-		"kAccountModal_ConfirmNewPassword": "Confirm New Password",
-		"kAccountModal_CurrentPassword": "Current Password",
-		"kAccountModal_ConfirmPassword": "Confirm Password",
+		"kAccountModal_NewPassword": "Nova senha",
+		"kAccountModal_ConfirmNewPassword": "Confirmar nova senha",
+		"kAccountModal_CurrentPassword": "Senha atual",
+		"kAccountModal_ConfirmPassword": "Confirmar senha atual",
 
-		"kMissingCaptcha": "Please fill out the captcha.",
-		"kPasswordsMustMatch": "Passwords must match.",
-		"kAccountModal_VerifyText": "We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
-		"kAccountModal_VerifyPasswordResetText": "We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
-		"kAccountModal_PasswordResetSuccess": "Your password has been changed successfully. You can now log in with your new password.",
+		"kMissingCaptcha": "Por favor preencha o captcha.",
+		"kPasswordsMustMatch": "As senhas devem corresponder.",
+		"kAccountModal_VerifyText": "Enviamos um e-mail para {0}. Para verificar sua conta, insira o código de 8 dígitos do e-mail abaixo.",
+		"kAccountModal_VerifyPasswordResetText": "Enviamos um e-mail para {0}. Para redefinir sua senha, digite o código de 8 dígitos do e-mail abaixo.",
+		"kAccountModal_PasswordResetSuccess": "Sua senha foi alterada com sucesso. Agora você pode fazer login com sua nova senha.",
 
-		"kNotLoggedIn": "Not Logged in"
+		"kNotLoggedIn": "Não logado"
 	}
 }
 
