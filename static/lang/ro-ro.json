@@ -1,0 +1,97 @@
+{
+	"languageName": "Română (RO)",
+	"translatedLanguageName": "Romanian (RO)",
+	"flag": "🇷🇴",
+	"author": "n0vac, mvoolt",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Da",
+		"kGeneric_No": "Nu",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Anulează",
+		"kGeneric_Send": "Trimite",
+		"kGeneric_Understood": "Ințeles",
+		"kGeneric_Username": "Numele de utilizator",
+		"kGeneric_Password": "Parolă",
+		"kGeneric_Login": "Contectază-te",
+		"kGeneric_Register": "Înregistrează-te",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Data de naștere",
+		"kGeneric_VerificationCode": "Codul de verificare",
+		"kGeneric_Verify": "Verifica",
+		"kGeneric_Update": "Actualizează",
+		"kGeneric_Logout": "Deconectare",
+		
+		"kWelcomeModal_Header": "Bun venit la CollabVM",
+		"kWelcomeModal_Body": "<p>Înainte de a continua, vă rugăm să vă familiarizați cu regulile noastre:</p> <h3>R1. Nu încălcați legea.</h3> Nu utilizați CollabVM sau rețeaua CollabVM pentru a încălca legea federală a Statelor Unite, legea statului New York sau legea internațională. Dacă CollabVM devine conștientă că s-a comis o crimă prin intermediul serviciului său, veți fi imediat interzis, iar activitățile dvs. pot fi raportate autorităților dacă este necesar.<br><br>CollabVM este obligat prin lege să notifice agențiile de aplicare a legii dacă devine conștient de prezența pornografiei infantile pe rețeaua sa.<br><br>De asemenea, COPPA este respectată, vă rugăm să nu utilizați CollabVM dacă aveți sub 13 ani. <h3>R2. Nu rulați instrumente DoS/DDoS.</h3> Nu utilizați CollabVM pentru a efectua DoS/DDoS asupra unei persoane, afaceri, companii sau altor persoane. <h3>R3. Nu distribuiți spam.</h3> Nu trimiteți spam pe e-mailuri folosind acest serviciu sau nu trimiteți spam în general. <h3>R4. Nu abuzați de nicio vulnerabilitate.</h3> Nu abuzați de nicio vulnerabilitate, în plus, dacă vedeți pe cineva abuzând de vulnerabilități sau trebuie să raportați una, vă rugăm să ne contactați la: computernewbab@gmail.com. <h3>R5. Nu vă impersonați alți utilizatori.</h3> Nu vă impersonați alți membri ai CollabVM. Dacă sunteți prins, veți fi temporar deconectat și interzis dacă este necesar. <h3>R6. Un vot pe persoană.</h3> Nu folosiți niciun metodă sau instrument pentru a evita restricția de vot. Este permis un singur vot per persoană, indiferent de circumstanțe. Orice persoană prinsă făcând acest lucru va fi interzisă. <h3>R7. Fără unelte de administrare de la distanță.</h3> Nu utilizați niciunelte de administrare de la distanță (ex: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, etc.). <h3>R8. Fără a evita CollabNet.</h3> Nu încercați să evitați blocarea furnizată de CollabNet, în special dacă este utilizată pentru a încălca Regula 1, Regula 2 sau Regula 7 (sau pentru a rula lucruri stupide și prea utilizate). <h3>R9. Fără a efectua acțiuni distructive constant.</h3> Orice utilizator nu poate distruge constant VM (făcându-l constant inutilizabil), instala/reinstala sistemul de operare (cu excepția VM7 sau VM8) sau rula bot-uri care fac astfel. Acest lucru include bot-uri care trimit cantități masive de intrări de la tastatură/mouse (\"kitting\"). <h3>R10. Fără minare de criptomonede</h3> Încercarea de a mina criptomonede pe VM-uri va rezulta într-o eliminare, și apoi o interzicere permanentă dacă continuați să încercați. În plus, nu e ca și cum ai face vreun bani de pe urma asta. <h3>Avertisment NSFW</h3> Vă rugăm să rețineți că conținutul NSFW este permis pe VM-ul nostru de anarhie (VM0b0t) și este vizualizat în mod regulat. În plus, deși facem un efort bun pentru a menține conținutul NSFW departe de VM-urile principale, uneori oamenii îl vor strecura.",
+		"kSiteButtons_Home": "Acasă",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Reguli",
+		"kSiteButtons_DarkMode": "Modul întunecat",
+		"kSiteButtons_LightMode": "Modul luminos",
+		"kSiteButtons_Languages": "Limbi",
+
+		"kVM_UsersOnlineText": "Utilizatori online:",
+
+		"kVM_TurnTimeTimer": "Rândul expiră în {0} secunde.",
+		"kVM_WaitingTurnTimer": "Așteptând rândul în {0} secunde.",
+		"kVM_VoteCooldownTimer": "Vă rugăm să așteptați {0} secunde înainte de a începe o altă votare.",
+
+		"kVM_VoteForResetTitle": "Vrei să resetezi mașina virtuală?",
+		"kVM_VoteForResetTimer": "Votul se încheie în {0} secunde",
+
+		"kVMButtons_TakeTurn": "Ia rândul",
+		"kVMButtons_EndTurn": "Încheie rândul tău",
+		"kVMButtons_ChangeUsername": "Schimbă numele de utilizator",
+		"kVMButtons_Keyboard": "Tastatură",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Votează pentru resetare",
+		"kVMButtons_Screenshot": "Captură de ecran",
+
+		"kQEMUMonitor": "Monitor QEMU",
+		"kAdminVMButtons_PassVote": "Aprobă votul",
+		"kAdminVMButtons_CancelVote": "Anulează votul",
+
+		"kAdminVMButtons_Restore": "Restaurează",
+		"kAdminVMButtons_Reboot": "Repornire",
+		"kAdminVMButtons_ClearTurnQueue": "Șterge coada de rânduri",
+		"kAdminVMButtons_BypassTurn": "Ocolire rând",
+		"kAdminVMButtons_IndefiniteTurn": "Rând indefinit",
+
+		"kAdminVMButtons_Ban": "Interzice",
+		"kAdminVMButtons_Kick": "Elimină",
+		"kAdminVMButtons_TempMute": "Mut temporar",
+		"kAdminVMButtons_IndefMute": "Mut indefinit",
+		"kAdminVMButtons_Unmute": "Revocă mutul",
+		"kAdminVMButtons_GetIP": "Obține IP-ul",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Introduceți noul nume de utilizator pentru {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Sunteți sigur că doriți să resetați mașina virtuală?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Introduceți un nou nume de utilizator sau lăsați câmpul gol pentru a primi un nume de utilizator de oaspete",
+
+		"kError_UnexpectedDisconnection": "Ați fost deconectat de la server.",
+		"kError_UsernameTaken": "Acel nume de utilizator este deja luat.",
+		"kError_UsernameInvalid": "Numele de utilizator pot conține doar numere, litere, spații, cratime, sublinieri și puncte, și trebuie să aibă între 3 și 20 de caractere.",
+		"kError_UsernameBlacklisted": "Acel nume de utilizator a fost adăugat în lista neagră.",
+		"kError_IncorrectPassword": "Parolă incorectă.",
+
+		"kAccountModal_Verify": "Verifică E-mailul",
+		"kAccountModal_AccountSettings": "Setări cont",
+		"kAccountModal_ResetPassword": "Resetare parolă",
+
+		"kAccountModal_NewPassword": "Parolă nouă",
+		"kAccountModal_ConfirmNewPassword": "Confirmă parola nouă",
+		"kAccountModal_CurrentPassword": "Parola curentă",
+		"kAccountModal_ConfirmPassword": "Confirmă parola",
+
+		"kMissingCaptcha": "Vă rugăm să completați captcha-ul.",
+		"kPasswordsMustMatch": "Parolele trebuie să fie identice.",
+		"kAccountModal_VerifyText": "Am trimis un E-mail către {0}. Pentru a vă verifica contul, vă rugăm să introduceți codul de 8 cifre din E-mail-ul de mai jos.",
+		"kAccountModal_VerifyPasswordResetText": "Am trimis un E-mail către {0}. Pentru a vă reseta parola, vă rugăm să introduceți codul de 8 cifre din E-mail-ul de mai jos.",
+		"kAccountModal_PasswordResetSuccess": "Parola dvs. a fost schimbată cu succes. Acum vă puteți autentifica cu noua parolă.",
+
+		"kNotLoggedIn": "Nu sunteți autentificat"
+	}
+}
