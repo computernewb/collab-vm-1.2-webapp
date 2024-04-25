@@ -1,0 +1,98 @@
+{
+	"languageName": "LOLCAT (KOC)",
+	"translatedLanguageName": "LOLCAT (KOC)",
+	"flag": "🐱",
+	"author": "Glitchy404",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "yez",
+		"kGeneric_No": "no",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "cancel",
+		"kGeneric_Send": "send",
+		"kGeneric_Understood": "understood",
+		"kGeneric_Username": "username",
+		"kGeneric_Password": "password",
+		"kGeneric_Login": "log in",
+		"kGeneric_Register": "make new account",
+		"kGeneric_EMail": "email",
+		"kGeneric_DateOfBirth": "date of birth",
+		"kGeneric_VerificationCode": "verification code",
+		"kGeneric_Verify": "verify",
+		"kGeneric_Update": "update",
+		"kGeneric_Logout": "log out",
+		
+		"kWelcomeModal_Header": "welcome 2 CollabVM",
+		"kWelcomeModal_Body": "<p>Before continuing, please familiarize yourself with our rules:</p> <h3>R1. Don't break the law.</h3> Do not use CollabVM or CollabVM's network to violate United States federal law, New York state law, or international law. If CollabVM becomes aware a crime has been committed through its service, you will be immediately banned, and your activities may be reported to the authorities if necessary.<br><br>CollabVM is required by law to notify law enforcement agencies if it becomes aware of the presence of child pornography on, or being transmitted through its network.<br><br>COPPA is also enforced, please do not use CollabVM if you are under the age of 13 years old. <h3>R2. No running DoS/DDoS tools.</h3> Do not use CollabVM to DoS/DDoS an indivdiual, business, company, or anyone else. <h3>R3. No spam distribution.</h3> Do not spam any emails using this service or push spam in general. <h3>R4. Do not abuse any exploits.</h3> Do not abuse any exploits, additionally if you see someone abusing exploits or you need to report one, please contact me at: computernewbab@gmail.com <h3>R5. Don't impersonate other users.</h3> Do not impersonate other members of CollabVM. If caught, you'll be temporarily disconnected, and banned if necessary. <h3>R6. One vote per person.</h3> Do not use any methods or tools to bypass the vote restriction. Only one vote per person is allowed, no matter what. Anybody who is caught doing this will be banned. <h3>R7. No Remote Administration Tools.</h3> Do not use any remote administration tools (ex: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, etc.) <h3>R8. No bypassing CollabNet.</h3> Do not attempt to bypass the blocking provided by CollabNet, especially if it is being used to break Rule 1, Rule 2, or Rule 7 (or run stupid over-used things). <h3>R9. No performing destructive actions constantly.</h3> Any user may not destroy the VM (rendering it unusable constantly), install/reinstall the operating system (except on VM7 or VM8), or run bots that do such. This includes bots that spam massive amounts of keyboard/mouse input (\"kitting\"). <h3>R10. No Cryptomining</h3> Attempting to mine cryptocurrency on the VMs will result in a kick, and then a permanent ban if you keep attempting. Besides, it's not like you're gonna make any money off it. <h3>NSFW Warning</h3> Please note that NSFW content is allowed on our anarchy VM (VM0b0t), and is viewed regularly. In addition, while we give a good effort to keep NSFW off the main VMs, people will occasionally slip it through.",
+
+		"kSiteButtons_Home": "home",
+		"kSiteButtons_FAQ": "faq",
+		"kSiteButtons_Rules": "rulez",
+		"kSiteButtons_DarkMode": "night mode",
+		"kSiteButtons_LightMode": "flashbang mode",
+		"kSiteButtons_Languages": "languagez",
+
+		"kVM_UsersOnlineText": "userz online:",
+
+		"kVM_TurnTimeTimer": "turn expirez in {0} seconds.",
+		"kVM_WaitingTurnTimer": "waiting 4 turn in {0} seconds.",
+		"kVM_VoteCooldownTimer": "please wait {0} secondz before starting another vote.",
+
+		"kVM_VoteForResetTitle": "do you want 2 reset teh VM?",
+		"kVM_VoteForResetTimer": "vote endz in {0} secondz",
+
+		"kVMButtons_TakeTurn": "take turn",
+		"kVMButtons_EndTurn": "end turn",
+		"kVMButtons_ChangeUsername": "change username",
+		"kVMButtons_Keyboard": "tippy tappy devize",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "vote 4 reset",
+		"kVMButtons_Screenshot": "screnshot",
+
+		"kQEMUMonitor": "emu monitor",
+		"kAdminVMButtons_PassVote": "pas vote",
+		"kAdminVMButtons_CancelVote": "cancel vote",
+
+		"kAdminVMButtons_Restore": "restore",
+		"kAdminVMButtons_Reboot": "reboot",
+		"kAdminVMButtons_ClearTurnQueue": "clear teh turnz",
+		"kAdminVMButtons_BypassTurn": "bypass turn",
+		"kAdminVMButtons_IndefiniteTurn": "infinite turnz!",
+
+		"kAdminVMButtons_Ban": "ban",
+		"kAdminVMButtons_Kick": "get out!",
+		"kAdminVMButtons_TempMute": "temporary shh",
+		"kAdminVMButtons_IndefMute": "infinite shh",
+		"kAdminVMButtons_Unmute": "unmute",
+		"kAdminVMButtons_GetIP": "get teh magik numberz",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "enter new username 4 {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "r u sure u want 2 restore teh VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "enter a new username, or leave teh field blank 2 be assigned a guest username",
+
+		"kError_UnexpectedDisconnection": "u haz been disconnected from teh server.",
+		"kError_UsernameTaken": "teh username iz already taken",
+		"kError_UsernameInvalid": "ur usernamez can contain only numberz, letterz, spacez, dashez, underscorez, and dotz, n it must be between 3 and 20 thingz",
+		"kError_UsernameBlacklisted": "teh username iz not allowed!!!!!.",
+		"kError_IncorrectPassword": "wrong password.",
+
+		"kAccountModal_Verify": "iz that email urz?",
+		"kAccountModal_AccountSettings": "account settingz",
+		"kAccountModal_ResetPassword": "hak teh account",
+
+		"kAccountModal_NewPassword": "new password",
+		"kAccountModal_ConfirmNewPassword": "confirm new password",
+		"kAccountModal_CurrentPassword": "current password",
+		"kAccountModal_ConfirmPassword": "confirm password",
+
+		"kMissingCaptcha": "plz fill out teh captcha.",
+		"kPasswordsMustMatch": "passwordz must match.",
+		"kAccountModal_VerifyText": "we sent an email 2 {0}. 2 verify ur account, please enter teh 8-digit code from teh email below.",
+		"kAccountModal_VerifyPasswordResetText": "we sent an email 2 {0}. 2 reset ur password, plz enter teh 8-digit code from teh email below.",
+		"kAccountModal_PasswordResetSuccess": "ur password haz been changed successfully. u can now log in with ur new password.",
+
+		"kNotLoggedIn": "not logged in"
+	}
+}
