@@ -93,6 +93,6 @@
 		"kAccountModal_VerifyPasswordResetText": "我们已向 {0} 发送了电子邮件。要重置密码，请输入下面电子邮件中的 8 位数字代码。",
 		"kAccountModal_PasswordResetSuccess": "您的密码已成功更改。您现在可以使用新密码登录。",
 
-		"kNotLoggedIn": "Not Logged in"
+		"kNotLoggedIn": "未登录"
 	}
 }
