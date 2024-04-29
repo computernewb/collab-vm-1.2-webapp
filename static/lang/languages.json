@@ -1,4 +1,4 @@
 {
-	"languages": ["en-us", "fr-fr", "de-de", "ja-jp", "pl-pl", "es-es", "ru-ru", "hu-hu", "uk-ua", "hr-hr", "tok", "id", "ko-kr", "pt-br"],
+	"languages": ["en-us", "fr-fr", "de-de", "ja-jp", "pl-pl", "es-es", "ru-ru", "hu-hu", "uk-ua", "hr-hr", "ro-ro", "tok", "id", "ko-kr", "pt-br"],
 	"defaultLanguage": "en-us"
 }
