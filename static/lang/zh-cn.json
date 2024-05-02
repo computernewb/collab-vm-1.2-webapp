@@ -1,0 +1,98 @@
+{
+	"languageName": "简体中文（中国）",
+	"translatedLanguageName": "Simplified Chinese (China)",
+	"flag": "🇨🇳",
+	"author": "Starmoe(辉夜星瞳)",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "是",
+		"kGeneric_No": "否",
+		"kGeneric_Ok": "好的",
+		"kGeneric_Cancel": "取消",
+		"kGeneric_Send": "发送",
+		"kGeneric_Understood": "我已知晓",
+		"kGeneric_Username": "用户名",
+		"kGeneric_Password": "密码",
+		"kGeneric_Login": "登录",
+		"kGeneric_Register": "注册",
+		"kGeneric_EMail": "电子邮件",
+		"kGeneric_DateOfBirth": "出生日期",
+		"kGeneric_VerificationCode": "验证码",
+		"kGeneric_Verify": "验证",
+		"kGeneric_Update": "更新",
+		"kGeneric_Logout": "登出",
+		
+		"kWelcomeModal_Header": "欢迎来到 CollabVM",
+		"kWelcomeModal_Body": "<p>在您的计算机之旅前， 请确认您已认真读过以下内容：</p> <h3>1. 不得破坏规则</h3> 不要使用 CollabVM 或者 CollabVM 的网络去违法美国联邦法律、纽约州的法律，或国际法。 如果 CollabVM 发现有人通过其服务实施犯罪，您将被立即禁止使用，必要时您的活动可能会被报告给当局。<br><br>根据法律规定，如果 CollabVM 发现其网络上存在或通过其网络传输儿童色情内容，必须通知执法机构。<br><br>COPPA 也会被执行，请不要未满13岁的用户使用 CollabVM。<h3>2. 不要运行 DoS/DDoS 工具。</h3> 请勿使用 CollabVM 对个人、企业、公司或其他任何人进行 DoS/DDoS 攻击。<h3>3. 不发送垃圾邮件。</h3> 请勿使用此服务发送垃圾邮件或推送垃圾邮件。<h3>4. 不要滥用任何漏洞。</h3> 请勿滥用任何漏洞，此外，如果您发现有人滥用漏洞或您需要报告漏洞，请通过以下方式联系： computernewbab@gmail.com <h3>5. 不要冒充其他用户。</h3> 请勿冒充 CollabVM 的其他成员。如果被发现，你将会被暂时断开连接，必要时还会被禁言。<h3>R6。每人只能投一票。</h3> 请勿使用任何方法或工具绕过投票限制。无论如何，每人只能投一票。任何被发现这样做的人都将被禁言。<h3>7. 没有远程管理工具。</h3> 不要使用任何远程管理工具（例如：DarkComet、NanoCore、Anydesk、TeamViewer、Orcus 等）。<h3>8. 不得绕过 CollabNet。</h3> 不要试图绕过 CollabNet 提供的屏蔽，尤其是当它被用于破坏规则 1、规则 2 或规则 7 时。 （或运行愚蠢的过度使用的东西）。 <h3>9. 不要不断地进行破坏性行动。</h3> 任何用户都不得破坏虚拟机（使其始终无法使用）、安装/重装操作系统（VM7 或 VM8 除外）或运行执行此类操作的机器人。这包括垃圾邮件式大量键盘/鼠标输入（\"kitting\"）的机器人。 <h3>10. 不得使用虚拟机挖掘加密货币 </h3> 试图在虚拟机上挖掘加密货币将导致被踢，如果你继续尝试，则会被永久禁止。此外，你也不会从中赚到钱。<h3>NSFW 警告！</h3> 请注意，在我们的无政府虚拟机 (VM0b0t) 上允许出现 NSFW 内容，而且这些内容会定期被查看。此外，虽然我们努力不让非主流内容出现在主虚拟机上，但偶尔也会有人漏网。",
+
+		"kSiteButtons_Home": "主页",
+		"kSiteButtons_FAQ": "疑难解答",
+		"kSiteButtons_Rules": "规则",
+		"kSiteButtons_DarkMode": "深色模式",
+		"kSiteButtons_LightMode": "浅色模式",
+		"kSiteButtons_Languages": "语言",
+
+		"kVM_UsersOnlineText": "在线的用户：",
+
+		"kVM_TurnTimeTimer": "操作轮次将在 {0} 秒后失效。",
+		"kVM_WaitingTurnTimer": "正在等待操作，还有 {0} 秒",
+		"kVM_VoteCooldownTimer": "请等待 {0} 秒后再开始投票。",
+
+		"kVM_VoteForResetTitle": "您想重置虚拟机吗？",
+		"kVM_VoteForResetTimer": "投票在 {0} 秒后结束",
+
+		"kVMButtons_TakeTurn": "开始轮次",
+		"kVMButtons_EndTurn": "结束轮次",
+		"kVMButtons_ChangeUsername": "更改用户名",
+		"kVMButtons_Keyboard": "键盘",
+		"KVMButtons_CtrlAltDel": "发送 Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "投票重置",
+		"kVMButtons_Screenshot": "截图",
+
+		"kQEMUMonitor": "QEMU 监视器",
+		"kAdminVMButtons_PassVote": "投票通过",
+		"kAdminVMButtons_CancelVote": "投票取消",
+
+		"kAdminVMButtons_Restore": "恢复",
+		"kAdminVMButtons_Reboot": "重启",
+		"kAdminVMButtons_ClearTurnQueue": "清楚操作请求",
+		"kAdminVMButtons_BypassTurn": "分流操作轮次",
+		"kAdminVMButtons_IndefiniteTurn": "无限操作轮次",
+
+		"kAdminVMButtons_Ban": "被封禁",
+		"kAdminVMButtons_Kick": "被踢出",
+		"kAdminVMButtons_TempMute": "临时静音",
+		"kAdminVMButtons_IndefMute": "永久静音",
+		"kAdminVMButtons_Unmute": "取消静音",
+		"kAdminVMButtons_GetIP": "取得 IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "请为 {0} 输入新的名称：",
+		"kVMPrompts_AdminRestoreVMPrompt": "您确定要恢复虚拟机吗？",
+		"kVMPrompts_EnterNewUsernamePrompt": "输入新的用户名，或留空以分配一个访客用户名",
+
+		"kError_UnexpectedDisconnection": "您已与服务器断开连接。",
+		"kError_UsernameTaken": "该用户名已被注册",
+		"kError_UsernameInvalid": "用户名只能包含数字、字母、空格、破折号、下划线和点，字符数必须在 3 到 20 之间。",
+		"kError_UsernameBlacklisted": "该用户名已被列入黑名单。",
+		"kError_IncorrectPassword": "不正确的密码。",
+
+		"kAccountModal_Verify": "验证电子邮件",
+		"kAccountModal_AccountSettings": "账户设置",
+		"kAccountModal_ResetPassword": "重置密码",
+
+		"kAccountModal_NewPassword": "新的密码",
+		"kAccountModal_ConfirmNewPassword": "确认新的密码",
+		"kAccountModal_CurrentPassword": "当前密码",
+		"kAccountModal_ConfirmPassword": "确认密码",
+
+		"kMissingCaptcha": "请通过人机验证。",
+		"kPasswordsMustMatch": "密码必须匹配。",
+		"kAccountModal_VerifyText": "我们已向 {0} 发送了电子邮件。要验证您的帐户，请输入下面电子邮件中的 8 位代码。",
+		"kAccountModal_VerifyPasswordResetText": "我们已向 {0} 发送了电子邮件。要重置密码，请输入下面电子邮件中的 8 位数字代码。",
+		"kAccountModal_PasswordResetSuccess": "您的密码已成功更改。您现在可以使用新密码登录。",
+
+		"kNotLoggedIn": "未登录"
+	}
+}
