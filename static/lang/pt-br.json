@@ -27,11 +27,11 @@
 		"kWelcomeModal_Header": "Bem vindo a CollabVM",
 		"kWelcomeModal_Body": "<p>Antes de continuar, familiarize-se com nossas regras:</p> <h3>R1. Não infrinja a lei.</h3> Não use o CollabVM ou a rede do CollabVM para violar leis federais dos Estados Unidos, lei do estado de Nova York ou lei internacional. Se o CollabVM tomar conhecimento de que um crime foi cometido por meio de seu serviço, você será imediatamente banido e suas atividades poderão ser denunciadas às autoridades, se necessário.<br><br>O CollabVM é. é obrigado por lei a notificar as agências de aplicação da lei se tomar conhecimento da presença de pornografia infantil ou sendo transmitida através de sua rede.<br><br>A COPPA também é aplicada, por favor, não use o CollabVM se você tiver menos de idade 13 anos. <h3>R2. Não é permitido executar ferramentas DoS/DDoS.</h3> Não use CollabVM para DoS/DDoS em um indivíduo, empresa, ou qualquer outra pessoa.</h3>R3. h3> Não envie spam em e-mails usando este serviço ou envie spam em geral. <h3>R4 Não abuse nenhum exploit (vulnerabilidade).</h3> Não abuse nenhum exploit, além disso, se você vir alguém abusando exploits ou precisar denunciar um, entre em contato comigo em: computernewbab@gmail.com <h3>R5. Não se faça passar por outros usuários.</h3> Não se faça passar por outros membros do CollabVM. Se for pego, você será temporariamente desconectado e banido, se necessário. <h3>T6. Um voto por pessoa.</h3> Não use nenhum método ou ferramenta para contornar a restrição de voto. Apenas um voto por pessoa é permitido, não importa o que aconteça. Qualquer pessoa que for flagrada fazendo isso será banida. <h3>T7. Sem ferramentas de administração remota.</h3> Não use nenhuma ferramenta de administração remota (ex: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, etc.) <h3>R8. Não é possível ignorar o CollabNet.</h3> Não tente ignorar o bloqueio fornecido pelo CollabNet, especialmente se ele estiver sendo usado para quebrar a Regra 1, Regra 2 ou Regra 7 (ou executar coisas estúpidas e usadas demais). <h3>R9. Não é permitido realizar ações destrutivas constantemente.</h3> Qualquer usuário não pode destruir a VM (tornando-a inutilizável constantemente), instalar/reinstalar o sistema operacional (exceto em VM7 ou VM8) ou executar bots que façam isso. Isso inclui bots que enviam spam para grandes quantidades de entradas de teclado/mouse (ou kitting). <h3>R10. Sem criptografia</h3> A tentativa de minerar criptomoedas nas VMs resultará em uma expulsão e, em seguida, em um banimento permanente se você continuar tentando. Além disso, não é como se você fosse ganhar dinheiro com isso. <h3>Aviso NSFW</h3> Observe que o conteúdo NSFW é permitido em nossa VM anarquia (VM0b0t) e é visualizado regularmente. Além disso, embora façamos um grande esforço para manter o NSFW fora das VMs principais, as pessoas ocasionalmente irão passar despercebidas.",
 
-		"kSiteButtons_Home": "Casa",
+		"kSiteButtons_Home": "Ínicio",
 		"kSiteButtons_FAQ": "FAQ",
 		"kSiteButtons_Rules": "Regras",
-		"kSiteButtons_DarkMode": "Modo escuro",
-		"kSiteButtons_LightMode": "Modo brancp",
+		"kSiteButtons_DarkMode": "Modo Escuro",
+		"kSiteButtons_LightMode": "Modo Claro",
 		"kSiteButtons_Languages": "Idiomas",
 
 		"kVM_UsersOnlineText": "Usuários online:",
@@ -96,4 +96,3 @@
 		"kNotLoggedIn": "Não logado"
 	}
 }
-
