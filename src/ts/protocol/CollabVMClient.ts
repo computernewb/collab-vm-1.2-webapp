@@ -9,6 +9,7 @@ import GetKeysym from '../keyboard.js';
 import VoteStatus from './VoteStatus.js';
 import MuteState from './MuteState.js';
 import { StringLike } from '../StringLike.js';
+const w = window as any;
 
 export interface CollabVMClientEvents {
 	//open: () => void;
@@ -98,7 +99,7 @@ export default class CollabVMClient {
 		this.canvas.addEventListener(
 			'mousedown',
 			(e: MouseEvent) => {
-				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+				if (!this.shouldSendInput()) return;
 				this.mouse.initFromMouseEvent(e);
 				this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
 			},
@@ -110,7 +111,7 @@ export default class CollabVMClient {
 		this.canvas.addEventListener(
 			'mouseup',
 			(e: MouseEvent) => {
-				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+				if (!this.shouldSendInput()) return;
 				this.mouse.initFromMouseEvent(e);
 				this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
 			},
@@ -122,7 +123,7 @@ export default class CollabVMClient {
 		this.canvas.addEventListener(
 			'mousemove',
 			(e: MouseEvent) => {
-				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+				if (!this.shouldSendInput()) return;
 				this.mouse.initFromMouseEvent(e);
 				this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
 			},
@@ -135,7 +136,7 @@ export default class CollabVMClient {
 			'keydown',
 			(e: KeyboardEvent) => {
 				e.preventDefault();
-				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+				if (!this.shouldSendInput()) return;
 				let keysym = GetKeysym(e.keyCode, e.key, e.location);
 				if (keysym === null) return;
 				this.key(keysym, true);
@@ -149,7 +150,7 @@ export default class CollabVMClient {
 			'keyup',
 			(e: KeyboardEvent) => {
 				e.preventDefault();
-				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+				if (!this.shouldSendInput()) return;
 				let keysym = GetKeysym(e.keyCode, e.key, e.location);
 				if (keysym === null) return;
 				this.key(keysym, false);
@@ -163,7 +164,7 @@ export default class CollabVMClient {
 			'wheel',
 			(ev: WheelEvent) => {
 				ev.preventDefault();
-				if (this.users.find((u) => u.username === this.username)?.turn === -1 && this.rank !== Rank.Admin) return;
+				if (!this.shouldSendInput()) return;
 				this.mouse.initFromWheelEvent(ev);
 
 				this.sendmouse(this.mouse.x, this.mouse.y, this.mouse.makeMask());
@@ -675,6 +676,10 @@ export default class CollabVMClient {
 
 	private onInternal<E extends keyof CollabVMClientPrivateEvents>(event: E, callback: CollabVMClientPrivateEvents[E]): Unsubscribe {
 		return this.internalEmitter.on(event, callback);
+	}
+
+	private shouldSendInput() {
+		return this.users.find(u => u.username === this.username)?.turn === 0 || (w.collabvm.ghostTurn && this.rank === Rank.Admin);
 	}
 
 	on<E extends keyof CollabVMClientEvents>(event: E, callback: CollabVMClientEvents[E]): Unsubscribe {

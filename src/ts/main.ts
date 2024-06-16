@@ -70,6 +70,8 @@ const elements = {
 	forceVoteYesBtn: document.getElementById('forceVoteYesBtn') as HTMLButtonElement,
 	forceVoteNoBtn: document.getElementById('forceVoteNoBtn') as HTMLButtonElement,
 	indefTurnBtn: document.getElementById('indefTurnBtn') as HTMLButtonElement,
+	ghostTurnBtn: document.getElementById('ghostTurnBtn') as HTMLButtonElement,
+	ghostTurnBtnText: document.getElementById('ghostTurnBtnText') as HTMLSpanElement,
 	qemuMonitorInput: document.getElementById('qemuMonitorInput') as HTMLInputElement,
 	qemuMonitorSendBtn: document.getElementById('qemuMonitorSendBtn') as HTMLButtonElement,
 	qemuMonitorOutput: document.getElementById('qemuMonitorOutput') as HTMLTextAreaElement,
@@ -482,6 +484,7 @@ function closeVM() {
 	elements.clearQueueBtn.style.display = 'none';
 	elements.qemuMonitorBtn.style.display = 'none';
 	elements.indefTurnBtn.style.display = 'none';
+	elements.ghostTurnBtn.style.display = 'none';
 	elements.xssCheckboxContainer.style.display = 'none';
 	elements.forceVotePanel.style.display = 'none';
 	elements.voteResetPanel.style.display = 'none';
@@ -813,6 +816,7 @@ function onLogin(_rank: Rank, _perms: Permissions) {
 	if (_rank === Rank.Admin) {
 		elements.qemuMonitorBtn.style.display = 'inline-block';
 		elements.indefTurnBtn.style.display = 'inline-block';
+		elements.ghostTurnBtn.style.display = 'inline-block';
 	}
 	if (_perms.xss) elements.xssCheckboxContainer.style.display = 'inline-block';
 	if (_perms.forcevote) elements.forceVotePanel.style.display = 'block';
@@ -875,6 +879,15 @@ elements.endTurnBtn.addEventListener('click', () => {
 elements.forceVoteNoBtn.addEventListener('click', () => VM?.forceVote(false));
 elements.forceVoteYesBtn.addEventListener('click', () => VM?.forceVote(true));
 elements.indefTurnBtn.addEventListener('click', () => VM?.indefiniteTurn());
+
+
+elements.ghostTurnBtn.addEventListener('click', () => {
+	w.collabvm.ghostTurn = !w.collabvm.ghostTurn;
+	if (w.collabvm.ghostTurn)
+		elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOn);
+	else
+		elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOff);
+});
 
 async function sendQEMUCommand() {
 	if (!elements.qemuMonitorInput.value) return;
@@ -1212,7 +1225,8 @@ w.collabvm = {
 	closeVM: closeVM,
 	loadList: loadList,
 	multicollab: multicollab,
-	getVM: () => VM
+	getVM: () => VM,
+	ghostTurn: false,
 };
 // Multicollab will stay in the global scope for backwards compatibility
 w.multicollab = multicollab;
@@ -1276,6 +1290,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 		if (darkTheme) elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_LightMode);
 		else elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_DarkMode);
 
+		if (w.collabvm.ghostTurn)
+			elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOn);
+		else
+			elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOff);
 	});
 	// Load theme
 	var _darktheme : boolean;

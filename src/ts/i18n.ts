@@ -62,6 +62,8 @@ export enum I18nStringKey {
 	kAdminVMButtons_ClearTurnQueue = 'kAdminVMButtons_ClearTurnQueue',
 	kAdminVMButtons_BypassTurn = 'kAdminVMButtons_BypassTurn',
 	kAdminVMButtons_IndefiniteTurn = 'kAdminVMButtons_IndefiniteTurn',
+	kAdminVMButtons_GhostTurnOn = 'kAdminVMButtons_GhostTurnOn',
+	kAdminVMButtons_GhostTurnOff = 'kAdminVMButtons_GhostTurnOff',
 
 	kAdminVMButtons_Ban = 'kAdminVMButtons_Ban',
 	kAdminVMButtons_Kick = 'kAdminVMButtons_Kick',
@@ -272,6 +274,7 @@ export class I18n {
 			clearQueueBtnText: I18nStringKey.kAdminVMButtons_ClearTurnQueue,
 			bypassTurnBtnText: I18nStringKey.kAdminVMButtons_BypassTurn,
 			indefTurnBtnText: I18nStringKey.kAdminVMButtons_IndefiniteTurn,
+			ghostTurnBtnText: I18nStringKey.kAdminVMButtons_GhostTurnOff,
 
 			// Account modal
 			accountLoginUsernameLabel: I18nStringKey.kGeneric_Username,
