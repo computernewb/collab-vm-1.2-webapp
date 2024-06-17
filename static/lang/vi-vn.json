@@ -1,0 +1,98 @@
+{
+	"languageName": "Tiếng Việt",
+	"translatedLanguageName": "Vietnamese",
+	"flag": "vn",
+	"author": "ubuntu2310fake",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Có",
+		"kGeneric_No": "Không",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Hủy",
+		"kGeneric_Send": "Gửi",
+		"kGeneric_Understood": "Hiểu",
+		"kGeneric_Username": "Tên",
+		"kGeneric_Password": "Mật khẩu",
+		"kGeneric_Login": "Đăng Nhập",
+		"kGeneric_Register": "Đăng kí",
+		"kGeneric_EMail": "Email",
+		"kGeneric_DateOfBirth": "Ngày tháng năm sinh",
+		"kGeneric_VerificationCode": "Mã xác thực",
+		"kGeneric_Verify": "Xác minh",
+		"kGeneric_Update": "Cập nhật",
+		"kGeneric_Logout": "Đăng xuất",
+		
+		"kWelcomeModal_Header": "Chào mừng bạn đã đến với CollabVM",
+		"kWelcomeModal_Body": "<p>Trước khi tiếp tục, vui lòng làm quen với các quy tắc của chúng tôi:</p> <h3>R1. Đừng vi phạm pháp luật.</h3> Không sử dụng mạng CollabVM hoặc CollabVM để vi phạm luật liên bang Hoa Kỳ, luật tiểu bang New York hoặc luật pháp quốc tế. Nếu CollabVM biết được một tội ác đã được thực hiện thông qua dịch vụ của mình, bạn sẽ bị cấm ngay lập tức và các hoạt động của bạn có thể bị báo cáo cho chính quyền nếu cần thiết.<br><br>CollabVM được pháp luật yêu cầu phải thông báo cho các cơ quan thực thi pháp luật nếu họ biết về sự hiện diện của nội dung khiêu dâm trẻ em trên hoặc được truyền qua mạng của mình.<br><br>COPPA cũng được thực thi, vui lòng không sử dụng CollabVM nếu bạn dưới 13 tuổi. <h3>R2. Không chạy các công cụ DoS/DDoS.</h3> Không sử dụng CollabVM để DoS/DDoS của cá nhân, doanh nghiệp, công ty hoặc bất kỳ ai khác. <h3>R3. Không phát tán thư rác.</h3> Không spam bất kỳ email nào sử dụng dịch vụ này hoặc đẩy thư rác nói chung. <h3>R4. Đừng lạm dụng bất kỳ lợi ích nào.</h3> Không lạm dụng bất kỳ hành vi khai thác nào, ngoài ra nếu bạn thấy ai đó lạm dụng hành vi khai thác hoặc bạn cần báo cáo một hành vi khai thác, vui lòng liên hệ với tôi theo địa chỉ: computernewbab@gmail.com <h3>R5. Không mạo danh người dùng khác.</h3> Không mạo danh các thành viên khác của CollabVM. Nếu bị bắt, bạn sẽ bị ngắt kết nối tạm thời và bị cấm nếu cần thiết. <h3>R6. Một phiếu bầu cho mỗi người.</h3> Không sử dụng bất kỳ phương pháp hoặc công cụ nào để vượt qua hạn chế bỏ phiếu. Mỗi người chỉ được phép bỏ phiếu một lần, bất kể thế nào. Bất cứ ai bị bắt làm điều này sẽ bị cấm. <h3>R7. Không có công cụ quản trị máy tính từ xa.</h3> Không sử dụng bất kỳ công cụ quản trị từ xa nào (ex: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, Ultraviewer, etc.) <h3>R8. Không bỏ qua CollabNet.</h3> Đừng cố gắng vượt qua tính năng chặn do CollabNet cung cấp, đặc biệt nếu nó đang được sử dụng để vi phạm Quy tắc 1, Quy tắc 2 hoặc Quy tắc 7 (hoặc chạy những thứ ngu ngốc được sử dụng quá mức). <h3>R9. Không thực hiện hành động phá hoại liên tục.</h3> Bất kỳ người dùng nào cũng không được phá hủy VM (làm cho nó liên tục không sử dụng được), cài đặt/cài đặt lại hệ điều hành (ngoại trừ trên VM7 hoặc VM8) hoặc chạy các bot thực hiện việc đó. Điều này bao gồm các bot spam số lượng lớn thao tác nhập bằng bàn phím/chuột (\"kitting\"). <h3>R10. Không khai thác tiền điện tử</h3> Cố gắng khai thác tiền điện tử trên máy ảo sẽ bị phạt và sau đó là lệnh cấm vĩnh viễn nếu bạn tiếp tục cố gắng. Ngoài ra, có vẻ như bạn sẽ không kiếm được tiền từ nó. <h3>Cảnh báo NSFW</h3> Xin lưu ý rằng nội dung NSFW được cho phép trên máy ảo vô chính phủ (VM0b0t) của chúng tôi và được xem thường xuyên. Ngoài ra, trong khi chúng tôi nỗ lực hết sức để loại bỏ NSFW khỏi các máy ảo chính, đôi khi mọi người sẽ bỏ qua nó.",
+
+		"kSiteButtons_Home": "Trang chủ",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Luật",
+		"kSiteButtons_DarkMode": "Giao diện tối",
+		"kSiteButtons_LightMode": "Giao diện sáng",
+		"kSiteButtons_Languages": "Ngôn ngữ",
+
+		"kVM_UsersOnlineText": "Người dùng trực tuyến:",
+
+		"kVM_TurnTimeTimer": "Lượt hết hạn sau {0} giây.",
+		"kVM_WaitingTurnTimer": "Chờ đến lượt sau {0} giây.",
+		"kVM_VoteCooldownTimer": "Vui lòng đợi {0} giây trước khi bắt đầu cuộc bỏ phiếu khác.",
+
+		"kVM_VoteForResetTitle": "Bạn có muốn thiết lập lại VM không?",
+		"kVM_VoteForResetTimer": "Cuộc bình chọn kết thúc sau {0} giây",
+
+		"kVMButtons_TakeTurn": "Bắt đầu",
+		"kVMButtons_EndTurn": "Kết thúc",
+		"kVMButtons_ChangeUsername": "Chỉnh sửa tên người dùng",
+		"kVMButtons_Keyboard": "Bàn phím",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Bầu phiếu thiết lập lại",
+		"kVMButtons_Screenshot": "Chụp ảnh màn hình",
+
+		"kQEMUMonitor": "Màn hình stdio (QEMU)",
+		"kAdminVMButtons_PassVote": "Vượt qua bình chọn",
+		"kAdminVMButtons_CancelVote": "Hủy bỏ phiếu",
+
+		"kAdminVMButtons_Restore": "Khôi phục",
+		"kAdminVMButtons_Reboot": "Khởi động lại",
+		"kAdminVMButtons_ClearTurnQueue": "Xóa hàng đợi rẽ",
+		"kAdminVMButtons_BypassTurn": "Bỏ qua lượt",
+		"kAdminVMButtons_IndefiniteTurn": "lượt không xác định",
+
+		"kAdminVMButtons_Ban": "Cấm",
+		"kAdminVMButtons_Kick": "Đuổi",
+		"kAdminVMButtons_TempMute": "Khóa mồm tạm thời",
+		"kAdminVMButtons_IndefMute": "Khóa mồm không xđ",
+		"kAdminVMButtons_Unmute": "Hủy khóa mồm",
+		"kAdminVMButtons_GetIP": "Lấy IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Nhập tên người dùng mới cho {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Bạn có chắc chắn muốn khôi phục VM không?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Nhập tên người dùng mới hoặc để trống trường để được chỉ định tên người dùng khách",
+
+		"kError_UnexpectedDisconnection": "Bị ngắt kết nối tới máy chủ.",
+		"kError_UsernameTaken": "Tên người dùng đó đã được sử dụng",
+		"kError_UsernameInvalid": "Tên người dùng chỉ có thể chứa số, chữ cái, dấu cách, dấu gạch ngang, dấu gạch dưới và dấu chấm và phải có từ 3 đến 20 ký tự.",
+		"kError_UsernameBlacklisted": "Tên này thuộc danh sách đen.",
+		"kError_IncorrectPassword": "Sai mật khẩu.",
+
+		"kAccountModal_Verify": "Xác nhận Email",
+		"kAccountModal_AccountSettings": "Cài đặt tài khoản",
+		"kAccountModal_ResetPassword": "Khôi phục mật khẩu",
+
+		"kAccountModal_NewPassword": "Mật khẩu mới",
+		"kAccountModal_ConfirmNewPassword": "Xác nhận mật khẩu mới",
+		"kAccountModal_CurrentPassword": "Mật khẩu hiện tại",
+		"kAccountModal_ConfirmPassword": "Xác nhận mật khẩu",
+
+		"kMissingCaptcha": "Vui lòng điền hình ảnh xác thực.",
+		"kPasswordsMustMatch": "Mật khẩu phải trùng khớp.",
+		"kAccountModal_VerifyText": "Chúng tôi đã gửi E-mail tới {0}. Để xác minh tài khoản của bạn, vui lòng nhập mã gồm 8 chữ số từ E-Mail bên dưới.",
+		"kAccountModal_VerifyPasswordResetText": "Chúng tôi đã gửi E-mail tới {0}. Để đặt lại mật khẩu, vui lòng nhập mã gồm 8 chữ số từ E-Mail bên dưới.",
+		"kAccountModal_PasswordResetSuccess": "Mật khẩu của bạn đã được thay đổi thành công. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới của mình.",
+
+		"kNotLoggedIn": "Đang không đăng nhập"
+	}
+}
