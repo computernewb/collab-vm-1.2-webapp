@@ -35,8 +35,8 @@
 
 		"kVM_UsersOnlineText": "Зараз у мережі:",
 
-		"kVM_TurnTimeTimer": "Ваш хід завершується через {0} секунд.",
-		"kVM_WaitingTurnTimer": "Черга дійде до вас за {0} секунд.",
+		"kVM_TurnTimeTimer": "Ваш хід завершується через {0} секунд",
+		"kVM_WaitingTurnTimer": "Черга дійде до вас за {0} секунд",
 		"kVM_VoteCooldownTimer": "Будь ласка, зачекайте {0} секунд, перш ніж почати нове голосування.",
 
 		"kVM_VoteForResetTitle": "Ви бажаєте скинути цю віртуальну машину?",
@@ -60,6 +60,8 @@
 		"kAdminVMButtons_ClearTurnQueue": "Очистити чергу",
 		"kAdminVMButtons_BypassTurn": "Обійти хід",
 		"kAdminVMButtons_IndefiniteTurn": "Необмежений хід",
+		"kAdminVMButtons_GhostTurnOn": "Увімк. хід-невидимку",
+		"kAdminVMButtons_GhostTurnOff": "Вимк. хід-невидимку",
 
 		"kAdminVMButtons_Ban": "Заблокувати",
 		"kAdminVMButtons_Kick": "Вигнати",
@@ -86,6 +88,7 @@
 		"kAccountModal_ConfirmNewPassword": "Підтвердьте новий пароль",
 		"kAccountModal_CurrentPassword": "Поточний пароль",
 		"kAccountModal_ConfirmPassword": "Підтвердьте пароль",
+		"kAccountModal_HideFlag": "Приховувати прапор моєї поточної країни",
 
 		"kMissingCaptcha": "Підтвердьте, що ви не робот.",
 		"kPasswordsMustMatch": "Паролі мають збігатися.",
