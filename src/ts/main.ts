@@ -10,7 +10,6 @@ import 'simple-keyboard/build/css/index.css';
 import VoteStatus from './protocol/VoteStatus.js';
 import * as bootstrap from 'bootstrap';
 import MuteState from './protocol/MuteState.js';
-import { Unsubscribe } from 'nanoevents';
 import { I18nStringKey, TheI18n } from './i18n.js';
 import { Format } from './format.js';
 import AuthManager from './AuthManager.js';
@@ -607,7 +606,10 @@ function addUser(user: User) {
 	flagSpan.classList.add("userlist-flag");
 	usernameSpan.classList.add("userlist-username");
 	td.appendChild(flagSpan);
-	if (user.countryCode !== null) flagSpan.innerHTML = getFlagEmoji(user.countryCode);
+	if (user.countryCode !== null) {
+		flagSpan.innerHTML = getFlagEmoji(user.countryCode);
+		flagSpan.title = TheI18n.getCountryName(user.countryCode);
+	};
 	td.appendChild(usernameSpan);
 	usernameSpan.innerText = user.username;
 	switch (user.rank) {
@@ -649,6 +651,7 @@ function getFlagEmoji(countryCode: string) {
 function flag() {
 	for (let user of users.filter(u => u.user.countryCode !== null)) {
 		user.flagElement.innerHTML = getFlagEmoji(user.user.countryCode!);
+		user.flagElement.title = TheI18n.getCountryName(user.user.countryCode!);
 	}
 }
 
@@ -1321,6 +1324,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 			elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOn);
 		else
 			elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOff);
+
+		for (const user of users) {
+			if (user.user.countryCode !== null) {
+				user.flagElement.title = TheI18n.getCountryName(user.user.countryCode);
+			}
+		}
 	});
 	// Load theme
 	var _darktheme : boolean;

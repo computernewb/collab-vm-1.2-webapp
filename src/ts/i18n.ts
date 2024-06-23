@@ -150,6 +150,7 @@ export class I18n {
 	// The language data itself
 	private langs : Map<string, Language> = new Map<string, Language>();
 	private lang: Language = fallbackLanguage;
+	private countryNames: {[key: string]: string} | null = null;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
 
@@ -163,7 +164,7 @@ export class I18n {
 		var res = await fetch("lang/languages.json");
 		if (!res.ok) {
 			alert("Failed to load languages.json: " + res.statusText);
-			this.SetLanguage(fallbackLanguage, fallbackId);
+			await this.SetLanguage(fallbackLanguage, fallbackId);
 			this.ReplaceStaticStrings();
 			return;
 		}
@@ -184,9 +185,9 @@ export class I18n {
 			a.classList.add('dropdown-item');
 			a.href = '#';
 			a.innerText = `${_lang.flag} ${_lang.languageName}`;
-			a.addEventListener('click', (e) => {
+			a.addEventListener('click', async e => {
 				e.preventDefault();
-				this.SetLanguage(_lang, langId);
+				await this.SetLanguage(_lang, langId);
 				this.ReplaceStaticStrings();
 			});
 			this.languageDropdown.appendChild(a);
@@ -209,14 +210,32 @@ export class I18n {
 		}
 		// If all else fails, use the default language
 		if (lang === null) lang = langData.defaultLanguage;
-		this.SetLanguage(this.langs.get(lang) as Language, lang);
+		await this.SetLanguage(this.langs.get(lang) as Language, lang);
 		this.ReplaceStaticStrings();
 	}
 
-	private SetLanguage(lang: Language, id: string) {
+	private async getCountryNames(lang: string) : Promise<{[key: string]: string} | null> {
+		lang = lang.split('-')[0].toLowerCase();
+		let res = await fetch(`https://www.unpkg.com/cldr-localenames-full@45.0.0/main/${lang}/territories.json`);
+		if (!res.ok) {
+			console.error(`Failed to load territories.json for ${lang}: ${res.statusText}`);
+			return null;
+		}
+		let data = await res.json();
+		return data.main[lang].localeDisplayNames.territories;
+	}
+
+	getCountryName(code: string) : string {
+		if (this.countryNames === null) return code;
+		return this.countryNames[code] || code;
+	}
+
+	private async SetLanguage(lang: Language, id: string) {
 		let lastId = this.langId;
 		this.langId = id;
 		this.lang = lang;
+
+		this.countryNames = await this.getCountryNames(id);
 
 		// Only replace static strings
 		if (this.langId != lastId) this.ReplaceStaticStrings();
