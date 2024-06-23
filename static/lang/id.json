@@ -60,7 +60,9 @@
 		"kAdminVMButtons_ClearTurnQueue": "Hapus Antrian Putar",
 		"kAdminVMButtons_BypassTurn": "Lewati Putaran",
 		"kAdminVMButtons_IndefiniteTurn": "Putaran Tidak Terbatas",
-
+		"kAdminVMButtons_GhostTurnOn": "Nyalakan Hantu (Aktif)",
+		"kAdminVMButtons_GhostTurnOff": "Matikan Hantu (Mati)",
+		
 		"kAdminVMButtons_Ban": "Ban",
 		"kAdminVMButtons_Kick": "Kick",
 		"kAdminVMButtons_TempMute": "Bisu Sementara",
@@ -86,7 +88,8 @@
 		"kAccountModal_ConfirmNewPassword": "Konfirmasi Password Baru",
 		"kAccountModal_CurrentPassword": "Kata Sandi Saat Ini",
 		"kAccountModal_ConfirmPassword": "Konfirmasi Sandi",
-
+        "kAccountModal_HideFlag": "Sembunyikan Bendera Negara saya",
+		
 		"kMissingCaptcha": "Silakan isi captchanya.",
 		"kPasswordsMustMatch": "Kata sandi harus cocok.",
 		"kAccountModal_VerifyText": "Kami mengirimkan E-Mail ke {0}. Untuk memverifikasi akun Anda, silakan masukkan kode 8 digit dari E-Mail di bawah ini.",
