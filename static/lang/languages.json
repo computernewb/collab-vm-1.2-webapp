@@ -1,4 +1,77 @@
 {
-	"languages": ["en-us", "fr-fr", "de-de", "ja-jp", "pl-pl", "es-es", "ru-ru", "hu-hu", "uk-ua", "hr-hr", "ro-ro", "tok", "id", "ko-kr", "pt-br", "th", "zh-cn", "vi-vn"],
+	"languages": {
+		"en-us": {
+			"languageName": "English (US)",
+			"flag": "🇺🇸"
+		},
+		"fr-fr": {
+			"languageName": "Français",
+			"flag": "🇫🇷"
+		},
+		"de-de": {
+			"languageName": "Deutsch",
+			"flag": "🇩🇪"
+		},
+		"ja-jp": {
+			"languageName": "日本語",
+			"flag": "🇯🇵"
+		},
+		"pl-pl": {
+			"languageName": "Polski",
+			"flag": "🇵🇱"
+		},
+		"es-es": {
+			"languageName": "Español (España)",
+			"flag": "🇪🇸"
+		},
+		"ru-ru": {
+			"languageName": "Русский",
+			"flag": "🇷🇺"
+		},
+		"hu-hu": {
+			"languageName": "Magyar",
+			"flag": "🇭🇺"
+		},
+		"uk-ua": {
+			"languageName": "Українська",
+			"flag": "🇺🇦"
+		},
+		"hr-hr": {
+			"languageName": "Hrvatski",
+			"flag": "🇭🇷"
+		},
+		"ro-ro": {
+			"languageName": "Română",
+			"flag": "🇷🇴"
+		},
+		"tok": {
+			"languageName": "Toki Pona",
+			"flag": "🌐"
+		},
+		"id": {
+			"languageName": "Bahasa Indonesia",
+			"flag": "🇮🇩"
+		},
+		"ko-kr": {
+			"languageName": "한국어",
+			"flag": "🇰🇷"
+		},
+		"pt-br": {
+			"languageName": "Português (Brasil)",
+			"flag": "🇧🇷"
+		},
+		"th": {
+			"languageName": "ภาษาไทย",
+			"flag": "🇹🇭"
+		},
+		"zh-cn": {
+			"languageName": "中文 (简体)",
+			"flag": "🇨🇳"
+		},
+		"vi-vn": {
+			"languageName": "Tiếng Việt",
+			"flag": "🇻🇳"
+		}
+	},
 	"defaultLanguage": "en-us"
 }

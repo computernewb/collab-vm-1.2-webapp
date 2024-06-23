@@ -126,10 +126,15 @@ export type Language = {
 	};
 };
 
+export type LanguageMetadata = {
+	languageName: string;
+	flag: string; // country flag, can be blank if not applicable. will be displayed in language dropdown
+};
+
 // `languages.json`
 export type LanguagesJson = {
 	// Array of language IDs to allow loading
-	languages: Array<string>;
+	languages: {[key: string]: LanguageMetadata};
 
 	// The default language (set if a invalid language not in the languages array is set, or no language is set)
 	defaultLanguage: string;
@@ -148,7 +153,7 @@ interface StringKeyMap {
 /// our fancy internationalization helper.
 export class I18n {
 	// The language data itself
-	private langs : Map<string, Language> = new Map<string, Language>();
+	private langs : Map<string, LanguageMetadata> = new Map<string, Language>();
 	private lang: Language = fallbackLanguage;
 	private countryNames: {[key: string]: string} | null = null;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
@@ -164,20 +169,13 @@ export class I18n {
 		var res = await fetch("lang/languages.json");
 		if (!res.ok) {
 			alert("Failed to load languages.json: " + res.statusText);
-			await this.SetLanguage(fallbackLanguage, fallbackId);
+			await this.SetLanguage(fallbackId);
 			this.ReplaceStaticStrings();
 			return;
 		}
 		var langData = await res.json() as LanguagesJson;
-		for (const langId of langData.languages) {
-			let path = `./lang/${langId}.json`;
-			let res = await fetch(path);
-			if (!res.ok) {
-				console.error(`Failed to load lang/${langId}.json: ${res.statusText}`);
-				continue;
-			}
-			let _lang = await res.json() as Language;
-			this.langs.set(langId, _lang);
+		for (const langId in langData.languages) {
+			this.langs.set(langId, langData.languages[langId]);
 		}
 		this.langs.forEach((_lang, langId) => {
 			// Add to language dropdown
@@ -187,7 +185,7 @@ export class I18n {
 			a.innerText = `${_lang.flag} ${_lang.languageName}`;
 			a.addEventListener('click', async e => {
 				e.preventDefault();
-				await this.SetLanguage(_lang, langId);
+				await this.SetLanguage(langId);
 				this.ReplaceStaticStrings();
 			});
 			this.languageDropdown.appendChild(a);
@@ -201,7 +199,7 @@ export class I18n {
 		else if (this.langs.has(browserLang)) lang = browserLang;
 		else {
 			// If the exact browser language isn't in the list, try to find a language with the same prefix
-			for (let langId of langData.languages) {
+			for (let langId in langData.languages) {
 				if (langId.split('-')[0] === browserLang.split('-')[0]) {
 					lang = langId;
 					break;
@@ -210,7 +208,7 @@ export class I18n {
 		}
 		// If all else fails, use the default language
 		if (lang === null) lang = langData.defaultLanguage;
-		await this.SetLanguage(this.langs.get(lang) as Language, lang);
+		await this.SetLanguage(lang);
 		this.ReplaceStaticStrings();
 	}
 
@@ -230,9 +228,23 @@ export class I18n {
 		return this.countryNames[code] || code;
 	}
 
-	private async SetLanguage(lang: Language, id: string) {
+	private async SetLanguage(id: string) {
 		let lastId = this.langId;
 		this.langId = id;
+
+		let lang;
+		if (id === fallbackId) lang = fallbackLanguage;
+		else {
+			let path = `./lang/${id}.json`;
+			let res = await fetch(path);
+			if (!res.ok) {
+				console.error(`Failed to load lang/${id}.json: ${res.statusText}`);
+				await this.SetLanguage(fallbackId);
+				return;
+			}
+			lang = await res.json() as Language;
+		}
+
 		this.lang = lang;
 
 		this.countryNames = await this.getCountryNames(id);
