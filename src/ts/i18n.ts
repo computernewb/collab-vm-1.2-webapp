@@ -94,6 +94,7 @@ export enum I18nStringKey {
 	kAccountModal_ConfirmNewPassword = 'kAccountModal_ConfirmNewPassword',
 	kAccountModal_CurrentPassword = 'kAccountModal_CurrentPassword',
 	kAccountModal_ConfirmPassword = 'kAccountModal_ConfirmPassword',
+	kAccountModal_HideFlag = 'kAccountModal_HideFlag',
 
 	kAccountModal_VerifyText = 'kAccountModal_VerifyText',
 	kAccountModal_VerifyPasswordResetText = 'kAccountModal_VerifyPasswordResetText',
@@ -295,6 +296,7 @@ export class I18n {
 			accountSettingsNewPasswordLabel: I18nStringKey.kAccountModal_NewPassword,
 			accountSettingsConfirmNewPasswordLabel: I18nStringKey.kAccountModal_ConfirmNewPassword,
 			accountSettingsCurrentPasswordLabel: I18nStringKey.kAccountModal_CurrentPassword,
+			hideFlagCheckboxLabel: I18nStringKey.kAccountModal_HideFlag,
 			updateAccountSettingsBtn: I18nStringKey.kGeneric_Update,
 			accountResetPasswordEmailLabel: I18nStringKey.kGeneric_EMail,
 			accountResetPasswordUsernameLabel: I18nStringKey.kGeneric_Username,

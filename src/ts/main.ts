@@ -117,6 +117,7 @@ const elements = {
 	accountSettingsNewPassword: document.getElementById("accountSettingsNewPassword") as HTMLInputElement,
 	accountSettingsConfirmNewPassword: document.getElementById("accountSettingsConfirmNewPassword") as HTMLInputElement,
 	accountSettingsCurrentPassword: document.getElementById("accountSettingsCurrentPassword") as HTMLInputElement,
+	hideFlagCheckbox: document.getElementById("hideFlagCheckbox") as HTMLInputElement,
 
 	accountResetPasswordSection: document.getElementById("accountResetPasswordSection") as HTMLDivElement,
 	accountResetPasswordForm: document.getElementById("accountResetPasswordForm") as HTMLFormElement,
@@ -316,6 +317,8 @@ const vms: VM[] = [];
 const cards: HTMLDivElement[] = [];
 const users: {
 	user: User;
+	usernameElement: HTMLSpanElement;
+	flagElement: HTMLSpanElement;
 	element: HTMLTableRowElement;
 }[] = [];
 let turnInterval: number | undefined = undefined;
@@ -392,6 +395,7 @@ async function openVM(vm: VM): Promise<void> {
 
 	VM!.on('chat', (username, message) => chatMessage(username, message));
 	VM!.on('adduser', (user) => addUser(user));
+	VM!.on('flag', () => flag());
 	VM!.on('remuser', (user) => remUser(user));
 	VM!.on('rename', (oldname, newname, selfrename) => userRenamed(oldname, newname, selfrename));
 
@@ -598,7 +602,14 @@ function addUser(user: User) {
 	let tr = document.createElement('tr');
 	tr.setAttribute('data-cvm-turn', '-1');
 	let td = document.createElement('td');
-	td.innerHTML = user.username;
+	let flagSpan = document.createElement('span');
+	let usernameSpan = document.createElement('span');
+	flagSpan.classList.add("userlist-flag");
+	usernameSpan.classList.add("userlist-username");
+	td.appendChild(flagSpan);
+	if (user.countryCode !== null) flagSpan.innerHTML = getFlagEmoji(user.countryCode);
+	td.appendChild(usernameSpan);
+	usernameSpan.innerText = user.username;
 	switch (user.rank) {
 		case Rank.Admin:
 			tr.classList.add('user-admin');
@@ -615,7 +626,7 @@ function addUser(user: User) {
 	}
 	if (user.username === w.username) tr.classList.add('user-current');
 	tr.appendChild(td);
-	let u = { user: user, element: tr };
+	let u = { user: user, element: tr, usernameElement: usernameSpan, flagElement: flagSpan };
 	if (rank === Rank.Admin || rank === Rank.Moderator) userModOptions(u);
 	elements.userlist.appendChild(tr);
 	if (olduser !== undefined) olduser.element = tr;
@@ -630,10 +641,21 @@ function remUser(user: User) {
 	users.splice(olduser, 1);
 }
 
+function getFlagEmoji(countryCode: string) {
+	if (countryCode.length !== 2) throw new Error('Invalid country code');
+	return String.fromCodePoint(...countryCode.toUpperCase().split('').map(char =>  127397 + char.charCodeAt(0)));
+}
+
+function flag() {
+	for (let user of users.filter(u => u.user.countryCode !== null)) {
+		user.flagElement.innerHTML = getFlagEmoji(user.user.countryCode!);
+	}
+}
+
 function userRenamed(oldname: string, newname: string, selfrename: boolean) {
 	let user = users.find((u) => u.user.username === newname);
 	if (user) {
-		user.element.children[0].innerHTML = newname;
+		user.usernameElement.innerHTML = newname;
 	}
 	if (selfrename) {
 		w.username = newname;
@@ -1110,6 +1132,11 @@ elements.accountSettingsForm.addEventListener('submit', async e => {
 		elements.accountModalError.style.display = "block";
 		return false;
 	}
+	localStorage.setItem("collabvm-hide-flag", JSON.stringify(elements.hideFlagCheckbox.checked));
+	if (!password && !email && !username) {
+		accountModal.hide();
+		return false
+	}
 	var result = await auth!.updateAccount(currentPassword, email, username, password);
 	if (result.success) {
 		elements.accountSettingsNewPassword.value = "";
@@ -1310,6 +1337,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 		auth = new AuthManager(Config.Auth.APIEndpoint);
 		renderAuth();
 	}
+
+	var hideFlag = JSON.parse(localStorage.getItem("collabvm-hide-flag")!);
+	if (hideFlag === null) hideFlag = false;
+	elements.hideFlagCheckbox.checked = hideFlag;
 
 	document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 

@@ -89,6 +89,7 @@ const fallbackLanguage : Language = {
 		"kAccountModal_ConfirmNewPassword": "Confirm New Password",
 		"kAccountModal_CurrentPassword": "Current Password",
 		"kAccountModal_ConfirmPassword": "Confirm Password",
+		"kAccountModal_HideFlag": "Hide my Country Flag",
 
 		"kMissingCaptcha": "Please fill out the captcha.",
 		"kPasswordsMustMatch": "Passwords must match.",

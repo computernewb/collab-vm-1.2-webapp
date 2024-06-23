@@ -38,6 +38,8 @@ export interface CollabVMClientEvents {
 	// Auth stuff
 	auth: (server: string) => void;
 	accountlogin: (success: boolean) => void;
+
+	flag: () => void;
 }
 
 // types for private emitter
@@ -413,6 +415,14 @@ export default class CollabVMClient {
 					}
 				}
 			}
+			case 'flag': {
+				for (let i = 1; i < msgArr.length; i += 2) {
+					let user = this.users.find((u) => u.username === msgArr[i]);
+					if (user) user.countryCode = msgArr[i + 1];
+				}
+				this.publicEmitter.emit('flag');
+				break;
+			}
 		}
 	}
 
@@ -493,6 +503,7 @@ export default class CollabVMClient {
 				u();
 				res(success);
 			});
+			if (localStorage.getItem('collabvm-hide-flag') === 'true') this.send('noflag');
 			if (username === null) this.send('rename');
 			else this.send('rename', username);
 			this.send('connect', id);

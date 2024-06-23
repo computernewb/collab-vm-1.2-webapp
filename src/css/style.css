@@ -87,40 +87,40 @@
   display: none;
 }
 
-tr.user-admin > td, .chat-username-admin, .username-admin {
+tr.user-admin .userlist-username, .chat-username-admin, .username-admin {
   color: #FF0000 !important;
 }
 
-tr.user-moderator > td, .chat-username-moderator, .username-moderator {
+tr.user-moderator .userlist-username, .chat-username-moderator, .username-moderator {
   color: #00FF00 !important;
 }
 
 html[data-bs-theme="dark"] {
-  tr.user-unregistered > td, .chat-username-unregistered, .username-unregistered {
+  tr.user-unregistered .userlist-username, .chat-username-unregistered, .username-unregistered {
     color: #b1b1b1 !important;
   }
   
-  tr.user-registered > td, .chat-username-registered, .username-registered {
+  tr.user-registered .userlist-username, .chat-username-registered, .username-registered {
     color: #FFFFFF !important;
   }
 
-  tr.user-registered.user-turn > td, tr.user-registered.user-waiting > td {
+  tr.user-registered.user-turn .userlist-username, tr.user-registered.user-waiting .userlist-username {
     color: #000000 !important;
     --bs-table-color: #000000 !important;
   }
   
-  tr.user-unregistered.user-turn > td, tr.user-unregistered.user-waiting > td {
+  tr.user-unregistered.user-turn .userlist-username, tr.user-unregistered.user-waiting .userlist-username {
     color: #585858 !important;
     --bs-table-color: #585858 !important;
   }
 }
 
 html[data-bs-theme="light"] {
-  tr.user-unregistered > td, .chat-username-unregistered, .username-unregistered {
+  tr.user-unregistered .userlist-username, .chat-username-unregistered, .username-unregistered {
     color: #6b6b6b !important;
   }
   
-  tr.user-registered > td, .chat-username-registered, .username-registered {
+  tr.user-registered .userlist-username, .chat-username-registered, .username-registered {
     color: #000 !important;
   }
 }
@@ -149,7 +149,7 @@ tr.user-waiting > td {
   --bs-table-bg-state: #ece1be !important;
 }
 
-.user-current {
+.user-current .userlist-username {
   font-style: italic;
 }
 
@@ -339,4 +339,12 @@ Theme: cvmDisabled
 @font-face {
   font-family: 'Noto Color Emoji';
   src: url('../assets/NotoColorEmoji.ttf');
+}
+
+.userlist-flag {
+  padding-right: 0.5rem;
+}
+
+.userlist-flag:empty {
+  display: none;
 }
