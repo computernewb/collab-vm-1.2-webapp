@@ -155,7 +155,6 @@ export class I18n {
 	// The language data itself
 	private langs : Map<string, LanguageMetadata> = new Map<string, Language>();
 	private lang: Language = fallbackLanguage;
-	private countryNames: {[key: string]: string} | null = null;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
 
@@ -163,6 +162,8 @@ export class I18n {
 
 	// the ID of the language
 	private langId: string = fallbackId;
+
+	private regionNameRenderer = new Intl.DisplayNames(['en-US'], {type: 'region'});
 	
 	async Init() {
 		// Load language list
@@ -212,20 +213,8 @@ export class I18n {
 		this.ReplaceStaticStrings();
 	}
 
-	private async getCountryNames(lang: string) : Promise<{[key: string]: string} | null> {
-		lang = lang.split('-')[0].toLowerCase();
-		let res = await fetch(`https://www.unpkg.com/cldr-localenames-full@45.0.0/main/${lang}/territories.json`);
-		if (!res.ok) {
-			console.error(`Failed to load territories.json for ${lang}: ${res.statusText}`);
-			return null;
-		}
-		let data = await res.json();
-		return data.main[lang].localeDisplayNames.territories;
-	}
-
 	getCountryName(code: string) : string {
-		if (this.countryNames === null) return code;
-		return this.countryNames[code] || code;
+		return this.regionNameRenderer.of(code) || code;
 	}
 
 	private async SetLanguage(id: string) {
@@ -247,10 +236,13 @@ export class I18n {
 
 		this.lang = lang;
 
-		this.countryNames = await this.getCountryNames(id);
-
-		// Only replace static strings
-		if (this.langId != lastId) this.ReplaceStaticStrings();
+		if (this.langId != lastId) {
+			// Replace static strings
+			this.ReplaceStaticStrings();
+			
+			// Update region name renderer target language
+			this.regionNameRenderer = new Intl.DisplayNames([this.langId], {type: 'region'});
+		};
 
 		// Set the language ID localstorage entry
 		if (this.langId !== fallbackId) {
