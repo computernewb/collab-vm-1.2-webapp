@@ -86,6 +86,7 @@
 		"kAccountModal_ConfirmNewPassword": "새 암호 확인",
 		"kAccountModal_CurrentPassword": "현재 암호",
 		"kAccountModal_ConfirmPassword": "암호 확인",
+		"kAccountModal_HideFlag": "내 국기 숨기기",
 
 		"kMissingCaptcha": "보안 문자를 입력하세요.",
 		"kPasswordsMustMatch": "암호가 일치해야 합니다.",
