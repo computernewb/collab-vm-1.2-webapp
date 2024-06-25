@@ -9,6 +9,8 @@ import GetKeysym from '../keyboard.js';
 import VoteStatus from './VoteStatus.js';
 import MuteState from './MuteState.js';
 import { StringLike } from '../StringLike.js';
+import msgpack from '@ygoe/msgpack';
+import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from './binaryprotocol/CollabVMProtocolMessage.js';
 const w = window as any;
 
 export interface CollabVMClientEvents {
@@ -50,6 +52,8 @@ interface CollabVMClientPrivateEvents {
 	ip: (username: string, ip: string) => void;
 	qemu: (qemuResponse: string) => void;
 }
+
+const DefaultCapabilities = [ "bin" ];
 
 export default class CollabVMClient {
 	// Fields
@@ -185,6 +189,7 @@ export default class CollabVMClient {
 		this.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 		// Create the WebSocket
 		this.socket = new WebSocket(url, 'guacamole');
+		this.socket.binaryType = 'arraybuffer';
 		// Add the event listeners
 		this.socket.addEventListener('open', () => this.onOpen());
 		this.socket.addEventListener('message', (event) => this.onMessage(event));
@@ -196,8 +201,37 @@ export default class CollabVMClient {
 		this.internalEmitter.emit('open');
 	}
 
+	private onBinaryMessage(data: ArrayBuffer) {
+		let msg: CollabVMProtocolMessage;
+		try {
+			msg = msgpack.decode(data);
+		} catch {
+			console.error("Server sent invalid binary message");
+			return;
+		}
+		if (msg.type === undefined) return;
+		switch (msg.type) {
+			case CollabVMProtocolMessageType.rect: {
+				if (!msg.rect || msg.rect.x === undefined || msg.rect.y === undefined || msg.rect.data === undefined) return;
+				let blob = new Blob( [ new Uint8Array(msg.rect.data) ], {type: "image/jpeg"});
+				let url = URL.createObjectURL(blob);
+				let img = new Image();
+				img.addEventListener('load', () => {
+					this.loadRectangle(img, msg.rect!.x, msg.rect!.y);
+					URL.revokeObjectURL(url);
+				});
+				img.src = url;
+				break;
+			}
+		}
+	}
+
 	// Fires on WebSocket message
 	private onMessage(event: MessageEvent) {
+		if (event.data instanceof ArrayBuffer) {
+			this.onBinaryMessage(event.data);
+			return;
+		}
 		let msgArr: string[];
 		try {
 			msgArr = Guacutils.decode(event.data);
@@ -237,15 +271,7 @@ export default class CollabVMClient {
 				var x = parseInt(msgArr[3]);
 				var y = parseInt(msgArr[4]);
 				img.addEventListener('load', () => {
-					if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height)
-						this.unscaledCtx.drawImage(img, x, y);
-					// Scale the image to the canvas
-					this.ctx.drawImage(img, 0, 0, img.width, img.height, 
-						(x / this.actualScreenSize.width) * this.canvas.width, 
-						(y / this.actualScreenSize.height) * this.canvas.height, 
-						(img.width / this.actualScreenSize.width) * this.canvas.width, 
-						(img.height / this.actualScreenSize.height) * this.canvas.height
-					);
+					this.loadRectangle(img, x, y);
 				});
 				img.src = 'data:image/jpeg;base64,' + msgArr[5];
 				break;
@@ -426,6 +452,18 @@ export default class CollabVMClient {
 		}
 	}
 
+	private loadRectangle(img: HTMLImageElement, x: number, y: number) {
+		if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height)
+			this.unscaledCtx.drawImage(img, x, y);
+		// Scale the image to the canvas
+		this.ctx.drawImage(img, 0, 0, img.width, img.height,
+			(x / this.actualScreenSize.width) * this.canvas.width,
+			(y / this.actualScreenSize.height) * this.canvas.height,
+			(img.width / this.actualScreenSize.width) * this.canvas.width,
+			(img.height / this.actualScreenSize.height) * this.canvas.height
+		);
+	}
+
 	private onWindowResize(e: Event) {
 		if (!this.connectedToVM) return;
 		// If the canvas is the same size as the screen, don't bother redrawing
@@ -506,6 +544,7 @@ export default class CollabVMClient {
 			if (localStorage.getItem('collabvm-hide-flag') === 'true') this.send('noflag');
 			if (username === null) this.send('rename');
 			else this.send('rename', username);
+			if (DefaultCapabilities.length > 0) this.send('cap', ...DefaultCapabilities);
 			this.send('connect', id);
 			this.node = id;
 		});
