@@ -10,7 +10,8 @@ import VoteStatus from './VoteStatus.js';
 import MuteState from './MuteState.js';
 import { StringLike } from '../StringLike.js';
 import * as msgpack from 'msgpackr';
-import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from './binaryprotocol/CollabVMProtocolMessage.js';
+// TODO: Properly workspaceify this
+import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from '../../../collab-vm-1.2-binary-protocol/src/index.js';
 const w = window as any;
 
 export interface CollabVMClientEvents {
