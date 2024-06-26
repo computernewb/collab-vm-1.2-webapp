@@ -15,10 +15,10 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "@ygoe/msgpack": "^1.0.3",
     "bootstrap": "^5.3.2",
     "dayjs": "^1.11.10",
     "dompurify": "^3.1.0",
+    "msgpackr": "^1.10.2",
     "nanoevents": "^7.0.1",
     "simple-keyboard": "^3.7.53"
   },
@@ -27,6 +27,7 @@
     "@types/bootstrap": "^5.2.10",
     "@types/dompurify": "^3.0.5",
     "@types/jest": "^29.5.12",
+    "buffer": "^5.5.0||^6.0.0",
     "jest": "^29.7.0",
     "parcel": "^2.11.0",
     "parcel-reporter-static-files-copy": "^1.5.3",

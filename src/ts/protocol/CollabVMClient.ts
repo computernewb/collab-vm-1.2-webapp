@@ -9,7 +9,7 @@ import GetKeysym from '../keyboard.js';
 import VoteStatus from './VoteStatus.js';
 import MuteState from './MuteState.js';
 import { StringLike } from '../StringLike.js';
-import msgpack from '@ygoe/msgpack';
+import * as msgpack from 'msgpackr';
 import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from './binaryprotocol/CollabVMProtocolMessage.js';
 const w = window as any;
 
