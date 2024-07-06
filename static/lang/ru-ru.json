@@ -86,6 +86,7 @@
 		"kAccountModal_ConfirmNewPassword": "Подтвердить новый пароль",
 		"kAccountModal_CurrentPassword": "Текущий пароль",
 		"kAccountModal_ConfirmPassword": "Подтвердите пароль",
+		"kAccountModal_HideFlag": "Скрыть флаг моей страны",
 
 		"kMissingCaptcha": "Пожалуйста, пройдите капчу.",
 		"kPasswordsMustMatch": "Пароли должны совпадать.",
