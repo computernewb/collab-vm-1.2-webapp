@@ -71,31 +71,31 @@
 		"kAdminVMButtons_GetIP": "IP'yi al",
 
 		"kVMPrompts_AdminChangeUsernamePrompt": "{0} için yeni bir isim gir:",
-		"kVMPrompts_AdminRestoreVMPrompt": "Are you sure you want to restore the VM?",
-		"kVMPrompts_EnterNewUsernamePrompt": "Enter a new username, or leave the field blank to be assigned a guest username",
+		"kVMPrompts_AdminRestoreVMPrompt": "VM'i geri yüklemeye eminmisin?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Yeni bir isim gir yada yazı yerini boş tutarak bir misafir ismi al.",
 
-		"kError_UnexpectedDisconnection": "You have been disconnected from the server.",
-		"kError_UsernameTaken": "That username is already taken",
-		"kError_UsernameInvalid": "Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
-		"kError_UsernameBlacklisted": "That username has been blacklisted.",
-		"kError_IncorrectPassword": "Incorrect password.",
+		"kError_UnexpectedDisconnection": "Sunucudan bağlantın kesildi.",
+		"kError_UsernameTaken": "Takma adı başkası aldı.",
+		"kError_UsernameInvalid": "Takma adlar içinde sadece numaralar, harfler, boşluklar, çizgiler, altreler ve noktalar içerir. Ve isimler 3 ve 20 karakter içermelidir.",
+		"kError_UsernameBlacklisted": "Bu takma isim karalistelendi.",
+		"kError_IncorrectPassword": "Yanlış şifre.",
 
-		"kAccountModal_Verify": "Verify E-Mail",
-		"kAccountModal_AccountSettings": "Account Settings",
+		"kAccountModal_Verify": "E-maili Doğrula",
+		"kAccountModal_AccountSettings": "Hesap Ayarları",
 		"kAccountModal_ResetPassword": "Reset Password",
 
-		"kAccountModal_NewPassword": "New Password",
-		"kAccountModal_ConfirmNewPassword": "Confirm New Password",
-		"kAccountModal_CurrentPassword": "Current Password",
-		"kAccountModal_ConfirmPassword": "Confirm Password",
-		"kAccountModal_HideFlag": "Hide my Country Flag",
+		"kAccountModal_NewPassword": "Yeni Şifre",
+		"kAccountModal_ConfirmNewPassword": "Yeni Şifreyi Doğrula",
+		"kAccountModal_CurrentPassword": "Şimdiki Şifre",
+		"kAccountModal_ConfirmPassword": "Şifreyi Değiştir",
+		"kAccountModal_HideFlag": "Ülke Bayrağımı Gizle",
 
-		"kMissingCaptcha": "Please fill out the captcha.",
-		"kPasswordsMustMatch": "Passwords must match.",
-		"kAccountModal_VerifyText": "We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
-		"kAccountModal_VerifyPasswordResetText": "We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
-		"kAccountModal_PasswordResetSuccess": "Your password has been changed successfully. You can now log in with your new password.",
+		"kMissingCaptcha": "Lütfen Caphta'yı doğrulayın.",
+		"kPasswordsMustMatch": "Şifleler uymalı.",
+		"kAccountModal_VerifyText": "{0} adresine E-mail gönderdik. Hesabınızı doğrulamak için lütfen attığımız E-mail'daki 8 haneli kodu aşağığa girin.",
+		"kAccountModal_VerifyPasswordResetText": "{0} adresine E-mail gönderdik. Şifrenizi sıfırlamak için lütfen attığımız E-mail'daki 8 haneli kodu aşağığa girin.",
+		"kAccountModal_PasswordResetSuccess": "Şifreniz başarılyla değiştirildi. Yeni şifrenizle hesabınıza girebilirsiniz.",
 
-		"kNotLoggedIn": "Not Logged in"
+		"kNotLoggedIn": "Giriş Yapılmadı"
 	}
 }
