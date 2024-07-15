@@ -1,0 +1,100 @@
+{
+	"languageName": "Türkçe",
+	"translatedLanguageName": "Turkish",
+	"flag": "🇹🇷",
+	"author": "enescetinkal",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Evet",
+		"kGeneric_No": "Hayır",
+		"kGeneric_Ok": "Tamam",
+		"kGeneric_Cancel": "İptal et",
+		"kGeneric_Send": "Gönder",
+		"kGeneric_Understood": "Anlaşıldı",
+		"kGeneric_Username": "Takma isim",
+		"kGeneric_Password": "Şifre",
+		"kGeneric_Login": "Giriş yap",
+		"kGeneric_Register": "Kayıt ol",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Doğum Tarihi",
+		"kGeneric_VerificationCode": "Doğrulama kodu",
+		"kGeneric_Verify": "Doğrula",
+		"kGeneric_Update": "Güncelle",
+		"kGeneric_Logout": "Çıkış yap",
+		
+		"kWelcomeModal_Header": "CollabVM'e hoşgeldiniz.",
+		"kWelcomeModal_Body": "<p>Devam etmeden önce, lütfen bu kuralları tanıyın.</p> <h3>K1. Kanunları çiğnemeyin. </h3> Collab VM'i ve ağlarını lütfen ABD,New york State yada uluslararası kanunu çiğnemek için kullanmayın. Eğer CollabVm hizmetlerinde senin kanun çiğnediğini görerse ,hemen banlanırsınız., ve yaptığınız eylemleri gerekirse otoritelere söyler.<br><br>CollabVM kanun nedeniyle çocuk pornografisini eğer hizmetlerinde veya ağlarında paylaşılp kullanılırsa kanuni hizmetlere bildirilir.<br><br>COPPA'da vardır. Lütfen CollabVM'i ve araçlarını 13 yaş altındaysanız kullanmayın. <h3>K2. DoS/DDoS araçlarını çalıştırmayın.</h3> CollabVM'i lütfen bir kişiyi,işletmey,markayı yada hiçkimseyi DoS/DDoS'lamak için kullanmayın. <h3>K3. Spam Paylaşmayın.</h3> Bu hizmetleri lütfen spam mail yada herhangi bir spam dağıtmak için kullanmayın. <h3>K4. Açıkları kötüye ve aşırıya kullanmayın.</h3> Açıkları kötüye kullanmayın. Eğer birisinin açıkları görüp raporlamak istersen, Lütfen computernewbab@gmail.com adresinden benimle iletişime geçin. <h3>K5. Başka kişileri taklit etme.</h3> CollabVm'in kullanıcılarını taklit etmeyin. Yakalınırsanız, bağlantınız kesilir ve gerekirse banlanırsınız. <h3>K6. Her kişiye bir oy.</h3> Oy sınıralını geçmek için hiçbir araç yada yontem kullanmayın. Her zaman her bir kişi sadece bir oy kullanır. Bunu yapıp yakalanan herkes banlanır. <h3>K7. Uzaktan Yönetme araçları yasak. </h3> Hiçbir uzaktan yönetme araçı kullanmayın.(öğrn: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, vs.) <h3>K8. CollabNet'in sınırlaını geçmeyin.</h3> CollabNet'in sunduğu engelleri aşamya çalışmayın, özellikle kural 1,2 ve 7'yi çiğnemek için yapmayın (yada salakca çok yapılmış şeyleri çalıştırmak için). <h3>K9. Sürekli yok eden aksiyonlar yapmayın.</h3> Hiçbir kişi VM'i yok etmemeli (sürekli kullanışsız yapmak), işletim sistemini yüklememeli/gene yüklememeli (VM7 yada VM8 dışında), yada bunları yapan botları çalıştırmamalı. Bu birsürü klavye/mouse girişi spamlayan botlarada dahildir (\"kitting\"). <h3>K10. Kripto Minelamak Yasak.</h3>VMlerde kripto kazmaya çalışırsanız atılırsınız , hala yapmaya çalışırsanız da kalıcı ban alırsınız. Zaten para yapacak gibi değilsin. <h3>NSFW Uyarısı</h3> Lütfen anarşi vm'de (VM0b0t'ta) NSFW materiyal olabileceğine ve normalde izlendiğine not alın. Birde, Ana VM'lerde NSFW materiyalleri engellemeye çalışıyoruz ama bazı kişiler genede açabilir.",
+		"kSiteButtons_Home": "Ev",
+		"kSiteButtons_FAQ": "SSS",
+		"kSiteButtons_Rules": "Kurallar",
+		"kSiteButtons_DarkMode": "Koyu Mod",
+		"kSiteButtons_LightMode": "Açık Mod",
+		"kSiteButtons_Languages": "Diller",
+
+		"kVM_UsersOnlineText": "Çevrimiçi kişiler:",
+
+		"kVM_TurnTimeTimer": "Sıranız {0} saniye içinde bitecektir.",
+		"kVM_WaitingTurnTimer": "Sıranızın gelmesi için {0} saniye bekleyin. ",
+		"kVM_VoteCooldownTimer": "Oylama yapmadan önce lütfen {0} saniye bekleyin.",
+
+		"kVM_VoteForResetTitle": "Bu VM'i sıfırlamak istermisin?",
+		"kVM_VoteForResetTimer": "Oylama {0} saniye içinde bitecek.",
+
+		"kVMButtons_TakeTurn": "Sıra al",
+		"kVMButtons_EndTurn": "Sıranı sonlandır",
+		"kVMButtons_ChangeUsername": "Takma ismini değiştir",
+		"kVMButtons_Keyboard": "Klavye",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Sıfırlamak için oylama aç",
+		"kVMButtons_Screenshot": "Ekran görüntüsü",
+
+		"kQEMUMonitor": "QEMU Monitörü",
+		"kAdminVMButtons_PassVote": "Oyu geçir",
+		"kAdminVMButtons_CancelVote": "Oyu iptal et",
+
+		"kAdminVMButtons_Restore": "Geri Yükle",
+		"kAdminVMButtons_Reboot": "Yeniden başlat",
+		"kAdminVMButtons_ClearTurnQueue": "Bekleyen sıraları temizle",
+		"kAdminVMButtons_BypassTurn": "Sırayı atla",
+		"kAdminVMButtons_IndefiniteTurn": "Sonsuz sıra",
+		"kAdminVMButtons_GhostTurnOn": "Gizli sıra (Açık)",
+		"kAdminVMButtons_GhostTurnOff": "Gizli sıra (Kapalı)",
+
+		"kAdminVMButtons_Ban": "Ban",
+		"kAdminVMButtons_Kick": "At",
+		"kAdminVMButtons_TempMute": "Geçici Mute",
+		"kAdminVMButtons_IndefMute": "Kalıcı Mute",
+		"kAdminVMButtons_Unmute": "Mute'u sil",
+		"kAdminVMButtons_GetIP": "IP'yi al",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "{0} için yeni bir isim gir:",
+		"kVMPrompts_AdminRestoreVMPrompt": "VM'i geri yüklemeye eminmisin?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Yeni bir isim gir yada yazı yerini boş tutarak bir misafir ismi al.",
+
+		"kError_UnexpectedDisconnection": "Sunucudan bağlantın kesildi.",
+		"kError_UsernameTaken": "Takma adı başkası aldı.",
+		"kError_UsernameInvalid": "Takma adlar içinde sadece numaralar, harfler, boşluklar, çizgiler, altreler ve noktalar içerir. Ve isimler 3 ve 20 karakter içermelidir.",
+		"kError_UsernameBlacklisted": "Bu takma isim karalistelendi.",
+		"kError_IncorrectPassword": "Yanlış şifre.",
+
+		"kAccountModal_Verify": "E-maili Doğrula",
+		"kAccountModal_AccountSettings": "Hesap Ayarları",
+		"kAccountModal_ResetPassword": "Reset Password",
+
+		"kAccountModal_NewPassword": "Yeni Şifre",
+		"kAccountModal_ConfirmNewPassword": "Yeni Şifreyi Doğrula",
+		"kAccountModal_CurrentPassword": "Şimdiki Şifre",
+		"kAccountModal_ConfirmPassword": "Şifreyi Değiştir",
+		"kAccountModal_HideFlag": "Ülke Bayrağımı Gizle",
+
+		"kMissingCaptcha": "Lütfen Caphta'yı doğrulayın.",
+		"kPasswordsMustMatch": "Şifleler uymalı.",
+		"kAccountModal_VerifyText": "{0} adresine E-mail gönderdik. Hesabınızı doğrulamak için lütfen attığımız E-mail'daki 8 haneli kodu aşağığa girin.",
+		"kAccountModal_VerifyPasswordResetText": "{0} adresine E-mail gönderdik. Şifrenizi sıfırlamak için lütfen attığımız E-mail'daki 8 haneli kodu aşağığa girin.",
+		"kAccountModal_PasswordResetSuccess": "Şifreniz başarılyla değiştirildi. Yeni şifrenizle hesabınıza girebilirsiniz.",
+
+		"kNotLoggedIn": "Giriş Yapılmadı"
+	}
+}
