@@ -97,7 +97,11 @@ const elements = {
 	accountRegisterForm: document.getElementById("accountRegisterForm") as HTMLFormElement,
 	accountVerifyEmailForm: document.getElementById("accountVerifyEmailForm") as HTMLFormElement,
 	accountLoginCaptcha: document.getElementById("accountLoginCaptcha") as HTMLDivElement,
+	accountLoginRecaptcha: document.getElementById("accountLoginReCaptcha") as HTMLDivElement,
+	accountLoginTurnstile: document.getElementById("accountLoginTurnstile") as HTMLDivElement,
 	accountRegisterCaptcha: document.getElementById("accountRegisterCaptcha") as HTMLDivElement,
+	accountRegisterRecaptcha: document.getElementById("accountRegisterReCaptcha") as HTMLDivElement,
+	accountRegisterTurnstile: document.getElementById("accountRegisterTurnstile") as HTMLDivElement,
 
 	accountLoginUsername: document.getElementById("accountLoginUsername") as HTMLInputElement,
 	accountLoginPassword: document.getElementById("accountLoginPassword") as HTMLInputElement,
@@ -123,6 +127,8 @@ const elements = {
 	accountResetPasswordEmail: document.getElementById("accountResetPasswordEmail") as HTMLInputElement,
 	accountResetPasswordUsername: document.getElementById("accountResetPasswordUsername") as HTMLInputElement,
 	accountResetPasswordCaptcha: document.getElementById("accountResetPasswordCaptcha") as HTMLDivElement,
+	accountResetPasswordRecaptcha: document.getElementById("accountResetPasswordReCaptcha") as HTMLDivElement,
+	accountResetPasswordTurnstile: document.getElementById("accountResetPasswordTurnstile") as HTMLDivElement,
 
 	accountResetPasswordVerifySection: document.getElementById("accountResetPasswordVerifySection") as HTMLDivElement,
 	accountVerifyPasswordResetText: document.getElementById("accountVerifyPasswordResetText") as HTMLParagraphElement,
@@ -943,12 +949,45 @@ async function renderAuth() {
 	elements.accountRegisterCaptcha.innerHTML = "";
 	elements.accountLoginCaptcha.innerHTML = "";
 	elements.accountResetPasswordCaptcha.innerHTML = "";
+	elements.accountRegisterTurnstile.innerHTML = "";
+	elements.accountLoginTurnstile.innerHTML = "";
+	elements.accountResetPasswordTurnstile.innerHTML = "";
+	elements.accountRegisterRecaptcha.innerHTML = "";
+	elements.accountLoginRecaptcha.innerHTML = "";
+	elements.accountResetPasswordRecaptcha.innerHTML = "";
 	if (auth!.info!.hcaptcha.required) {
 		var hconfig = {sitekey: auth!.info!.hcaptcha.siteKey!};
 		hcaptcha.render(elements.accountRegisterCaptcha, hconfig);
 		hcaptcha.render(elements.accountLoginCaptcha, hconfig);
 		hcaptcha.render(elements.accountResetPasswordCaptcha, hconfig);
 	}
+
+	if(auth!.info?.turnstile.required) {
+		var turnstileconfig = {sitekey: auth!.info!.turnstile.siteKey!};
+
+		// hCaptcha does this automatically, but Turnstile doesn't, oh well.
+		var turnstileRegisterWidgetId = turnstile.render(elements.accountRegisterTurnstile, turnstileconfig);
+		var turnstileLoginWidgetId = turnstile.render(elements.accountLoginTurnstile, turnstileconfig);
+		var turnstileResetPasswordWidgetId = turnstile.render(elements.accountResetPasswordTurnstile, turnstileconfig);
+
+		elements.accountRegisterTurnstile.children[0].setAttribute("data-turnstile-widget-id", turnstileRegisterWidgetId!);
+		elements.accountLoginTurnstile.children[0].setAttribute("data-turnstile-widget-id", turnstileLoginWidgetId!);
+		elements.accountResetPasswordTurnstile.children[0].setAttribute("data-turnstile-widget-id", turnstileResetPasswordWidgetId!);
+	}
+
+	if(auth!.info?.recaptcha.required) {
+		var recaptchaconfig = {sitekey: auth!.info!.recaptcha.siteKey!};
+
+		// Same deal as with Turnstile
+		var RecaptchaRegisterWidgetId = grecaptcha.render(elements.accountRegisterRecaptcha, recaptchaconfig);
+		var RecaptchaLoginWidgetId = grecaptcha.render(elements.accountLoginRecaptcha, recaptchaconfig);
+		var RecaptchaResetPasswordWidgetId = grecaptcha.render(elements.accountResetPasswordRecaptcha, recaptchaconfig);
+
+		elements.accountRegisterRecaptcha.children[0].setAttribute("data-recaptcha-widget-id", RecaptchaRegisterWidgetId!.toString());
+		elements.accountLoginRecaptcha.children[0].setAttribute("data-recaptcha-widget-id", RecaptchaLoginWidgetId!.toString());
+		elements.accountResetPasswordRecaptcha.children[0].setAttribute("data-recaptcha-widget-id", RecaptchaResetPasswordWidgetId!.toString());
+	}
+
 	var token = localStorage.getItem("collabvm_session_" + new URL(auth!.apiEndpoint).host);
 	if (token) {
 		var result = await auth!.loadSession(token);
@@ -1032,10 +1071,41 @@ elements.accountLoginForm.addEventListener('submit', async (e) => {
 		}
 		hcaptchaToken = response;
 	}
+
+	var turnstileToken = undefined;
+	var turnstileID = undefined;
+
+	if (auth!.info!.turnstile.required) {
+		turnstileID = elements.accountLoginTurnstile.children[0].getAttribute("data-turnstile-widget-id")!
+		var response: string = turnstile.getResponse(turnstileID) || "";
+		if (response === "") {
+			elements.accountModalErrorText.innerHTML = TheI18n.GetString(I18nStringKey.kMissingCaptcha);
+			elements.accountModalError.style.display = "block";
+			return false;
+		}
+		turnstileToken = response;
+	}
+
+	var recaptchaToken = undefined;
+	var recaptchaID = undefined;
+
+	if (auth!.info!.recaptcha.required) {
+		recaptchaID = parseInt(elements.accountLoginRecaptcha.children[0].getAttribute("data-recaptcha-widget-id")!)
+		var response = grecaptcha.getResponse(recaptchaID);
+		if (response === "") {
+			elements.accountModalErrorText.innerHTML = TheI18n.GetString(I18nStringKey.kMissingCaptcha);
+			elements.accountModalError.style.display = "block";
+			return false;
+		}
+		recaptchaToken = response;
+	}
+
 	var username = elements.accountLoginUsername.value;
 	var password = elements.accountLoginPassword.value;
-	var result = await auth!.login(username, password, hcaptchaToken);
+	var result = await auth!.login(username, password, hcaptchaToken, turnstileToken, recaptchaToken);
 	if (auth!.info!.hcaptcha.required) hcaptcha.reset(hcaptchaID);
+	if (auth!.info!.turnstile.required) turnstile.reset(turnstileID);
+	if (auth!.info!.recaptcha.required) grecaptcha.reset(recaptchaID);
 	if (result.success) {
 		elements.accountLoginUsername.value = "";
 		elements.accountLoginPassword.value = "";
@@ -1069,6 +1139,35 @@ elements.accountRegisterForm.addEventListener('submit', async (e) => {
 		}
 		hcaptchaToken = response;
 	}
+
+	var turnstileToken = undefined;
+	var turnstileID = undefined;
+
+	if (auth!.info!.turnstile.required) {
+		turnstileID = elements.accountRegisterTurnstile.children[0].getAttribute("data-turnstile-widget-id")!
+		var response: string = turnstile.getResponse(turnstileID) || "";
+		if (response === "") {
+			elements.accountModalErrorText.innerHTML = TheI18n.GetString(I18nStringKey.kMissingCaptcha);
+			elements.accountModalError.style.display = "block";
+			return false;
+		}
+		turnstileToken = response;
+	}
+
+	var recaptchaToken = undefined;
+	var recaptchaID = undefined;
+
+	if (auth!.info!.recaptcha.required) {
+		recaptchaID = parseInt(elements.accountRegisterRecaptcha.children[0].getAttribute("data-recaptcha-widget-id")!)
+		var response = grecaptcha.getResponse(recaptchaID);
+		if (response === "") {
+			elements.accountModalErrorText.innerHTML = TheI18n.GetString(I18nStringKey.kMissingCaptcha);
+			elements.accountModalError.style.display = "block";
+			return false;
+		}
+		recaptchaToken = response;
+	}
+
 	var username = elements.accountRegisterUsername.value;
 	var password = elements.accountRegisterPassword.value;
 	var email = elements.accountRegisterEmail.value;
@@ -1078,8 +1177,10 @@ elements.accountRegisterForm.addEventListener('submit', async (e) => {
 		elements.accountModalError.style.display = "block";
 		return false;
 	}
-	var result = await auth!.register(username, password, email, dob, hcaptchaToken);
+	var result = await auth!.register(username, password, email, dob, hcaptchaToken, turnstileToken, recaptchaToken);
 	if (auth!.info!.hcaptcha.required) hcaptcha.reset(hcaptchaID);
+	if (auth!.info!.turnstile.required) turnstile.reset(turnstileID);
+	if (auth!.info!.recaptcha.required) grecaptcha.reset(recaptchaID);
 	if (result.success) {
 		elements.accountRegisterUsername.value = "";
 		elements.accountRegisterEmail.value = "";
@@ -1182,10 +1283,41 @@ elements.accountResetPasswordForm.addEventListener('submit', async e => {
 		}
 		hcaptchaToken = response;
 	}
+
+	var turnstileToken = undefined;
+	var turnstileID = undefined;
+
+	if (auth!.info!.turnstile.required) {
+		turnstileID = elements.accountResetPasswordTurnstile.children[0].getAttribute("data-turnstile-widget-id")!
+		var response: string = turnstile.getResponse(turnstileID) || "";
+		if (response === "") {
+			elements.accountModalErrorText.innerHTML = TheI18n.GetString(I18nStringKey.kMissingCaptcha);
+			elements.accountModalError.style.display = "block";
+			return false;
+		}
+		turnstileToken = response;
+	}
+
+	var recaptchaToken = undefined;
+	var recaptchaID = undefined;
+
+	if (auth!.info!.recaptcha.required) {
+		recaptchaID = parseInt(elements.accountResetPasswordRecaptcha.children[0].getAttribute("data-recaptcha-widget-id")!)
+		var response = grecaptcha.getResponse(recaptchaID);
+		if (response === "") {
+			elements.accountModalErrorText.innerHTML = TheI18n.GetString(I18nStringKey.kMissingCaptcha);
+			elements.accountModalError.style.display = "block";
+			return false;
+		}
+		recaptchaToken = response;
+	}
+
 	var username = elements.accountResetPasswordUsername.value;
 	var email = elements.accountResetPasswordEmail.value;
-	var result = await auth!.sendPasswordResetEmail(username, email, hcaptchaToken);
+	var result = await auth!.sendPasswordResetEmail(username, email, hcaptchaToken, turnstileToken, recaptchaToken);
 	if (auth!.info!.hcaptcha.required) hcaptcha.reset(hcaptchaID);
+	if (auth!.info!.turnstile.required) turnstile.reset(turnstileID);
+	if (auth!.info!.recaptcha.required) grecaptcha.reset(recaptchaID);
 	if (result.success) {
 		resetPasswordUsername = username;
 		resetPasswordEmail = email;

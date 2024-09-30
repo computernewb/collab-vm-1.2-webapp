@@ -1446,6 +1446,11 @@
   dependencies:
     "@popperjs/core" "^2.9.2"
 
+"@types/cloudflare-turnstile@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@types/cloudflare-turnstile/-/cloudflare-turnstile-0.2.2.tgz#3364d65b00f03376f4e555820db270173807a52c"
+  integrity sha512-3Yf7b1Glci+V2bFWwWBbZkRgTuegp7RDgNTOG4U0UNPB9RV4AWvwqg2/qqLff8G+SwKFNXoXvTkqaRBZrAFdKA==
+
 "@types/dompurify@^3.0.5":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@types/dompurify/-/dompurify-3.0.5.tgz#02069a2fcb89a163bacf1a788f73cb415dd75cb7"
@@ -1459,6 +1464,11 @@
   integrity sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==
   dependencies:
     "@types/node" "*"
+
+"@types/grecaptcha@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@types/grecaptcha/-/grecaptcha-3.0.9.tgz#9f3b07ec06c8fff221aa6fc124fe5b8a0e2c3349"
+  integrity sha512-fFxMtjAvXXMYTzDFK5NpcVB7WHnrHVLl00QzEGpuFxSAC789io6M+vjcn+g5FTEamIJtJr/IHkCDsqvJxeWDyw==
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.6"
