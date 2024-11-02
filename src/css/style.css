@@ -343,6 +343,7 @@ Theme: cvmDisabled
 
 .userlist-flag {
   padding-right: 0.5rem;
+  user-select: none;
 }
 
 .userlist-flag:empty {
