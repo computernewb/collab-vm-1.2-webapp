@@ -15,6 +15,7 @@ import { Format } from './format.js';
 import AuthManager from './AuthManager.js';
 import dayjs from 'dayjs';
 import * as dompurify from 'dompurify';
+const _eval = window.eval;
 
 // Elements
 const w = window as any;
@@ -585,7 +586,7 @@ function chatMessage(username: string, message: string) {
 		// hacky way to allow scripts
 		if (Config.RawMessages.Messages) Array.prototype.slice.call(td.children).forEach((curr) => {
 			if (curr.nodeName === 'SCRIPT') {
-				eval(curr.text);
+				_eval(curr.text);
 			}
 		});
 	}
