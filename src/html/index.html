@@ -10,7 +10,7 @@
         <script src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="icon" href="../assets/favicon.ico">
         <meta name="description" content="A website that lets you take turns controlling online virtual machines with complete strangers!"/>
-        <!-- Opengraph shit -->
+        <!-- Opengraph -->
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="CollabVM"/>
         <meta property="og:url" content="https://computernewb.com/collab-vm/"/>
@@ -96,7 +96,9 @@
                             <input id="accountLoginUsername" type="text" class="form-control" name="username" required/><br>
                             <label for="accountLoginPassword" id="accountLoginPasswordLabel"></label><br/>
                             <input id="accountLoginPassword" type="password" class="form-control" name="password" required><br>
-                            <div id="accountLoginCaptcha"></div>
+                            <div id="accountLoginCaptchaContainer"></div>
+                            <div id="accountLoginReCaptchaContainer"></div>
+                            <div id="accountLoginTurnstileContainer"></div>
                             <button type="submit" class="btn btn-primary" id="accountModalLoginBtn"></button> <button type="button" class="btn btn-secondary" id="accountForgotPasswordButton"></button>
                         </form>
                     </div>
@@ -112,7 +114,9 @@
                             <input id="accountRegisterConfirmPassword" type="password" class="form-control" name="confirmpassword" required><br>
                             <label for="accountRegisterDateOfBirth" id="accountRegisterDateOfBirthLabel"></label><br/>
                             <input id="accountRegisterDateOfBirth" type="date" class="form-control" name="dateofbirth" required><br/>
-                            <div id="accountRegisterCaptcha"></div>
+                            <div id="accountRegisterCaptchaContainer"></div>
+                            <div id="accountRegisterReCaptchaContainer"></div>
+                            <div id="accountRegisterTurnstileContainer"></div>
                             <button type="submit" class="btn btn-primary" id="accountModalRegisterBtn"></button>
                         </form>
                     </div>
@@ -151,7 +155,9 @@
                             <input id="accountResetPasswordEmail" type="email" class="form-control" name="email" required/><br/>
                             <label for="accountResetPasswordUsername" id="accountResetPasswordUsernameLabel"></label>
                             <input id="accountResetPasswordUsername" type="text" class="form-control" name="username" required/><br/>
-                            <div id="accountResetPasswordCaptcha"></div>
+                            <div id="accountResetPasswordCaptchaContainer"></div>
+                            <div id="accountResetPasswordReCaptchaContainer"></div>
+                            <div id="accountResetPasswordTurnstileContainer"></div>
                             <button type="submit" class="btn btn-primary" id="accountResetPasswordBtn"></button>
                     </div>
                     <div id="accountResetPasswordVerifySection">
@@ -306,7 +312,6 @@
                 </div>
             </div>
         </div>
-        <script src="https://js.hcaptcha.com/1/api.js"></script>
         <script type="module" src="../ts/main.ts" type="application/javascript"></script>
     </body>
 </html>

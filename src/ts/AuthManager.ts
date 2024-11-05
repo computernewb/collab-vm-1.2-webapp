@@ -18,10 +18,12 @@ export default class AuthManager {
         })
     }
 
-    login(username : string, password : string, captchaToken : string | undefined) : Promise<AccountLoginResult> {
+    login(username : string, password : string, captchaToken : string | undefined, turnstileToken : string | undefined, recaptchaToken : string | undefined) : Promise<AccountLoginResult> {
         return new Promise(async (res,rej) => {
             if (!this.info) throw new Error("Cannot login before fetching API information.");
             if (!captchaToken && this.info.hcaptcha.required) throw new Error("This API requires a valid hCaptcha token.");
+            if (!turnstileToken && this.info.turnstile.required) throw new Error("This API requires a valid Turnstile token.");
+            if (!recaptchaToken && this.info.recaptcha.required) throw new Error("This API requires a valid reCAPTCHA token.");
             var data = await fetch(this.apiEndpoint + "/api/v1/login", {
                 method: "POST",
                 headers: {
@@ -30,7 +32,9 @@ export default class AuthManager {
                 body: JSON.stringify({
                     username: username,
                     password: password,
-                    captchaToken: captchaToken
+                    captchaToken: captchaToken,
+                    turnstileToken: turnstileToken,
+                    recaptchaToken: recaptchaToken
                 })
             });
             var json = await data.json() as AccountLoginResult;
@@ -69,10 +73,12 @@ export default class AuthManager {
         })
     }
 
-    register(username : string, password : string, email : string, dateOfBirth : dayjs.Dayjs, captchaToken : string | undefined) : Promise<AccountRegisterResult> {
+    register(username : string, password : string, email : string, dateOfBirth : dayjs.Dayjs, captchaToken : string | undefined, turnstileToken: string | undefined, recaptchaToken : string | undefined) : Promise<AccountRegisterResult> {
         return new Promise(async (res, rej) => {
             if (!this.info) throw new Error("Cannot login before fetching API information.");
             if (!captchaToken && this.info.hcaptcha.required) throw new Error("This API requires a valid hCaptcha token.");
+            if (!turnstileToken && this.info.turnstile.required) throw new Error("This API requires a valid Turnstile token.");
+            if (!recaptchaToken && this.info.recaptcha.required) throw new Error("This API requires a valid reCAPTCHA token.");
             var data = await fetch(this.apiEndpoint + "/api/v1/register", {
                 method: "POST",
                 headers: {
@@ -83,7 +89,9 @@ export default class AuthManager {
                     password: password,
                     email: email,
                     dateOfBirth: dateOfBirth.format("YYYY-MM-DD"),
-                    captchatoken: captchaToken
+                    captchatoken: captchaToken,
+                    turnstiletoken: turnstileToken,
+                    recaptchaToken: recaptchaToken
                 })
             });
             res(await data.json() as AccountRegisterResult);
@@ -154,10 +162,12 @@ export default class AuthManager {
         });
     }
 
-    sendPasswordResetEmail(username : string, email : string, captchaToken : string | undefined) {
+    sendPasswordResetEmail(username : string, email : string, captchaToken : string | undefined, turnstileToken : string | undefined, recaptchaToken : string | undefined) {
         return new Promise<PasswordResetResult>(async res => {
             if (!this.info) throw new Error("Cannot send password reset email without fetching API information.");
             if (!captchaToken && this.info.hcaptcha.required) throw new Error("This API requires a valid hCaptcha token.");
+            if (!turnstileToken && this.info.turnstile.required) throw new Error("This API requires a valid Turnstile token.");
+            if (!recaptchaToken && this.info.recaptcha.required) throw new Error("This API requires a valid reCAPTCHA token.");
             var data = await fetch(this.apiEndpoint + "/api/v1/sendreset", {
                 method: "POST",
                 headers: {
@@ -166,7 +176,9 @@ export default class AuthManager {
                 body: JSON.stringify({
                     username: username,
                     email: email,
-                    captchaToken: captchaToken
+                    captchaToken: captchaToken,
+                    turnstileToken: turnstileToken,
+                    recaptchaToken: recaptchaToken
                 })
             });
             res(await data.json() as PasswordResetResult);
@@ -198,6 +210,14 @@ export interface AuthServerInformation {
         required : boolean;
         siteKey : string | undefined;
     };
+    turnstile : {
+        required : boolean;
+        siteKey : string | undefined;
+    };
+    recaptcha : {
+        required : boolean;
+        siteKey : string | undefined;
+    }
 }
 
 export interface AccountRegisterResult {
