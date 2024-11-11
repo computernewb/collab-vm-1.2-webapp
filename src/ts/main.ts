@@ -767,7 +767,8 @@ elements.chatinput.addEventListener('keypress', (e) => {
 	if (e.key === 'Enter') sendChat();
 });
 elements.changeUsernameBtn.addEventListener('click', () => {
-	let newname = prompt(TheI18n.GetString(I18nStringKey.kVMPrompts_EnterNewUsernamePrompt), w.username);
+	let oldname = w.username.nodeName === undefined ? w.username : w.username.innerText;
+	let newname = prompt(TheI18n.GetString(I18nStringKey.kVMPrompts_EnterNewUsernamePrompt), oldname);
 	if (newname === w.username) return;
 	VM?.rename(newname);
 });
