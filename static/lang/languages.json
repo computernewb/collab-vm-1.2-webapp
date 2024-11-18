@@ -75,6 +75,10 @@
 		"tr-tr": {
 			"languageName": "Türkçe",
 			"flag": "🇹🇷"
+		},
+		"uz-uz": {
+			"languageName": "O'zbekcha",
+			"flag": "🇺🇿"
 		}
 	},
 	"defaultLanguage": "en-us"
