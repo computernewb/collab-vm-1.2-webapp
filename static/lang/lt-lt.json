@@ -1,0 +1,102 @@
+{
+	"languageName": "Lietuvių (LT)",
+	"translatedLanguageName": "Lietuvių (LT)",
+	"flag": "🇱🇹",
+	"author": "Thany2010 (thany_gd)",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Taip",
+		"kGeneric_No": "Nr",
+		"kGeneric_Ok": "Gerai",
+		"kGeneric_Cancel": "Atšaukti",
+		"kGeneric_Send": "Siųsti",
+		"kGeneric_Understood": "Suprato",
+		"kGeneric_Username": "Vartotojo vardas",
+		"kGeneric_Password": "Slaptažodis",
+		"kGeneric_Login": "Prisijunkite",
+		"kGeneric_Register": "Registruotis",
+		"kGeneric_EMail": "Paštu",
+		"kGeneric_DateOfBirth": "Gimimo data",
+		"kGeneric_VerificationCode": "Patvirtinimo kodas",
+		"kGeneric_Verify": "Patikrinti",
+		"kGeneric_Update": "Atnaujinti",
+		"kGeneric_Logout": "Atsijungti",
+		
+		"kWelcomeModal_Header": "Sveiki atvykę į CollabVM",
+		"kWelcomeModal_Body": "<p>Prieš tęsdami susipažinkite su mūsų taisyklėmis:</p> <h3>R1. Nepažeisk įstatymų.</h3> Nenaudokite CollabVM ar CollabVM tinklo, kad pažeistumėte Jungtinių Valstijų federalinius įstatymus, Niujorko valstijos įstatymus ar tarptautinę teisę. Jei „CollabVM“ sužinos, kad per jos paslaugą buvo įvykdytas nusikaltimas, būsite nedelsiant uždraustas, o prireikus apie jūsų veiklą gali būti pranešta valdžios institucijoms.<br><br>Įstatymai įpareigoja „CollabVM“ pranešti teisėsaugos institucijoms, jei tai taps žinote, kad jos tinkle yra vaikų pornografijos arba ji perduodama.<br><br>COPPA taip pat yra vykdoma, nenaudokite CollabVM, jei esate jaunesnis nei 13 metų.<h3>R2. Neveikia DoS/DDoS įrankiai.</h3> Nenaudokite „CollabVM“ DoS / DDoS asmeniui, verslui, įmonei ar bet kam kitam. <h3>R3. Jokio šlamšto platinimo.</h3> Naudodamiesi šia paslauga nesiųskite jokių el. laiškų šlamšto ir apskritai nesiųskite šlamšto. <h3>R4. Nepiktnaudžiaukite jokiais išnaudojimais.</h3> Nepiktnaudžiaukite jokiais išnaudojimais, be to, jei matote, kad kažkas piktnaudžiauja išnaudojimais arba jums reikia apie tai pranešti, susisiekite su manimi: computernewbab@gmail.com <h3>R5. Neapsimetinėkite kitais naudotojais.</h3>Neapsimetinėti kitais CollabVM nariais. Jei būsite sugauti, būsite laikinai atjungtas ir prireikus užblokuotas. <h3>R6. Vienas balsas vienam asmeniui.</h3> Nenaudokite jokių metodų ar įrankių, kad apeitumėte balsavimo apribojimą. Vienam asmeniui leidžiama tik vienas balsas, nesvarbu. Kiekvienas, kuris bus sučiuptas tai darantis, bus uždraustas. <h3>R7. Nėra nuotolinio administravimo įrankių.</h3> Nenaudokite jokių nuotolinio administravimo įrankių (pvz., „DarkComet“, „NanoCore“, „Anydesk“, „TeamViewer“, „Orcus“ ir kt.)<h3>R8. Neapeiti CollabNet.</h3> Nebandykite apeiti CollabNet teikiamo blokavimo, ypač jei jis naudojamas siekiant pažeisti 1, 2 ar 7 taisyklę (arba paleisti kvailus per daug naudojamus dalykus). <h3>R9. Nuolat neatliekant destruktyvių veiksmų.</h3> Bet kuris vartotojas negali sunaikinti VM (padaryti ją nuolat netinkamą naudoti), įdiegti / iš naujo įdiegti operacinės sistemos (išskyrus VM7 arba VM8) arba paleisti tai atliekančių robotų. Tai apima robotus, kurie siunčia didžiulį kiekį klaviatūros / pelės įvesties (\"komplektavimas\"). <h3>R10. Jokio kriptovaliutų kasimo</h3> Bandymas išgauti kriptovaliutą virtualiojoje mašinoje sukels spyrį, o vėliau – nuolatinį draudimą, jei bandysite ir toliau. Be to, nėra taip, kad iš to uždirbsite pinigų. <h3>NSFW įspėjimas</h3> Atminkite, kad NSFW turinys leidžiamas mūsų anarchinėje VM (VM0b0t) ir yra reguliariai peržiūrimas. Be to, nors mes dedame daug pastangų, kad NSFW nepatektų į pagrindines virtualias mašinas, žmonės retkarčiais tai prasilenks.
+
+		"kSiteButtons_Home": "Pradžia",
+		"kSiteButtons_FAQ": "DUK",
+		"kSiteButtons_Rules": "Taisyklės",
+		"kSiteButtons_DarkMode": "Tamsusis režimas",
+		"kSiteButtons_LightMode": "Šviesos režimas",
+		"kSiteButtons_Languages": "Kalbos",
+		"kSiteButtons_Languages": "Kalbos",
+
+		"kVM_UsersOnlineText": "Prisijungę vartotojai:",
+
+		"kVM_TurnTimeTimer": "Posūkis baigiasi po {0} sek.",
+		"kVM_WaitingTurnTimer": "Laukiama posūkio po {0} sek.",
+		"kVM_VoteCooldownTimer": "Prieš pradėdami kitą balsavimą, palaukite {0} sek.",
+
+		"kVM_VoteForResetTitle": "Ar norite iš naujo nustatyti VM?",
+		"kVM_VoteForResetTimer": "Balsavimas baigsis po {0} sek",
+
+		"kVMButtons_TakeTurn": "Pasukite",
+		"kVMButtons_EndTurn": "Posūkio pabaiga",
+		"kVMButtons_ChangeUsername": "Keisti vartotojo vardą",
+		"kVMButtons_Keyboard": "Klaviatūra",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Balsuokite už atstatymą",
+		"kVMButtons_Screenshot": "Ekrano kopija",
+
+		"kQEMUMonitor": "QEMU monitorius",
+		"kAdminVMButtons_PassVote": "Balsuoti",
+		"kAdminVMButtons_CancelVote": "Atšaukti balsavimą",
+
+		"kAdminVMButtons_Restore": "Atkurti",
+		"kAdminVMButtons_Reboot": "Perkraukite",
+		"kAdminVMButtons_ClearTurnQueue": "Išvalyti posūkių eilę",
+		"kAdminVMButtons_BypassTurn": "Apeiti posūkį",
+		"kAdminVMButtons_IndefiniteTurn": "Neribotas posūkis",
+		"kAdminVMButtons_GhostTurnOn": "Vaiduoklių įjungimas (įjungtas)",
+		"kAdminVMButtons_GhostTurnOff": "Vaiduoklių išjungimas (išjungtas)",
+
+		"kAdminVMButtons_Ban": "Uždrausti",
+		"kAdminVMButtons_Kick": "Spyris",
+		"kAdminVMButtons_TempMute": "Laikinas nutildymas",
+		"kAdminVMButtons_IndefMute": "Neribotas nutildymas",
+		"kAdminVMButtons_Unmute": "Įjungti garsą",
+		"kAdminVMButtons_GetIP": "Gaukite IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Įveskite naują {0} naudotojo vardą:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Ar tikrai norite atkurti VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Įveskite naują vartotojo vardą arba palikite lauką tuščią, kad jums būtų priskirtas svečio vartotojo vardas",
+
+		"kError_UnexpectedDisconnection": "Jūs buvote atjungtas nuo serverio.",
+		"kError_UsernameTaken": "Šis vartotojo vardas jau užimtas",
+		"kError_UsernameInvalid": "Vartotojų vardus gali sudaryti tik skaičiai, raidės, tarpai, brūkšniai, apatiniai brūkšniai ir taškai, juos turi sudaryti nuo 3 iki 20 simbolių.",
+		"kError_UsernameBlacklisted": "Šis vartotojo vardas buvo įtrauktas į juodąjį sąrašą.",
+		"kError_IncorrectPassword": "Neteisingas slaptažodis.",
+
+		"kAccountModal_Verify": "Verify E-Mail",
+		"kAccountModal_AccountSettings": "Account Settings",
+		"kAccountModal_ResetPassword": "Reset Password",
+
+		"kAccountModal_NewPassword": "New Password",
+		"kAccountModal_ConfirmNewPassword": "Confirm New Password",
+		"kAccountModal_CurrentPassword": "Current Password",
+		"kAccountModal_ConfirmPassword": "Confirm Password",
+		"kAccountModal_HideFlag": "Hide my Country Flag",
+
+		"kMissingCaptcha": "Please fill out the captcha.",
+		"kPasswordsMustMatch": "Passwords must match.",
+		"kAccountModal_VerifyText": "We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_VerifyPasswordResetText": "We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_PasswordResetSuccess": "Your password has been changed successfully. You can now log in with your new password.",
+
+		"kNotLoggedIn": "Not Logged in"
+	}
+}
