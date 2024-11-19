@@ -76,6 +76,10 @@
 			"languageName": "Türkçe",
 			"flag": "🇹🇷"
 		}
+		"tr-tr": {
+			"languageName": "Lietuvių",
+			"flag": "🇱🇹"
+		}
 	},
 	"defaultLanguage": "en-us"
 }
