@@ -81,22 +81,22 @@
 		"kError_UsernameBlacklisted": "Šis vartotojo vardas buvo įtrauktas į juodąjį sąrašą.",
 		"kError_IncorrectPassword": "Neteisingas slaptažodis.",
 
-		"kAccountModal_Verify": "Verify E-Mail",
-		"kAccountModal_AccountSettings": "Account Settings",
-		"kAccountModal_ResetPassword": "Reset Password",
+		"kAccountModal_Verify": "Patvirtinti el",
+		"kAccountModal_AccountSettings": "Paskyros nustatymai",
+		"kAccountModal_ResetPassword": "Iš naujo nustatyti slaptažodį",
 
-		"kAccountModal_NewPassword": "New Password",
-		"kAccountModal_ConfirmNewPassword": "Confirm New Password",
-		"kAccountModal_CurrentPassword": "Current Password",
-		"kAccountModal_ConfirmPassword": "Confirm Password",
-		"kAccountModal_HideFlag": "Hide my Country Flag",
+		"kAccountModal_NewPassword": "Naujas slaptažodis",
+		"kAccountModal_ConfirmNewPassword": "Patvirtinkite naują slaptažodį",
+		"kAccountModal_CurrentPassword": "Dabartinis slaptažodis",
+		"kAccountModal_ConfirmPassword": "Patvirtinkite slaptažodį",
+		"kAccountModal_HideFlag": "Paslėpti mano šalies vėliavą",
 
-		"kMissingCaptcha": "Please fill out the captcha.",
-		"kPasswordsMustMatch": "Passwords must match.",
-		"kAccountModal_VerifyText": "We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
-		"kAccountModal_VerifyPasswordResetText": "We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
-		"kAccountModal_PasswordResetSuccess": "Your password has been changed successfully. You can now log in with your new password.",
+		"kMissingCaptcha": "Užpildykite captcha.",
+		"kPasswordsMustMatch": "Slaptažodžiai turi sutapti.",
+		"kAccountModal_VerifyText": "Išsiuntėme el. laišką adresu {0}. Norėdami patvirtinti paskyrą, įveskite 8 skaitmenų kodą iš toliau pateikto el. pašto.",
+		"kAccountModal_VerifyPasswordResetText": "Išsiuntėme el. laišką adresu {0}. Norėdami iš naujo nustatyti slaptažodį, įveskite 8 skaitmenų kodą iš toliau pateikto el. pašto.",
+		"kAccountModal_PasswordResetSuccess": "Jūsų slaptažodis buvo sėkmingai pakeistas. Dabar galite prisijungti naudodami naują slaptažodį.",
 
-		"kNotLoggedIn": "Not Logged in"
+		"kNotLoggedIn": "Neprisijungęs"
 	}
 }
