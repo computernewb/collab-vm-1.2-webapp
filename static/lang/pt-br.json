@@ -88,6 +88,7 @@
 		"kAccountModal_ConfirmNewPassword": "Confirmar nova senha",
 		"kAccountModal_CurrentPassword": "Senha atual",
 		"kAccountModal_ConfirmPassword": "Confirmar senha atual",
+		"kAccountModal_HideFlag": "Ocultar a bandeira do meu país",
 
 		"kMissingCaptcha": "Por favor preencha o captcha.",
 		"kPasswordsMustMatch": "As senhas devem corresponder.",
