@@ -86,6 +86,7 @@
 		"kAccountModal_ConfirmNewPassword": "Xác nhận mật khẩu mới",
 		"kAccountModal_CurrentPassword": "Mật khẩu hiện tại",
 		"kAccountModal_ConfirmPassword": "Xác nhận mật khẩu",
+		"kAccountModal_HideFlag": "Ẩn cờ quốc gia",
 
 		"kMissingCaptcha": "Vui lòng điền hình ảnh xác thực.",
 		"kPasswordsMustMatch": "Mật khẩu phải trùng khớp.",
