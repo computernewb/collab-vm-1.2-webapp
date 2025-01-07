@@ -964,7 +964,7 @@ async function renderAuth() {
 		element.remove();
 	}
 
-	if (auth!.info!.hcaptcha.required) {
+	if (auth!.info!.hcaptcha?.required) {
 		const hconfig = { sitekey: auth!.info!.hcaptcha.siteKey! };
 	
 		let renderHcaptcha = () => {
@@ -1001,7 +1001,7 @@ async function renderAuth() {
 		}
 	}
 	
-	if (auth!.info?.turnstile.required) {
+	if (auth!.info?.turnstile?.required) {
 		const turnstileConfig = { sitekey: auth!.info!.turnstile.siteKey! };
 	
 		let renderTurnstile = () => {
@@ -1038,7 +1038,7 @@ async function renderAuth() {
 		}
 	}
 	
-	if (auth!.info?.recaptcha.required) {
+	if (auth!.info?.recaptcha?.required) {
 		const recaptchaConfig = { sitekey: auth!.info!.recaptcha.siteKey! };
 	
 		let renderRecaptcha = () => {
@@ -1148,7 +1148,7 @@ elements.accountLoginForm.addEventListener('submit', async (e) => {
 	e.preventDefault();
 	var hcaptchaToken = undefined;
 	var hcaptchaID = undefined;
-	if (auth!.info!.hcaptcha.required) {
+	if (auth!.info!.hcaptcha?.required) {
 		hcaptchaID = elements.accountLoginCaptchaContainer.getAttribute("data-hcaptcha-widget-id")!
 		var response = hcaptcha.getResponse(hcaptchaID);
 		if (response === "") {
@@ -1162,7 +1162,7 @@ elements.accountLoginForm.addEventListener('submit', async (e) => {
 	var turnstileToken = undefined;
 	var turnstileID = undefined;
 
-	if (auth!.info!.turnstile.required) {
+	if (auth!.info!.turnstile?.required) {
 		turnstileID = elements.accountLoginTurnstileContainer.getAttribute("data-turnstile-widget-id")!
 		var response: string = turnstile.getResponse(turnstileID) || "";
 		if (response === "") {
@@ -1176,7 +1176,7 @@ elements.accountLoginForm.addEventListener('submit', async (e) => {
 	var recaptchaToken = undefined;
 	var recaptchaID = undefined;
 
-	if (auth!.info!.recaptcha.required) {
+	if (auth!.info!.recaptcha?.required) {
 		recaptchaID = parseInt(elements.accountLoginRecaptchaContainer.getAttribute("data-recaptcha-widget-id")!)
 		var response = grecaptcha.getResponse(recaptchaID);
 		if (response === "") {
@@ -1190,9 +1190,9 @@ elements.accountLoginForm.addEventListener('submit', async (e) => {
 	var username = elements.accountLoginUsername.value;
 	var password = elements.accountLoginPassword.value;
 	var result = await auth!.login(username, password, hcaptchaToken, turnstileToken, recaptchaToken);
-	if (auth!.info!.hcaptcha.required) hcaptcha.reset(hcaptchaID);
-	if (auth!.info!.turnstile.required) turnstile.reset(turnstileID);
-	if (auth!.info!.recaptcha.required) grecaptcha.reset(recaptchaID);
+	if (auth!.info!.hcaptcha?.required) hcaptcha.reset(hcaptchaID);
+	if (auth!.info!.turnstile?.required) turnstile.reset(turnstileID);
+	if (auth!.info!.recaptcha?.required) grecaptcha.reset(recaptchaID);
 	if (result.success) {
 		elements.accountLoginUsername.value = "";
 		elements.accountLoginPassword.value = "";
@@ -1216,7 +1216,7 @@ elements.accountRegisterForm.addEventListener('submit', async (e) => {
 	e.preventDefault();
 	var hcaptchaToken = undefined;
 	var hcaptchaID = undefined;
-	if (auth!.info!.hcaptcha.required) {
+	if (auth!.info!.hcaptcha?.required) {
 		hcaptchaID = elements.accountRegisterCaptchaContainer.getAttribute("data-hcaptcha-widget-id")!
 		var response = hcaptcha.getResponse(hcaptchaID);
 		if (response === "") {
@@ -1230,7 +1230,7 @@ elements.accountRegisterForm.addEventListener('submit', async (e) => {
 	var turnstileToken = undefined;
 	var turnstileID = undefined;
 
-	if (auth!.info!.turnstile.required) {
+	if (auth!.info!.turnstile?.required) {
 		turnstileID = elements.accountRegisterTurnstileContainer.getAttribute("data-turnstile-widget-id")!
 		var response: string = turnstile.getResponse(turnstileID) || "";
 		if (response === "") {
@@ -1244,7 +1244,7 @@ elements.accountRegisterForm.addEventListener('submit', async (e) => {
 	var recaptchaToken = undefined;
 	var recaptchaID = undefined;
 
-	if (auth!.info!.recaptcha.required) {
+	if (auth!.info!.recaptcha?.required) {
 		recaptchaID = parseInt(elements.accountRegisterRecaptchaContainer.getAttribute("data-recaptcha-widget-id")!)
 		var response = grecaptcha.getResponse(recaptchaID);
 		if (response === "") {
@@ -1265,9 +1265,9 @@ elements.accountRegisterForm.addEventListener('submit', async (e) => {
 		return false;
 	}
 	var result = await auth!.register(username, password, email, dob, hcaptchaToken, turnstileToken, recaptchaToken);
-	if (auth!.info!.hcaptcha.required) hcaptcha.reset(hcaptchaID);
-	if (auth!.info!.turnstile.required) turnstile.reset(turnstileID);
-	if (auth!.info!.recaptcha.required) grecaptcha.reset(recaptchaID);
+	if (auth!.info!.hcaptcha?.required) hcaptcha.reset(hcaptchaID);
+	if (auth!.info!.turnstile?.required) turnstile.reset(turnstileID);
+	if (auth!.info!.recaptcha?.required) grecaptcha.reset(recaptchaID);
 	if (result.success) {
 		elements.accountRegisterUsername.value = "";
 		elements.accountRegisterEmail.value = "";
@@ -1360,7 +1360,7 @@ elements.accountResetPasswordForm.addEventListener('submit', async e => {
 	e.preventDefault();
 	var hcaptchaToken = undefined;
 	var hcaptchaID = undefined;
-	if (auth!.info!.hcaptcha.required) {
+	if (auth!.info!.hcaptcha?.required) {
 		hcaptchaID = elements.accountResetPasswordCaptchaContainer.getAttribute("data-hcaptcha-widget-id")!
 		var response = hcaptcha.getResponse(hcaptchaID);
 		if (response === "") {
@@ -1374,7 +1374,7 @@ elements.accountResetPasswordForm.addEventListener('submit', async e => {
 	var turnstileToken = undefined;
 	var turnstileID = undefined;
 
-	if (auth!.info!.turnstile.required) {
+	if (auth!.info!.turnstile?.required) {
 		turnstileID = elements.accountResetPasswordTurnstileContainer.getAttribute("data-turnstile-widget-id")!
 		var response: string = turnstile.getResponse(turnstileID) || "";
 		if (response === "") {
@@ -1388,7 +1388,7 @@ elements.accountResetPasswordForm.addEventListener('submit', async e => {
 	var recaptchaToken = undefined;
 	var recaptchaID = undefined;
 
-	if (auth!.info!.recaptcha.required) {
+	if (auth!.info!.recaptcha?.required) {
 		recaptchaID = parseInt(elements.accountResetPasswordRecaptchaContainer.getAttribute("data-recaptcha-widget-id")!)
 		var response = grecaptcha.getResponse(recaptchaID);
 		if (response === "") {
@@ -1402,9 +1402,9 @@ elements.accountResetPasswordForm.addEventListener('submit', async e => {
 	var username = elements.accountResetPasswordUsername.value;
 	var email = elements.accountResetPasswordEmail.value;
 	var result = await auth!.sendPasswordResetEmail(username, email, hcaptchaToken, turnstileToken, recaptchaToken);
-	if (auth!.info!.hcaptcha.required) hcaptcha.reset(hcaptchaID);
-	if (auth!.info!.turnstile.required) turnstile.reset(turnstileID);
-	if (auth!.info!.recaptcha.required) grecaptcha.reset(recaptchaID);
+	if (auth!.info!.hcaptcha?.required) hcaptcha.reset(hcaptchaID);
+	if (auth!.info!.turnstile?.required) turnstile.reset(turnstileID);
+	if (auth!.info!.recaptcha?.required) grecaptcha.reset(recaptchaID);
 	if (result.success) {
 		resetPasswordUsername = username;
 		resetPasswordEmail = email;
