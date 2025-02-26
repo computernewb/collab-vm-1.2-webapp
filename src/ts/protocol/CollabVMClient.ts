@@ -303,6 +303,7 @@ export default class CollabVMClient {
 					this.users.splice(this.users.indexOf(_user), 1);
 					this.publicEmitter.emit('remuser', _user);
 				}
+				break;
 			}
 			case 'rename': {
 				let selfrename = false;
@@ -395,6 +396,7 @@ export default class CollabVMClient {
 						this.publicEmitter.emit('votecd', parseInt(msgArr[2]));
 						break;
 				}
+				break;
 			}
 			// auth stuff
 			case 'auth': {
@@ -441,6 +443,7 @@ export default class CollabVMClient {
 						break;
 					}
 				}
+				break;
 			}
 			case 'flag': {
 				for (let i = 1; i < msgArr.length; i += 2) {
