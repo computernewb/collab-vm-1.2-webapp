@@ -15,6 +15,7 @@ import CollabVMClient from '../ts/protocol/CollabVMClient';
 import VM from '../ts/protocol/VM';
 import { reactive } from 'vue';
 import { ThemeManager } from '../ts/ThemeManager';
+import { I18n } from '../ts/i18n';
 
 export default {
     data() {
@@ -22,7 +23,8 @@ export default {
             Config,
             activeVM: null as (CollabVMClient | null),
             themeManager: new ThemeManager(),
-            vms: [] as VM[]
+            vms: [] as VM[],
+            _i18n: new I18n()
         }
     },
     mounted() {
@@ -35,11 +37,23 @@ export default {
         }
         // Register hash handler
         window.addEventListener("hashchange", () => this.handleHashChange());
+        // Init i18n
+        this.TheI18n.Init();
+    },
+    provide() {
+        return {
+            i18n: this.TheI18n
+        }
     },
     components: {
         vmlist,
         vmview,
         navbar
+    },
+    computed: {
+        TheI18n() {
+            return this._i18n;
+        }
     },
     methods: {
         async openVM(vm: VM) {

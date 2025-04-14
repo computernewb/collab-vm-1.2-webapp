@@ -9,6 +9,7 @@ export function fontAwesomeLibrary() {
         // fa-solid
         faSolid.faCircleQuestion,
         faSolid.faClipboardCheck,
+        faSolid.faGlobe,
         faSolid.faHouse,
         faSolid.faMoon,
         faSolid.faPaperPlane,

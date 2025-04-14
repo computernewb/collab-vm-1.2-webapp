@@ -3,8 +3,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 import TurnStatus from '../../ts/protocol/TurnStatus';
+import { I18n } from '../../ts/i18n';
 
 export default defineComponent({
     data() {
@@ -31,12 +32,16 @@ export default defineComponent({
             }
         }
     },
+    inject: ['i18n'],
     computed: {
+        TheI18n() {
+            return (this.i18n as I18n);
+        },
         turnStatusText() {
             if (this.turnStatus.turnTime !== null) {
-                return `Turn expires in ${this.turnCounter} seconds`;
+                return computed(() => this.TheI18n.GetString('kVM_TurnTimeTimer', this.turnCounter));
             } else if (this.turnStatus.queueTime !== null) {
-                return `Waiting for turn in ${this.turnCounter} seconds`;
+                return computed(() => this.TheI18n.GetString('kVM_WaitingTurnTimer', this.turnCounter));
             } else {
                 return "";
             }

@@ -5,7 +5,7 @@
                 <tr>
                     <th class="bg-body-tertiary">
                         <FontAwesomeIcon :icon="['fa-solid', 'fa-user']"/>
-                        Users Online: <span class="vm-online-user-count">{{ users.length }}</span>
+                        <localestring :strkey="'kVM_UsersOnlineText'"/> <span class="vm-online-user-count">{{ users.length }}</span>
                     </th>                    
                 </tr>
             </thead>
@@ -25,6 +25,7 @@ import { defineComponent } from 'vue';
 import { User } from '../../ts/protocol/User';
 import { Rank } from '../../ts/protocol/Permissions';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import localestring from '../localestring.vue';
 
     export default defineComponent({
         props: {
@@ -88,7 +89,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
             }
         },
         components: {
-            FontAwesomeIcon
+            FontAwesomeIcon,
+            localestring
         }
     });
 </script>

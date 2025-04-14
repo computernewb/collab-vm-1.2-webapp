@@ -8,8 +8,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li v-for="link in navbarLinks" class="nav-item">
-                        <a :href="link.href" @click="link.onclick?.()" class="nav-link"><FontAwesomeIcon :icon="link.icon"/> <span v-html="link.text"></span></a>
+                        <a :href="link.href" @click="link.onclick?.()" class="nav-link"><FontAwesomeIcon :icon="link.icon"/> <span v-text="link.text"></span></a>
                     </li>
+                    <langdropdown/>
                 </ul>
             </div>
         </div>
@@ -17,12 +18,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, ComputedRef, defineComponent } from 'vue';
 import { ThemeManager } from '../ts/ThemeManager';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import langdropdown from './langdropdown.vue';
+import { I18n } from '../ts/i18n';
 
 interface NavbarLink {
-    text: string;
+    text: string | ComputedRef<String>;
     href: string;
     icon: string[];
     onclick?: (() => void);
@@ -42,9 +45,9 @@ export default defineComponent({
     computed: {
         navbarLinks(): Array<NavbarLink> {
             return [
-                { text: 'Home', href: '#', icon: ['fa-solid', 'fa-house'] },
-                { text: 'FAQ', href: 'https://computernewb.com/collab-vm/faq/', icon: ['fa-solid', 'fa-circle-question'] },
-                { text: 'Rules', href: 'https://computernewb.com/collab-vm/rules/', icon: ['fa-solid', 'fa-clipboard-check'] },
+                { text: computed(() => this.TheI18n.GetString('kSiteButtons_Home')), href: '#', icon: ['fa-solid', 'fa-house'] },
+                { text: computed(() => this.TheI18n.GetString('kSiteButtons_FAQ')), href: 'https://computernewb.com/collab-vm/faq/', icon: ['fa-solid', 'fa-circle-question'] },
+                { text: computed(() => this.TheI18n.GetString('kSiteButtons_Rules')), href: 'https://computernewb.com/collab-vm/rules/', icon: ['fa-solid', 'fa-clipboard-check'] },
                 { text: 'Discord', href: 'https://discord.horse/invite/collabvm', icon: ['fa-brands', 'fa-discord'] },
                 { text: 'Reddit', href: 'https://reddit.com/r/collabvm', icon: ['fa-brands', 'fa-reddit'] },
                 { text: 'Mastodon', href: 'https://fedi.computernewb.com/@collabvm', icon: ['fa-brands', 'fa-mastodon'] },
@@ -58,14 +61,19 @@ export default defineComponent({
             ];
         },
         themeToggleText() {
-            return this.themeManager.isDarkTheme ? "Light Theme" : "Dark Theme";
+            return this.themeManager.isDarkTheme ? computed(() => this.TheI18n.GetString('kSiteButtons_LightMode')) : computed(() => this.TheI18n.GetString('kSiteButtons_DarkMode'));
         },
         themeToggleIcon() {
             return this.themeManager.isDarkTheme ? "fa-sun" : "fa-moon";
+        },
+        TheI18n() {
+            return (this.i18n as I18n);
         }
     },
     components: {
-        FontAwesomeIcon
-    }
+        FontAwesomeIcon,
+        langdropdown
+    },
+    inject: ["i18n"]
 });
 </script>
