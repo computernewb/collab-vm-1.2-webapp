@@ -1,38 +1,19 @@
-#vmview {
-  display: none;
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-}
-/*.vmtile {
-  text-decoration: none;
-  color: #FFFFFF;
-  font-size: 16pt;
-  border: 2px solid #575757;
-  border-radius: 15px;
-  height: fit-content;
-  width: fit-content;
-  display: block;
-  padding: 4px;
-}*/
-#vmDisplay, #btns {
+.vm-display, .vm-btns {
   text-align: center;
   display: block;
   margin-bottom: 10px;
 }
 
-#vmlist > div.row > div {
+.vm-card-col {
   padding-bottom: 10px;
 }
-#vmlist div.col-md-3 > div.card:hover {
+
+.vm-card:hover {
   cursor: pointer;
   border-color: rgb(8, 121, 250);
 }
 
-.vmtile > img {
-  margin-bottom: 2px;
-}
-
-.chat-table, .username-table {
+.chat-table, .vm-username-table {
   overflow-y: auto;
   border: 1px solid #575757;
 }
@@ -40,15 +21,15 @@
   height: 30vh;
 }
 
-.username-table {
+.vm-username-table {
   max-height: 30vh;
 }
-.username-table > table > thead {
+.vm-username-table > table > thead {
   position: sticky;
   top: 0;
 }
 
-#turnstatus {
+.vm-turn-status {
   text-align: center;
 }
 #voteResetPanel {
@@ -67,14 +48,6 @@
   -webkit-box-shadow: 0 0 9px 0 rgba(242,255,63,.75)
 }
 
-#staffbtns {
-  display: none;
-}
-
-#staffbtns > button {
-  display: none;
-}
-
 #qemuMonitorOutput {
   height: 180px;
 }
@@ -87,69 +60,69 @@
   display: none;
 }
 
-tr.user-admin .userlist-username, .chat-username-admin, .username-admin {
+.user-admin .vm-username-table-username, .chat-username-admin, .username-admin {
   color: #FF0000 !important;
 }
 
-tr.user-moderator .userlist-username, .chat-username-moderator, .username-moderator {
+.user-moderator .vm-username-table-username, .chat-username-moderator, .username-moderator {
   color: #00FF00 !important;
 }
 
 html[data-bs-theme="dark"] {
-  tr.user-unregistered .userlist-username, .chat-username-unregistered, .username-unregistered {
+  .user-unregistered .vm-username-table-username, .chat-username-unregistered, .username-unregistered {
     color: #b1b1b1 !important;
   }
   
-  tr.user-registered .userlist-username, .chat-username-registered, .username-registered {
+  .user-registered .vm-username-table-username, .chat-username-registered, .username-registered {
     color: #FFFFFF !important;
   }
 
-  tr.user-registered.user-turn .userlist-username, tr.user-registered.user-waiting .userlist-username {
+  .user-registered.user-turn .vm-username-table-username, .user-registered.user-waiting .vm-username-table-username {
     color: #000000 !important;
     --bs-table-color: #000000 !important;
   }
   
-  tr.user-unregistered.user-turn .userlist-username, tr.user-unregistered.user-waiting .userlist-username {
+  .user-unregistered.user-turn .vm-username-table-username, .user-unregistered.user-waiting .vm-username-table-username {
     color: #585858 !important;
     --bs-table-color: #585858 !important;
   }
 }
 
 html[data-bs-theme="light"] {
-  tr.user-unregistered .userlist-username, .chat-username-unregistered, .username-unregistered {
+  .user-unregistered .vm-username-table-username, .chat-username-unregistered, .username-unregistered {
     color: #6b6b6b !important;
   }
   
-  tr.user-registered .userlist-username, .chat-username-registered, .username-registered {
+  .user-registered .vm-username-table-username, .chat-username-registered, .username-registered {
     color: #000 !important;
   }
 }
 
-tr.user-turn > td {
+.user-turn {
   background-color: #cfe2ff !important;
   --bs-table-bg-state: #cfe2ff !important;
   color: #000000;
   --bs-table-color: #000000;
 }
 
-tr.user-turn:hover, tr.user-turn > td:hover {
+.user-turn:hover {
   background-color: #bacbe6 !important;
   --bs-table-bg-state: #bacbe6 !important;
 }
 
-tr.user-waiting > td {
+.user-waiting {
   background-color: #fff3cd !important;
   --bs-table-bg-state: #fff3cd !important;
   color: #000000;
   --bs-table-color: #000000;
 }
 
-.tr.user-waiting:hover, tr.user-waiting > td:hover {
+.user-waiting:hover {
   background-color: #ece1be !important;
   --bs-table-bg-state: #ece1be !important;
 }
 
-.user-current .userlist-username {
+.user-current .vm-username-table-username {
   font-style: italic;
 }
 
