@@ -2,17 +2,8 @@
     <div class="vm-display" :class="displayClass" ref="display"></div>
     <turncounter ref="turncounter"/>
     <!-- vtr -->
-    <div class="vm-btns">
-        <div class="vm-user-btns">
-
-        </div>
-        <div class="vm-staff-btns">
-
-        </div>
-        <div class="vm-osk-container">
-
-        </div>
-    </div>
+    <vmbtns :vm="vm" :turn-state="turnState"/>
+    <div class="vm-osk-container"></div>
     <div class="row container-fluid">
         <div class="col-md-4">
             <vmusertable :users="vm.users" />
@@ -30,6 +21,7 @@ import turncounter from './turncounter.vue';
 import vmchat from './vmchat.vue';
 import CollabVMClient from '../../ts/protocol/CollabVMClient';
 import { TurnState } from '../../ts/protocol/TurnStatus';
+import vmbtns from './vmbtns.vue';
 export default defineComponent({
     props: {
         vm: {
@@ -63,7 +55,8 @@ export default defineComponent({
     components: {
         vmusertable,
         vmchat,
-        turncounter
+        turncounter,
+        vmbtns
     },
     computed: {
         username() {
