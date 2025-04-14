@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="vm-card-col col-sm-5 col-md-3" v-for="vm in vms">
-            <vmlistcard :vm="vm" @click="$emit('vm', vm)" />
+            <vmlistcard :vm="vm"/>
         </div>
     </div>
 </template>
@@ -17,11 +17,10 @@ export default defineComponent({
         serverAddresses: {
             type: Array<string>,
             required: true
-        }
-    },
-    data() {
-        return {
-            vms: [] as VM[]
+        },
+        vms: {
+            type: Array<VM>,
+            required: true
         }
     },
     components: {
@@ -43,7 +42,12 @@ export default defineComponent({
             }
             // Add new VMs
             this.vms.push(...vms);
+            // Sort
+            this.vms.sort((a, b) => a.id.localeCompare(b.id));
+            // emit event
+            this.$emit("listUpdated");
         }
-    }
+    },
+    emits: ["listUpdated"]
 });
 </script>

@@ -15,11 +15,14 @@
     <div class="input-group">
         <span class="input-group-text vm-username">{{ username }}</span>
         <input type="text" class="form-control chat-input" v-model="chatInput" @keypress="(p) => (p.key === 'Enter') && sendChat()"/>
-        <button class="btn btn-primary" type="button" @click="sendChat()" >Send</button>
+        <button class="btn btn-primary" type="button" @click="sendChat()" >
+            <FontAwesomeIcon :icon="['fa-solid', 'fa-paper-plane']" aria-label="Send"/>
+        </button>
     </div>
 </template>
 
 <script lang="ts">
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { defineComponent, nextTick } from 'vue';
 
 export default defineComponent({
@@ -51,6 +54,9 @@ export default defineComponent({
             this.$emit("chat", this.chatInput);
             this.chatInput = "";
         }
+    },
+    components: {
+        FontAwesomeIcon
     },
     emits: ["chat"]
 })

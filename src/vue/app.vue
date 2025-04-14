@@ -1,7 +1,7 @@
 <template>
     <navbar site-name="CollabVM" :theme-manager="themeManager" />
     <div class="container-fluid">
-        <vmlist v-if="activeVM === null" :server-addresses="Config.ServerAddresses" @vm="openVM" />
+        <vmlist v-if="activeVM === null" :server-addresses="Config.ServerAddresses" :vms="vms" @list-updated="handleHashChange" />
         <vmview v-else :vm="getVM()" />
     </div>
 </template>
@@ -21,7 +21,8 @@ export default {
         return {
             Config,
             activeVM: null as (CollabVMClient | null),
-            themeManager: new ThemeManager()
+            themeManager: new ThemeManager(),
+            vms: [] as VM[]
         }
     },
     mounted() {
@@ -32,6 +33,8 @@ export default {
                 return self.activeVM
             }
         }
+        // Register hash handler
+        window.addEventListener("hashchange", () => this.handleHashChange());
     },
     components: {
         vmlist,
@@ -51,6 +54,22 @@ export default {
         },
         getVM() {
             return this.activeVM as CollabVMClient;
+        },
+        handleHashChange() {
+            let hash = window.location.hash.substring(1);
+            if (!hash) {
+                this.activeVM = null;
+                return;
+            }
+            // Check if VM exists
+            let vm = this.vms.find(v => v.id === hash);
+            if (!vm) {
+                this.activeVM = null;
+                return;
+            }
+
+            // Open VM
+            this.openVM(vm);
         }
     }
 }

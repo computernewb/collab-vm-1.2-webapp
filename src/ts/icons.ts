@@ -11,6 +11,7 @@ export function fontAwesomeLibrary() {
         faSolid.faClipboardCheck,
         faSolid.faHouse,
         faSolid.faMoon,
+        faSolid.faPaperPlane,
         faSolid.faSun,
         faSolid.faUser,
         // fa-brands

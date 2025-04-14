@@ -4,6 +4,7 @@
             <thead>
                 <tr>
                     <th class="bg-body-tertiary">
+                        <FontAwesomeIcon :icon="['fa-solid', 'fa-user']"/>
                         Users Online: <span class="vm-online-user-count">{{ users.length }}</span>
                     </th>                    
                 </tr>
@@ -23,6 +24,7 @@
 import { defineComponent } from 'vue';
 import { User } from '../../ts/protocol/User';
 import { Rank } from '../../ts/protocol/Permissions';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
     export default defineComponent({
         props: {
@@ -84,6 +86,9 @@ import { Rank } from '../../ts/protocol/Permissions';
                     return 0;
                 })
             }
+        },
+        components: {
+            FontAwesomeIcon
         }
     });
 </script>

@@ -1,10 +1,10 @@
 <template>
-    <div class="card vm-card" :data-cvm-node="vm.id">
+    <a class="card vm-card" :data-cvm-node="vm.id" :href="`#${vm.id}`">
         <img class="card-img-top" v-bind:src="vm.thumbnailSrc" />
         <div class="card-body">
             <h5 v-html="vm.displayName"></h5>
         </div>
-    </div>
+    </a>
 </template>
 
 <script lang="ts">
