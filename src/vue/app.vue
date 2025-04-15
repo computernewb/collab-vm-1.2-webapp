@@ -3,13 +3,16 @@
     <div class="container-fluid">
         <vmlist v-if="activeVM === null" :server-addresses="Config.ServerAddresses" :vms="vms" @list-updated="handleHashChange" />
         <vmview v-else :vm="getVM()" />
+        <welcomemodal ref="welcomemodal" @understood="welcomeModalDone"/>
     </div>
+    <!-- modals -->
 </template>
 
 <script lang="ts">
 import vmlist from './vmlist/vmlist.vue';
 import vmview from './vmview/vmview.vue';
 import navbar from './navbar.vue';
+import welcomemodal from './welcomemodal.vue';
 import Config from "../../config.json";
 import CollabVMClient from '../ts/protocol/CollabVMClient';
 import VM from '../ts/protocol/VM';
@@ -39,6 +42,10 @@ export default {
         window.addEventListener("hashchange", () => this.handleHashChange());
         // Init i18n
         this.TheI18n.Init();
+        // Welcome modal
+        if (window.localStorage.getItem(Config.WelcomeModalLocalStorageKey) !== '1') {
+            this.welcomeModal.show();
+        }
     },
     provide() {
         return {
@@ -48,11 +55,15 @@ export default {
     components: {
         vmlist,
         vmview,
-        navbar
+        navbar,
+        welcomemodal
     },
     computed: {
         TheI18n() {
             return this._i18n;
+        },
+        welcomeModal() {
+            return (this.$refs.welcomemodal as typeof welcomemodal.methods)!;
         }
     },
     methods: {
@@ -84,6 +95,9 @@ export default {
 
             // Open VM
             this.openVM(vm);
+        },
+        welcomeModalDone() {
+            window.localStorage.setItem(Config.WelcomeModalLocalStorageKey, '1');
         }
     }
 }
