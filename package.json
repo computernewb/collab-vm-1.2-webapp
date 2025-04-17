@@ -1,7 +1,7 @@
 {
-  "name": "cvmwebapp",
+  "name": "collab-vm-1.2-webapp",
   "version": "2.0.0",
-  "description": "kill me",
+  "description": "Official webapp for the CollabVM 1.2.x protocol",
   "private": true,
   "scripts": {
     "build": "parcel build --no-source-maps --dist-dir dist --public-url '.' src/html/index.html",
@@ -14,17 +14,25 @@
   "author": "Elijah R",
   "license": "GPL-3.0",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/vue-fontawesome": "^3.0.8",
     "@popperjs/core": "^2.11.8",
+    "@twemoji/api": "^15.1.0",
     "bootstrap": "^5.3.3",
     "dayjs": "^1.11.13",
     "dompurify": "^3.2.4",
     "msgpackr": "^1.11.2",
     "nanoevents": "^9.1.0",
-    "simple-keyboard": "^3.8.14"
+    "simple-keyboard": "^3.8.14",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@hcaptcha/types": "^1.0.4",
+    "@parcel/transformer-sass": "2.12.0",
+    "@parcel/transformer-vue": "2.12.0",
     "@types/bootstrap": "^5.2.10",
     "@types/cloudflare-turnstile": "^0.2.2",
     "@types/dompurify": "^3.0.5",

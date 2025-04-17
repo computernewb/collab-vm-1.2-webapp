@@ -1,0 +1,149 @@
+.osk-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	max-width: 1024px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	border-radius: 5px;
+}
+
+.simple-keyboard.hg-theme-default {
+	display: inline-block;
+}
+
+.simple-keyboard {
+	&.osk-main {
+		max-width: 640px;
+		background: none;
+		.hg-row:first-child {
+			margin-bottom: 8.51px; /* wtf? */
+		}
+	}
+
+	&.osk-arrows {
+		align-self: flex-end;
+		background: none;
+		.hg-row {
+			justify-content: center;
+		}
+		.hg-button {
+			width: 50px;
+			flex-grow: 0 !important;
+			justify-content: center !important;
+			display: flex !important;
+			align-items: center !important;
+		}
+	}
+
+	&.osk-control {
+		background: none;
+		.hg-row:first-child {
+			margin-bottom: 8.51px;
+		}
+		.hg-button {
+			width: 50px;
+			flex-grow: 0 !important;
+			justify-content: center !important;
+			display: flex !important;
+			align-items: center !important;
+		}
+	}
+
+	&.osk-numpad {
+		background: none;
+		width: 160px;
+		.hg-button {
+			width: 50px;
+			justify-content: center;
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	&.osk-numpadEnd {
+		width: 50px;
+		background: none;
+		margin: 0;
+		padding: 5px 5px 5px 0;
+		.hg-button {
+			align-items: center;
+			justify-content: center;
+			display: flex;
+			&.hg-standardBtn.hg-button-plus {
+				height: 85px;
+			}
+			&.hg-button-enter {
+				height: 85px;
+			}
+		}
+	}
+
+	.hg-button {
+		&.selectedButton {
+			background: rgba(5, 25, 70, 0.53);
+			color: white;
+		}
+		&.emptySpace {
+			pointer-events: none;
+			background: none;
+			border: none;
+			box-shadow: none;
+		}
+		&.hg-functionBtn.hg-button-space {
+			width: 350px;
+		}
+		&.hg-button-depressed {
+			background-color: #1c4995 !important;
+		}
+	}
+
+	&.hg-theme-default {
+		.hg-button.hg-selectedButton {
+			background: rgba(5, 25, 70, 0.53);
+			color: white;
+		}
+	}
+
+	&.cvmDark {
+		.hg-button {
+			border-bottom: none;
+			background: rgba(0, 0, 0, 0.5);
+			color: white;
+		}
+
+		.hg-button:active {
+			background: #1c4995;
+			color: white;
+		}
+
+		+ .simple-keyboard-preview {
+			background: #1c4995;
+		}
+	}
+
+	&.cvmDisabled .hg-button {
+		border-bottom: none;
+		pointer-events: none;
+		background: gray;
+		color: white;
+	}
+}
+
+.controlArrows {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-flow: column;
+}
+
+.numPad {
+	display: flex;
+	align-items: flex-end;
+}
+
+@media screen and (max-width: 640px) {
+	.hg-button:not(:last-child) {
+		margin-right: 1px !important;
+	}
+}

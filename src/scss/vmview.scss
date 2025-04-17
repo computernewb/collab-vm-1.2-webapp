@@ -1,0 +1,113 @@
+@use './colors';
+
+// General
+
+.vm-display,
+.vm-btns {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.vm-display,
+.vm-btns,
+.vm-turn-status,
+.vote-reset-panel {
+	text-align: center;
+}
+
+// Turn state
+.vm-display-turn > canvas {
+	box-shadow: 0 0 9px 0 colors.$color_has_turn_outline;
+}
+
+.vm-display-waiting > canvas {
+	box-shadow: 0 0 9px 0 colors.$color_waiting_turn_outline;
+}
+
+.user-turn {
+	background-color: colors.$color_has_turn_user_bg !important;
+	--bs-table-bg: colors.$color_has_turn_user_bg !important;
+	--bs-table-bg-state: colors.$color_has_turn_user_bg !important;
+
+	color: colors.$color_has_turn_user_fg;
+	--bs-table-color: colors.$color_has_turn_user_fg;
+
+	&:hover {
+		background-color: colors.$color_has_turn_hover !important;
+		--bs-table-bg: colors.$color_has_turn_hover !important;
+		--bs-table-bg-state: colors.$color_has_turn_hover !important;
+	}
+}
+
+.user-waiting {
+	background-color: colors.$color_waiting_turn_user_bg !important;
+	--bs-table-bg: colors.$color_waiting_turn_user_bg !important;
+	--bs-table-bg-state: colors.$color_waiting_turn_user_bg !important;
+
+	color: colors.$color_waiting_turn_user_fg;
+	--bs-table-color: colors.$color_waiting_turn_user_fg;
+
+	&:hover {
+		background-color: colors.$color_waiting_turn_hover !important;
+		--bs-table-bg: colors.$color_waiting_turn_hover !important;
+		--bs-table-bg-state: colors.$color_waiting_turn_hover !important;
+	}
+}
+
+// Chat and username tables
+.chat-table,
+.vm-username-table {
+	overflow-y: auto;
+	border: 1px solid #575757;
+}
+
+.chat-table {
+	height: 30vh;
+}
+
+.vm-username-table {
+	max-height: 30vh;
+
+	table > thead {
+		position: sticky;
+		top: 0;
+	}
+}
+
+.chat-message-username::after {
+	content: '▸ ';
+}
+
+.user-current {
+	font-style: italic;
+}
+
+// Rank colors
+.user-unregistered {
+	color: colors.$color_unregistered !important;
+
+	&.user-turn {
+		color: colors.$color_unregistered_turn_active !important;
+	}
+}
+
+.user-registered {
+	color: colors.$color_registered !important;
+
+	&.user-turn {
+		color: colors.$color_registered_turn_active !important;
+	}
+}
+
+.user-moderator {
+	color: colors.$color_moderator !important;
+}
+
+.user-admin {
+	color: colors.$color_admin !important;
+}
+
+// Admin
+.qemu-monitor-output {
+	height: 180px;
+}

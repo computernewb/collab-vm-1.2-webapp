@@ -1,0 +1,32 @@
+// Misc
+$color_vm_card_outline_hover: #0879fa;
+$color_nsfw_warning: #ff0000;
+
+// Rank
+$color_admin: #ff0000;
+$color_moderator: #00ff00;
+
+$color_unregistered: #b1b1b1;
+$color_registered: #ffffff;
+$color_unregistered_turn_active: #585858;
+$color_registered_turn_active: #000000;
+
+html[data-bs-theme='light'] {
+	$color_unregistered: #6b6b6b;
+	$color_registered: #000000;
+	$color_unregistered_turn_active: $color_unregistered;
+	$color_registered_turn_active: $color_registered;
+}
+
+// Turn state
+$color_has_turn_outline: #2dd5ffbf;
+$color_waiting_turn_outline: #f2ff3fbf;
+
+$color_has_turn_hover: #bacbe6;
+$color_waiting_turn_hover: #ece1be;
+
+$color_has_turn_user_bg: #cfe2ff;
+$color_has_turn_user_fg: #000000;
+
+$color_waiting_turn_user_bg: #fff3cd;
+$color_waiting_turn_user_fg: #000000;

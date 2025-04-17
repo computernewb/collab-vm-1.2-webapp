@@ -10,3 +10,9 @@ export default interface TurnStatus {
 	// Amount of time until the user gets their turn. Null unless the user is in the queue
 	queueTime: number | null;
 }
+
+export enum TurnState {
+	None,
+	Waiting,
+	HasTurn
+}

@@ -5,5 +5,5 @@ export default interface VM {
 
 	displayName: string;
 
-	thumbnail: HTMLImageElement;
+	thumbnailSrc: string;
 }

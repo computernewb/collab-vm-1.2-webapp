@@ -1,0 +1,25 @@
+@use './colors';
+
+.vm-card-col {
+	padding-bottom: 10px;
+}
+
+.vm-card {
+	text-decoration: none;
+}
+
+.vm-card:hover {
+	cursor: pointer;
+	border-color: colors.$color_vm_card_outline_hover;
+}
+
+.cvm-nsfw {
+	& img {
+		filter: blur(40px) !important;
+	}
+
+	& h5::before {
+		content: '[NSFW] ';
+		color: #ff0000;
+	}
+}
