@@ -1,0 +1,101 @@
+{
+	"languageName": "HaelVerse (PUFFARTZ NVKE!) LANGUAGE",
+	"translatedLanguageName": "HaelVerse LANGUAGE",
+	"flag": "haelsaturn",
+	"author": "Hael Saturn",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "KalebVM",
+		"kGeneric_Yes": "Yes",
+		"kGeneric_No": "No",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Cancel",
+		"kGeneric_Send": "Send",
+		"kGeneric_Understood": "Understood",
+		"kGeneric_Username": "Username",
+		"kGeneric_Password": "Password",
+		"kGeneric_Login": "Join Team C00lkidd",
+		"kGeneric_Register": "Register",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Date of Birth",
+		"kGeneric_VerificationCode": "Verification Code",
+		"kGeneric_Verify": "Verify",
+		"kGeneric_Update": "Update",
+		"kGeneric_Logout": "Log out",
+		
+		"kWelcomeModal_Header": "Welcome to KalebVM",
+		"kWelcomeModal_Body": "<h1>There are no rules :3</h1><h3>THIS JUST IN: JOHNATHAN DONATHAN HAS FINALLY ESCAPED DEVELOPMENT HELL!!!!!!! 🔥🔥🔥 And, i’ve decided i won’t make TF of Eternal Sugar Cookie right away if that’s okay with you guys. What’s wrong with being a little late?</h3>",
+
+		"kSiteButtons_Home": "Home",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Rules",
+		"kSiteButtons_DarkMode": "Dark Mode",
+		"kSiteButtons_LightMode": "Light Mode",
+		"kSiteButtons_Languages": "International :3",
+
+		"kVM_UsersOnlineText": "Users Online:",
+
+		"kVM_TurnTimeTimer": "Exploding in {0}... /jk /silly /pos",
+		"kVM_WaitingTurnTimer": "Turning into a fox in {0} seconds...",
+		"kVM_VoteCooldownTimer": "Please wait {0} seconds before TFing another individual.",
+
+		"kVM_VoteForResetTitle": "Do you want to reset the VM?",
+		"kVM_VoteForResetTimer": "Individual reverting to their original form in {0} seconds...",
+
+		"kVMButtons_TakeTurn": "BOMB THE WHITE HOUSE!!!",
+		"kVMButtons_EndTurn": "DEFUSE!!!",
+		"kVMButtons_ChangeUsername": "Change Username",
+		"kVMButtons_Keyboard": "Keyboard",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "TF individual (Vote for FUCKING RESET!)",
+		"kVMButtons_Screenshot": "Screenshot",
+
+		"kQEMUMonitor": "QEMU Monitor",
+		"kAdminVMButtons_PassVote": "Pass Vote",
+		"kAdminVMButtons_CancelVote": "Cancel Vote",
+
+		"kAdminVMButtons_Restore": "Restore",
+		"kAdminVMButtons_Reboot": "Reboot",
+		"kAdminVMButtons_ClearTurnQueue": "Clear Turn Queue",
+		"kAdminVMButtons_BypassTurn": "Bypass Turn",
+		"kAdminVMButtons_IndefiniteTurn": "Indefinite Turn",
+		"kAdminVMButtons_GhostTurnOn": "Ghost Turn (On)",
+		"kAdminVMButtons_GhostTurnOff": "Ghost Turn (Off)",
+
+		"kAdminVMButtons_Ban": "Ban",
+		"kAdminVMButtons_Kick": "Kick",
+		"kAdminVMButtons_TempMute": "Temporary Mute",
+		"kAdminVMButtons_IndefMute": "Indefinite Mute",
+		"kAdminVMButtons_Unmute": "Unmute",
+		"kAdminVMButtons_GetIP": "Get IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Enter new username for {0} to stalk people:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Are you sure you want to restore the VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Enter a new username, or leave the field blank to be assigned a guest username",
+
+		"kError_UnexpectedDisconnection": "You have been TURNED into a cookie :3",
+		"kError_UsernameTaken": "That username is already taken",
+		"kError_UsernameInvalid": "Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
+		"kError_UsernameBlacklisted": "That username has been blacklisted.",
+		"kError_IncorrectPassword": "Incorrect password.",
+
+		"kAccountModal_Verify": "Verify E-Mail",
+		"kAccountModal_AccountSettings": "Account Settings",
+		"kAccountModal_ResetPassword": "Reset Password",
+
+		"kAccountModal_NewPassword": "New Password",
+		"kAccountModal_ConfirmNewPassword": "Confirm New Password",
+		"kAccountModal_CurrentPassword": "Current Password",
+		"kAccountModal_ConfirmPassword": "Confirm Password",
+		"kAccountModal_HideFlag": "Hide my Country Flag (hael can still go after you tho)",
+
+		"kMissingCaptcha": "Please fill out the captcha.",
+		"kPasswordsMustMatch": "Passwords must match.",
+		"kAccountModal_VerifyText": "We sent an E-Mail to {0}. To verify your account, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_VerifyPasswordResetText": "We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.",
+		"kAccountModal_PasswordResetSuccess": "Your password has been changed successfully. You can now join team C00LKIDD.",
+
+		"kNotLoggedIn": "Join Team C00lkidd Today!"
+	}
+}
