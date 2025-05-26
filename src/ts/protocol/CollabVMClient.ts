@@ -68,8 +68,8 @@ export default class CollabVMClient {
 	private ctx: CanvasRenderingContext2D;
 	private url: string;
 	private connectedToVM: boolean = false;
-	private users: User[] = [];
-	private username: string | null = null;
+	users: User[] = [];
+	username: string | null = null;
 	private mouse: Mouse = new Mouse();
 	private rank: Rank = Rank.Unregistered;
 	private perms: Permissions = new Permissions(0);
@@ -205,7 +205,7 @@ export default class CollabVMClient {
 	private onBinaryMessage(data: ArrayBuffer) {
 		let msg: CollabVMProtocolMessage;
 		try {
-			msg = msgpack.decode(data);
+			msg = msgpack.decode(new Uint8Array(data));
 		} catch {
 			console.error("Server sent invalid binary message");
 			return;
@@ -523,13 +523,11 @@ export default class CollabVMClient {
 				u();
 				let vms: VM[] = [];
 				for (let i = 0; i < list.length; i += 3) {
-					let th = new Image();
-					th.src = 'data:image/jpeg;base64,' + list[i + 2];
 					vms.push({
 						url: this.url,
 						id: list[i],
 						displayName: list[i + 1],
-						thumbnail: th
+						thumbnailSrc: 'data:image/jpeg;base64,' + list[i + 2]
 					});
 				}
 				res(vms);

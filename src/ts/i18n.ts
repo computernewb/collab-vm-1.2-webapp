@@ -4,106 +4,105 @@ import { Emitter, Unsubscribe, createNanoEvents } from 'nanoevents';
 import Config from '../../config.json';
 
 /// All string keys.
-export enum I18nStringKey {
+export type I18nStringKey =
 	// Generic things
-	kGeneric_CollabVM = 'kGeneric_CollabVM',
-	kGeneric_Yes = 'kGeneric_Yes',
-	kGeneric_No = 'kGeneric_No',
-	kGeneric_Ok = 'kGeneric_Ok',
-	kGeneric_Cancel = 'kGeneric_Cancel',
-	kGeneric_Send = 'kGeneric_Send',
-	kGeneric_Understood = 'kGeneric_Understood',
-	kGeneric_Username = 'kGeneric_Username',
-	kGeneric_Password = 'kGeneric_Password',
-	kGeneric_Login = 'kGeneric_Login',
-	kGeneric_Register = 'kGeneric_Register',
-	kGeneric_EMail = 'kGeneric_EMail',
-	kGeneric_DateOfBirth = 'kGeneric_DateOfBirth',
-	kGeneric_VerificationCode = 'kGeneric_VerificationCode',
-	kGeneric_Verify = 'kGeneric_Verify',
-	kGeneric_Update = 'kGeneric_Update',
-	kGeneric_Logout = 'kGeneric_Logout',
+	'kGeneric_CollabVM' |
+	'kGeneric_Yes' |
+	'kGeneric_No' |
+	'kGeneric_Ok' |
+	'kGeneric_Cancel' |
+	'kGeneric_Send' |
+	'kGeneric_Understood' |
+	'kGeneric_Username' |
+	'kGeneric_Password' |
+	'kGeneric_Login' |
+	'kGeneric_Register' |
+	'kGeneric_EMail' |
+	'kGeneric_DateOfBirth' |
+	'kGeneric_VerificationCode' |
+	'kGeneric_Verify' |
+	'kGeneric_Update' |
+	'kGeneric_Logout' |
 
-	kWelcomeModal_Header = 'kWelcomeModal_Header',
-	kWelcomeModal_Body = 'kWelcomeModal_Body',
+	'kWelcomeModal_Header' |
+	'kWelcomeModal_Body' |
 
-	kSiteButtons_Home = 'kSiteButtons_Home',
-	kSiteButtons_FAQ = 'kSiteButtons_FAQ',
-	kSiteButtons_Rules = 'kSiteButtons_Rules',
-	kSiteButtons_DarkMode = 'kSiteButtons_DarkMode',
-	kSiteButtons_LightMode = 'kSiteButtons_LightMode',
-	kSiteButtons_Languages = 'kSiteButtons_Languages',
+	'kSiteButtons_Home' |
+	'kSiteButtons_FAQ' |
+	'kSiteButtons_Rules' |
+	'kSiteButtons_DarkMode' |
+	'kSiteButtons_LightMode' |
+	'kSiteButtons_Languages' |
 
-	kVM_UsersOnlineText = 'kVM_UsersOnlineText',
+	'kVM_UsersOnlineText' |
 
-	kVM_TurnTimeTimer = 'kVM_TurnTimeTimer',
-	kVM_WaitingTurnTimer = 'kVM_WaitingTurnTimer',
-	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
+	'kVM_TurnTimeTimer' |
+	'kVM_WaitingTurnTimer' |
+	'kVM_VoteCooldownTimer' |
 
-	kVM_VoteForResetTitle = 'kVM_VoteForResetTitle',
-	kVM_VoteForResetTimer = 'kVM_VoteForResetTimer',
+	'kVM_VoteForResetTitle' |
+	'kVM_VoteForResetTimer' |
 
-	kVMButtons_TakeTurn = 'kVMButtons_TakeTurn',
-	kVMButtons_EndTurn = 'kVMButtons_EndTurn',
-	kVMButtons_ChangeUsername = 'kVMButtons_ChangeUsername',
-	kVMButtons_Keyboard = 'kVMButtons_Keyboard',
-	KVMButtons_CtrlAltDel = 'KVMButtons_CtrlAltDel',
+	'kVMButtons_TakeTurn' |
+	'kVMButtons_EndTurn' |
+	'kVMButtons_ChangeUsername' |
+	'kVMButtons_Keyboard' |
+	'KVMButtons_CtrlAltDel' |
 
-	kVMButtons_VoteForReset = 'kVMButtons_VoteForReset',
-	kVMButtons_Screenshot = 'kVMButtons_Screenshot',
+	'kVMButtons_VoteForReset' |
+	'kVMButtons_Screenshot' |
 
 	// Admin VM buttons
-	kQEMUMonitor = 'kQEMUMonitor',
-	kAdminVMButtons_PassVote = 'kAdminVMButtons_PassVote',
-	kAdminVMButtons_CancelVote = 'kAdminVMButtons_CancelVote',
+	'kQEMUMonitor' |
+	'kAdminVMButtons_PassVote' |
+	'kAdminVMButtons_CancelVote' |
 
-	kAdminVMButtons_Restore = 'kAdminVMButtons_Restore',
-	kAdminVMButtons_Reboot = 'kAdminVMButtons_Reboot',
-	kAdminVMButtons_ClearTurnQueue = 'kAdminVMButtons_ClearTurnQueue',
-	kAdminVMButtons_BypassTurn = 'kAdminVMButtons_BypassTurn',
-	kAdminVMButtons_IndefiniteTurn = 'kAdminVMButtons_IndefiniteTurn',
-	kAdminVMButtons_GhostTurnOn = 'kAdminVMButtons_GhostTurnOn',
-	kAdminVMButtons_GhostTurnOff = 'kAdminVMButtons_GhostTurnOff',
+	'kAdminVMButtons_Restore' |
+	'kAdminVMButtons_Reboot' |
+	'kAdminVMButtons_ClearTurnQueue' |
+	'kAdminVMButtons_BypassTurn' |
+	'kAdminVMButtons_IndefiniteTurn' |
+	'kAdminVMButtons_GhostTurnOn' |
+	'kAdminVMButtons_GhostTurnOff' |
 
-	kAdminVMButtons_Ban = 'kAdminVMButtons_Ban',
-	kAdminVMButtons_Kick = 'kAdminVMButtons_Kick',
-	kAdminVMButtons_TempMute = 'kAdminVMButtons_TempMute',
-	kAdminVMButtons_IndefMute = 'kAdminVMButtons_IndefMute',
-	kAdminVMButtons_Unmute = 'kAdminVMButtons_Unmute',
-	kAdminVMButtons_GetIP = 'kAdminVMButtons_GetIP',
+	'kAdminVMButtons_Ban' |
+	'kAdminVMButtons_Kick' |
+	'kAdminVMButtons_TempMute' |
+	'kAdminVMButtons_IndefMute' |
+	'kAdminVMButtons_Unmute' |
+	'kAdminVMButtons_GetIP' |
 
 	// prompts
-	kVMPrompts_AdminChangeUsernamePrompt = 'kVMPrompts_AdminChangeUsernamePrompt',
-	kVMPrompts_AdminRestoreVMPrompt = 'kVMPrompts_AdminRestoreVMPrompt',
-	kVMPrompts_EnterNewUsernamePrompt = 'kVMPrompts_EnterNewUsernamePrompt',
+	'kVMPrompts_AdminChangeUsernamePrompt' |
+	'kVMPrompts_AdminRestoreVMPrompt' |
+	'kVMPrompts_EnterNewUsernamePrompt' |
 
 	// error messages
-	kError_UnexpectedDisconnection = 'kError_UnexpectedDisconnection',
+	'kError_UnexpectedDisconnection' |
 
-	kError_UsernameTaken = 'kError_UsernameTaken',
-	kError_UsernameInvalid = 'kError_UsernameInvalid',
-	kError_UsernameBlacklisted = 'kError_UsernameBlacklisted',
-	kError_IncorrectPassword = 'kError_IncorrectPassword',
+	'kError_UsernameTaken' |
+	'kError_UsernameInvalid' |
+	'kError_UsernameBlacklisted' |
+	'kError_IncorrectPassword' |
 
 	// Auth
-	kAccountModal_Verify = 'kAccountModal_Verify',
-	kAccountModal_AccountSettings = 'kAccountModal_AccountSettings',
-	kAccountModal_ResetPassword = 'kAccountModal_ResetPassword',
+	'kAccountModal_Verify' |
+	'kAccountModal_AccountSettings' |
+	'kAccountModal_ResetPassword' |
 
-	kAccountModal_NewPassword = 'kAccountModal_NewPassword',
-	kAccountModal_ConfirmNewPassword = 'kAccountModal_ConfirmNewPassword',
-	kAccountModal_CurrentPassword = 'kAccountModal_CurrentPassword',
-	kAccountModal_ConfirmPassword = 'kAccountModal_ConfirmPassword',
-	kAccountModal_HideFlag = 'kAccountModal_HideFlag',
+	'kAccountModal_NewPassword' |
+	'kAccountModal_ConfirmNewPassword' |
+	'kAccountModal_CurrentPassword' |
+	'kAccountModal_ConfirmPassword' |
+	'kAccountModal_HideFlag' |
 
-	kAccountModal_VerifyText = 'kAccountModal_VerifyText',
-	kAccountModal_VerifyPasswordResetText = 'kAccountModal_VerifyPasswordResetText',
-	kAccountModal_PasswordResetSuccess = 'kAccountModal_PasswordResetSuccess',
-	kMissingCaptcha = 'kMissingCaptcha',
-	kPasswordsMustMatch = 'kPasswordsMustMatch',
+	'kAccountModal_VerifyText' |
+	'kAccountModal_VerifyPasswordResetText' |
+	'kAccountModal_PasswordResetSuccess' |
+	'kMissingCaptcha' |
+	'kPasswordsMustMatch' |
 
-	kNotLoggedIn = 'kNotLoggedIn',
-}
+	'kNotLoggedIn';
 
 export interface I18nEvents {
 	// Called when the language is changed
@@ -153,9 +152,8 @@ interface StringKeyMap {
 /// our fancy internationalization helper.
 export class I18n {
 	// The language data itself
-	private langs : Map<string, LanguageMetadata> = new Map<string, Language>();
-	private lang: Language = fallbackLanguage;
-	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
+	langs : Map<string, LanguageMetadata> = new Map<string, Language>();
+	lang: Language = fallbackLanguage;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
 
 	CurrentLanguage = () => this.langId;
@@ -171,26 +169,13 @@ export class I18n {
 		if (!res.ok) {
 			alert("Failed to load languages.json: " + res.statusText);
 			await this.SetLanguage(fallbackId);
-			this.ReplaceStaticStrings();
 			return;
 		}
 		var langData = await res.json() as LanguagesJson;
 		for (const langId in langData.languages) {
 			this.langs.set(langId, langData.languages[langId]);
 		}
-		this.langs.forEach((_lang, langId) => {
-			// Add to language dropdown
-			var a = document.createElement('a');
-			a.classList.add('dropdown-item');
-			a.href = '#';
-			a.innerText = `${_lang.flag} ${_lang.languageName}`;
-			a.addEventListener('click', async e => {
-				e.preventDefault();
-				await this.SetLanguage(langId);
-				this.ReplaceStaticStrings();
-			});
-			this.languageDropdown.appendChild(a);
-		});
+
 		let lang = null;
 		let lsLang = window.localStorage.getItem('i18n-lang');
 		var browserLang = navigator.language.toLowerCase();
@@ -210,14 +195,13 @@ export class I18n {
 		// If all else fails, use the default language
 		if (lang === null) lang = langData.defaultLanguage;
 		await this.SetLanguage(lang);
-		this.ReplaceStaticStrings();
 	}
 
 	getCountryName(code: string) : string {
 		return this.regionNameRenderer.of(code) || code;
 	}
 
-	private async SetLanguage(id: string) {
+	async SetLanguage(id: string) {
 		let lastId = this.langId;
 		this.langId = id;
 
@@ -237,9 +221,6 @@ export class I18n {
 		this.lang = lang;
 
 		if (this.langId != lastId) {
-			// Replace static strings
-			this.ReplaceStaticStrings();
-			
 			// Update region name renderer target language
 			this.regionNameRenderer = new Intl.DisplayNames([this.langId], {type: 'region'});
 		};
@@ -253,196 +234,11 @@ export class I18n {
 		console.log('i18n initalized for', id, 'sucessfully!');
 	}
 
-	// Replaces static strings that we don't recompute
-	private ReplaceStaticStrings() {
-		const kDomIdtoStringMap: StringKeyMap = {
-			siteNameText: I18nStringKey.kGeneric_CollabVM,
-			homeBtnText: I18nStringKey.kSiteButtons_Home,
-			faqBtnText: I18nStringKey.kSiteButtons_FAQ,
-			rulesBtnText: I18nStringKey.kSiteButtons_Rules,
-			accountLoginButton: I18nStringKey.kGeneric_Login,
-			accountRegisterButton: I18nStringKey.kGeneric_Register,
-			accountSettingsButton: I18nStringKey.kAccountModal_AccountSettings,
-			accountLogoutButton: I18nStringKey.kGeneric_Logout,
-			languageDropdownText: I18nStringKey.kSiteButtons_Languages,
-			
-			welcomeModalHeader: I18nStringKey.kWelcomeModal_Header,
-			welcomeModalBody: I18nStringKey.kWelcomeModal_Body,
-			welcomeModalDismiss: I18nStringKey.kGeneric_Understood,
-
-			usersOnlineText: I18nStringKey.kVM_UsersOnlineText,
-
-			voteResetHeaderText: I18nStringKey.kVM_VoteForResetTitle,
-			voteYesBtnText: I18nStringKey.kGeneric_Yes,
-			voteNoBtnText: I18nStringKey.kGeneric_No,
-
-			changeUsernameBtnText: I18nStringKey.kVMButtons_ChangeUsername,
-			oskBtnText: I18nStringKey.kVMButtons_Keyboard,
-			ctrlAltDelBtnText: I18nStringKey.KVMButtons_CtrlAltDel,
-			voteForResetBtnText: I18nStringKey.kVMButtons_VoteForReset,
-			screenshotBtnText: I18nStringKey.kVMButtons_Screenshot,
-
-			// admin stuff
-			badPasswordAlertText: I18nStringKey.kError_IncorrectPassword,
-			loginModalPasswordText: I18nStringKey.kGeneric_Password,
-			loginButton: I18nStringKey.kGeneric_Login,
-			passVoteBtnText: I18nStringKey.kAdminVMButtons_PassVote,
-			cancelVoteBtnText: I18nStringKey.kAdminVMButtons_CancelVote,
-			endTurnBtnText: I18nStringKey.kVMButtons_EndTurn,
-			qemuMonitorBtnText: I18nStringKey.kQEMUMonitor,
-			qemuModalHeader: I18nStringKey.kQEMUMonitor,
-			qemuMonitorSendBtn: I18nStringKey.kGeneric_Send,
-
-			restoreBtnText: I18nStringKey.kAdminVMButtons_Restore,
-			rebootBtnText: I18nStringKey.kAdminVMButtons_Reboot,
-			clearQueueBtnText: I18nStringKey.kAdminVMButtons_ClearTurnQueue,
-			bypassTurnBtnText: I18nStringKey.kAdminVMButtons_BypassTurn,
-			indefTurnBtnText: I18nStringKey.kAdminVMButtons_IndefiniteTurn,
-			ghostTurnBtnText: I18nStringKey.kAdminVMButtons_GhostTurnOff,
-
-			// Account modal
-			accountLoginUsernameLabel: I18nStringKey.kGeneric_Username,
-			accountLoginPasswordLabel: I18nStringKey.kGeneric_Password,
-			accountModalLoginBtn: I18nStringKey.kGeneric_Login,
-			accountForgotPasswordButton: I18nStringKey.kAccountModal_ResetPassword,
-			accountRegisterEmailLabel: I18nStringKey.kGeneric_EMail,
-			accountRegisterUsernameLabel: I18nStringKey.kGeneric_Username,
-			accountRegisterPasswordLabel: I18nStringKey.kGeneric_Password,
-			accountRegisterConfirmPasswordLabel: I18nStringKey.kAccountModal_ConfirmPassword,
-			accountRegisterDateOfBirthLabel: I18nStringKey.kGeneric_DateOfBirth,
-			accountModalRegisterBtn: I18nStringKey.kGeneric_Register,
-			accountVerifyEmailCodeLabel: I18nStringKey.kGeneric_VerificationCode,
-			accountVerifyEmailPasswordLabel: I18nStringKey.kGeneric_Password,
-			accountModalVerifyEmailBtn: I18nStringKey.kGeneric_Verify,
-			accountSettingsEmailLabel: I18nStringKey.kGeneric_EMail,
-			accountSettingsUsernameLabel: I18nStringKey.kGeneric_Username,
-			accountSettingsNewPasswordLabel: I18nStringKey.kAccountModal_NewPassword,
-			accountSettingsConfirmNewPasswordLabel: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			accountSettingsCurrentPasswordLabel: I18nStringKey.kAccountModal_CurrentPassword,
-			hideFlagCheckboxLabel: I18nStringKey.kAccountModal_HideFlag,
-			updateAccountSettingsBtn: I18nStringKey.kGeneric_Update,
-			accountResetPasswordEmailLabel: I18nStringKey.kGeneric_EMail,
-			accountResetPasswordUsernameLabel: I18nStringKey.kGeneric_Username,
-			accountResetPasswordBtn: I18nStringKey.kAccountModal_ResetPassword,
-			accountResetPasswordCodeLabel: I18nStringKey.kGeneric_VerificationCode,
-			accountResetPasswordNewPasswordLabel: I18nStringKey.kAccountModal_NewPassword,
-			accountResetPasswordConfirmNewPasswordLabel: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			accountResetPasswordVerifyBtn: I18nStringKey.kAccountModal_ResetPassword,
-		};
-
-		const kDomAttributeToStringMap = {
-			adminPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
-			},
-			accountLoginUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
-			},
-			accountLoginPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
-			},
-			accountRegisterEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
-			},
-			accountRegisterUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
-			},
-			accountRegisterPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
-			},
-			accountRegisterConfirmPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmPassword,
-			},
-			accountVerifyEmailCode: {
-				placeholder: I18nStringKey.kGeneric_VerificationCode,
-			},
-			accountVerifyEmailPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
-			},
-			accountSettingsEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
-			},
-			accountSettingsUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
-			},
-			accountSettingsNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_NewPassword,
-			},
-			accountSettingsConfirmNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			},
-			accountSettingsCurrentPassword: {
-				placeholder: I18nStringKey.kAccountModal_CurrentPassword,
-			},
-			accountResetPasswordEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
-			},
-			accountResetPasswordUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
-			},
-			accountResetPasswordCode: {
-				placeholder: I18nStringKey.kGeneric_VerificationCode,
-			},
-			accountResetPasswordNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_NewPassword,
-			},
-			accountResetPasswordConfirmNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			},
-		};
-
-		const kDomClassToStringMap: StringKeyMap = {
-			"mod-end-turn-btn": I18nStringKey.kVMButtons_EndTurn,
-			"mod-ban-btn": I18nStringKey.kAdminVMButtons_Ban,
-			"mod-kick-btn": I18nStringKey.kAdminVMButtons_Kick,
-			"mod-change-username-btn": I18nStringKey.kVMButtons_ChangeUsername,
-			"mod-temp-mute-btn": I18nStringKey.kAdminVMButtons_TempMute,
-			"mod-indef-mute-btn": I18nStringKey.kAdminVMButtons_IndefMute,
-			"mod-unmute-btn": I18nStringKey.kAdminVMButtons_Unmute,
-			"mod-get-ip-btn": I18nStringKey.kAdminVMButtons_GetIP,
-		}
-
-		for (let domId of Object.keys(kDomIdtoStringMap)) {
-			let element = document.getElementById(domId);
-			if (element == null) {
-				alert(`Error: Could not find element with ID ${domId} in the DOM! Please tell a site admin this happened.`);
-				return;
-			}
-
-			// Do the magic.
-			// N.B: For now, we assume all strings in this map are not formatted.
-			// If this assumption changes, then we should just use GetString() again
-			// and maybe include arguments, but for now this is okay
-			element.innerHTML = this.GetStringRaw(kDomIdtoStringMap[domId]);
-		}
-
-		for (let domId of Object.keys(kDomAttributeToStringMap)) {
-			let element = document.getElementById(domId);
-			if (element == null) {
-				alert(`Error: Could not find element with ID ${domId} in the DOM! Please tell a site admin this happened.`);
-				return;
-			}
-
-			// TODO: Figure out if we can get rid of this ts-ignore
-			// @ts-ignore
-			let attributes = kDomAttributeToStringMap[domId];
-			for (let attr of Object.keys(attributes)) {
-				element.setAttribute(attr, this.GetStringRaw(attributes[attr] as I18nStringKey));
-			}
-		}
-
-		for (let domClass of Object.keys(kDomClassToStringMap)) {
-			let elements = document.getElementsByClassName(domClass);
-			for (let element of elements) {
-				element.innerHTML = this.GetStringRaw(kDomClassToStringMap[domClass]);
-			}
-		}
-	}
-
 	// Returns a (raw, unformatted) string. Currently only used if we don't need formatting.
 	GetStringRaw(key: I18nStringKey): string {
-		if (key === I18nStringKey.kGeneric_CollabVM && Config.SiteNameOverride) return Config.SiteNameOverride;
-		if (key === I18nStringKey.kWelcomeModal_Header && Config.WelcomeModalTitleOverride) return Config.WelcomeModalTitleOverride;
-		if (key === I18nStringKey.kWelcomeModal_Body && Config.WelcomeModalBodyOverride) return Config.WelcomeModalBodyOverride;
+		if (key === 'kGeneric_CollabVM' && Config.SiteNameOverride) return Config.SiteNameOverride;
+		if (key === 'kWelcomeModal_Header' && Config.WelcomeModalTitleOverride) return Config.WelcomeModalTitleOverride;
+		if (key === 'kWelcomeModal_Body' && Config.WelcomeModalBodyOverride) return Config.WelcomeModalBodyOverride;
 		let val = this.lang.stringKeys[key];
 
 		// Look up the fallback language by default if the language doesn't
@@ -466,5 +262,3 @@ export class I18n {
 		return this.emitter.on(event, cb);
 	}
 }
-
-export let TheI18n = new I18n();
