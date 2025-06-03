@@ -12,6 +12,7 @@ import { StringLike } from '../StringLike.js';
 import * as msgpack from 'msgpackr';
 // TODO: Properly workspaceify this
 import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from '../../../collab-vm-1.2-binary-protocol/src/index.js';
+import { OpusPlayer } from '../audio/opus-player.js';
 const w = window as any;
 
 export interface CollabVMClientEvents {
@@ -54,7 +55,7 @@ interface CollabVMClientPrivateEvents {
 	qemu: (qemuResponse: string) => void;
 }
 
-const DefaultCapabilities = [ "bin" ];
+const DefaultCapabilities = ['bin'];
 
 export default class CollabVMClient {
 	// Fields
@@ -62,8 +63,8 @@ export default class CollabVMClient {
 	canvas: HTMLCanvasElement;
 	// A secondary canvas that is not scaled
 	unscaledCanvas: HTMLCanvasElement;
-	canvasScale : { width : number, height : number } = { width: 0, height: 0 };
-	actualScreenSize : { width : number, height : number } = { width: 0, height: 0 };
+	canvasScale: { width: number; height: number } = { width: 0, height: 0 };
+	actualScreenSize: { width: number; height: number } = { width: 0, height: 0 };
 	private unscaledCtx: CanvasRenderingContext2D;
 	private ctx: CanvasRenderingContext2D;
 	private url: string;
@@ -76,12 +77,14 @@ export default class CollabVMClient {
 	private voteStatus: VoteStatus | null = null;
 	private node: string | null = null;
 	private auth: boolean = false;
+	private audioMute: boolean = true;
 	// events that are used internally and not exposed
 	private internalEmitter: Emitter<CollabVMClientPrivateEvents>;
 	// public events
 	private publicEmitter: Emitter<CollabVMClientEvents>;
 
 	private unsubscribeCallbacks: Array<Unsubscribe> = [];
+	opusPlayer: OpusPlayer | undefined;
 
 	constructor(url: string) {
 		// Save the URL
@@ -205,22 +208,42 @@ export default class CollabVMClient {
 	private onBinaryMessage(data: ArrayBuffer) {
 		let msg: CollabVMProtocolMessage;
 		try {
-			msg = msgpack.decode(data);
+			// wrap ArrayBuffer in a Uint8Array so the decoder accepts it
+			msg = msgpack.decode(new Uint8Array(data));
 		} catch {
-			console.error("Server sent invalid binary message");
+			console.error('Server sent invalid binary message');
 			return;
 		}
 		if (msg.type === undefined) return;
 		switch (msg.type) {
+			case CollabVMProtocolMessageType.audioOpus:
+				if (msg.opusPacket) {
+					const packet = new Uint8Array(msg.opusPacket);
+					if (!this.opusPlayer) {
+						this.opusPlayer = new OpusPlayer();
+						
+					}
+					//console.log(`[Client] Received audioOpus: length=${packet.length}`);
+					this.opusPlayer.feed(packet);
+				} else {
+					console.error('[Client] Missing opusPacket in audioOpus message');
+				}
+				break;
 			case CollabVMProtocolMessageType.rect: {
-				if (!msg.rect || msg.rect.x === undefined || msg.rect.y === undefined || msg.rect.data === undefined) return;
-				let blob = new Blob( [ new Uint8Array(msg.rect.data) ], {type: "image/jpeg"});
-				let url = URL.createObjectURL(blob);
-				let img = new Image();
+				const r = msg.rect;
+				if (!r || r.x === undefined || r.y === undefined || r.data === undefined) return;
+
+				// r.data is assumed to be something decode() gave you,
+				// if it's already a Uint8Array you can use it directly:
+				const blob = new Blob([new Uint8Array(r.data)], { type: 'image/jpeg' });
+				const url = URL.createObjectURL(blob);
+				const img = new Image();
+
 				img.addEventListener('load', () => {
-					this.loadRectangle(img, msg.rect!.x, msg.rect!.y);
+					this.loadRectangle(img, r.x, r.y);
 					URL.revokeObjectURL(url);
 				});
+
 				img.src = url;
 				break;
 			}
@@ -405,11 +428,11 @@ export default class CollabVMClient {
 				break;
 			}
 			case 'login': {
-				if (msgArr[1] === "1") {
+				if (msgArr[1] === '1') {
 					this.rank = Rank.Registered;
 					this.publicEmitter.emit('login', Rank.Registered, new Permissions(0));
 				}
-				this.publicEmitter.emit('accountlogin', msgArr[1] === "1");
+				this.publicEmitter.emit('accountlogin', msgArr[1] === '1');
 				break;
 			}
 			case 'admin': {
@@ -457,10 +480,14 @@ export default class CollabVMClient {
 	}
 
 	private loadRectangle(img: HTMLImageElement, x: number, y: number) {
-		if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height)
-			this.unscaledCtx.drawImage(img, x, y);
+		if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height) this.unscaledCtx.drawImage(img, x, y);
 		// Scale the image to the canvas
-		this.ctx.drawImage(img, 0, 0, img.width, img.height,
+		this.ctx.drawImage(
+			img,
+			0,
+			0,
+			img.width,
+			img.height,
 			(x / this.actualScreenSize.width) * this.canvas.width,
 			(y / this.actualScreenSize.height) * this.canvas.height,
 			(img.width / this.actualScreenSize.width) * this.canvas.width,
@@ -563,6 +590,7 @@ export default class CollabVMClient {
 			cb();
 		}
 		this.unsubscribeCallbacks = [];
+		this.opusPlayer?.destroy();
 
 		if (this.socket.readyState === WebSocket.OPEN) this.socket.close();
 	}
@@ -587,6 +615,16 @@ export default class CollabVMClient {
 	// Take or drop turn
 	turn(taketurn: boolean) {
 		this.send('turn', taketurn ? '1' : '0');
+	}
+
+	// Mute or unmute audio
+	sendAudioMute() {
+		this.send('audioMute');
+		this.audioMute = !this.audioMute;
+	}
+
+	getAudioMute() {
+		return this.audioMute;
 	}
 
 	// Send mouse instruction
@@ -733,7 +771,7 @@ export default class CollabVMClient {
 	}
 
 	private shouldSendInput() {
-		return this.users.find(u => u.username === this.username)?.turn === 0 || (w.collabvm.ghostTurn && this.rank === Rank.Admin);
+		return this.users.find((u) => u.username === this.username)?.turn === 0 || (w.collabvm.ghostTurn && this.rank === Rank.Admin);
 	}
 
 	on<E extends keyof CollabVMClientEvents>(event: E, callback: CollabVMClientEvents[E]): Unsubscribe {

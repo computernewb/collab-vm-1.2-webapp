@@ -41,6 +41,7 @@ const elements = {
 	screenshotButton: document.getElementById('screenshotButton') as HTMLButtonElement,
 	voteResetButton: document.getElementById('voteResetButton') as HTMLButtonElement,
 	voteResetPanel: document.getElementById('voteResetPanel') as HTMLDivElement,
+	enableSoundBtn: document.getElementById('enableSoundBtn') as HTMLButtonElement,
 	voteYesBtn: document.getElementById('voteYesBtn') as HTMLButtonElement,
 	voteNoBtn: document.getElementById('voteNoBtn') as HTMLButtonElement,
 	voteYesLabel: document.getElementById('voteYesLabel') as HTMLSpanElement,
@@ -799,6 +800,21 @@ elements.ctrlAltDelBtn.addEventListener('click', () => {
 elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
 elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
 elements.voteNoBtn.addEventListener('click', () => VM?.vote(false));
+
+// Sound
+// init audio button
+elements.enableSoundBtn.textContent = "🔇";
+//Listener for audio button
+elements.enableSoundBtn.addEventListener('click', () => {
+	if (!VM) return;
+	VM.sendAudioMute();
+	if(VM.getAudioMute() == false) {
+		elements.enableSoundBtn.textContent = "🔊";
+	} else {
+		elements.enableSoundBtn.textContent = "🔇";
+	}
+});
+
 // Login
 let usernameClick = false;
 const loginModal = new bootstrap.Modal(elements.loginModal);
@@ -1419,6 +1435,7 @@ elements.accountResetPasswordForm.addEventListener('submit', async e => {
 	}
 	return false;
 });
+if(elements.accountResetPasswordVerifyForm) { // i have no idea why it wont start without this line
 elements.accountResetPasswordVerifyForm.addEventListener('submit', async e => {
 	e.preventDefault();
 	var code = elements.accountResetPasswordCode.value;
@@ -1444,6 +1461,7 @@ elements.accountResetPasswordVerifyForm.addEventListener('submit', async e => {
 	}
 	return false;
 });
+}
 
 let darkTheme = true;
 function loadColorTheme(dark : boolean) {
