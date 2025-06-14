@@ -4,7 +4,7 @@ interface OpusPlayerOptions {
   encoding?: '8bitInt' | '16bitInt' | '32bitInt' | '32bitFloat';
   channels?: number;
   sampleRate?: number;
-  // lowered from 1000 ms to something like 20 ms so 10 ms Opus frames don’t sit in the buffer too long
+  // lowered from 1000 ms to 20 ms so 10 ms Opus frames don’t sit in the buffer too long
   flushingTime?: number;
 }
 
