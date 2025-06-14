@@ -27,6 +27,8 @@
 		"kEnterNewUsername": "Arggghh, matey, what would you like to be known as?",
 		"kError_UsernameTaken": "Sorry, matey, but another pirate is using that name.",
 		"kError_UsernameInvalid": "Sorry matey, but that name is invalid. Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
-		"kError_UsernameBlacklisted": "Sorry matey, but you cannot use that name."
+		"kError_UsernameBlacklisted": "Sorry matey, but you cannot use that name.",
+		"kVMButtons_SoundOn": "Ruckus on",
+		"kVMButtons_SoundOff": "Ruckus off"
 	}
 }

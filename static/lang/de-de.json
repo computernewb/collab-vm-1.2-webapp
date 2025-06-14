@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Für Zurücksetzung abstimmen",
 		"kVMButtons_Screenshot": "Screenshot",
 
+		"kVMButtons_SoundOn": "Ton an",
+		"kVMButtons_SoundOff": "Ton aus",
+
 		"kQEMUMonitor": "QEMU-Konsole",
 		"kAdminVMButtons_PassVote": "Abstimmung abschließen",
 		"kAdminVMButtons_CancelVote": "Abstimmung abbrechen",

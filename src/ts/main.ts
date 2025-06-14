@@ -37,6 +37,8 @@ const elements = {
 	turnBtnText: document.getElementById('turnBtnText') as HTMLSpanElement,
 	turnstatus: document.getElementById('turnstatus') as HTMLParagraphElement,
 	osk: window.document.getElementById('oskBtn') as HTMLButtonElement,
+	audioBtnOn: window.document.getElementById('audioBtnOn') as HTMLButtonElement,
+	audioBtnOff: window.document.getElementById('audioBtnOff') as HTMLButtonElement,
 	oskContainer: document.getElementById('osk-container') as HTMLDivElement,
 	screenshotButton: document.getElementById('screenshotButton') as HTMLButtonElement,
 	voteResetButton: document.getElementById('voteResetButton') as HTMLButtonElement,
@@ -264,6 +266,19 @@ const enableOSK = (enable: boolean) => {
 
 	if (enable) updateOSKStyle();
 };
+
+// Audio buttons
+elements.audioBtnOn.addEventListener('click', () => {
+	if (!VM) return;
+	if(VM.getAudioMute() === true)
+		VM.sendAudioMute();
+});
+
+elements.audioBtnOff.addEventListener('click', () => {
+	if (!VM) return;
+	if(VM.getAudioMute() === false)
+		VM.sendAudioMute();
+});
 
 const updateOSKStyle = () => {
 	setButtonBackground('.hg-button-shiftleft, .hg-button-shiftright', shiftHeld);
