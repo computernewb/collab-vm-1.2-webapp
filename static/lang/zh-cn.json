@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "投票重置",
 		"kVMButtons_Screenshot": "截图",
 
+		"kVMButtons_SoundOn": "声音已开",
+		"kVMButtons_SoundOff": "声音已关",
+
 		"kQEMUMonitor": "QEMU 监视器",
 		"kAdminVMButtons_PassVote": "投票通过",
 		"kAdminVMButtons_CancelVote": "投票取消",

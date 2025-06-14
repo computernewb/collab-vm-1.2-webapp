@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Голосовать за сброс",
 		"kVMButtons_Screenshot": "Скриншот",
 
+		"kVMButtons_SoundOn": "Звук включён",
+		"kVMButtons_SoundOff": "Звук выключен",
+
 		"kQEMUMonitor": "QEMU Монитор",
 		"kAdminVMButtons_PassVote": "Восстановить виртуальную машину",
 		"kAdminVMButtons_CancelVote": "Отменить голосование",

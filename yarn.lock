@@ -297,6 +297,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@eshaz/web-worker@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@eshaz/web-worker/-/web-worker-1.2.2.tgz#506ec07ab811c15a12799725a0d8b82289e3d937"
+  integrity sha512-WxXiHFmD9u/owrzempiDlBB1ZYqiLnm9s6aPc8AlFQalq2tKmqdmMr9GXOupDgzXtqnBipj8Un0gkIm7Sjf8mw==
+
 "@fortawesome/fontawesome-free@^6.6.0":
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-6.6.0.tgz#0e984f0f2344ee513c185d87d77defac4c0c8224"
@@ -1525,6 +1530,14 @@
   integrity sha512-xQ67Yc/laOG5uMfX/093MRlGGCIBzZMarVa+gfNKJxWAIgykYpVGkBdbqEzGDDfCrVUj6Hiff4mTZ5BA6TmAog==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@wasm-audio-decoders/common@9.0.7":
+  version "9.0.7"
+  resolved "https://registry.yarnpkg.com/@wasm-audio-decoders/common/-/common-9.0.7.tgz#3210cdd77893a51fbb205f15dc0e56293e2074b5"
+  integrity sha512-WRaUuWSKV7pkttBygml/a6dIEpatq2nnZGFIoPTc5yPLkxL6Wk4YaslPM98OPQvWacvNZ+Py9xROGDtrFBDzag==
+  dependencies:
+    "@eshaz/web-worker" "1.2.2"
+    simple-yenc "^1.0.4"
 
 abortcontroller-polyfill@^1.1.9:
   version "1.7.5"
@@ -3083,6 +3096,13 @@ onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
+opus-decoder@^0.7.10:
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/opus-decoder/-/opus-decoder-0.7.10.tgz#a075cb4e6f0d4692fd918615321de6147a5c022e"
+  integrity sha512-qUZdyAK+kKy/wUSd/oZ0ULE9U/yskp332n2oBvSP/Jz/wHsHiVRg33f/tRUR8TRiw+ka7AQUclxcr5TbUJo+VA==
+  dependencies:
+    "@wasm-audio-decoders/common" "9.0.7"
+
 ordered-binary@^1.4.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ordered-binary/-/ordered-binary-1.5.1.tgz#94ccbf14181711081ee23931db0dc3f58aaa0df6"
@@ -3253,6 +3273,11 @@ pretty-format@^29.0.0, pretty-format@^29.7.0:
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
+process@^0.11.10:
+  version "0.11.10"
+  resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
+  integrity sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==
+
 prompts@^2.0.1:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
@@ -3370,6 +3395,11 @@ simple-keyboard@^3.8.14:
   version "3.8.14"
   resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-3.8.14.tgz#be0610be423f4b53ca3e09023b17a7618a3beb13"
   integrity sha512-iCOjvE1ZfngMzbPgVhOXVlo4FSCZ/keOO9cmLc1Z6WR4aHTv2NtBsNVilBAsemFcfvZuCoNb4Zdy7kIJEv5Uhg==
+
+simple-yenc@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/simple-yenc/-/simple-yenc-1.0.4.tgz#52805f504ec03c0aafe3766eee901e4e6f352ead"
+  integrity sha512-5gvxpSd79e9a3V4QDYUqnqxeD4HGlhCakVpb6gMnDD7lexJggSBJRBO5h52y/iJrdXRilX9UCuDaIJhSWm5OWw==
 
 sisteransi@^1.0.5:
   version "1.0.5"

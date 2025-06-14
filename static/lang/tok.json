@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "o wile e sin ilo",
 		"kVMButtons_Screenshot": "o jo e sitelen ni",
 
+		"kVMButtons_SoundOn": "kalama li lon",
+		"kVMButtons_SoundOff": "kalama li ala",
+
 		"kQEMUMonitor": "sinpin QEMU",
 		"kAdminVMButtons_PassVote": "mi pilin ala",
 		"kAdminVMButtons_CancelVote": "ni li wile mi ala",

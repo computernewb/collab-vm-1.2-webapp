@@ -50,6 +50,9 @@
 		"kVMButtons_VoteForReset": "Votează pentru resetare",
 		"kVMButtons_Screenshot": "Captură de ecran",
 
+		"kVMButtons_SoundOn": "Sunet activat",
+		"kVMButtons_SoundOff": "Sunet dezactivat",
+
 		"kQEMUMonitor": "Monitor QEMU",
 		"kAdminVMButtons_PassVote": "Aprobă votul",
 		"kAdminVMButtons_CancelVote": "Anulează votul",

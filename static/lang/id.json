@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Pilih Reset",
 		"kVMButtons_Screenshot": "Screenshot",
 
+		"kVMButtons_SoundOn": "Suara aktif",
+		"kVMButtons_SoundOff": "Suara nonaktif",
+
 		"kQEMUMonitor": "Pemantau QEMU",
 		"kAdminVMButtons_PassVote": "Lulus pemungutan suara",
 		"kAdminVMButtons_CancelVote": "Batalkan Suara",

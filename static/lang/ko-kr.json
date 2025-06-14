@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "초기화 투표",
 		"kVMButtons_Screenshot": "스크린샷",
 
+		"kVMButtons_SoundOn": "소리 켬",
+		"kVMButtons_SoundOff": "소리 끔",
+
 		"kQEMUMonitor": "QEMU 모니터",
 		"kAdminVMButtons_PassVote": "투표 건너뛰기",
 		"kAdminVMButtons_CancelVote": "투표 취소",
