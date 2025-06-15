@@ -270,14 +270,20 @@ const enableOSK = (enable: boolean) => {
 // Audio buttons
 elements.audioBtnOn.addEventListener('click', () => {
 	if (!VM) return;
-	if(VM.getAudioMute() === true)
+	elements.audioBtnOn.style.display = 'none';
+	elements.audioBtnOff.style.display = 'inline';
+	if(VM.getAudioMute() === false) {
 		VM.sendAudioMute();
+	}
 });
 
 elements.audioBtnOff.addEventListener('click', () => {
 	if (!VM) return;
-	if(VM.getAudioMute() === false)
+	elements.audioBtnOff.style.display = 'none';
+	elements.audioBtnOn.style.display = 'inline';
+	if(VM.getAudioMute() === true) {
 		VM.sendAudioMute();
+	}
 });
 
 const updateOSKStyle = () => {

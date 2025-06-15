@@ -125,6 +125,10 @@ html[data-bs-theme="light"] {
   }
 }
 
+#audioBtnOn {
+  display: none;
+}
+
 tr.user-turn > td {
   background-color: #cfe2ff !important;
   --bs-table-bg-state: #cfe2ff !important;
