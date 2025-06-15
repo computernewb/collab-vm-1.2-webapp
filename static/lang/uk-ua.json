@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Проголосувати за скидання",
 		"kVMButtons_Screenshot": "Знімок екрана",
 
+		"kVMButtons_SoundOn": "Звук увімкнено",
+		"kVMButtons_SoundOff": "Звук вимкнено",
+
 		"kQEMUMonitor": "Монітор QEMU",
 		"kAdminVMButtons_PassVote": "Підтримати голосування",
 		"kAdminVMButtons_CancelVote": "Скасувати голосування",

@@ -52,6 +52,10 @@ export enum I18nStringKey {
 	kVMButtons_VoteForReset = 'kVMButtons_VoteForReset',
 	kVMButtons_Screenshot = 'kVMButtons_Screenshot',
 
+	// sound
+	kVMButtons_SoundOn = 'kVMButtons_SoundOn',
+	kVMButtons_SoundOff = 'kVMButtons_SoundOff',
+
 	// Admin VM buttons
 	kQEMUMonitor = 'kQEMUMonitor',
 	kAdminVMButtons_PassVote = 'kAdminVMButtons_PassVote',
@@ -281,6 +285,10 @@ export class I18n {
 			ctrlAltDelBtnText: I18nStringKey.KVMButtons_CtrlAltDel,
 			voteForResetBtnText: I18nStringKey.kVMButtons_VoteForReset,
 			screenshotBtnText: I18nStringKey.kVMButtons_Screenshot,
+
+			// sound
+			audioBtnOnText: I18nStringKey.kVMButtons_SoundOn,
+			audioBtnOffText: I18nStringKey.kVMButtons_SoundOff,
 
 			// admin stuff
 			badPasswordAlertText: I18nStringKey.kError_IncorrectPassword,
