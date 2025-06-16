@@ -490,6 +490,13 @@ async function openVM(vm: VM): Promise<void> {
 function closeVM() {
 	if (VM === null) return;
 	expectedClose = true;
+
+	// Reset audio state
+	if(VM?.getAudioMute() === false)
+		VM.sendAudioMute();
+	elements.audioBtnOff.style.display = 'inline';
+	elements.audioBtnOn.style.display = 'none';
+
 	// Close the VM
 	VM.close();
 	VM = null;
