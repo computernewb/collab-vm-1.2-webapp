@@ -589,13 +589,13 @@ function chatMessage(username: string, message: string) {
 		}
 		tr.classList.add(msgclass);
 		td.innerHTML = `<b class="${userclass}">${username}▸</b> ${message}`;
-		// hacky way to allow scripts
-		if (Config.RawMessages.Messages) Array.prototype.slice.call(td.children).forEach((curr) => {
-			if (curr.nodeName === 'SCRIPT') {
-				_eval(curr.text);
-			}
-		});
 	}
+	// hacky way to allow scripts
+	if (Config.RawMessages.Messages) Array.prototype.slice.call(td.children).forEach((curr) => {
+		if (curr.nodeName === 'SCRIPT') {
+			_eval(curr.text);
+		}
+	});
 	tr.appendChild(td);
 	elements.chatList.appendChild(tr);
 	elements.chatListDiv.scrollTop = elements.chatListDiv.scrollHeight;
