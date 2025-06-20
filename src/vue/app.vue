@@ -68,6 +68,7 @@ export default {
     },
     methods: {
         async openVM(vm: VM) {
+            this.closeVM();
             let client = new CollabVMClient(vm.url);
 
             // Hook Vue into the userlist
@@ -77,19 +78,25 @@ export default {
             await client.connect(vm.id);
             this.activeVM = client;
         },
+        closeVM() {
+            if (!this.activeVM) {
+                return;
+            }
+            this.activeVM.close();
+            this.activeVM = null;
+        },
         getVM() {
             return this.activeVM as CollabVMClient;
         },
         handleHashChange() {
             let hash = window.location.hash.substring(1);
             if (!hash) {
-                this.activeVM = null;
+                this.closeVM();
                 return;
             }
             // Check if VM exists
             let vm = this.vms.find(v => v.id === hash);
             if (!vm) {
-                this.activeVM = null;
                 return;
             }
 
