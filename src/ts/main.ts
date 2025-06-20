@@ -37,6 +37,8 @@ const elements = {
 	turnBtnText: document.getElementById('turnBtnText') as HTMLSpanElement,
 	turnstatus: document.getElementById('turnstatus') as HTMLParagraphElement,
 	osk: window.document.getElementById('oskBtn') as HTMLButtonElement,
+	audioBtnOn: window.document.getElementById('audioBtnOn') as HTMLButtonElement,
+	audioBtnOff: window.document.getElementById('audioBtnOff') as HTMLButtonElement,
 	oskContainer: document.getElementById('osk-container') as HTMLDivElement,
 	screenshotButton: document.getElementById('screenshotButton') as HTMLButtonElement,
 	voteResetButton: document.getElementById('voteResetButton') as HTMLButtonElement,
@@ -265,6 +267,25 @@ const enableOSK = (enable: boolean) => {
 	if (enable) updateOSKStyle();
 };
 
+// Audio buttons
+elements.audioBtnOn.addEventListener('click', () => {
+	if (!VM) return;
+	elements.audioBtnOn.style.display = 'none';
+	elements.audioBtnOff.style.display = 'inline';
+	if(VM.getAudioMute() === false) {
+		VM.sendAudioMute();
+	}
+});
+
+elements.audioBtnOff.addEventListener('click', () => {
+	if (!VM) return;
+	elements.audioBtnOff.style.display = 'none';
+	elements.audioBtnOn.style.display = 'inline';
+	if(VM.getAudioMute() === true) {
+		VM.sendAudioMute();
+	}
+});
+
 const updateOSKStyle = () => {
 	setButtonBackground('.hg-button-shiftleft, .hg-button-shiftright', shiftHeld);
 	setButtonBackground('.hg-button-controlleft, .hg-button-controlright', ctrlHeld);
@@ -469,6 +490,13 @@ async function openVM(vm: VM): Promise<void> {
 function closeVM() {
 	if (VM === null) return;
 	expectedClose = true;
+
+	// Reset audio state
+	if(VM?.getAudioMute() === false)
+		VM.sendAudioMute();
+	elements.audioBtnOff.style.display = 'inline';
+	elements.audioBtnOn.style.display = 'none';
+
 	// Close the VM
 	VM.close();
 	VM = null;

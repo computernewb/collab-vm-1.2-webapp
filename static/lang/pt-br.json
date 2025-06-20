@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Votar para Redefinir",
 		"kVMButtons_Screenshot": "Captura de tela",
 
+		"kVMButtons_SoundOn": "Som ativado",
+		"kVMButtons_SoundOff": "Som desativado",
+
 		"kQEMUMonitor": "Monitor QEMU",
 		"kAdminVMButtons_PassVote": "Passar Voto",
 		"kAdminVMButtons_CancelVote": "Cancelar Voto",

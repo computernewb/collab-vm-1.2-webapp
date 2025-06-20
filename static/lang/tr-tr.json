@@ -50,6 +50,9 @@
 		"kVMButtons_VoteForReset": "Sıfırlamak için oylama aç",
 		"kVMButtons_Screenshot": "Ekran görüntüsü",
 
+		"kVMButtons_SoundOn": "Ses açık",
+		"kVMButtons_SoundOff": "Ses kapalı",
+
 		"kQEMUMonitor": "QEMU Monitörü",
 		"kAdminVMButtons_PassVote": "Oyu geçir",
 		"kAdminVMButtons_CancelVote": "Oyu iptal et",

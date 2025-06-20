@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Szavazás az alaphelyzetbe állításért",
 		"kVMButtons_Screenshot": "Képernyőkép",
 
+		"kVMButtons_SoundOn": "Hang bekapcsolva",
+		"kVMButtons_SoundOff": "Hang kikapcsolva",
+
 		"kQEMUMonitor": "QEMU Konzol",
 		"kAdminVMButtons_PassVote": "Szavazás kényzerítése",
 		"kAdminVMButtons_CancelVote": "Szavazás megszakítása",

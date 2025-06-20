@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Glasaj za reset",
 		"kVMButtons_Screenshot": "Screenshot",
 
+		"kVMButtons_SoundOn": "Zvuk uključen",
+		"kVMButtons_SoundOff": "Zvuk isključen",
+
 		"kQEMUMonitor": "QEMU Monitor",
 		"kAdminVMButtons_PassVote": "Prođi glasovanje",
 		"kAdminVMButtons_CancelVote": "Otkaži glasovanje",

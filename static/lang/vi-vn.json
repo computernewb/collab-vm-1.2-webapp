@@ -51,6 +51,9 @@
 		"kVMButtons_VoteForReset": "Bầu phiếu thiết lập lại",
 		"kVMButtons_Screenshot": "Chụp ảnh màn hình",
 
+		"kVMButtons_SoundOn": "Âm thanh bật",
+		"kVMButtons_SoundOff": "Âm thanh tắt",
+
 		"kQEMUMonitor": "Màn hình stdio (QEMU)",
 		"kAdminVMButtons_PassVote": "Vượt qua bình chọn",
 		"kAdminVMButtons_CancelVote": "Hủy bỏ phiếu",
