@@ -1,0 +1,100 @@
+{
+	"languageName": "العربية",
+	"translatedLanguageName": "Arabic",
+	"flag": "🇸🇦",
+	"author": "shikoinfinity",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "كولاب في أم",
+		"kGeneric_Yes": "نعم",
+		"kGeneric_No": "لا",
+		"kGeneric_Ok": "حسنا",
+		"kGeneric_Cancel": "الغاء",
+		"kGeneric_Send": "ارسل",
+		"kGeneric_Understood": "فهمت",
+		"kGeneric_Username": "اسم المستخدم",
+		"kGeneric_Password": "كلمة المرور",
+		"kGeneric_Login": "تسجيل الدخول",
+		"kGeneric_Register": "الانضمام",
+		"kGeneric_EMail": "عنوان البريد الالكتروني",
+		"kGeneric_DateOfBirth": "تاريخ الميلاد",
+		"kGeneric_VerificationCode": "كود التأكيد",
+		"kGeneric_Verify": "تأكيد",
+		"kGeneric_Update": "تحديث",
+		"kGeneric_Logout": "تسجيل الخروج",
+		
+		"kWelcomeModal_Header": "مرحبا بك في كولاب في أم!",
+		"kWelcomeModal_Body": "قبل المتابعة، يُرجى الاطلاع على قواعدنا: <h3>R1. لا تُخالف القانون.</h3> لا تستخدم كولاب في أم أو شبكتها لانتهاك القانون الفيدرالي الأمريكي، أو قانون ولاية نيويورك، أو القانون الدولي. إذا علمت كولاب في أم بارتكاب جريمة من خلال خدمتها، فسيتم حظرك فورًا، وقد يتم الإبلاغ عن أنشطتك للسلطات إذا لزم الأمر. <br><br>يُلزم القانون كولاب في أم بإبلاغ جهات إنفاذ القانون إذا علمت بوجود مواد إباحية للأطفال على شبكتها أو يتم بثها عبرها. <br><br>يُطبق قانون حماية خصوصية الأطفال على الإنترنت (COPPA) أيضًا، لذا يُرجى عدم استخدام كولاب في أم إذا كنت دون سن 13 عامًا. <h3>R2. لا تستخدم أدوات DoS/DDoS.</h3> لا تستخدم كولاب في أم لشن هجمات DoS/DDoS على أي فرد أو شركة أو أي شخص آخر. <h3>R3. ممنوع توزيع البريد العشوائي. لا ترسل أي رسائل بريد إلكتروني عشوائية باستخدام هذه الخدمة أو ترسلها بشكل عام. <h3>R4. لا تُسيء استخدام أي ثغرات أمنية.</h3> لا تُسيء استخدام أي ثغرات أمنية، وإذا رأيت شخصًا يُسيء استخدام ثغرات أمنية أو كنت بحاجة للإبلاغ عنها، يُرجى التواصل معي على: computernewbab@gmail.com <h3>R5. لا تنتحل شخصية مستخدمين آخرين.</h3> لا تنتحل شخصية أعضاء آخرين في كولاب في أم. في حال اكتشافك، سيتم فصلك مؤقتًا، وسيتم حظرك إذا لزم الأمر. <h3>R6. صوت واحد لكل شخص.</h3> لا تستخدم أي طرق أو أدوات لتجاوز قيود التصويت. يُسمح بصوت واحد فقط لكل شخص، مهما كانت الظروف. سيتم حظر أي شخص يُكتشف قيامه بذلك. <h3>R7. لا تستخدم أدوات الإدارة عن بُعد.</h3> لا تستخدم أي أدوات إدارة عن بُعد (مثل: DarkComet، NanoCore، Anydesk، TeamViewer، Orcus، إلخ.) <h3>R8. ممنوع تجاوز كولاب في أم. لا تحاول تجاوز الحظر الذي توفره كولاب نت، خاصةً إذا كان يُستخدم لخرق القاعدة 1 أو القاعدة 2 أو القاعدة 7 (أو تشغيل برامج مُستخدمة بشكل مُفرط). <h3>R9. ممنوع القيام بأعمال تخريبية بشكل مُستمر.</h3> لا يجوز لأي مستخدم تدمير الجهاز الافتراضي (بجعله غير قابل للاستخدام باستمرار)، أو تثبيت/إعادة تثبيت نظام التشغيل (باستثناء الجهازين VM7 وVM8)، أو تشغيل برامج روبوتية تقوم بذلك. يشمل ذلك البرامج الروبوتية التي تُرسل كميات هائلة من بيانات لوحة المفاتيح/الفأرة ("التجهيز"). <h3>R10. ممنوع تعدين العملات الرقمية.</h3> ستؤدي محاولة تعدين العملات الرقمية على الأجهزة الافتراضية إلى إيقاف الحساب، ثم حظر دائم إذا استمررت في المحاولة. بالإضافة إلى ذلك، لن تربح أي أموال من ذلك. تحذير NSFW: يُرجى العلم أن المحتوى غير الآمن للعمل مسموح به على جهازنا الافتراضي (VM0b0t) من Anarchy، ويُعرض بانتظام. مع أننا نبذل جهدًا كبيرًا لإبعاد المحتوى غير الآمن للعمل عن أجهزة VM الرئيسية، إلا أن بعض المستخدمين قد يُسرّبونه أحيانًا.",
+		"kSiteButtons_Home": "المنزل",
+		"kSiteButtons_FAQ": "اسئلة مجاب عنها",
+		"kSiteButtons_Rules": "القواعد",
+		"kSiteButtons_DarkMode": "الوضع الداكن",
+		"kSiteButtons_LightMode": "الوضع الساطع",
+		"kSiteButtons_Languages": "اللغات",
+
+		"kVM_UsersOnlineText": "المستخدمون الموجودون:",
+
+		"kVM_TurnTimeTimer": "الدور سينتهي بعد {0} ثانية.",
+		"kVM_WaitingTurnTimer": "دورك سيأتي بعد {0} ثانية",
+		"kVM_VoteCooldownTimer": "ارجو الانتظار {0} ثانية قبل بدء تصويت أخر",
+
+		"kVM_VoteForResetTitle": "هل تريد اعادة ضبط (اصلاح) الجهاز الافتراضي؟",
+		"kVM_VoteForResetTimer": "التصويت ينتهي خلال {0} ثانية",
+
+		"kVMButtons_TakeTurn": "خذ الدور",
+		"kVMButtons_EndTurn": "انهاء الدور",
+		"kVMButtons_ChangeUsername": "تغيير اسم المستخدم",
+		"kVMButtons_Keyboard": "كيبورد افتراضي",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "بدء تصويت لأعادة ضبط (اصلاح) الجهاز الافتراضي",
+		"kVMButtons_Screenshot": "لقطة شاشة",
+
+		"kQEMUMonitor": "شاشة QEMU",
+		"kAdminVMButtons_PassVote": "قبول التصويت",
+		"kAdminVMButtons_CancelVote": "الغاء التصويت",
+
+		"kAdminVMButtons_Restore": "اعادة ضبط",
+		"kAdminVMButtons_Reboot": "اعادة تشغيل",
+		"kAdminVMButtons_ClearTurnQueue": "ازالة الانتظار",
+		"kAdminVMButtons_BypassTurn": "تجاوز الدور",
+		"kAdminVMButtons_IndefiniteTurn": "جولة غير مؤقتة",
+		"kAdminVMButtons_GhostTurnOn": "دور مخفي (مفعل)",
+		"kAdminVMButtons_GhostTurnOff": "دور مخفي (مغلق)",
+
+		"kAdminVMButtons_Ban": "حظر",
+		"kAdminVMButtons_Kick": "طرد",
+		"kAdminVMButtons_TempMute": "اسكات مؤقت",
+		"kAdminVMButtons_IndefMute": "اسكات غير مؤقت",
+		"kAdminVMButtons_Unmute": "الغاء الاسكات",
+		"kAdminVMButtons_GetIP": "احصل على IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "ادخل اسم مستخدم جديد ل {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "هل انت متأكد من استرجاع الجهاز الافتراضي؟",
+		"kVMPrompts_EnterNewUsernamePrompt": "ادخل اسم مستخدم جديد أو اترك الخانة فارغ لتكون مسجلا باسم مستخدم ضيف",
+
+		"kError_UnexpectedDisconnection": "تم الغاء اتصالك من السيرفر.",
+		"kError_UsernameTaken": "اسم المستخدم موجود بالفعل",
+		"kError_UsernameInvalid": "اسم المستخدم يمكن ان يتضمن فقط ارقام و حروف و مسافات و شرط و شرط سفلية ونقط ويجب ان يكون بين 3 و 20 حرف",
+		"kError_UsernameBlacklisted": "اسم المستخدم موجود في القائمة السوداء",
+		"kError_IncorrectPassword": "كلمة المرور غير صحيحة.",
+
+		"kAccountModal_Verify": "اثبات ملكية البريد الالكتروني",
+		"kAccountModal_AccountSettings": "اعدادات الحساب",
+		"kAccountModal_ResetPassword": "اعادة تعيين كلمة المرور",
+
+		"kAccountModal_NewPassword": "كلمة المرور الجديدة",
+		"kAccountModal_ConfirmNewPassword": "تأكيد كلمة المرور الجديدة",
+		"kAccountModal_CurrentPassword": "كلمة المرور الحالية",
+		"kAccountModal_ConfirmPassword": "تأكيد كلمة المرور",
+		"kAccountModal_HideFlag": "اخفاء علم بلدي",
+
+		"kMissingCaptcha": "ارجو املاء Captcha",
+		"kPasswordsMustMatch": "كلمات المرور غير متطابقة",
+		"kAccountModal_VerifyText": "لقد ارسلنا رسالة الي بريدك الالكتروني {0} لأثبات الملكية .. يرجي ادخال الرمز المكون من 6 ارقام في الخانة الموجودة اسفل.",
+		"kAccountModal_VerifyPasswordResetText": "لقد ارسلنا رسالة الي بريدك الالكتروني {0} لأعادة تعيين كلمة المرور .. يرجي ادخال الرمز المكون من 6 ارقام في الخانة الموجودة اسفل.",
+		"kAccountModal_PasswordResetSuccess": "تم اعادة تعيين كلمة المرور يمكنك الآن تسجيل الدخول بكلمة المرور الجديدة.",
+
+		"kNotLoggedIn": "لست مسجل دخول"
+	}
+}
