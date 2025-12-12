@@ -1,0 +1,101 @@
+{
+	"languageName": "Norwegian Bokmål (NO)",
+	"translatedLanguageName": "Norsk bokmål (NO)",
+	"flag": "🇺🇸",
+	"author": "Computernewb",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Ja",
+		"kGeneric_No": "Nei",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Avbryt",
+		"kGeneric_Send": "Send",
+		"kGeneric_Understood": "Jeg forstår",
+		"kGeneric_Username": "Brukernavn",
+		"kGeneric_Password": "Passord",
+		"kGeneric_Login": "Logg inn",
+		"kGeneric_Register": "Registrer",
+		"kGeneric_EMail": "E-post",
+		"kGeneric_DateOfBirth": "Fødselsdato",
+		"kGeneric_VerificationCode": "Verifiseringskode",
+		"kGeneric_Verify": "Verifiser",
+		"kGeneric_Update": "Oppdater",
+		"kGeneric_Logout": "Logg ut",
+		
+		"kWelcomeModal_Header": "Velkommen til CollabVM",
+"kWelcomeModal_Body": "<p>CollabVM gir deg muligheter til å kontrollere online virtuelle maskiner med fremmede!</p> <p>Før du fortsetter, vennligst les våre regler:</p> <h3>R1. Ikke bryt lovene.</h3> Ikke bruk CollabVM eller CollabVM's nettverk til å bryte USA sine føderale lover, New Yorks statlige lover, eller internasjonale lover. Hvis CollabVM merker en kriminell handling har skjedd gjennom tjenestene sine, vil du bli utestengt umiddelbart, og dine aktiviteter kan bli rapportert til myndighetene hvis nødvendig.<br><br>CollabVM er lovpålagt til å varsle myndighetene hvis det blir merket at det er barnepornografi på VM-ene, eller blir sendt gjennom nettverket sitt.<br><br>COPPA er også tvunget, så vennligst ikke bruk CollabVM hvis du er under 13 år gammel. <h3>R2. Ikke kjør DoS/DDoS-verktøy.</h3> Ikke bruk CollabVM til å DoS/DDoSe en privatperson, bedrift, selskap, eller noen som helst. <h3>R3. Ingen spam-distrubisjon.</h3> Ikke spam e-poster med våre VM-er eller sende spam i tekstkanalene. <h3>R4. Ikke misbruk utnyttelsesverktøy.</h3> Ikke misbruk noen utnyttelser, og i tillegg, hvis du ser noen som misbruker utnyttelser eller du trenger å rapportere noen, vennligst kontakt meg på denne e-posten: computernewbab@gmail.com <h3>R5. Ikke misbruk andres identiteter.</h3> Ikke misbruk andre medlemmer i CollabVM. If caught, you'll be temporarily disconnected, and banned if necessary. <h3>R6. Bare en stemme per person.</h3> Ikke bruk andre måter eller verktøy til å omgå stemme-restriksjonen. Bare en stemme per person er tillatt, uansett hva. Folk som blir tatt for å gjøre dette vil bli utestengt. <h3>R7. Ingen eksternt skrivebord-verktøy.</h3> Ikke bruk eksterne skrivebordsapper (inkl. DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, etc.) <h3>R8. Ikke omgå CollabNet.</h3> Ikke forsøk å omgå blokkeringene som kommer fra CollabNet, spesielt hvis det blir misbrukt for å bryte regel 1, regel 2, eller regel 7 (eller gjøre noe annet idiotiskt). <h3>R9. Ikke utfør destruktive handlinger automatiskt.</h3> Ingen brukere kan ødelegge VM-en (umulig å se/bruke VM-ene flere ganger), installere/reinstallere operativsystemet (med mindre det foregår i VM7 eller VM8), eller kjøre botter som gjør akkurat dette. Dette inkluderer botter som spammer massive mengder av tastatur/museklikk (også kalt for \"kitting\"). <h3>R10. Ingen kryptomining.</h3> Forsøk på å mine kryptoverdier i VM-ene vil føre til at du blir sparket ut, og dermed en permament utestengelse hvis du prøver igjen. I tillegg, du kommer ikke til å tjene noe penger på det. <h3>Vokseninnhold - Advarsel!</h3> Vennligst merk at vokseninnhold er tillatt i vår anarki-VM (VM0b0t), og blir overvåket ofte. I tillegg, mens vi gir en god innsats for å holde vokseninnhold vekk fra våre primære VM-er, vil folk få det gjennom, før eller senere.",
+
+		"kSiteButtons_Home": "Hjem",
+		"kSiteButtons_FAQ": "OSS",
+		"kSiteButtons_Rules": "Regler",
+		"kSiteButtons_DarkMode": "Mørk tema",
+		"kSiteButtons_LightMode": "Lys tema",
+		"kSiteButtons_Languages": "Språk",
+
+		"kVM_UsersOnlineText": "Online brukere:",
+
+		"kVM_TurnTimeTimer": "Du mister kontrollen om {0} sekunder.",
+		"kVM_WaitingTurnTimer": "Venter på at det er din tur. {0} sekunder gjenstår.",
+		"kVM_VoteCooldownTimer": "Vennligst vent {0} sekunder før du starter en annen stemme.",
+
+		"kVM_VoteForResetTitle": "Vil du tilbakestille VM-en?",
+		"kVM_VoteForResetTimer": "Stemmer avsluttes om {0} sekunder",
+
+		"kVMButtons_TakeTurn": "Ta kontroll",
+		"kVMButtons_EndTurn": "Stopp å kontrollere",
+		"kVMButtons_ChangeUsername": "Endre brukernavn",
+		"kVMButtons_Keyboard": "Tastatur",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Stem for tilbakestilling",
+		"kVMButtons_Screenshot": "Skjermbilde",
+
+		"kQEMUMonitor": "QEMU-monitor",
+		"kAdminVMButtons_PassVote": "Passer stemme",
+		"kAdminVMButtons_CancelVote": "Avbryt stemme",
+
+		"kAdminVMButtons_Restore": "Gjenopprett",
+		"kAdminVMButtons_Reboot": "Start på nytt",
+		"kAdminVMButtons_ClearTurnQueue": "Tøm køen",
+		"kAdminVMButtons_BypassTurn": "Omgå kontrolleren",
+		"kAdminVMButtons_IndefiniteTurn": "Uendelig kontrollerere",
+		"kAdminVMButtons_GhostTurnOn": "Spøkelseskontroll (På)",
+		"kAdminVMButtons_GhostTurnOff": "Spøkelseskontroll (Av)",
+
+		"kAdminVMButtons_Ban": "Utesteng",
+		"kAdminVMButtons_Kick": "Spark ut",
+		"kAdminVMButtons_TempMute": "Demp midlertidig",
+		"kAdminVMButtons_IndefMute": "Demp permanent",
+		"kAdminVMButtons_Unmute": "Opphev demping",
+		"kAdminVMButtons_GetIP": "Hent IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Skriv inn et nytt brukernavn for {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Er du sikker på at du vil gjenopprette VM-en?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Skriv inn et nytt brukernavn, eller la feltet stå tomt for å få et tilfeldig gjestenavn",
+
+		"kError_UnexpectedDisconnection": "Du har blitt koblet fra serveren.",
+		"kError_UsernameTaken": "Det brukernavnet er allerede tatt.",
+		"kError_UsernameInvalid": "Brukernavn kan bare inneholde sifre, bokstaver, mellomrom, bindestreker, understreker, og prikker, og det må være mellom 3 og 20 tegn.",
+		"kError_UsernameBlacklisted": "Det brukernavnet er svartelistet.",
+		"kError_IncorrectPassword": "Feil passord.",
+
+		"kAccountModal_Verify": "Verifiser e-post",
+		"kAccountModal_AccountSettings": "Kontoinnstilligner",
+		"kAccountModal_ResetPassword": "Tilbakestill passord",
+
+		"kAccountModal_NewPassword": "Nytt passord",
+		"kAccountModal_ConfirmNewPassword": "Bekreft nytt passord",
+		"kAccountModal_CurrentPassword": "Gjeldende passord",
+		"kAccountModal_ConfirmPassword": "Bekreft passordet igjen",
+		"kAccountModal_HideFlag": "Skjul nasjonalflagget mitt",
+
+		"kMissingCaptcha": "Vennligst fyll ut captchaen.",
+		"kPasswordsMustMatch": "Passordene må stemme.",
+		"kAccountModal_VerifyText": "Vi har sendt en e-post til {0}. For å verifisere kontoen din, vennligst skriv inn den 8-sifrede koden fra e-posten under.",
+		"kAccountModal_VerifyPasswordResetText": "Vi har sendt en e-post til {0}. For å tilbaketille passordet ditt, vennligst skriv inn den 8-sifrede koden fra e-posten under.",
+		"kAccountModal_PasswordResetSuccess": "Passordet ditt har blitt endret. Du kan bruke den for å logge inn til kontoen din.",
+
+		"kNotLoggedIn": "Ikke logget inn"
+	}
+}
