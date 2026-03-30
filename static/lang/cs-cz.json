@@ -1,0 +1,101 @@
+{
+	"languageName": "Čeština",
+	"translatedLanguageName": "Czech",
+	"flag": "🇨🇿",
+	"author": "SRVL",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Ano",
+		"kGeneric_No": "Ne",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Zrušit",
+		"kGeneric_Send": "Odeslat",
+		"kGeneric_Understood": "Rozumím",
+		"kGeneric_Username": "Uživatelské jméno",
+		"kGeneric_Password": "Heslo",
+		"kGeneric_Login": "Přihlásit se",
+		"kGeneric_Register": "Zaregistrovat se",
+		"kGeneric_EMail": "E-mail",
+		"kGeneric_DateOfBirth": "Datum narození",
+		"kGeneric_VerificationCode": "Ověřovací kód",
+		"kGeneric_Verify": "Ověřit",
+		"kGeneric_Update": "Aktualizovat",
+		"kGeneric_Logout": "Odhlásit se",
+		
+		"kWelcomeModal_Header": "Vítejte v CollabVM",
+		"kWelcomeModal_Body": "<p>CollabVM vám umožňuje střídat se při ovládání online virtuálních strojů se zcela neznámými lidmi!</p> <p>Než budete pokračovat, seznamte se prosím s našimi pravidly:</p> <h3>R1. Neporušujte zákon.</h3> Nepoužívejte CollabVM ani síť CollabVM k porušování federálních zákonů Spojených států, zákonů státu New York nebo mezinárodního práva. Pokud se společnost CollabVM dozví, že prostřednictvím jejích služeb došlo ke spáchání trestného činu, bude Vám okamžitě zakázán přístup a Vaše činnosti mohou být v případě nutnosti nahlášeny příslušným orgánům.<br><br>Společnost CollabVM má ze zákona povinnost informovat orgány činné v trestním řízení, pokud zjistí přítomnost dětské pornografie na své síti nebo její přenos prostřednictvím své sítě.<br><br>COPPA je také vynucována, proto prosím nepoužívejte CollabVM, pokud je Vám méně než 13 let. <h3>R2. Nespouštějte nástroje DoS/DDoS.</h3> Nepoužívejte službu CollabVM k provádění útoků DoS/DDoS na jednotlivce, podniky, společnosti nebo kohokoliv jiného. <h3>R3. Žádná distribuce spamu.</h3> Nepoužívejte tuto službu k rozesílání spamu ani k rozesílání obecně nevyžádané pošty. <h3>R4. Nezneužívejte žádné exploity.</h3> Nezneužívejte žádné exploity. Pokud zjistíte, že někdo exploity zneužívá, nebo pokud potřebujete nahlásit nějaký exploit, kontaktujte nás prosím na adrese: computernewbab@gmail.com <h3>R5. Nevydávejte se za jiné uživatele.</h3> Nevydávejte se za jiné členy CollabVM. Pokud budete přistiženi, budete dočasně odpojeni a v případě nutnosti Vám bude zablokován přístup. <h3>R6. Pouze jeden hlas na osobu.</h3> Nepoužívejte žádné metody či nástroje k obcházení omezení hlasovacího systému. Každá osoba má nárok pouze na jeden hlas. Bez výjimek. Každý, kdo bude přistižen při obcházení hlasovacího systému, bude zabanován. <h3>R7. Žádné nástroje vzdáleného přístupu.</h3> Nepoužívejte žádné nástroje pro vzdálenou správu (např. DarkComet, NanoCore, AnyDesk, TeamViewer, Orcus, atd.) <h3>R8. Neobcházejte CollabNet.</h3> Nepokoušejte se obejít blokování poskytované CollabNetem, zejména pokud je používáno k porušení 1. pravidla, 2. pravidla nebo 7. pravidla (nebo spouštění hloupých, přehnaně používaných věcí). <h3>R9. Nevykonávejte opakovaně destruktivní činnosti.</h3> Uživatelům je zakázáno úmyslně znepřístupňovat VM (opakovaně ji činit nepoužitelnou), instalovat nebo přeinstalovávat operační systém (s vyjímkou VM7 nebo VM8), nebo spouštět roboty, které tyto činnosti provádějí. To zahrnuje i roboty, kteří spamují velké množství vstupů z klávesnice nebo myši (tzv. \"kitting\"). <h3>R10. Žádné těžení kryptoměn.</h3> Pokusy o těžbu kryptoměn na virtuálních počítačích povedou k vykopnutí, a při opakovaných pokusech k trvalému zakázání přístupu. Kromě toho si tím stejně nevyděláte žádné peníze. <h3>Varování před NSFW obsahem</h3> Upozorňujeme, že NSFW obsah je na naší anarchistické VM (VM0b0t) povolen a uživatelé ho pravidelně sledují. Navíc, i když se snažíme udržet NSFW mimo hlavní VM, občas se to někomu podaří.",
+
+		"kSiteButtons_Home": "Domů",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Pravidla",
+		"kSiteButtons_DarkMode": "Tmavý režim",
+		"kSiteButtons_LightMode": "Světlý režim",
+		"kSiteButtons_Languages": "Jazyky",
+
+		"kVM_UsersOnlineText": "Uživatelé online:",
+
+		"kVM_TurnTimeTimer": "Přístup vyprší za {0} vteřin.",
+		"kVM_WaitingTurnTimer": "Za {0} vteřin získáte kontrolu.",
+		"kVM_VoteCooldownTimer": "Počkejte prosím {0} vteřin před zahájením dalšího hlasování.",
+
+		"kVM_VoteForResetTitle": "Chcete resetovat VM?",
+		"kVM_VoteForResetTimer": "Hlasování končí za {0} vteřin",
+
+		"kVMButtons_TakeTurn": "Převzít kontrolu",
+		"kVMButtons_EndTurn": "Přestat ovládat",
+		"kVMButtons_ChangeUsername": "Změnit uživatelské jméno",
+		"kVMButtons_Keyboard": "Klávesnice",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Hlasovat pro reset",
+		"kVMButtons_Screenshot": "Snímek obrazovky",
+
+		"kQEMUMonitor": "QEMU Monitor",
+		"kAdminVMButtons_PassVote": "Schválit hlas",
+		"kAdminVMButtons_CancelVote": "Zrušit hlas",
+
+		"kAdminVMButtons_Restore": "Obnovit",
+		"kAdminVMButtons_Reboot": "Restartovat",
+		"kAdminVMButtons_ClearTurnQueue": "Vymazat frontu přístupu",
+		"kAdminVMButtons_BypassTurn": "Přednostní přístup",
+		"kAdminVMButtons_IndefiniteTurn": "Nekonečný přístup",
+		"kAdminVMButtons_GhostTurnOn": "Režim ducha (Zapnuto)",
+		"kAdminVMButtons_GhostTurnOff": "Režim ducha (Vypnuto)",
+
+		"kAdminVMButtons_Ban": "Zabanovat",
+		"kAdminVMButtons_Kick": "Vyhodit",
+		"kAdminVMButtons_TempMute": "Dočasně ztlumit",
+		"kAdminVMButtons_IndefMute": "Tvrale ztlumit",
+		"kAdminVMButtons_Unmute": "Zrušit ztlumení",
+		"kAdminVMButtons_GetIP": "Získat IP adresu",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Zadejte nové uživatelské jméno pro {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Opravdu chcete obnovit VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Zadejte nové uživatelské jméno, nebo nechte políčko prázdné pro přidělení uživatelského jména pro hosty",
+
+		"kError_UnexpectedDisconnection": "Byli jste odpojeni od serveru.",
+		"kError_UsernameTaken": "Toto uživatelské jméno je již zabrané.",
+		"kError_UsernameInvalid": "Uživatelské jméno smí obsahovat pouze čísla, písmena, mezery, pomlčky, podtržítka a tečky a jeho délka musí být mezi 3 a 20 znaky.",
+		"kError_UsernameBlacklisted": "Toto uživatelské jméno není povoleno.",
+		"kError_IncorrectPassword": "Nesprávné heslo.",
+
+		"kAccountModal_Verify": "Ověřit e-mail",
+		"kAccountModal_AccountSettings": "Nastavení účtu",
+		"kAccountModal_ResetPassword": "Obnovit heslo",
+
+		"kAccountModal_NewPassword": "Nové heslo",
+		"kAccountModal_ConfirmNewPassword": "Potvrdit nové heslo",
+		"kAccountModal_CurrentPassword": "Aktuální heslo",
+		"kAccountModal_ConfirmPassword": "Potvrdit heslo",
+		"kAccountModal_HideFlag": "Skrýt vlajku mé země",
+
+		"kMissingCaptcha": "Vyplňte prosím captchu.",
+		"kPasswordsMustMatch": "Hesla se musí shodovat.",
+		"kAccountModal_VerifyText": "Poslali jsme e-mail na adresu {0}. Pro ověření Vašeho účtu zadejte 8 místný kód, který jste obdrželi v e-mailu.",
+		"kAccountModal_VerifyPasswordResetText": "Poslali jsme e-mail na adresu {0}. Pro obnovení Vašeho hesla zadejte 8 místný kód, který jste obdrželi v e-mailu.",
+		"kAccountModal_PasswordResetSuccess": "Vaše heslo bylo úspěšně změněno. Nyní se můžete přihlásit pomocí nového hesla.",
+
+		"kNotLoggedIn": "Nepřihlášen"
+	}
+}
