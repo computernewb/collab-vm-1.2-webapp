@@ -1,0 +1,100 @@
+{
+	"languageName": "Dansk",
+	"translatedLanguageName": "Danish",
+	"flag": "🇩🇰",
+	"author": "enix",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Ja",
+		"kGeneric_No": "Nej",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Afbryde",
+		"kGeneric_Send": "Sende",
+		"kGeneric_Understood": "Forstået",
+		"kGeneric_Username": "Brugernavn",
+		"kGeneric_Password": "Kodeord",
+		"kGeneric_Login": "Log ind",
+		"kGeneric_Register": "Registrere",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Fødselsdato",
+		"kGeneric_VerificationCode": "Verifikationskode",
+		"kGeneric_Verify": "Tjekke",
+		"kGeneric_Update": "Opdatere",
+		"kGeneric_Logout": "Log ud",
+		
+		"kWelcomeModal_Header": "Vellkommen til CollabVM",
+		"kWelcomeModal_Body": "<p>Før du fortsætter, bedes du gøre dig bekendt med vores regler:</p> <h3>R1. Overtræd ikke loven.</h3> Brug ikke CollabVM eller CollabVM-netværket til at overtræde USA's føderale lov, New Yorks statslov eller international lov. Hvis CollabVM opdager, at en forbrydelse er begået gennem sin tjeneste, bliver du straks blokeret, og dine aktiviteter kan rapporteres til myndighederne, hvis det er nødvendigt.<br/> CollabVM er juridisk forpligtet til at underrette retshåndhævende myndigheder, hvis det får kendskab til tilstedeværelsen af børnepornografi på sit netværk eller dens overførsel.<br/> COPPA håndhæves også, så brug ikke CollabVM, hvis du er under 13 år. <h3>R2. Ingen DoS/DDoS-værktøjer.</h3> Brug ikke CollabVM til at udføre DoS/DDoS mod en person, en butik, en virksomhed eller en anden person. <h3>R3. Ingen spam.</h3> Brug ikke denne tjeneste til at sende spam-e-mails eller spam generelt. <h3>R4. Ingen misbrug af exploits.</h3> Misbrug ikke exploits. Hvis du ser nogen misbruge exploits, eller hvis du vil rapportere en exploit, kontakt mig venligst på: computernewbab@gmail.com <h3>R5. Udgiv dig ikke for andre brugere.</h3> Udgi dig ikke for andre medlemmer af CollabVM. Hvis du bliver opdaget, bliver du midlertidigt afbrudt fra forbindelsen og eventuelt blokeret. <h3>R6. Én stemme per person.</h3> Brug ikke metoder eller værktøjer til at omgå stemmebegrænsningen. Det er kun tilladt med én stemme per person. Enhver, der bliver opdaget, bliver udelukket. <h3>R7. Ingen fjernadministrationsværktøjer.</h3> Fjernadministrationsværktøjer må ikke anvendes (f.eks. DarkComet, NanoCore, Anydesk, TeamViewer, Orcus osv.) <h3>R8. Ingen omgåelse af CollabNet</h3> Forsøg ikke at omgå de låse, der er leveret af CollabNet, især ikke hvis de bruges til at bryde regel 1, regel 2 eller regel 7 (eller udføre dumme, overdrevne handlinger). <h3>R9. Ingen konstante destruktive handlinger.</h3> Brugere må ikke ødelægge VM'en (så den konstant bliver ubrugelig), installere et andet operativsystem eller geninstallere operativsystemet (undtagen på VM7 eller VM8) eller køre bots, der gør dette. Dette inkluderer bots, der spammer massive mængder tastatur-/musinput (såkaldt 'kitting'). <h3>R10. Ingen kryptomining</h3> Forsøg på at mine kryptovalutaer på VM'erne vil føre til et kick og derefter permanent udelukkelse, hvis det fortsættes. Derudover er det ikke sådan, at du ville tjene penge på det. <h3>NSFW-advarsel</h3> Bemærk venligst, at NSFW-indhold er tilladt på vores Anarcho-VM (VM0b0t) og ses regelmæssigt. Selvom vi forsøger at holde NSFW væk fra hoved-VM'erne, kan noget slippe igennem. </div>",
+
+		"kSiteButtons_Home": "Hjemmeside",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Regler",
+		"kSiteButtons_DarkMode": "Mørk tilstand",
+		"kSiteButtons_LightMode": "Lys tilstand",
+		"kSiteButtons_Languages": "Sprog",
+
+		"kVM_UsersOnlineText": "Bruger online:",
+
+		"kVM_TurnTimeTimer": "Din tid udløber om {0} sekunder.",
+		"kVM_WaitingTurnTimer": "Vent i kø i {0} sekunder.",
+		"kVM_VoteCooldownTimer": "Vent venligst {0} sekunder, før du starter endnu en afstemning.",
+
+		"kVM_VoteForResetTitle": "Vil du nulstille VM'en?",
+		"kVM_VoteForResetTimer": "Afstemning slutter om {0} sekunder",
+
+		"kVMButtons_TakeTurn": "Gå i kø",
+		"kVMButtons_EndTurn": "Forlad køen",
+		"kVMButtons_ChangeUsername": "Skift brugernavn",
+		"kVMButtons_Keyboard": "Tastatur",
+		"KVMButtons_CtrlAltDel": "Strg+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Stem for nulstilling",
+		"kVMButtons_Screenshot": "Skærmbillede",
+
+		"kQEMUMonitor": "QEMU-konsol",
+		"kAdminVMButtons_PassVote": "Afslut afstemning",
+		"kAdminVMButtons_CancelVote": "Annuller afstemning",
+
+		"kAdminVMButtons_Restore": "Gendan",
+		"kAdminVMButtons_Reboot": "Genstart",
+		"kAdminVMButtons_ClearTurnQueue": "Tøm køen",
+		"kAdminVMButtons_BypassTurn": "Spring køen over",
+		"kAdminVMButtons_IndefiniteTurn": "Ubegrænset tid",
+
+		"kAdminVMButtons_Ban": "Lås",
+		"kAdminVMButtons_Kick": "Kick",
+		"kAdminVMButtons_TempMute": "Midlertidig lydløs",
+		"kAdminVMButtons_IndefMute": "Permanent lydløs",
+		"kAdminVMButtons_Unmute": "Fjern lydløs",
+		"kAdminVMButtons_GetIP": "Hent IP-adresse",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Indtast et nyt brugernavn for {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Er du sikker på, at du vil gendanne den virtuelle maskine?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Indtast dit nye brugernavn.",
+
+		"kError_UnexpectedDisconnection": "Du er blevet afbrudt fra serveren.",
+		"kError_UsernameTaken": "Dette brugernavn er allerede taget.",
+		"kError_UsernameInvalid": "Brugernavne må kun indeholde tal, bogstaver, mellemrum, bindestreger, understregninger og punktummer, og skal være mellem 3 og 20 tegn lange.",
+		"kError_UsernameBlacklisted": "Dette brugernavn er forbudt.",
+		"kError_IncorrectPassword": "Forkert Kodeord",
+
+		"kAccountModal_Verify": "Bekræft e-mailadresse",
+		"kAccountModal_AccountSettings": "Kontoindstillinger",
+		"kAccountModal_ResetPassword": "Nulstil adgangskode",
+
+        "kAccountModal_NewPassword": "Nyt kodeord",
+        "kAccountModal_ConfirmNewPassword": "Bekræft nyt kodeord",
+        "kAccountModal_CurrentPassword": "Nuværende kodeord",
+        "kAccountModal_ConfirmPassword": "Bekræft kodeord",
+
+
+        "kMissingCaptcha": "Udfyld venligst Captcha.",
+        "kPasswordsMustMatch": "Adgangskoderne skal matche.",
+        "kAccountModal_VerifyText": "Vi har sendt en e-mail til {0}. For at bekræfte din konto, indtast venligst den 8-cifrede kode fra e-mailen nedenfor.",
+        "kAccountModal_VerifyPasswordResetText": "Vi har sendt en e-mail til {0}. For at nulstille din adgangskode, indtast venligst den 8-cifrede kode fra e-mailen nedenfor.",
+        "kAccountModal_PasswordResetSuccess": "Din adgangskode er blevet ændret succesfuldt. Du kan nu logge ind med din nye adgangskode.",
+
+        "kNotLoggedIn": "Ikke logget ind"
+
+	}
+}
