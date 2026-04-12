@@ -1,0 +1,101 @@
+{
+	"languageName": "Uzbek",
+	"translatedLanguageName": "Uzbek",
+	"flag": "uz",
+	"author": "guest86841",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Ha",
+		"kGeneric_No": "Yo'q",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Bekor qilish",
+		"kGeneric_Send": "jo'natish",
+		"kGeneric_Understood": "Tushundim",
+		"kGeneric_Username": "Foydalanuvchi nomi",
+		"kGeneric_Password": "Parol",
+		"kGeneric_Login": "Kirish",
+		"kGeneric_Register": "Ro'yxatdan o'tish",
+		"kGeneric_EMail": "E-pochta",
+		"kGeneric_DateOfBirth": "Tug'ilgan sana",
+		"kGeneric_VerificationCode": "Tasdiqlash kodi",
+		"kGeneric_Verify": "Tasdiqlash",
+		"kGeneric_Update": "Yangilash",
+		"kGeneric_Logout": "Hisobdan chiqish",
+		
+		"kWelcomeModal_Header": "CollabVM ga xush kelibsiz",
+		"kWelcomeModal_Body": "<p>Davom etishdan oldin,bizning qoidalarimiz bilan tanishib oling :</p> <h3>Q1. Qoidalarni buzmang.</h3>  CollabVMni yoki CollabVMning tarmog'ini  AQSH qoida federalini, Nyu York statik qoidasini, yoki Xalqaro qoidalarni buzib kirmang. Agar CollabVM kriminallika ayblanib qolsa, servis uni to'xtatishga majbur etadi, siz esa zudlikda bloklanasiz, va sizning harakatlaringiz xabar qilinadi..<br><br>CollabVM qonunga ko'ra, agar u o'z tarmog'ida bolalar pornografiyasi borligi yoki uning tarmog'i orqali uzatilayotganidan xabar topsa, huquqni muhofaza qilish organlarini xabardor qilishi shart..<br><br>COPPA hattoki majburlatilgan, Iltimos, CollabVMni 13 yoshdan kichik bo'lsangiz, ishlatmang. <h3>Q2. DoS/DDoSni ishga tushirmang.</h3> CollabVMni DoS/DDoS hujumini ishlatmang, biznes, kompaniyan, yoki boshqa narsaga ishlatmang. <h3>Q3. Spam distributsiya ruxsat berilmagan.</h3> E-pochtani CollabVMda spamni uyushtirmang. <h3>Q4. Ekspluatatsiya qilmang.</h3> Ekspluatatsiya qilmang,  agar siz bunday odamlarni ko'rsangiz, computernewbab@gmail.com ga murojaat qiling <h3>Q5. Boshqa foydalanuvchilarga taqlid qilmang.</h3> CollabVMning boshqa a'zolarini taqlid qilmang. Agar tutilsangiz, siz vaqtinchaga uzilasiz, kerak bo'lsa bloklanasiz. <h3>Q6. Bir odam bir ovoz.</h3> Ovoz qoidalarini buzish uchun har qanday metoddan foydalanmang. Agar kimdir bu ishni bajarsa, bloklanadi. <h3>Q7. Boshqaruv ish stolidan foydalanmang.</h3> Boshqaruv ish stolidan foydalanmang(masalan: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, RustDesk.) <h3>Q8.CollabNetdan o'tmang.</h3> CollabNet tarmog'idan o'tmang, agar Qoida 1, Qoida 2, or Qoida 7 (yoki keraksiz ish bajarganda). <h3>R9. VMni darrov buzishga o'tmang.</h3> VMni xohlagan uslub bilan buzmang (agar foydasiz bo'lsa), Operatsion tizimni o'rnatish/qayta o'rnatish (VM7 yoki VM8dan tashqari), yoki buni botlar bajarishi mumkin emas. Bu hattoki, galni ishlatishda qo'llanadigan botlarni (\"haking\") ni ham o'z ichiga oladi. <h3>Q10. Kriptomaniya bajarmang</h3>Bunday VMlar kriptomaniya uchun mo'ljallanmagan. Agar kriptomaniyani bajarsangiz, siz bloklanasiz. Bu yerda baribir pul ishlay olmaysiz. <h3>Diskleymer!!!</h3>  NSFW kontent bizning anarxiya VMga (VM0b0t) ruxsat berilgan,boshqalarda esa NSFW ruxsat berilmagan va E2Guarden tomonidan taqiqlanadi.",
+
+		"kSiteButtons_Home": "Asosiy",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Qoidalar",
+		"kSiteButtons_DarkMode": "Qorong'i rejim",
+		"kSiteButtons_LightMode": "Yorug' rejim",
+		"kSiteButtons_Languages": "Tillar",
+
+		"kVM_UsersOnlineText": "Foydalanuvchilar:",
+
+		"kVM_TurnTimeTimer": "Galingiz {0} soniyadan keyin tugaydi.",
+		"kVM_WaitingTurnTimer": "Gal uchun {0} soniya kutilmoqda.",
+		"kVM_VoteCooldownTimer": "Iltimos, ovoz berishdan oldin {0} soniya kuting .",
+
+		"kVM_VoteForResetTitle": "VMni asl holatga qaytarishni xohlaysizmi?",
+		"kVM_VoteForResetTimer": "Ovoz {0} soniyadan so'ng tugaydi",
+
+		"kVMButtons_TakeTurn": "Gal olish",
+		"kVMButtons_EndTurn": "Tugatish",
+		"kVMButtons_ChangeUsername": "Foydalanuvchi nomini o'zgartirish",
+		"kVMButtons_Keyboard": "Klaviatura",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Asl holatga qaytarish uchun ovoz berish",
+		"kVMButtons_Screenshot": "Ekran tasviri",
+
+		"kQEMUMonitor": "QEMU Monitor",
+		"kAdminVMButtons_PassVote": "Ovozni qabul qilish",
+		"kAdminVMButtons_CancelVote": "Ovozni rad etish",
+
+		"kAdminVMButtons_Restore": "Tiklash",
+		"kAdminVMButtons_Reboot": "Qayta ishga tushirish",
+		"kAdminVMButtons_ClearTurnQueue": "Gal navbatligini tozalash",
+		"kAdminVMButtons_BypassTurn": "Galdan o'tish",
+		"kAdminVMButtons_IndefiniteTurn": "Galni o'chirish",
+		"kAdminVMButtons_GhostTurnOn": "Ko'rinmas rejim (Yoniq)",
+		"kAdminVMButtons_GhostTurnOff": "Ko'rinmas rejim(O'chiq)",
+
+		"kAdminVMButtons_Ban": "Bloklash",
+		"kAdminVMButtons_Kick": "Chiqarish",
+		"kAdminVMButtons_TempMute": "Vaqtincha to'xtatish",
+		"kAdminVMButtons_IndefMute": "To'xtatish",
+		"kAdminVMButtons_Unmute": "Ruxsat berish",
+		"kAdminVMButtons_GetIP": "IPni olish",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Yangi foydalanuvchi nomini kiriting {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "VMni tiklashni xohlaysizmi?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Yangi foydalanuvchi nomini kiriting, yoki hech narsa yozmasdan mehmon nomerini olasiz",
+
+		"kError_UnexpectedDisconnection": "Siz serverdan chiqdingiz.",
+		"kError_UsernameTaken": "Bu foydalanuvchi nomi band",
+		"kError_UsernameInvalid": "Foydalanuvchi nomi raqamlardan, harflardan, probellardan, tagchiziqlardan va nuqtalardan iborat bo'lishi kerak va bu nom 3 tadan 20 tagacha bo'lishi lozim.",
+		"kError_UsernameBlacklisted": "Foydalanuvchi nomi qoralangan.",
+		"kError_IncorrectPassword": "Noto'g'ri parol.",
+
+		"kAccountModal_Verify": "E-pochtani tasdiqlang",
+		"kAccountModal_AccountSettings": "Hisob Sozlamalari",
+		"kAccountModal_ResetPassword": "Parolni tiklash",
+
+		"kAccountModal_NewPassword": "Yangi Parol",
+		"kAccountModal_ConfirmNewPassword": "Yangi Parolni tasdiqlash",
+		"kAccountModal_CurrentPassword": "Joriy Parol",
+		"kAccountModal_ConfirmPassword": "Parolni tasdiqlash",
+		"kAccountModal_HideFlag": "Davlat bayrog'ini yashirmoq",
+
+		"kMissingCaptcha": "Captchadan o'ting.",
+		"kPasswordsMustMatch": "Parol bir xil emas.",
+		"kAccountModal_VerifyText": "Biz E-pochtani {0}ga yubordik. Hisobni tasdiqlash uchun, 8 raqamli kodni E-pochtadan tering.",
+		"kAccountModal_VerifyPasswordResetText": "Biz E-pochtani {0}ga yubordik. Parolni tiklash uchun, 8 raqamli kodni E-pochtadan tering.",
+		"kAccountModal_PasswordResetSuccess": "Parolingiz muvaffaqiyatli o'zgartirildi. Endi siz yangi parol bilan kirishingiz mumkin.",
+
+		"kNotLoggedIn": "Hisobga kirmagan"
+	}
+}
