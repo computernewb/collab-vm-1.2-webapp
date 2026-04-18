@@ -427,7 +427,15 @@ async function openVM(vm: VM): Promise<void> {
 	VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms));
 
 	VM!.on('close', () => {
-		if (!expectedClose) alert(TheI18n.GetString(I18nStringKey.kError_UnexpectedDisconnection));
+		if (!expectedClose) {
+			/*
+			 * better disconnection thing
+			 * by guest4242 :-)
+			 */
+			const someToast = document.getElementById('disconnectionToast') // yummy toast
+			const disconnectionToastControl = bootstrap.Toast.getOrCreateInstance(someToast)
+			disconnectionToastControl.show();
+		}
 		closeVM();
 	});
 

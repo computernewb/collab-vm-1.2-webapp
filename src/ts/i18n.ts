@@ -265,6 +265,7 @@ export class I18n {
 			accountSettingsButton: I18nStringKey.kAccountModal_AccountSettings,
 			accountLogoutButton: I18nStringKey.kGeneric_Logout,
 			languageDropdownText: I18nStringKey.kSiteButtons_Languages,
+			disconnecti18n_thing: I18nStringKey.kError_UnexpectedDisconnection,
 			
 			welcomeModalHeader: I18nStringKey.kWelcomeModal_Header,
 			welcomeModalBody: I18nStringKey.kWelcomeModal_Body,
