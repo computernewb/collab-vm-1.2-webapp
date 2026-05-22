@@ -28,6 +28,7 @@
     "@types/bootstrap": "^5.2.10",
     "@types/cloudflare-turnstile": "^0.2.2",
     "@types/dompurify": "^3.2.0",
+    "@types/dom-webcodecs": "^0.1.18",
     "@types/grecaptcha": "^3.0.9",
     "@types/jest": "^29.5.14",
     "buffer": "^6.0.3",

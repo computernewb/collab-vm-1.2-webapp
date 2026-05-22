@@ -71,6 +71,12 @@ export default class CollabVMClient {
 	actualScreenSize : { width : number, height : number } = { width: 0, height: 0 };
 	private unscaledCtx: CanvasRenderingContext2D;
 	private ctx: CanvasRenderingContext2D;
+
+	private audioCtx: AudioContext;
+	private audioDecoder: AudioDecoder;
+	private audioDropTime: number = 0;
+	private audioNextTime: number = 0;
+
 	private url: string;
 	private connectedToVM: boolean = false;
 	private users: User[] = [];
@@ -102,6 +108,21 @@ export default class CollabVMClient {
 		// Get the 2D context
 		this.ctx = this.canvas.getContext('2d')!;
 		this.unscaledCtx = this.unscaledCanvas.getContext('2d')!;
+
+		this.audioCtx = new AudioContext();
+
+		this.audioDecoder = new AudioDecoder({
+			output: this.scheduleAudioData.bind(this),
+			error: console.error
+		});
+
+		// TODO: These settings should come from an AudioFormat message
+		this.audioDecoder.configure({
+			codec: 'opus',
+			sampleRate: 48000,
+			numberOfChannels: 2
+		});
+
 		// Bind canvas click
 		this.canvas.addEventListener('click', (e) => {
 			if (this.users.find((u) => u.username === this.username)?.turn === -1) this.turn(true);
@@ -227,6 +248,12 @@ export default class CollabVMClient {
 					URL.revokeObjectURL(url);
 				});
 				img.src = url;
+				break;
+			}
+
+			case CollabVMProtocolMessageType.audio: {
+				if (!msg.audio) return;
+				this.audioDecoder.decode(new EncodedAudioChunk({ type: 'key', timestamp: 0, data: msg.audio.data }));
 				break;
 			}
 		}
@@ -506,6 +533,55 @@ export default class CollabVMClient {
 			this.canvasScale.width = window.innerWidth;
 			this.canvasScale.height = (window.innerWidth / this.actualScreenSize.width) * this.actualScreenSize.height;
 		}
+	}
+
+	private scheduleAudioData(data: AudioData) {
+		const buffer = this.audioCtx.createBuffer(data.numberOfChannels, data.numberOfFrames, data.sampleRate);
+
+		for (let i = 0; i < data.numberOfChannels; i++) {
+			data.copyTo(buffer.getChannelData(i), { planeIndex: i, format: 'f32-planar' });
+		}
+
+		const source = this.audioCtx.createBufferSource();
+		source.buffer = buffer;
+		source.connect(this.audioCtx.destination);
+
+		const now = this.audioCtx.currentTime;
+
+		/**
+		 * Drop everything if we've queued more than 100ms (5 frames at 20ms).
+		 * 
+		 * As this is TCP, anything we missed will be retried, causing us to
+		 * drift in latency. This is an attempt to alleviate this.
+		 * 
+		 * Users can (eventually) do this manually by toggling audio, or the
+		 * issue can solve itself over time during times when nothing is
+		 * playing.
+		 * 
+		 * This can be tested by disconnecting from your network for a moment.
+		 * 
+		 * TODO: It's worth experimenting with this on different network
+		 * conditions, as this might not be sufficient for latency fluctuations
+		 * for example.
+		 */
+
+		if (now < this.audioDropTime) {
+			return;
+		}
+
+		if (this.audioNextTime - now > 0.100) {
+			this.audioDropTime = this.audioNextTime;
+			return;
+		}
+
+		// TODO: Playing XP ding after connect sounds like its overlapping two frames?
+		if (this.audioNextTime < now) {
+			this.audioNextTime = now;
+		}
+
+		source.start(this.audioNextTime);
+		this.audioNextTime += data.duration / (1000 ** 2);
+		data.close(); // *Seems* to solve a memory leak
 	}
 
 	async WaitForOpen() {
