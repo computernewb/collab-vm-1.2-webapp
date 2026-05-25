@@ -53,6 +53,8 @@ const elements = {
 	badPasswordAlert: document.getElementById('badPasswordAlert') as HTMLDivElement,
 	incorrectPasswordDismissBtn: document.getElementById('incorrectPasswordDismissBtn') as HTMLButtonElement,
 	ctrlAltDelBtn: document.getElementById('ctrlAltDelBtn') as HTMLButtonElement,
+	audioBtn: document.getElementById('audioBtn') as HTMLButtonElement,
+	audioBtnText: document.getElementById('audioBtnText') as HTMLSpanElement,
 	toggleThemeBtn: document.getElementById('toggleThemeBtn') as HTMLAnchorElement,
 	toggleThemeIcon: document.getElementById('toggleThemeIcon') as HTMLElement,
 	toggleThemeBtnText: document.getElementById('toggleThemeBtnText') as HTMLSpanElement,
@@ -458,6 +460,7 @@ async function openVM(vm: VM): Promise<void> {
 		closeVM();
 		throw new Error('Failed to connect to node');
 	}
+	updateAudioButton();
 	// Set the title
 	document.title = Format('{0} - {1}', vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
 	// Append canvas
@@ -813,6 +816,12 @@ elements.ctrlAltDelBtn.addEventListener('click', () => {
 	VM?.key(0xffe9, false);
 	// Del
 	VM?.key(0xffff, false);
+});
+elements.audioBtn.addEventListener('click', () => {
+	const enable = !VM?.getAudioEnabled();
+	VM?.enableAudio(enable);
+	localStorage.setItem('collabvm-audio-enabled', enable.toString());
+	updateAudioButton();
 });
 elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
 elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
@@ -1486,6 +1495,17 @@ elements.toggleThemeBtn.addEventListener('click', e => {
 	return false;
 });
 
+function updateAudioButton() {
+	if (!VM)
+		return;
+
+	// TODO: audioBtnIcon, off = volume-xmark, low = volume-off, medium = volume-low, high = volume-high
+
+	elements.audioBtnText.innerText = TheI18n.GetString(
+		I18nStringKey[VM.getAudioEnabled() ? 'kVMButtons_AudioOn' : 'kVMButtons_AudioOff']
+	);
+}
+
 // Public API
 w.collabvm = {
 	openVM: openVM,
@@ -1547,8 +1567,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 			else
 				elements.turnBtnText.innerText = TheI18n.GetString(I18nStringKey.kVMButtons_TakeTurn);
 			if (VM!.getVoteStatus())
-			elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteForResetTimer, voteTimer);
-
+				elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteForResetTimer, voteTimer);
+			updateAudioButton();
 		}
 		else {
 			document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);

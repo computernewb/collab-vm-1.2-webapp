@@ -52,6 +52,8 @@ export enum I18nStringKey {
 
 	kVMButtons_VoteForReset = 'kVMButtons_VoteForReset',
 	kVMButtons_Screenshot = 'kVMButtons_Screenshot',
+	kVMButtons_AudioOn = 'kVMButtons_AudioOn',
+	kVMButtons_AudioOff = 'kVMButtons_AudioOff',
 
 	// Admin VM buttons
 	kQEMUMonitor = 'kQEMUMonitor',

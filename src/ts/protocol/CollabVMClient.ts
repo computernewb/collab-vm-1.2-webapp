@@ -76,6 +76,8 @@ export default class CollabVMClient {
 	private audioDecoder: AudioDecoder;
 	private audioDropTime: number = 0;
 	private audioNextTime: number = 0;
+	private audioEnabled: boolean;
+	private audioVolume: number;
 
 	private url: string;
 	private connectedToVM: boolean = false;
@@ -116,12 +118,8 @@ export default class CollabVMClient {
 			error: console.error
 		});
 
-		// TODO: These settings should come from an AudioFormat message
-		this.audioDecoder.configure({
-			codec: 'opus',
-			sampleRate: 48000,
-			numberOfChannels: 2
-		});
+		this.audioEnabled = localStorage.getItem('collabvm-audio-enabled') === 'true';
+		this.audioVolume = parseFloat(localStorage.getItem('collabvm-audio-volume') ?? '1.0');
 
 		// Bind canvas click
 		this.canvas.addEventListener('click', (e) => {
@@ -251,8 +249,18 @@ export default class CollabVMClient {
 				break;
 			}
 
+			case CollabVMProtocolMessageType.audioFormat: {
+				if (!msg.audioFormat) return;
+				this.audioDecoder.configure({
+					codec: msg.audioFormat.format,
+					sampleRate: msg.audioFormat.sampleRate,
+					numberOfChannels: msg.audioFormat.channels
+				});
+				break;
+			}
+
 			case CollabVMProtocolMessageType.audio: {
-				if (!msg.audio) return;
+				if (!msg.audio || !this.audioEnabled) return;
 				this.audioDecoder.decode(new EncodedAudioChunk({ type: 'key', timestamp: 0, data: msg.audio.data }));
 				break;
 			}
@@ -638,6 +646,7 @@ export default class CollabVMClient {
 			if (username === null) this.send('rename');
 			else this.send('rename', username);
 			if (DefaultCapabilities.length > 0) this.send('cap', ...DefaultCapabilities);
+			this.send('audio', this.audioEnabled ? '1' : '0');
 			this.send('connect', id);
 			this.node = id;
 		});
@@ -703,6 +712,15 @@ export default class CollabVMClient {
 	// Try to login using the specified password
 	login(password: string) {
 		this.send('admin', AdminOpcode.Login, password);
+	}
+
+	enableAudio(enable: boolean) {
+		this.send('audio', enable ? '1' : '0');
+		this.audioEnabled = enable;
+	}
+
+	getAudioEnabled(): boolean {
+		return this.audioEnabled;
 	}
 
 	/* Admin commands */

@@ -54,6 +54,8 @@ const enusLanguage : Language = {
 
 		"kVMButtons_VoteForReset": "Vote For Reset",
 		"kVMButtons_Screenshot": "Screenshot",
+		"kVMButtons_AudioOn": "Audio On",
+		"kVMButtons_AudioOff": "Audio Off",
 
 		"kQEMUMonitor": "QEMU Monitor",
 		"kAdminVMButtons_PassVote": "Pass Vote",
