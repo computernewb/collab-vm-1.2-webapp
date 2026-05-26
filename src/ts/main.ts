@@ -32,6 +32,7 @@ const elements = {
 	username: document.getElementById('username') as HTMLSpanElement,
 	chatinput: document.getElementById('chat-input') as HTMLInputElement,
 	sendChatBtn: document.getElementById('sendChatBtn') as HTMLButtonElement,
+	muteChatSoundBtn: document.getElementById('muteChatSoundBtn') as HTMLButtonElement,
 	takeTurnBtn: document.getElementById('takeTurnBtn') as HTMLButtonElement,
 	changeUsernameBtn: document.getElementById('changeUsernameBtn') as HTMLButtonElement,
 	turnBtnText: document.getElementById('turnBtnText') as HTMLSpanElement,
@@ -341,6 +342,7 @@ let voteTimer = 0;
 let rank: Rank = Rank.Unregistered;
 let perms: Permissions = new Permissions(0);
 const chatsound = new Audio(Config.ChatSound);
+let chatSoundEnabled: boolean = (localStorage.getItem('collabvm-chat-sound') ?? 'true') === 'true';
 
 // Active VM
 let VM: CollabVMClient | null = null;
@@ -609,7 +611,9 @@ function chatMessage(username: string, message: string) {
 	tr.appendChild(td);
 	elements.chatList.appendChild(tr);
 	elements.chatListDiv.scrollTop = elements.chatListDiv.scrollHeight;
-	chatsound.play();
+	if (chatSoundEnabled) {
+		chatsound.play();
+	}
 }
 
 function addUser(user: User) {
@@ -782,11 +786,20 @@ function sendChat() {
 	elements.chatinput.value = '';
 }
 
+function updateChatSoundBtn() {
+	elements.muteChatSoundBtn.firstElementChild!.className = `fa-solid fa-volume-${chatSoundEnabled ? 'high' : 'xmark'}`;
+}
+
 // Bind list buttons
 elements.homeBtn.addEventListener('click', () => closeVM());
 
 // Bind VM view buttons
 elements.sendChatBtn.addEventListener('click', sendChat);
+elements.muteChatSoundBtn.addEventListener('click', (e) => {
+	chatSoundEnabled = !chatSoundEnabled;
+	updateChatSoundBtn();
+	localStorage.setItem('collabvm-chat-sound', chatSoundEnabled.toString());
+});
 elements.chatinput.addEventListener('keypress', (e) => {
 	if (e.key === 'Enter') sendChat();
 });
@@ -1635,6 +1648,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 	elements.hideFlagCheckbox.checked = hideFlag;
 
 	document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
+
+	updateChatSoundBtn();
 
 	// Load all VMs
 	loadList();
