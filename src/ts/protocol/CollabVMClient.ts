@@ -73,11 +73,11 @@ export default class CollabVMClient {
 	private ctx: CanvasRenderingContext2D;
 
 	private audioCtx: AudioContext;
+	private audioGain: GainNode;
 	private audioDecoder: AudioDecoder;
 	private audioDropTime: number = 0;
 	private audioNextTime: number = 0;
 	private audioEnabled: boolean;
-	private audioVolume: number;
 
 	private url: string;
 	private connectedToVM: boolean = false;
@@ -112,6 +112,8 @@ export default class CollabVMClient {
 		this.unscaledCtx = this.unscaledCanvas.getContext('2d')!;
 
 		this.audioCtx = new AudioContext();
+		this.audioGain = this.audioCtx.createGain();
+		this.audioGain.connect(this.audioCtx.destination);
 
 		this.audioDecoder = new AudioDecoder({
 			output: this.scheduleAudioData.bind(this),
@@ -119,7 +121,7 @@ export default class CollabVMClient {
 		});
 
 		this.audioEnabled = localStorage.getItem('collabvm-audio-enabled') === 'true';
-		this.audioVolume = parseFloat(localStorage.getItem('collabvm-audio-volume') ?? '1.0');
+		this.audioGain.gain.value = parseFloat(localStorage.getItem('collabvm-audio-volume') ?? '1.0');
 
 		// Bind canvas click
 		this.canvas.addEventListener('click', (e) => {
@@ -552,7 +554,7 @@ export default class CollabVMClient {
 
 		const source = this.audioCtx.createBufferSource();
 		source.buffer = buffer;
-		source.connect(this.audioCtx.destination);
+		source.connect(this.audioGain);
 
 		const now = this.audioCtx.currentTime;
 
@@ -721,6 +723,14 @@ export default class CollabVMClient {
 
 	getAudioEnabled(): boolean {
 		return this.audioEnabled;
+	}
+
+	setAudioVolume(volume: number) {
+		this.audioGain.gain.value = volume; // Naive, not as good as other volume controls
+	}
+
+	getAudioVolume(): number {
+		return this.audioGain.gain.value;
 	}
 
 	/* Admin commands */

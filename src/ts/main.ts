@@ -56,6 +56,8 @@ const elements = {
 	audioBtn: document.getElementById('audioBtn') as HTMLButtonElement,
 	audioBtnIcon: document.getElementById('audioBtnIcon') as HTMLElement,
 	audioBtnText: document.getElementById('audioBtnText') as HTMLSpanElement,
+	audioVolumeInput: document.getElementById('audioVolumeInput') as HTMLInputElement,
+	audioVolumeOutput: document.getElementById('audioVolumeOutput') as HTMLOutputElement,
 	toggleThemeBtn: document.getElementById('toggleThemeBtn') as HTMLAnchorElement,
 	toggleThemeIcon: document.getElementById('toggleThemeIcon') as HTMLElement,
 	toggleThemeBtnText: document.getElementById('toggleThemeBtnText') as HTMLSpanElement,
@@ -818,12 +820,22 @@ elements.ctrlAltDelBtn.addEventListener('click', () => {
 	// Del
 	VM?.key(0xffff, false);
 });
+
 elements.audioBtn.addEventListener('click', () => {
 	const enable = !VM?.getAudioEnabled();
 	VM?.enableAudio(enable);
 	localStorage.setItem('collabvm-audio-enabled', enable.toString());
 	updateAudioButton();
 });
+
+elements.audioVolumeInput.addEventListener('input', () => {
+	// TS is awkward with accessing e.target with this event type
+	const volume = parseFloat(elements.audioVolumeInput.value);
+	VM?.setAudioVolume(volume);
+	localStorage.setItem('collabvm-audio-volume', volume.toString());
+	updateAudioButton();
+});
+
 elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
 elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
 elements.voteNoBtn.addEventListener('click', () => VM?.vote(false));
@@ -1500,19 +1512,24 @@ function updateAudioButton() {
 	if (!VM)
 		return;
 
+	const volume = VM.getAudioVolume();
 	let icon: string;
 
-	if (VM.getAudioEnabled()) {
-		icon = 'volume-high';
-	} else {
+	if (VM.getAudioEnabled())
+		if (volume >= 0.66)
+			icon = 'volume-high';
+		else if (volume >= 0.33)
+			icon = 'volume';
+		else if (volume > 0)
+			icon = 'volume-low'
+		else
+			icon = 'volume-off';
+	else
 		icon = 'volume-xmark';
-	}
 
 	elements.audioBtnIcon.className = `fa-solid fa-${icon}`;
-
-	elements.audioBtnText.innerText = TheI18n.GetString(
-		I18nStringKey[VM.getAudioEnabled() ? 'kVMButtons_AudioOn' : 'kVMButtons_AudioOff']
-	);
+	elements.audioBtnText.innerText = TheI18n.GetString(I18nStringKey[VM.getAudioEnabled() ? 'kVMButtons_AudioOn' : 'kVMButtons_AudioOff']);
+	elements.audioVolumeOutput.innerText = `${(volume * 100).toFixed()}%`;
 }
 
 // Public API

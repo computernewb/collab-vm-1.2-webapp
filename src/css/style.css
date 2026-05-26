@@ -55,6 +55,14 @@
   text-align: center;
 }
 
+#audioVolumeMenu {
+  min-width: 220px;
+}
+
+#audioVolumeOutput {
+  min-width: 4ch;
+}
+
 .focused {
   box-shadow: 0 0 9px 0 rgba(45,213,255,.75);
   -moz-box-shadow: 0 0 9px 0 rgba(45,213,255,.75);
