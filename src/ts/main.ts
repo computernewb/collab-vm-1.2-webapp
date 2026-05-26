@@ -54,6 +54,7 @@ const elements = {
 	incorrectPasswordDismissBtn: document.getElementById('incorrectPasswordDismissBtn') as HTMLButtonElement,
 	ctrlAltDelBtn: document.getElementById('ctrlAltDelBtn') as HTMLButtonElement,
 	audioBtn: document.getElementById('audioBtn') as HTMLButtonElement,
+	audioBtnIcon: document.getElementById('audioBtnIcon') as HTMLElement,
 	audioBtnText: document.getElementById('audioBtnText') as HTMLSpanElement,
 	toggleThemeBtn: document.getElementById('toggleThemeBtn') as HTMLAnchorElement,
 	toggleThemeIcon: document.getElementById('toggleThemeIcon') as HTMLElement,
@@ -1499,7 +1500,15 @@ function updateAudioButton() {
 	if (!VM)
 		return;
 
-	// TODO: audioBtnIcon, off = volume-xmark, low = volume-off, medium = volume-low, high = volume-high
+	let icon: string;
+
+	if (VM.getAudioEnabled()) {
+		icon = 'volume-high';
+	} else {
+		icon = 'volume-xmark';
+	}
+
+	elements.audioBtnIcon.className = `fa-solid fa-${icon}`;
 
 	elements.audioBtnText.innerText = TheI18n.GetString(
 		I18nStringKey[VM.getAudioEnabled() ? 'kVMButtons_AudioOn' : 'kVMButtons_AudioOff']
