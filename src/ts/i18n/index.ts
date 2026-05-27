@@ -88,6 +88,7 @@ export enum I18nStringKey {
 	kError_UsernameInvalid = 'kError_UsernameInvalid',
 	kError_UsernameBlacklisted = 'kError_UsernameBlacklisted',
 	kError_IncorrectPassword = 'kError_IncorrectPassword',
+	kError_AudioInitFailed = 'kError_AudioInitFailed',
 
 	// Auth
 	kAccountModal_Verify = 'kAccountModal_Verify',
@@ -284,6 +285,8 @@ export class I18n {
 			ctrlAltDelBtnText: I18nStringKey.KVMButtons_CtrlAltDel,
 			voteForResetBtnText: I18nStringKey.kVMButtons_VoteForReset,
 			screenshotBtnText: I18nStringKey.kVMButtons_Screenshot,
+
+			audioFailedText: I18nStringKey.kError_AudioInitFailed,
 
 			// admin stuff
 			badPasswordAlertText: I18nStringKey.kError_IncorrectPassword,

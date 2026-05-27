@@ -86,6 +86,7 @@ const enusLanguage : Language = {
 		"kError_UsernameInvalid": "Usernames can contain only numbers, letters, spaces, dashes, underscores, and dots, and it must be between 3 and 20 characters.",
 		"kError_UsernameBlacklisted": "That username has been blacklisted.",
 		"kError_IncorrectPassword": "Incorrect password.",
+		"kError_AudioInitFailed": "<p>Failed to initialize audio. Please try updating your browser and try again.</p><p>As of writing, mobile browsers and privacy-oriented browsers like LibreWolf may not work.</p><p>Additionally, ensure you are using HTTPS.</p>",
 
 		"kAccountModal_Verify": "Verify E-Mail",
 		"kAccountModal_AccountSettings": "Account Settings",

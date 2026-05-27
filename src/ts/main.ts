@@ -57,6 +57,8 @@ const elements = {
 	audioBtn: document.getElementById('audioBtn') as HTMLButtonElement,
 	audioBtnIcon: document.getElementById('audioBtnIcon') as HTMLElement,
 	audioBtnText: document.getElementById('audioBtnText') as HTMLSpanElement,
+	audioVolumeControls: document.getElementById('audioVolumeControls') as HTMLDivElement,
+	audioFailedText: document.getElementById('audioFailedText') as HTMLDivElement,
 	audioVolumeInput: document.getElementById('audioVolumeInput') as HTMLInputElement,
 	audioVolumeOutput: document.getElementById('audioVolumeOutput') as HTMLOutputElement,
 	toggleThemeBtn: document.getElementById('toggleThemeBtn') as HTMLAnchorElement,
@@ -467,7 +469,15 @@ async function openVM(vm: VM): Promise<void> {
 	}
 	// Initial audio UI state
 	updateAudioButton();
-	elements.audioVolumeInput.value = VM.getAudioVolume().toString();
+	elements.audioBtn.disabled = !VM.hasAudioDecoder();
+	if (VM.hasAudioDecoder()) {
+		elements.audioVolumeControls.classList.remove('d-none'); // Bootstrap's classes use !important
+		elements.audioFailedText.classList.add('d-none');
+		elements.audioVolumeInput.value = VM.getAudioVolume().toString();
+	} else {
+		elements.audioVolumeControls.classList.add('d-none');
+		elements.audioFailedText.classList.remove('d-none');
+	}
 	// Set the title
 	document.title = Format('{0} - {1}', vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
 	// Append canvas

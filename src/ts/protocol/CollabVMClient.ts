@@ -74,7 +74,7 @@ export default class CollabVMClient {
 
 	private audioCtx: AudioContext;
 	private audioGain: GainNode;
-	private audioDecoder: AudioDecoder;
+	private audioDecoder: AudioDecoder | null;
 	private audioDropTime: number = 0;
 	private audioNextTime: number = 0;
 	private audioEnabled: boolean;
@@ -115,13 +115,19 @@ export default class CollabVMClient {
 		this.audioGain = this.audioCtx.createGain();
 		this.audioGain.connect(this.audioCtx.destination);
 
-		this.audioDecoder = new AudioDecoder({
-			output: this.scheduleAudioData.bind(this),
-			error: console.error
-		});
-
-		this.audioEnabled = localStorage.getItem('collabvm-audio-enabled') === 'true';
-		this.audioGain.gain.value = parseFloat(localStorage.getItem('collabvm-audio-volume') ?? '1.0');
+		try {
+			this.audioDecoder = new AudioDecoder({
+				output: this.scheduleAudioData.bind(this),
+				error: console.error
+			});
+			
+			this.audioEnabled = localStorage.getItem('collabvm-audio-enabled') === 'true';
+			this.audioGain.gain.value = parseFloat(localStorage.getItem('collabvm-audio-volume') ?? '1.0');
+		} catch (error) {
+			console.error(error);
+			this.audioDecoder = null;
+			this.audioEnabled = false;
+		}
 
 		// Bind canvas click
 		this.canvas.addEventListener('click', (e) => {
@@ -253,7 +259,7 @@ export default class CollabVMClient {
 
 			case CollabVMProtocolMessageType.audioFormat: {
 				if (!msg.audioFormat) return;
-				this.audioDecoder.configure({
+				this.audioDecoder?.configure({
 					codec: msg.audioFormat.format,
 					sampleRate: msg.audioFormat.sampleRate,
 					numberOfChannels: msg.audioFormat.channels
@@ -263,7 +269,7 @@ export default class CollabVMClient {
 
 			case CollabVMProtocolMessageType.audio: {
 				if (!msg.audio || !this.audioEnabled) return;
-				this.audioDecoder.decode(new EncodedAudioChunk({ type: 'key', timestamp: 0, data: msg.audio.data }));
+				this.audioDecoder?.decode(new EncodedAudioChunk({ type: 'key', timestamp: 0, data: msg.audio.data }));
 				break;
 			}
 		}
@@ -564,9 +570,8 @@ export default class CollabVMClient {
 		 * As this is TCP, anything we missed will be retried, causing us to
 		 * drift in latency. This is an attempt to alleviate this.
 		 * 
-		 * Users can (eventually) do this manually by toggling audio, or the
-		 * issue can solve itself over time during times when nothing is
-		 * playing.
+		 * Users can do this manually by toggling audio, or the issue can solve
+		 * itself over time during times when nothing is playing.
 		 * 
 		 * This can be tested by disconnecting from your network for a moment.
 		 * 
@@ -731,6 +736,10 @@ export default class CollabVMClient {
 
 	getAudioVolume(): number {
 		return this.audioGain.gain.value;
+	}
+
+	hasAudioDecoder(): boolean {
+		return this.audioDecoder !== null;
 	}
 
 	/* Admin commands */
