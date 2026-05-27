@@ -465,7 +465,9 @@ async function openVM(vm: VM): Promise<void> {
 		closeVM();
 		throw new Error('Failed to connect to node');
 	}
+	// Initial audio UI state
 	updateAudioButton();
+	elements.audioVolumeInput.value = VM.getAudioVolume().toString();
 	// Set the title
 	document.title = Format('{0} - {1}', vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
 	// Append canvas
