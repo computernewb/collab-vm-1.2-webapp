@@ -562,29 +562,25 @@ export default class CollabVMClient {
 		source.buffer = buffer;
 		source.connect(this.audioGain);
 
-		const now = this.audioCtx.currentTime;
-
 		/**
-		 * Drop everything if we've queued more than 100ms (5 frames at 20ms).
+		 * Drop everything if we've queued more than 360ms (18 frames at 20ms,
+		 * but is also a multiple of other frame lengths).
 		 * 
-		 * As this is TCP, anything we missed will be retried, causing us to
-		 * drift in latency. This is an attempt to alleviate this.
+		 * Many different network or VM conditions can cause this. An easy way
+		 * to test is disconnecting from your network for a moment, or trying
+		 * to put pressure on things by playing a fullscreen video.
 		 * 
-		 * Users can do this manually by toggling audio, or the issue can solve
-		 * itself over time during times when nothing is playing.
-		 * 
-		 * This can be tested by disconnecting from your network for a moment.
-		 * 
-		 * TODO: It's worth experimenting with this on different network
-		 * conditions, as this might not be sufficient for latency fluctuations
-		 * for example.
+		 * Users can drain the queue manually by toggling audio, or the issue
+		 * can solve itself over time during times when nothing is playing.
 		 */
+
+		const now = this.audioCtx.currentTime;
 
 		if (now < this.audioDropTime) {
 			return;
 		}
 
-		if (this.audioNextTime - now > 0.100) {
+		if (this.audioNextTime - now > 0.360) {
 			this.audioDropTime = this.audioNextTime;
 			return;
 		}
