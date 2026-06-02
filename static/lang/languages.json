@@ -75,6 +75,10 @@
 		"tr-tr": {
 			"languageName": "Türkçe",
 			"flag": "🇹🇷"
+		},
+		"nl-nl": {
+			"languageName": "Nederland",
+			"flag": "🇳🇱"
 		}
 	},
 	"defaultLanguage": "en-us"
