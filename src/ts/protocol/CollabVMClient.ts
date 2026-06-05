@@ -564,7 +564,8 @@ export default class CollabVMClient {
 
 		/**
 		 * Drop everything if we've queued more than 360ms (18 frames at 20ms,
-		 * but is also a multiple of other frame lengths).
+		 * but is also a multiple of other frame lengths. Excluding the delay
+		 * we include).
 		 * 
 		 * Many different network or VM conditions can cause this. An easy way
 		 * to test is disconnecting from your network for a moment, or trying
@@ -580,14 +581,18 @@ export default class CollabVMClient {
 			return;
 		}
 
-		if (this.audioNextTime - now > 0.360) {
+		if (this.audioNextTime - now > 0.380) {
 			this.audioDropTime = this.audioNextTime;
 			return;
 		}
 
-		// TODO: Playing XP ding after connect sounds like its overlapping two frames?
+		/**
+		 * Starting exactly now can cause stuttering for some, especially for
+		 * short bursts of sounds like system sounds, so we delay.
+		 * TODO: Would moving to a Worklet be worth it?
+		 */
 		if (this.audioNextTime < now) {
-			this.audioNextTime = now;
+			this.audioNextTime = now + 0.020;
 		}
 
 		source.start(this.audioNextTime);
