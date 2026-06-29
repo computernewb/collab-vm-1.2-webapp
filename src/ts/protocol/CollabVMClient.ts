@@ -730,7 +730,6 @@ export default class CollabVMClient {
 
 	// Toggle turns
 	pauseTurns(enabled: boolean) {
-		console.log('it time to do the dance', enabled);
 		this.send('admin', AdminOpcode.ToggleTurns, enabled ? '1' : '0');
 	}
 
