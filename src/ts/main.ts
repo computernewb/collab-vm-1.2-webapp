@@ -69,7 +69,8 @@ const elements = {
 	forceVotePanel: document.getElementById('forceVotePanel') as HTMLDivElement,
 	forceVoteYesBtn: document.getElementById('forceVoteYesBtn') as HTMLButtonElement,
 	forceVoteNoBtn: document.getElementById('forceVoteNoBtn') as HTMLButtonElement,
-	indefTurnBtn: document.getElementById('indefTurnBtn') as HTMLButtonElement,
+	pauseTurnsBtn: document.getElementById('pauseTurnsBtn') as HTMLButtonElement,
+	pauseTurnsBtnText: document.getElementById('pauseTurnsBtnText') as HTMLButtonElement,
 	ghostTurnBtn: document.getElementById('ghostTurnBtn') as HTMLButtonElement,
 	ghostTurnBtnText: document.getElementById('ghostTurnBtnText') as HTMLSpanElement,
 	qemuMonitorInput: document.getElementById('qemuMonitorInput') as HTMLInputElement,
@@ -327,6 +328,7 @@ const users: {
 	flagElement: HTMLSpanElement;
 	element: HTMLTableRowElement;
 }[] = [];
+let turnsPaused = false;
 let turnInterval: number | undefined = undefined;
 let voteInterval: number | undefined = undefined;
 let turnTimer = 0;
@@ -493,7 +495,7 @@ function closeVM() {
 	elements.endTurnBtn.style.display = 'none';
 	elements.clearQueueBtn.style.display = 'none';
 	elements.qemuMonitorBtn.style.display = 'none';
-	elements.indefTurnBtn.style.display = 'none';
+	elements.pauseTurnsBtn.style.display = 'none';
 	elements.ghostTurnBtn.style.display = 'none';
 	elements.xssCheckboxContainer.style.display = 'none';
 	elements.forceVotePanel.style.display = 'none';
@@ -711,9 +713,14 @@ function turnUpdate(status: TurnStatus) {
 		VM!.canvas.classList.add('waiting');
 	}
 
+	turnsPaused = status.paused;
+
 	if(status.paused) {
 		elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_TurnsPaused);
+		elements.pauseTurnsBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_UnpauseTurns);
 	} else {
+		elements.pauseTurnsBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_PauseTurns);
+
 		if (turn === -1) elements.turnstatus.innerText = '';
 		else {
 			if(status.soleUser) {
@@ -857,7 +864,7 @@ function onLogin(_rank: Rank, _perms: Permissions) {
 	}
 	if (_rank === Rank.Admin) {
 		elements.qemuMonitorBtn.style.display = 'inline-block';
-		elements.indefTurnBtn.style.display = 'inline-block';
+		elements.pauseTurnsBtn.style.display = 'inline-block';
 		elements.ghostTurnBtn.style.display = 'inline-block';
 	}
 	if (_perms.xss) elements.xssCheckboxContainer.style.display = 'inline-block';
@@ -920,7 +927,7 @@ elements.endTurnBtn.addEventListener('click', () => {
 });
 elements.forceVoteNoBtn.addEventListener('click', () => VM?.forceVote(false));
 elements.forceVoteYesBtn.addEventListener('click', () => VM?.forceVote(true));
-elements.indefTurnBtn.addEventListener('click', () => VM?.indefiniteTurn());
+elements.pauseTurnsBtn.addEventListener('click', () => VM?.pauseTurns(turnsPaused));
 
 
 elements.ghostTurnBtn.addEventListener('click', () => {

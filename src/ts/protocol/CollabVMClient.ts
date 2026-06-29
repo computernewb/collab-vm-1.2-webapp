@@ -357,27 +357,43 @@ export default class CollabVMClient {
 					});
 					return;
 				}
-				let currentTurn = this.users.find((u) => u.username === msgArr[3])!;
-				currentTurn.turn = 0;
-				let queue: User[] = [];
-				if (queuedUsers > 1) {
-					for (let i = 1; i < queuedUsers; i++) {
-						let user = this.users.find((u) => u.username === msgArr[i + 3])!;
-						queue.push(user);
-						user.turn = i;
+
+				// this is a bit of an ugly hack, but this is used by turns2 to update the paused state when no one is active
+				// oh well. can't be as bad as the rest of this god forsaken guacamole shitfuck
+				if(msgArr[3] !== '') {
+					let currentTurn = this.users.find((u) => u.username === msgArr[3])!;
+					currentTurn.turn = 0;
+					let queue: User[] = [];
+					if (queuedUsers > 1) {
+						for (let i = 1; i < queuedUsers; i++) {
+							let user = this.users.find((u) => u.username === msgArr[i + 3])!;
+							queue.push(user);
+							user.turn = i;
+						}
 					}
+
+					let turnTime = parseInt(msgArr[1]);
+					this.publicEmitter.emit('turn', {
+						paused: turnTime == SpecialTurnTimes.Paused,
+						soleUser: turnTime == SpecialTurnTimes.OneUser,
+						user: currentTurn,
+						queue: queue,
+						turnTime: currentTurn.username === this.username ? turnTime : null,
+						queueTime: queue.some((u) => u.username === this.username) ? parseInt(msgArr[msgArr.length - 1]) : null
+					});
+				} else {
+					let turnTime = parseInt(msgArr[1]);
+					this.publicEmitter.emit('turn', {
+						paused: turnTime == SpecialTurnTimes.Paused,
+						soleUser: false,
+						user: null,
+						queue: [],
+						turnTime: null,
+						queueTime: null
+					});
 				}
 
-				let turnTime = parseInt(msgArr[1]);
-
-				this.publicEmitter.emit('turn', {
-					paused: turnTime == SpecialTurnTimes.Paused,
-					soleUser: turnTime == SpecialTurnTimes.OneUser,
-					user: currentTurn,
-					queue: queue,
-					turnTime: currentTurn.username === this.username ? turnTime : null,
-					queueTime: queue.some((u) => u.username === this.username) ? parseInt(msgArr[msgArr.length - 1]) : null
-				});
+				
 				break;
 			}
 			case 'vote': {
@@ -713,11 +729,12 @@ export default class CollabVMClient {
 	}
 
 	// Toggle turns
-	turns(enabled: boolean) {
+	pauseTurns(enabled: boolean) {
+		console.log('it time to do the dance', enabled);
 		this.send('admin', AdminOpcode.ToggleTurns, enabled ? '1' : '0');
 	}
 
-	// Indefinite turn
+	// Indefinite turn (deprecated)
 	indefiniteTurn() {
 		this.send('admin', AdminOpcode.IndefiniteTurn);
 	}

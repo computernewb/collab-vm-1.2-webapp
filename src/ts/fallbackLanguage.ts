@@ -63,7 +63,8 @@ const fallbackLanguage : Language = {
 		"kAdminVMButtons_Reboot": "Reboot",
 		"kAdminVMButtons_ClearTurnQueue": "Clear Turn Queue",
 		"kAdminVMButtons_BypassTurn": "Bypass Turn",
-		"kAdminVMButtons_IndefiniteTurn": "Indefinite Turn",
+		"kAdminVMButtons_PauseTurns": "Pause Turns",
+		"kAdminVMButtons_UnpauseTurns": "Unpause Turns",
 		"kAdminVMButtons_GhostTurnOn": "Ghost Turn (On)",
 		"kAdminVMButtons_GhostTurnOff": "Ghost Turn (Off)",
 

@@ -63,7 +63,8 @@ export enum I18nStringKey {
 	kAdminVMButtons_Reboot = 'kAdminVMButtons_Reboot',
 	kAdminVMButtons_ClearTurnQueue = 'kAdminVMButtons_ClearTurnQueue',
 	kAdminVMButtons_BypassTurn = 'kAdminVMButtons_BypassTurn',
-	kAdminVMButtons_IndefiniteTurn = 'kAdminVMButtons_IndefiniteTurn',
+	kAdminVMButtons_PauseTurns = 'kAdminVMButtons_PauseTurns',
+	kAdminVMButtons_UnpauseTurns = 'kAdminVMButtons_UnpauseTurns',
 	kAdminVMButtons_GhostTurnOn = 'kAdminVMButtons_GhostTurnOn',
 	kAdminVMButtons_GhostTurnOff = 'kAdminVMButtons_GhostTurnOff',
 
@@ -258,7 +259,7 @@ export class I18n {
 		console.log('i18n initalized for', id, 'sucessfully!');
 	}
 
-	// Replaces static strings that we don't recompute
+	// Replaces static strings that we don't recompute and initializes some which are
 	private ReplaceStaticStrings() {
 		const kDomIdtoStringMap: StringKeyMap = {
 			siteNameText: I18nStringKey.kGeneric_CollabVM,
@@ -302,7 +303,7 @@ export class I18n {
 			rebootBtnText: I18nStringKey.kAdminVMButtons_Reboot,
 			clearQueueBtnText: I18nStringKey.kAdminVMButtons_ClearTurnQueue,
 			bypassTurnBtnText: I18nStringKey.kAdminVMButtons_BypassTurn,
-			indefTurnBtnText: I18nStringKey.kAdminVMButtons_IndefiniteTurn,
+			pauseTurnsBtnText: I18nStringKey.kAdminVMButtons_PauseTurns,
 			ghostTurnBtnText: I18nStringKey.kAdminVMButtons_GhostTurnOff,
 
 			// Account modal
