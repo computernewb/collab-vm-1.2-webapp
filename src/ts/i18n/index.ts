@@ -143,10 +143,9 @@ export type LanguagesJson = {
 };
 
 // ID for fallback language
-const fallbackId = 'en-us';
+const enusId = 'en-us';
 
-// This language is provided in the webapp itself just in case language stuff fails
-import fallbackLanguage from './fallbackLanguage.js';
+import enusLanguage from './enusLanguage';
 
 interface StringKeyMap {
 	[k: string]: I18nStringKey;
@@ -156,14 +155,14 @@ interface StringKeyMap {
 export class I18n {
 	// The language data itself
 	private langs : Map<string, LanguageMetadata> = new Map<string, Language>();
-	private lang: Language = fallbackLanguage;
+	private lang: Language = enusLanguage;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
 
 	CurrentLanguage = () => this.langId;
 
 	// the ID of the language
-	private langId: string = fallbackId;
+	private langId: string = enusId;
 
 	private regionNameRenderer = new Intl.DisplayNames(['en-US'], {type: 'region'});
 	
@@ -172,7 +171,7 @@ export class I18n {
 		var res = await fetch("lang/languages.json");
 		if (!res.ok) {
 			alert("Failed to load languages.json: " + res.statusText);
-			await this.SetLanguage(fallbackId);
+			await this.SetLanguage(enusId);
 			this.ReplaceStaticStrings();
 			return;
 		}
@@ -225,15 +224,15 @@ export class I18n {
 
 		let lang;
 
-		if (id === fallbackId) 
-			lang = fallbackLanguage;
+		if (id === enusId) 
+			lang = enusLanguage;
 
 		else {
 			let path = `./lang/${id}.json`;
 			let res = await fetch(path);
 			if (!res.ok) {
 				console.error(`Failed to load lang/${id}.json: ${res.statusText}`);
-				await this.SetLanguage(fallbackId);
+				await this.SetLanguage(enusId);
 				return;
 			}
 			lang = await res.json() as Language;
@@ -452,7 +451,7 @@ export class I18n {
 		// have that string key yet; if the fallback doesn't have it either,
 		// then just return the string key and a bit of a notice things have gone wrong
 		if (val == undefined) {
-			let fallback = fallbackLanguage.stringKeys[key];
+			let fallback = enusLanguage.stringKeys[key];
 			if (fallback !== undefined) val = fallback;
 			else return `${key} (ERROR LOOKING UP TRANSLATION!!!)`;
 		}

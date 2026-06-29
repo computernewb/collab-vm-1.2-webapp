@@ -1,6 +1,6 @@
-import { Language } from "./i18n.js";
+import { Language } from "./";
 
-const fallbackLanguage : Language = {
+const enusLanguaeg : Language = {
 	"languageName": "English (US)",
 	"translatedLanguageName": "English (US)",
 	"flag": "🇺🇸",
@@ -105,4 +105,4 @@ const fallbackLanguage : Language = {
 	}
 }
 
-export default fallbackLanguage;
+export default enusLanguaeg;
