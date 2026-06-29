@@ -251,9 +251,7 @@ export class I18n {
 		};
 
 		// Set the language ID localstorage entry
-		if (this.langId !== fallbackId) {
-			window.localStorage.setItem('i18n-lang', this.langId);
-		}
+		window.localStorage.setItem('i18n-lang', this.langId);
 
 		this.emitter.emit('languageChanged', this.langId);
 		console.log('i18n initalized for', id, 'sucessfully!');
