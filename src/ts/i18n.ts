@@ -37,6 +37,8 @@ export enum I18nStringKey {
 	kVM_UsersOnlineText = 'kVM_UsersOnlineText',
 
 	kVM_TurnTimeTimer = 'kVM_TurnTimeTimer',
+	kVM_TurnYouHave = 'kVM_TurnYouHave',
+	kVM_TurnsPaused = 'kVM_TurnsPaused',
 	kVM_WaitingTurnTimer = 'kVM_WaitingTurnTimer',
 	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
 
@@ -141,7 +143,7 @@ export type LanguagesJson = {
 };
 
 // ID for fallback language
-const fallbackId = '!!fallback';
+const fallbackId = 'en-us';
 
 // This language is provided in the webapp itself just in case language stuff fails
 import fallbackLanguage from './fallbackLanguage.js';
@@ -222,7 +224,10 @@ export class I18n {
 		this.langId = id;
 
 		let lang;
-		if (id === fallbackId) lang = fallbackLanguage;
+
+		if (id === fallbackId) 
+			lang = fallbackLanguage;
+
 		else {
 			let path = `./lang/${id}.json`;
 			let res = await fetch(path);

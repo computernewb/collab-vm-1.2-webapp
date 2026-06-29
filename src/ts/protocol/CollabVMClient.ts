@@ -14,6 +14,11 @@ import * as msgpack from 'msgpackr';
 import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from '../../../collab-vm-1.2-binary-protocol/src/index.js';
 const w = window as any;
 
+enum SpecialTurnTimes {
+	OneUser = 2147483647,
+	Paused = 2147483646
+}
+
 export interface CollabVMClientEvents {
 	//open: () => void;
 	close: () => void;
@@ -343,6 +348,8 @@ export default class CollabVMClient {
 				let queuedUsers = parseInt(msgArr[2]);
 				if (queuedUsers === 0) {
 					this.publicEmitter.emit('turn', {
+						paused: false,
+						soleUser: false,
 						user: null,
 						queue: [],
 						turnTime: null,
@@ -360,10 +367,15 @@ export default class CollabVMClient {
 						user.turn = i;
 					}
 				}
+
+				let turnTime = parseInt(msgArr[1]);
+
 				this.publicEmitter.emit('turn', {
+					paused: turnTime == SpecialTurnTimes.Paused,
+					soleUser: turnTime == SpecialTurnTimes.OneUser,
 					user: currentTurn,
 					queue: queue,
-					turnTime: currentTurn.username === this.username ? parseInt(msgArr[1]) : null,
+					turnTime: currentTurn.username === this.username ? turnTime : null,
 					queueTime: queue.some((u) => u.username === this.username) ? parseInt(msgArr[msgArr.length - 1]) : null
 				});
 				break;

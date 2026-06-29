@@ -710,11 +710,20 @@ function turnUpdate(status: TurnStatus) {
 		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kVMButtons_EndTurn);
 		VM!.canvas.classList.add('waiting');
 	}
-	if (turn === -1) elements.turnstatus.innerText = '';
-	else {
-		//@ts-ignore
-		turnInterval = setInterval(() => turnIntervalCb(), 1000);
-		setTurnStatus();
+
+	if(status.paused) {
+		elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_TurnsPaused);
+	} else {
+		if (turn === -1) elements.turnstatus.innerText = '';
+		else {
+			if(status.soleUser) {
+				elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_TurnYouHave);
+			} else {
+				//@ts-ignore
+				turnInterval = setInterval(() => turnIntervalCb(), 1000);
+				setTurnStatus();
+			}
+		}
 	}
 	sortUserList();
 }

@@ -33,10 +33,13 @@ const fallbackLanguage : Language = {
 		"kSiteButtons_Rules": "Rules",
 		"kSiteButtons_DarkMode": "Dark Mode",
 		"kSiteButtons_LightMode": "Light Mode",
+		"kSiteButtons_Languages": "Languages",
 
 		"kVM_UsersOnlineText": "Users Online:",
 
 		"kVM_TurnTimeTimer": "Turn expires in {0} seconds.",
+		"kVM_TurnYouHave": "You have the turn.",
+		"kVM_TurnsPaused": "Turns have been paused.",
 		"kVM_WaitingTurnTimer": "Waiting for turn in {0} seconds.",
 		"kVM_VoteCooldownTimer": "Please wait {0} seconds before starting another vote.",
 

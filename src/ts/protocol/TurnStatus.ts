@@ -1,6 +1,10 @@
 import { User } from './User.js';
 
 export default interface TurnStatus {
+	/// True if turns have been paused, false otherwise.
+	paused: boolean;
+	soleUser: boolean;
+
 	// The user currently taking their turn
 	user: User | null;
 	// The users in the turn queue
