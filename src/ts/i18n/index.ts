@@ -142,9 +142,8 @@ export type LanguagesJson = {
 	defaultLanguage: string;
 };
 
-// ID for fallback language
+// Language ID for the default en-us language.
 const enusId = 'en-us';
-
 import enusLanguage from './enusLanguage';
 
 interface StringKeyMap {

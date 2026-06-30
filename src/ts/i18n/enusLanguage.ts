@@ -1,6 +1,6 @@
 import { Language } from "./";
 
-const enusLanguaeg : Language = {
+const enusLanguage : Language = {
 	"languageName": "English (US)",
 	"translatedLanguageName": "English (US)",
 	"flag": "🇺🇸",
@@ -105,4 +105,4 @@ const enusLanguaeg : Language = {
 	}
 }
 
-export default enusLanguaeg;
+export default enusLanguage;
