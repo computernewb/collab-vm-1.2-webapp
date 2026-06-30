@@ -544,14 +544,16 @@ function sortVMList() {
 
 function sortUserList() {
 	users.sort((a, b) => {
-		if (a.user.username === w.username && a.user.turn >= b.user.turn && b.user.turn !== 0) return -1;
-		if (b.user.username === w.username && b.user.turn >= a.user.turn && a.user.turn !== 0) return 1;
-		if (a.user.turn === b.user.turn) return 0;
+		if (a.user.turn === 0) return -1;
+		if (b.user.turn === 0) return 1;
+		if (a.user.turn === -1 && b.user.turn === -1 && a.user.username === w.username) return -1;
+		if (a.user.turn === -1 && b.user.turn === -1 && b.user.username === w.username) return 1;
 		if (a.user.turn === -1) return 1;
 		if (b.user.turn === -1) return -1;
 		if (a.user.turn < b.user.turn) return -1;
-		else return 1;
+		return 0;
 	});
+
 	for (const user of users) {
 		elements.userlist.removeChild(user.element);
 		elements.userlist.appendChild(user.element);
