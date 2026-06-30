@@ -1,7 +1,7 @@
 import { StringLike } from './StringLike';
 
 function isalpha(char: number) {
-	return RegExp(/^\p{L}/, 'u').test(String.fromCharCode(char));
+	return /^\p{L}/u.test(String.fromCharCode(char));
 }
 
 /// A simple function for formatting strings in a more expressive manner.

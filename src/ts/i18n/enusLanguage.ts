@@ -1,6 +1,6 @@
-import { Language } from "./i18n.js";
+import { Language } from "./";
 
-const fallbackLanguage : Language = {
+const enusLanguage : Language = {
 	"languageName": "English (US)",
 	"translatedLanguageName": "English (US)",
 	"flag": "🇺🇸",
@@ -33,10 +33,13 @@ const fallbackLanguage : Language = {
 		"kSiteButtons_Rules": "Rules",
 		"kSiteButtons_DarkMode": "Dark Mode",
 		"kSiteButtons_LightMode": "Light Mode",
+		"kSiteButtons_Languages": "Languages",
 
 		"kVM_UsersOnlineText": "Users Online:",
 
 		"kVM_TurnTimeTimer": "Turn expires in {0} seconds.",
+		"kVM_TurnYouHave": "You have the turn.",
+		"kVM_TurnsPaused": "Turns have been paused.",
 		"kVM_WaitingTurnTimer": "Waiting for turn in {0} seconds.",
 		"kVM_VoteCooldownTimer": "Please wait {0} seconds before starting another vote.",
 
@@ -60,7 +63,8 @@ const fallbackLanguage : Language = {
 		"kAdminVMButtons_Reboot": "Reboot",
 		"kAdminVMButtons_ClearTurnQueue": "Clear Turn Queue",
 		"kAdminVMButtons_BypassTurn": "Bypass Turn",
-		"kAdminVMButtons_IndefiniteTurn": "Indefinite Turn",
+		"kAdminVMButtons_PauseTurns": "Pause Turns",
+		"kAdminVMButtons_UnpauseTurns": "Unpause Turns",
 		"kAdminVMButtons_GhostTurnOn": "Ghost Turn (On)",
 		"kAdminVMButtons_GhostTurnOff": "Ghost Turn (Off)",
 
@@ -101,4 +105,4 @@ const fallbackLanguage : Language = {
 	}
 }
 
-export default fallbackLanguage;
+export default enusLanguage;

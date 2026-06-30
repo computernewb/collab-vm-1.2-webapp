@@ -1,7 +1,6 @@
-import { StringLike } from './StringLike';
-import { Format } from './format';
+import { StringLike, Format } from '../util';
 import { Emitter, Unsubscribe, createNanoEvents } from 'nanoevents';
-import Config from '../../config.json';
+import Config from '../../../config.json';
 
 /// All string keys.
 export enum I18nStringKey {
@@ -37,6 +36,8 @@ export enum I18nStringKey {
 	kVM_UsersOnlineText = 'kVM_UsersOnlineText',
 
 	kVM_TurnTimeTimer = 'kVM_TurnTimeTimer',
+	kVM_TurnYouHave = 'kVM_TurnYouHave',
+	kVM_TurnsPaused = 'kVM_TurnsPaused',
 	kVM_WaitingTurnTimer = 'kVM_WaitingTurnTimer',
 	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
 
@@ -61,7 +62,8 @@ export enum I18nStringKey {
 	kAdminVMButtons_Reboot = 'kAdminVMButtons_Reboot',
 	kAdminVMButtons_ClearTurnQueue = 'kAdminVMButtons_ClearTurnQueue',
 	kAdminVMButtons_BypassTurn = 'kAdminVMButtons_BypassTurn',
-	kAdminVMButtons_IndefiniteTurn = 'kAdminVMButtons_IndefiniteTurn',
+	kAdminVMButtons_PauseTurns = 'kAdminVMButtons_PauseTurns',
+	kAdminVMButtons_UnpauseTurns = 'kAdminVMButtons_UnpauseTurns',
 	kAdminVMButtons_GhostTurnOn = 'kAdminVMButtons_GhostTurnOn',
 	kAdminVMButtons_GhostTurnOff = 'kAdminVMButtons_GhostTurnOff',
 
@@ -140,11 +142,9 @@ export type LanguagesJson = {
 	defaultLanguage: string;
 };
 
-// ID for fallback language
-const fallbackId = '!!fallback';
-
-// This language is provided in the webapp itself just in case language stuff fails
-import fallbackLanguage from './fallbackLanguage.js';
+// Language ID for the default en-us language.
+const enusId = 'en-us';
+import enusLanguage from './enusLanguage';
 
 interface StringKeyMap {
 	[k: string]: I18nStringKey;
@@ -154,14 +154,14 @@ interface StringKeyMap {
 export class I18n {
 	// The language data itself
 	private langs : Map<string, LanguageMetadata> = new Map<string, Language>();
-	private lang: Language = fallbackLanguage;
+	private lang: Language = enusLanguage;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
 
 	CurrentLanguage = () => this.langId;
 
 	// the ID of the language
-	private langId: string = fallbackId;
+	private langId: string = enusId;
 
 	private regionNameRenderer = new Intl.DisplayNames(['en-US'], {type: 'region'});
 	
@@ -170,7 +170,7 @@ export class I18n {
 		var res = await fetch("lang/languages.json");
 		if (!res.ok) {
 			alert("Failed to load languages.json: " + res.statusText);
-			await this.SetLanguage(fallbackId);
+			await this.SetLanguage(enusId);
 			this.ReplaceStaticStrings();
 			return;
 		}
@@ -222,13 +222,16 @@ export class I18n {
 		this.langId = id;
 
 		let lang;
-		if (id === fallbackId) lang = fallbackLanguage;
+
+		if (id === enusId) 
+			lang = enusLanguage;
+
 		else {
 			let path = `./lang/${id}.json`;
 			let res = await fetch(path);
 			if (!res.ok) {
 				console.error(`Failed to load lang/${id}.json: ${res.statusText}`);
-				await this.SetLanguage(fallbackId);
+				await this.SetLanguage(enusId);
 				return;
 			}
 			lang = await res.json() as Language;
@@ -245,15 +248,13 @@ export class I18n {
 		};
 
 		// Set the language ID localstorage entry
-		if (this.langId !== fallbackId) {
-			window.localStorage.setItem('i18n-lang', this.langId);
-		}
+		window.localStorage.setItem('i18n-lang', this.langId);
 
 		this.emitter.emit('languageChanged', this.langId);
 		console.log('i18n initalized for', id, 'sucessfully!');
 	}
 
-	// Replaces static strings that we don't recompute
+	// Replaces static strings that we don't recompute and initializes some which are
 	private ReplaceStaticStrings() {
 		const kDomIdtoStringMap: StringKeyMap = {
 			siteNameText: I18nStringKey.kGeneric_CollabVM,
@@ -297,7 +298,7 @@ export class I18n {
 			rebootBtnText: I18nStringKey.kAdminVMButtons_Reboot,
 			clearQueueBtnText: I18nStringKey.kAdminVMButtons_ClearTurnQueue,
 			bypassTurnBtnText: I18nStringKey.kAdminVMButtons_BypassTurn,
-			indefTurnBtnText: I18nStringKey.kAdminVMButtons_IndefiniteTurn,
+			pauseTurnsBtnText: I18nStringKey.kAdminVMButtons_PauseTurns,
 			ghostTurnBtnText: I18nStringKey.kAdminVMButtons_GhostTurnOff,
 
 			// Account modal
@@ -449,7 +450,7 @@ export class I18n {
 		// have that string key yet; if the fallback doesn't have it either,
 		// then just return the string key and a bit of a notice things have gone wrong
 		if (val == undefined) {
-			let fallback = fallbackLanguage.stringKeys[key];
+			let fallback = enusLanguage.stringKeys[key];
 			if (fallback !== undefined) val = fallback;
 			else return `${key} (ERROR LOOKING UP TRANSLATION!!!)`;
 		}

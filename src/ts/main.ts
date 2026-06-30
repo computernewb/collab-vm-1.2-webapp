@@ -10,8 +10,8 @@ import 'simple-keyboard/build/css/index.css';
 import VoteStatus from './protocol/VoteStatus.js';
 import * as bootstrap from 'bootstrap';
 import MuteState from './protocol/MuteState.js';
-import { I18nStringKey, TheI18n } from './i18n.js';
-import { Format } from './format.js';
+import { I18nStringKey, TheI18n } from './i18n';
+import { Format } from './util';
 import AuthManager from './AuthManager.js';
 import dayjs from 'dayjs';
 import * as dompurify from 'dompurify';
@@ -69,7 +69,8 @@ const elements = {
 	forceVotePanel: document.getElementById('forceVotePanel') as HTMLDivElement,
 	forceVoteYesBtn: document.getElementById('forceVoteYesBtn') as HTMLButtonElement,
 	forceVoteNoBtn: document.getElementById('forceVoteNoBtn') as HTMLButtonElement,
-	indefTurnBtn: document.getElementById('indefTurnBtn') as HTMLButtonElement,
+	pauseTurnsBtn: document.getElementById('pauseTurnsBtn') as HTMLButtonElement,
+	pauseTurnsBtnText: document.getElementById('pauseTurnsBtnText') as HTMLButtonElement,
 	ghostTurnBtn: document.getElementById('ghostTurnBtn') as HTMLButtonElement,
 	ghostTurnBtnText: document.getElementById('ghostTurnBtnText') as HTMLSpanElement,
 	qemuMonitorInput: document.getElementById('qemuMonitorInput') as HTMLInputElement,
@@ -327,6 +328,7 @@ const users: {
 	flagElement: HTMLSpanElement;
 	element: HTMLTableRowElement;
 }[] = [];
+let turnsPaused = false;
 let turnInterval: number | undefined = undefined;
 let voteInterval: number | undefined = undefined;
 let turnTimer = 0;
@@ -493,7 +495,7 @@ function closeVM() {
 	elements.endTurnBtn.style.display = 'none';
 	elements.clearQueueBtn.style.display = 'none';
 	elements.qemuMonitorBtn.style.display = 'none';
-	elements.indefTurnBtn.style.display = 'none';
+	elements.pauseTurnsBtn.style.display = 'none';
 	elements.ghostTurnBtn.style.display = 'none';
 	elements.xssCheckboxContainer.style.display = 'none';
 	elements.forceVotePanel.style.display = 'none';
@@ -542,14 +544,16 @@ function sortVMList() {
 
 function sortUserList() {
 	users.sort((a, b) => {
-		if (a.user.username === w.username && a.user.turn >= b.user.turn && b.user.turn !== 0) return -1;
-		if (b.user.username === w.username && b.user.turn >= a.user.turn && a.user.turn !== 0) return 1;
-		if (a.user.turn === b.user.turn) return 0;
+		if (a.user.turn === 0) return -1;
+		if (b.user.turn === 0) return 1;
+		if (a.user.turn === -1 && b.user.turn === -1 && a.user.username === w.username) return -1;
+		if (a.user.turn === -1 && b.user.turn === -1 && b.user.username === w.username) return 1;
 		if (a.user.turn === -1) return 1;
 		if (b.user.turn === -1) return -1;
 		if (a.user.turn < b.user.turn) return -1;
-		else return 1;
+		return 0;
 	});
+
 	for (const user of users) {
 		elements.userlist.removeChild(user.element);
 		elements.userlist.appendChild(user.element);
@@ -710,11 +714,25 @@ function turnUpdate(status: TurnStatus) {
 		elements.turnBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kVMButtons_EndTurn);
 		VM!.canvas.classList.add('waiting');
 	}
-	if (turn === -1) elements.turnstatus.innerText = '';
-	else {
-		//@ts-ignore
-		turnInterval = setInterval(() => turnIntervalCb(), 1000);
-		setTurnStatus();
+
+	turnsPaused = status.paused;
+
+	if(status.paused) {
+		elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_TurnsPaused);
+		elements.pauseTurnsBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_UnpauseTurns);
+	} else {
+		elements.pauseTurnsBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_PauseTurns);
+
+		if (turn === -1) elements.turnstatus.innerText = '';
+		else {
+			if(status.soleUser) {
+				elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_TurnYouHave);
+			} else {
+				//@ts-ignore
+				turnInterval = setInterval(() => turnIntervalCb(), 1000);
+				setTurnStatus();
+			}
+		}
 	}
 	sortUserList();
 }
@@ -848,7 +866,7 @@ function onLogin(_rank: Rank, _perms: Permissions) {
 	}
 	if (_rank === Rank.Admin) {
 		elements.qemuMonitorBtn.style.display = 'inline-block';
-		elements.indefTurnBtn.style.display = 'inline-block';
+		elements.pauseTurnsBtn.style.display = 'inline-block';
 		elements.ghostTurnBtn.style.display = 'inline-block';
 	}
 	if (_perms.xss) elements.xssCheckboxContainer.style.display = 'inline-block';
@@ -911,7 +929,7 @@ elements.endTurnBtn.addEventListener('click', () => {
 });
 elements.forceVoteNoBtn.addEventListener('click', () => VM?.forceVote(false));
 elements.forceVoteYesBtn.addEventListener('click', () => VM?.forceVote(true));
-elements.indefTurnBtn.addEventListener('click', () => VM?.indefiniteTurn());
+elements.pauseTurnsBtn.addEventListener('click', () => VM?.pauseTurns(turnsPaused));
 
 
 elements.ghostTurnBtn.addEventListener('click', () => {

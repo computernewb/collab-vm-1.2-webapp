@@ -14,6 +14,11 @@ import * as msgpack from 'msgpackr';
 import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from '../../../collab-vm-1.2-binary-protocol/src/index.js';
 const w = window as any;
 
+enum SpecialTurnTimes {
+	OneUser = 2147483647,
+	Paused = 2147483646
+}
+
 export interface CollabVMClientEvents {
 	//open: () => void;
 	close: () => void;
@@ -340,9 +345,13 @@ export default class CollabVMClient {
 			case 'turn': {
 				// Reset all turn data
 				for (let user of this.users) user.turn = -1;
+				let turnTime = parseInt(msgArr[1]);
 				let queuedUsers = parseInt(msgArr[2]);
+
 				if (queuedUsers === 0) {
 					this.publicEmitter.emit('turn', {
+						paused: turnTime == SpecialTurnTimes.Paused,
+						soleUser: false,
 						user: null,
 						queue: [],
 						turnTime: null,
@@ -350,6 +359,7 @@ export default class CollabVMClient {
 					});
 					return;
 				}
+
 				let currentTurn = this.users.find((u) => u.username === msgArr[3])!;
 				currentTurn.turn = 0;
 				let queue: User[] = [];
@@ -360,10 +370,13 @@ export default class CollabVMClient {
 						user.turn = i;
 					}
 				}
+
 				this.publicEmitter.emit('turn', {
+					paused: turnTime == SpecialTurnTimes.Paused,
+					soleUser: turnTime == SpecialTurnTimes.OneUser,
 					user: currentTurn,
 					queue: queue,
-					turnTime: currentTurn.username === this.username ? parseInt(msgArr[1]) : null,
+					turnTime: currentTurn.username === this.username ? turnTime : null,
 					queueTime: queue.some((u) => u.username === this.username) ? parseInt(msgArr[msgArr.length - 1]) : null
 				});
 				break;
@@ -701,11 +714,11 @@ export default class CollabVMClient {
 	}
 
 	// Toggle turns
-	turns(enabled: boolean) {
+	pauseTurns(enabled: boolean) {
 		this.send('admin', AdminOpcode.ToggleTurns, enabled ? '1' : '0');
 	}
 
-	// Indefinite turn
+	// Indefinite turn (deprecated)
 	indefiniteTurn() {
 		this.send('admin', AdminOpcode.IndefiniteTurn);
 	}
