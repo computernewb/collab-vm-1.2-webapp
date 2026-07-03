@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Bitte warten Sie {0} Sekunden bevor Sie noch eine Abstimmung starten.",
 
 		"kVM_VoteForResetTitle": "Möchten Sie die VM zurücksetzen?",
-		"kVM_VoteForResetTimer": "Abstimmung endet in {0} Sekunden",
+		"kVM_VoteTimer": "Abstimmung endet in {0} Sekunden",
 
 		"kVMButtons_TakeTurn": "In Reihe stellen.",
 		"kVMButtons_EndTurn": "Aus der Reihe kommen",

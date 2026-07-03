@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "次の投票を開始する前に、{0} 秒間お待ちください。",
 
 		"kVM_VoteForResetTitle": "マシンの再起動を行いますか？",
-		"kVM_VoteForResetTimer": "投票は {0} 秒後に終了します。",
+		"kVM_VoteTimer": "投票は {0} 秒後に終了します。",
 
 		"kVMButtons_TakeTurn": "ターンを得る",
 		"kVMButtons_EndTurn": "ターンを終了する",

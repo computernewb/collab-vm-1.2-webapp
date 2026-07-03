@@ -51,7 +51,7 @@
 #turnstatus {
   text-align: center;
 }
-#voteResetPanel {
+#votePanel {
   text-align: center;
 }
 
@@ -348,4 +348,134 @@ Theme: cvmDisabled
 
 .userlist-flag:empty {
   display: none;
+}
+
+.userlist-vote-marker {
+  padding-left: 0.5rem;
+}
+
+.userlist-vote-marker:empty {
+  display: none;
+}
+
+/* IAOS: Tab bar */
+
+.iaos-vmview {
+    margin-bottom: 3em;
+}
+
+#iaosTabBar {
+  position: absolute;
+  top: -2.25em;
+  width: 100%;
+
+}
+
+#iaosTabContainer {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  visibility: visible !important;
+}
+
+.iaos-dock-tab {
+  height: 2.25em !important;
+  width: fit-content;
+  background-color: var(--bs-gray-700, #495057);
+  color: var(--bs-body-color, white);
+  border-top-left-radius: var(--bs-border-radius, 3px);
+  border-top-right-radius: var(--bs-border-radius, 3px);
+
+  padding: 0 0.5em;
+  pointer-events: auto;
+
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.iaos-dock-tab:hover, .iaos-dock-tab.iaos-active {
+  background-color: var(--bs-gray-800, #343a40);
+}
+
+/* IAOS: Dock */
+
+#iaosDock {
+  height: 80%;
+}
+
+#iaosDockActionBtnGroup {
+  margin-left: auto;
+}
+
+#iaosDockContainer, #iaosDockRow, #iaosDockCard {
+  height: 100%;
+}
+
+#iaosDockRow {
+  max-height: 100%;
+  flex-direction: column;
+}
+
+#iaosDockInfoCol {
+  height: min-content;
+  max-height: 40%;
+}
+
+#iaosDockCard {
+  flex-direction: row;
+  height: min-content;
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+#iaosDockCard > .card-body {
+  padding-bottom: 0;
+}
+
+#iaosDockCardImg {
+  max-width: 50%;
+  height: min-content;
+}
+
+#iaosDockTableCol {
+  height: 0;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.iaos-media-year-col {
+  width: 6em;
+}
+
+/* IAOS: Desktop style */
+@media screen and (min-width: 768px) {
+  #iaosDock {
+    height: 60%;
+  }
+  #iaosDockRow {
+    flex-direction: row;
+  }
+  #iaosDockInfoCol {
+    height: 100%;
+    max-height: 100%;
+  }
+  #iaosDockTableCol {
+    height: 100%;
+  }
+  #iaosDockCardImg {
+    max-height: none;
+    max-width: 100%;
+  }
+  #iaosDockCard {
+    height: min-content;
+    flex-direction: column;
+  }
+  #iaosDockCard > .card-body {
+    padding-bottom: var(--bs-card-spacer-y);
+  }
 }
