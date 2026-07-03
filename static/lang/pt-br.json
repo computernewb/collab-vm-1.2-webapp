@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Aguarde {0} segundos antes de iniciar outra votação.",
 
 		"kVM_VoteForResetTitle": "Deseja redefinir a VM?",
-		"kVM_VoteForResetTimer": "Voto acaba em {0} segundos",
+		"kVM_VoteTimer": "Voto acaba em {0} segundos",
 
 		"kVMButtons_TakeTurn": "Tomar turno",
 		"kVMButtons_EndTurn": "Finalizar turno",

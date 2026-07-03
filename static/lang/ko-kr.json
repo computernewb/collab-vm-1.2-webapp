@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "다른 투표를 시작하기 전에 {0}초 동안 기다려 주세요.",
 
 		"kVM_VoteForResetTitle": "VM을 초기화하시겠습니까?",
-		"kVM_VoteForResetTimer": "투표가 {0}초 후 종료됩니다",
+		"kVM_VoteTimer": "투표가 {0}초 후 종료됩니다",
 
 		"kVMButtons_TakeTurn": "차례 가져가기",
 		"kVMButtons_EndTurn": "차례 끝내기",

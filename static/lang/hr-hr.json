@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Molim Vas pričekajte {0} sekundi prije početka novog glasanja.",
 
 		"kVM_VoteForResetTitle": "Želite li resetirati VM?",
-		"kVM_VoteForResetTimer": "Glasanje završava za {0} sekundi",
+		"kVM_VoteTimer": "Glasanje završava za {0} sekundi",
 
 		"kVMButtons_TakeTurn": "Uzmi red",
 		"kVMButtons_EndTurn": "Završi red",

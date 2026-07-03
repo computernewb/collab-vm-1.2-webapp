@@ -39,10 +39,22 @@ export enum I18nStringKey {
 	kVM_TurnYouHave = 'kVM_TurnYouHave',
 	kVM_TurnsPaused = 'kVM_TurnsPaused',
 	kVM_WaitingTurnTimer = 'kVM_WaitingTurnTimer',
-	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
 
-	kVM_VoteForResetTitle = 'kVM_VoteForResetTitle',
-	kVM_VoteForResetTimer = 'kVM_VoteForResetTimer',
+	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
+	kVM_VoteError_existingVote = 'kVM_VoteError_existingVote',
+	kVM_VoteTitle = 'kVM_VoteTitle',
+	kVM_VoteTimer = 'kVM_VoteTimer',
+	kVM_VoteStarted = 'kVM_VoteStarted',
+	kVM_VoteSuccess = 'kVM_VoteSuccess',
+	kVM_VoteFail = 'kVM_VoteFail',
+	kVM_UserVotedYes = 'kVM_UserVotedYes',
+	kVM_UserVotedNo = 'kVM_UserVotedNo',
+	kVM_VoteMarker_UserVotedYes = 'kVM_VoteMarker_UserVotedYes',
+	kVM_VoteMarker_UserVotedNo = 'kVM_VoteMarker_UserVotedNo',
+	kVM_VoteType_VoteReset = 'kVM_VoteType_VoteReset',
+	kVM_VoteType_VoteReboot = 'kVM_VoteType_VoteReboot',
+	kVM_VoteType_VoteIaosInsertMedia = 'kVM_VoteType_VoteIaosInsertMedia',
+	kVM_VoteType_VoteIaosEjectMedia = 'kVM_VoteType_VoteIaosEjectMedia',
 
 	kVMButtons_TakeTurn = 'kVMButtons_TakeTurn',
 	kVMButtons_EndTurn = 'kVMButtons_EndTurn',
@@ -50,7 +62,7 @@ export enum I18nStringKey {
 	kVMButtons_Keyboard = 'kVMButtons_Keyboard',
 	KVMButtons_CtrlAltDel = 'KVMButtons_CtrlAltDel',
 
-	kVMButtons_VoteForReset = 'kVMButtons_VoteForReset',
+	kVMButtons_Vote = 'kVMButtons_Vote',
 	kVMButtons_Screenshot = 'kVMButtons_Screenshot',
 
 	// Admin VM buttons
@@ -104,7 +116,17 @@ export enum I18nStringKey {
 	kMissingCaptcha = 'kMissingCaptcha',
 	kPasswordsMustMatch = 'kPasswordsMustMatch',
 
-	kNotLoggedIn = 'kNotLoggedIn'
+	kNotLoggedIn = 'kNotLoggedIn',
+
+	kIaosTabMediaKind_iso = 'kIaosTabMediaKind_iso',
+	kIaosTabMediaKind_flp = 'kIaosTabMediaKind_flp',
+	kIaosDriveMediaKind_iso = 'kIaosDriveMediaKind_iso',
+	kIaosDriveMediaKind_flp = 'kIaosDriveMediaKind_flp',
+	kIaosMediaChanged = 'kIaosMediaChanged',
+	kIaosMediaEjected = 'kIaosMediaEjected',
+	kIaosDockHeader = 'kIaosDockHeader',
+	kIaosInsert = 'kIaosInsert',
+	kIaosEject = 'kIaosEject'
 }
 
 export interface I18nEvents {
@@ -252,7 +274,33 @@ export class I18n {
 		console.log('i18n initalized for', id, 'sucessfully!');
 	}
 
-	// Replaces static strings that we don't recompute and initializes some which are
+	LocalizeClassNames(...classList: Array<string>) {
+		const kDomClassToStringMap: StringKeyMap = {
+			'mod-end-turn-btn': I18nStringKey.kVMButtons_EndTurn,
+			'mod-ban-btn': I18nStringKey.kAdminVMButtons_Ban,
+			'mod-kick-btn': I18nStringKey.kAdminVMButtons_Kick,
+			'mod-change-username-btn': I18nStringKey.kVMButtons_ChangeUsername,
+			'mod-temp-mute-btn': I18nStringKey.kAdminVMButtons_TempMute,
+			'mod-indef-mute-btn': I18nStringKey.kAdminVMButtons_IndefMute,
+			'mod-unmute-btn': I18nStringKey.kAdminVMButtons_Unmute,
+			'mod-get-ip-btn': I18nStringKey.kAdminVMButtons_GetIP,
+			'iaos-dock-tab-label-iso': I18nStringKey.kIaosTabMediaKind_iso,
+			'iaos-dock-tab-label-flp': I18nStringKey.kIaosTabMediaKind_flp
+		};
+
+		if (classList.length === 0) {
+			classList = Object.keys(kDomClassToStringMap);
+		}
+
+		for (let domClass of classList) {
+			let elements = document.getElementsByClassName(domClass);
+			for (let element of elements) {
+				element.innerHTML = this.GetStringRaw(kDomClassToStringMap[domClass]);
+			}
+		}
+	}
+
+	// Replaces static strings that we don't recompute
 	private ReplaceStaticStrings() {
 		const kDomIdtoStringMap: StringKeyMap = {
 			siteNameText: I18nStringKey.kGeneric_CollabVM,
@@ -271,14 +319,15 @@ export class I18n {
 
 			usersOnlineText: I18nStringKey.kVM_UsersOnlineText,
 
-			voteResetHeaderText: I18nStringKey.kVM_VoteForResetTitle,
 			voteYesBtnText: I18nStringKey.kGeneric_Yes,
 			voteNoBtnText: I18nStringKey.kGeneric_No,
 
 			changeUsernameBtnText: I18nStringKey.kVMButtons_ChangeUsername,
 			oskBtnText: I18nStringKey.kVMButtons_Keyboard,
 			ctrlAltDelBtnText: I18nStringKey.KVMButtons_CtrlAltDel,
-			voteForResetBtnText: I18nStringKey.kVMButtons_VoteForReset,
+			voteBtnText: I18nStringKey.kVMButtons_Vote,
+			voteForResetBtnText: I18nStringKey.kAdminVMButtons_Restore,
+			voteForRebootBtnText: I18nStringKey.kAdminVMButtons_Reboot,
 			screenshotBtnText: I18nStringKey.kVMButtons_Screenshot,
 
 			// admin stuff
@@ -326,7 +375,12 @@ export class I18n {
 			accountResetPasswordCodeLabel: I18nStringKey.kGeneric_VerificationCode,
 			accountResetPasswordNewPasswordLabel: I18nStringKey.kAccountModal_NewPassword,
 			accountResetPasswordConfirmNewPasswordLabel: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			accountResetPasswordVerifyBtn: I18nStringKey.kAccountModal_ResetPassword
+			accountResetPasswordVerifyBtn: I18nStringKey.kAccountModal_ResetPassword,
+
+			// iaos
+			iaosDockHeader: I18nStringKey.kIaosDockHeader,
+			iaosInsertBtnLabel: I18nStringKey.kIaosInsert,
+			iaosEjectBtnLabel: I18nStringKey.kIaosEject
 		};
 
 		const kDomAttributeToStringMap = {
@@ -389,17 +443,6 @@ export class I18n {
 			}
 		};
 
-		const kDomClassToStringMap: StringKeyMap = {
-			'mod-end-turn-btn': I18nStringKey.kVMButtons_EndTurn,
-			'mod-ban-btn': I18nStringKey.kAdminVMButtons_Ban,
-			'mod-kick-btn': I18nStringKey.kAdminVMButtons_Kick,
-			'mod-change-username-btn': I18nStringKey.kVMButtons_ChangeUsername,
-			'mod-temp-mute-btn': I18nStringKey.kAdminVMButtons_TempMute,
-			'mod-indef-mute-btn': I18nStringKey.kAdminVMButtons_IndefMute,
-			'mod-unmute-btn': I18nStringKey.kAdminVMButtons_Unmute,
-			'mod-get-ip-btn': I18nStringKey.kAdminVMButtons_GetIP
-		};
-
 		for (let domId of Object.keys(kDomIdtoStringMap)) {
 			let element = document.getElementById(domId);
 			if (element == null) {
@@ -429,12 +472,7 @@ export class I18n {
 			}
 		}
 
-		for (let domClass of Object.keys(kDomClassToStringMap)) {
-			let elements = document.getElementsByClassName(domClass);
-			for (let element of elements) {
-				element.innerHTML = this.GetStringRaw(kDomClassToStringMap[domClass]);
-			}
-		}
+		this.LocalizeClassNames();
 	}
 
 	// Returns a (raw, unformatted) string. Currently only used if we don't need formatting.
@@ -459,6 +497,10 @@ export class I18n {
 	// Returns a formatted localized string.
 	GetString(key: I18nStringKey, ...replacements: StringLike[]): string {
 		return Format(this.GetStringRaw(key), ...replacements);
+	}
+
+	Has(key: I18nStringKey) {
+		return this.lang.stringKeys[key] || enusLanguage.stringKeys[key];
 	}
 
 	on<e extends keyof I18nEvents>(event: e, cb: I18nEvents[e]): Unsubscribe {

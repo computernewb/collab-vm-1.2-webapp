@@ -42,10 +42,22 @@ const enusLanguage: Language = {
 		kVM_TurnYouHave: 'You have the turn.',
 		kVM_TurnsPaused: 'Turns have been paused.',
 		kVM_WaitingTurnTimer: 'Waiting for turn in {0} seconds.',
-		kVM_VoteCooldownTimer: 'Please wait {0} seconds before starting another vote.',
 
-		kVM_VoteForResetTitle: 'Do you want to reset the VM?',
-		kVM_VoteForResetTimer: 'Vote ends in {0} seconds',
+		kVM_VoteCooldownTimer: 'Please wait {0} seconds before starting another vote.',
+		kVM_VoteError_existingVote: 'A vote is already in progress.',
+		kVM_VoteTitle: 'Do you want to {0}?',
+		kVM_VoteTimer: 'Vote ends in {0} seconds',
+		kVM_VoteStarted: '{0} has started a vote to {1}.',
+		kVM_VoteSuccess: 'The vote to {0} has won.',
+		kVM_VoteFail: 'The vote to {0} has lost.',
+		kVM_UserVotedYes: '{0} has voted yes.',
+		kVM_UserVotedNo: '{0} has voted no.',
+		kVM_VoteMarker_UserVotedYes: 'Voted yes',
+		kVM_VoteMarker_UserVotedNo: 'Voted no',
+		kVM_VoteType_VoteReset: 'reset the VM',
+		kVM_VoteType_VoteReboot: 'reboot the VM',
+		kVM_VoteType_VoteIaosInsertMedia: 'insert {0} into the {1}',
+		kVM_VoteType_VoteIaosEjectMedia: 'eject the {0}',
 
 		kVMButtons_TakeTurn: 'Take Turn',
 		kVMButtons_EndTurn: 'End Turn',
@@ -53,7 +65,7 @@ const enusLanguage: Language = {
 		kVMButtons_Keyboard: 'Keyboard',
 		KVMButtons_CtrlAltDel: 'Ctrl+Alt+Del',
 
-		kVMButtons_VoteForReset: 'Vote For Reset',
+		kVMButtons_Vote: 'Vote...',
 		kVMButtons_Screenshot: 'Screenshot',
 
 		kQEMUMonitor: 'QEMU Monitor',
@@ -102,7 +114,17 @@ const enusLanguage: Language = {
 		kAccountModal_VerifyPasswordResetText: 'We sent an E-Mail to {0}. To reset your password, please enter the 8-digit code from the E-Mail below.',
 		kAccountModal_PasswordResetSuccess: 'Your password has been changed successfully. You can now log in with your new password.',
 
-		kNotLoggedIn: 'Not Logged in'
+		kNotLoggedIn: 'Not Logged in',
+
+		kIaosTabMediaKind_iso: 'Disc Images',
+		kIaosTabMediaKind_flp: 'Floppy Images',
+		kIaosDriveMediaKind_iso: 'CD drive',
+		kIaosDriveMediaKind_flp: 'floppy drive',
+		kIaosMediaChanged: '{0} inserted {1} into the {2}.',
+		kIaosMediaEjected: '{0} ejected the {1}.',
+		kIaosDockHeader: 'Select a disc below, then press load on the right.',
+		kIaosInsert: 'Load..',
+		kIaosEject: 'Eject'
 	}
 };
 

@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "sina wile open sin e toki wile la, o awen lon tenpo lili {0}.",
 
 		"kVM_VoteForResetTitle": "sina wile ala wile sin e ilo?",
-		"kVM_VoteForResetTimer": "toki wile li pini lon tenpo lili {0}",
+		"kVM_VoteTimer": "toki wile li pini lon tenpo lili {0}",
 
 		"kVMButtons_TakeTurn": "o pali",
 		"kVMButtons_EndTurn": "o pini e pali",
