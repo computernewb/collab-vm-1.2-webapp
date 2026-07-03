@@ -104,7 +104,7 @@ export enum I18nStringKey {
 	kMissingCaptcha = 'kMissingCaptcha',
 	kPasswordsMustMatch = 'kPasswordsMustMatch',
 
-	kNotLoggedIn = 'kNotLoggedIn',
+	kNotLoggedIn = 'kNotLoggedIn'
 }
 
 export interface I18nEvents {
@@ -136,7 +136,7 @@ export type LanguageMetadata = {
 // `languages.json`
 export type LanguagesJson = {
 	// Array of language IDs to allow loading
-	languages: {[key: string]: LanguageMetadata};
+	languages: { [key: string]: LanguageMetadata };
 
 	// The default language (set if a invalid language not in the languages array is set, or no language is set)
 	defaultLanguage: string;
@@ -153,7 +153,7 @@ interface StringKeyMap {
 /// our fancy internationalization helper.
 export class I18n {
 	// The language data itself
-	private langs : Map<string, LanguageMetadata> = new Map<string, Language>();
+	private langs: Map<string, LanguageMetadata> = new Map<string, Language>();
 	private lang: Language = enusLanguage;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
@@ -163,18 +163,18 @@ export class I18n {
 	// the ID of the language
 	private langId: string = enusId;
 
-	private regionNameRenderer = new Intl.DisplayNames(['en-US'], {type: 'region'});
-	
+	private regionNameRenderer = new Intl.DisplayNames(['en-US'], { type: 'region' });
+
 	async Init() {
 		// Load language list
-		var res = await fetch("lang/languages.json");
+		var res = await fetch('lang/languages.json');
 		if (!res.ok) {
-			alert("Failed to load languages.json: " + res.statusText);
+			alert('Failed to load languages.json: ' + res.statusText);
 			await this.SetLanguage(enusId);
 			this.ReplaceStaticStrings();
 			return;
 		}
-		var langData = await res.json() as LanguagesJson;
+		var langData = (await res.json()) as LanguagesJson;
 		for (const langId in langData.languages) {
 			this.langs.set(langId, langData.languages[langId]);
 		}
@@ -184,7 +184,7 @@ export class I18n {
 			a.classList.add('dropdown-item');
 			a.href = '#';
 			a.innerText = `${_lang.flag} ${_lang.languageName}`;
-			a.addEventListener('click', async e => {
+			a.addEventListener('click', async (e) => {
 				e.preventDefault();
 				await this.SetLanguage(langId);
 				this.ReplaceStaticStrings();
@@ -213,7 +213,7 @@ export class I18n {
 		this.ReplaceStaticStrings();
 	}
 
-	getCountryName(code: string) : string {
+	getCountryName(code: string): string {
 		return this.regionNameRenderer.of(code) || code;
 	}
 
@@ -223,9 +223,7 @@ export class I18n {
 
 		let lang;
 
-		if (id === enusId) 
-			lang = enusLanguage;
-
+		if (id === enusId) lang = enusLanguage;
 		else {
 			let path = `./lang/${id}.json`;
 			let res = await fetch(path);
@@ -234,7 +232,7 @@ export class I18n {
 				await this.SetLanguage(enusId);
 				return;
 			}
-			lang = await res.json() as Language;
+			lang = (await res.json()) as Language;
 		}
 
 		this.lang = lang;
@@ -242,10 +240,10 @@ export class I18n {
 		if (this.langId != lastId) {
 			// Replace static strings
 			this.ReplaceStaticStrings();
-			
+
 			// Update region name renderer target language
-			this.regionNameRenderer = new Intl.DisplayNames([this.langId], {type: 'region'});
-		};
+			this.regionNameRenderer = new Intl.DisplayNames([this.langId], { type: 'region' });
+		}
 
 		// Set the language ID localstorage entry
 		window.localStorage.setItem('i18n-lang', this.langId);
@@ -266,7 +264,7 @@ export class I18n {
 			accountSettingsButton: I18nStringKey.kAccountModal_AccountSettings,
 			accountLogoutButton: I18nStringKey.kGeneric_Logout,
 			languageDropdownText: I18nStringKey.kSiteButtons_Languages,
-			
+
 			welcomeModalHeader: I18nStringKey.kWelcomeModal_Header,
 			welcomeModalBody: I18nStringKey.kWelcomeModal_Body,
 			welcomeModalDismiss: I18nStringKey.kGeneric_Understood,
@@ -328,79 +326,79 @@ export class I18n {
 			accountResetPasswordCodeLabel: I18nStringKey.kGeneric_VerificationCode,
 			accountResetPasswordNewPasswordLabel: I18nStringKey.kAccountModal_NewPassword,
 			accountResetPasswordConfirmNewPasswordLabel: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			accountResetPasswordVerifyBtn: I18nStringKey.kAccountModal_ResetPassword,
+			accountResetPasswordVerifyBtn: I18nStringKey.kAccountModal_ResetPassword
 		};
 
 		const kDomAttributeToStringMap = {
 			adminPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountLoginUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountLoginPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountRegisterEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
+				placeholder: I18nStringKey.kGeneric_EMail
 			},
 			accountRegisterUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountRegisterPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountRegisterConfirmPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmPassword,
+				placeholder: I18nStringKey.kAccountModal_ConfirmPassword
 			},
 			accountVerifyEmailCode: {
-				placeholder: I18nStringKey.kGeneric_VerificationCode,
+				placeholder: I18nStringKey.kGeneric_VerificationCode
 			},
 			accountVerifyEmailPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountSettingsEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
+				placeholder: I18nStringKey.kGeneric_EMail
 			},
 			accountSettingsUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountSettingsNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_NewPassword,
+				placeholder: I18nStringKey.kAccountModal_NewPassword
 			},
 			accountSettingsConfirmNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword,
+				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword
 			},
 			accountSettingsCurrentPassword: {
-				placeholder: I18nStringKey.kAccountModal_CurrentPassword,
+				placeholder: I18nStringKey.kAccountModal_CurrentPassword
 			},
 			accountResetPasswordEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
+				placeholder: I18nStringKey.kGeneric_EMail
 			},
 			accountResetPasswordUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountResetPasswordCode: {
-				placeholder: I18nStringKey.kGeneric_VerificationCode,
+				placeholder: I18nStringKey.kGeneric_VerificationCode
 			},
 			accountResetPasswordNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_NewPassword,
+				placeholder: I18nStringKey.kAccountModal_NewPassword
 			},
 			accountResetPasswordConfirmNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			},
+				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword
+			}
 		};
 
 		const kDomClassToStringMap: StringKeyMap = {
-			"mod-end-turn-btn": I18nStringKey.kVMButtons_EndTurn,
-			"mod-ban-btn": I18nStringKey.kAdminVMButtons_Ban,
-			"mod-kick-btn": I18nStringKey.kAdminVMButtons_Kick,
-			"mod-change-username-btn": I18nStringKey.kVMButtons_ChangeUsername,
-			"mod-temp-mute-btn": I18nStringKey.kAdminVMButtons_TempMute,
-			"mod-indef-mute-btn": I18nStringKey.kAdminVMButtons_IndefMute,
-			"mod-unmute-btn": I18nStringKey.kAdminVMButtons_Unmute,
-			"mod-get-ip-btn": I18nStringKey.kAdminVMButtons_GetIP,
-		}
+			'mod-end-turn-btn': I18nStringKey.kVMButtons_EndTurn,
+			'mod-ban-btn': I18nStringKey.kAdminVMButtons_Ban,
+			'mod-kick-btn': I18nStringKey.kAdminVMButtons_Kick,
+			'mod-change-username-btn': I18nStringKey.kVMButtons_ChangeUsername,
+			'mod-temp-mute-btn': I18nStringKey.kAdminVMButtons_TempMute,
+			'mod-indef-mute-btn': I18nStringKey.kAdminVMButtons_IndefMute,
+			'mod-unmute-btn': I18nStringKey.kAdminVMButtons_Unmute,
+			'mod-get-ip-btn': I18nStringKey.kAdminVMButtons_GetIP
+		};
 
 		for (let domId of Object.keys(kDomIdtoStringMap)) {
 			let element = document.getElementById(domId);
