@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Kérlek várj {0} másodpercet egy másik szavazás indítása előtt.",
 
 		"kVM_VoteForResetTitle": "Alaphelyzetbe szeretnéd állítani a virtuális gépet?",
-		"kVM_VoteForResetTimer": "A szavazásnak vége lesz {0} másodperc múlva.",
+		"kVM_VoteTimer": "A szavazásnak vége lesz {0} másodperc múlva.",
 
 		"kVMButtons_TakeTurn": "Sorban állás",
 		"kVMButtons_EndTurn": "Sor elhagyása",

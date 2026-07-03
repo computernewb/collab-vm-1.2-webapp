@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Prosimy zaczekać {0} sekund przed rozpoczęciem następnego głosowania.",
 
 		"kVM_VoteForResetTitle": "Czy chcesz zresetować wirtualną maszynę?",
-		"kVM_VoteForResetTimer": "Głosowanie kończy się za {0} sekund.",
+		"kVM_VoteTimer": "Głosowanie kończy się za {0} sekund.",
 
 		"kVMButtons_TakeTurn": "Weź kolej",
 		"kVMButtons_EndTurn": "Zakończ kolej",

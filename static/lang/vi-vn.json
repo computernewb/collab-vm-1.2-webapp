@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Vui lòng đợi {0} giây trước khi bắt đầu cuộc bỏ phiếu khác.",
 
 		"kVM_VoteForResetTitle": "Bạn có muốn thiết lập lại VM không?",
-		"kVM_VoteForResetTimer": "Cuộc bình chọn kết thúc sau {0} giây",
+		"kVM_VoteTimer": "Cuộc bình chọn kết thúc sau {0} giây",
 
 		"kVMButtons_TakeTurn": "Bắt đầu",
 		"kVMButtons_EndTurn": "Kết thúc",
