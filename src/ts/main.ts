@@ -682,7 +682,9 @@ function addUser(user: User) {
 	let u = { user: user, element: tr, usernameElement: usernameSpan, flagElement: flagSpan, voteMarkerElement: voteMarkerSpan };
 	if (rank === Rank.Admin || rank === Rank.Moderator) userModOptions(u);
 	elements.userlist.appendChild(tr);
-	if (olduser !== undefined) olduser.element = tr;
+	if (olduser !== undefined) {
+		Object.assign(olduser, u);
+	}
 	else users.push(u);
 	elements.onlineusercount.innerHTML = VM!.getUsers().length.toString();
 }
