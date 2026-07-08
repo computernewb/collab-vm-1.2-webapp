@@ -76,6 +76,10 @@
 			"languageName": "Türkçe",
 			"flag": "🇹🇷"
 		}
-	},
+		"it-it": {
+			"languageName": "Italiano (Italia)",
+			"flag": " 🇮🇹"
+		}
+	}, 
 	"defaultLanguage": "en-us"
 }
