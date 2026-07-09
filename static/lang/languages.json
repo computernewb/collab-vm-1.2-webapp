@@ -79,6 +79,10 @@
 		"it-it": {
 			"languageName": "Italiano (Italia)",
 			"flag": " 🇮🇹"
+		},
+		"fi-fi": {
+			"languageName": "Suomi",
+			"flag": "🇫🇮"
 		}
 	}, 
 	"defaultLanguage": "en-us"
