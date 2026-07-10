@@ -358,83 +358,25 @@ Theme: cvmDisabled
   display: none;
 }
 
-/* IAOS: Tab bar */
-
-.iaos-vmview {
-    margin-bottom: 3em;
-}
-
-#iaosTabBar {
-  position: absolute;
-  top: -2.25em;
-  width: 100%;
-
-}
-
-#iaosTabContainer {
-  width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: row;
-  visibility: visible !important;
-}
-
-.iaos-dock-tab {
-  height: 2.25em !important;
-  width: fit-content;
-  background-color: var(--bs-gray-700, #495057);
-  color: var(--bs-body-color, white);
-  border-top-left-radius: var(--bs-border-radius, 3px);
-  border-top-right-radius: var(--bs-border-radius, 3px);
-
-  padding: 0 0.5em;
-  pointer-events: auto;
-
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-
-  cursor: pointer;
-  user-select: none;
-}
-
-.iaos-dock-tab:hover, .iaos-dock-tab.iaos-active {
-  background-color: var(--bs-gray-800, #343a40);
-}
-
-/* IAOS: Dock */
-
-#iaosDock {
-  height: 80%;
-}
-
-#iaosDockActionBtnGroup {
-  margin-left: auto;
-}
-
-#iaosDockContainer, #iaosDockRow, #iaosDockCard {
+/* IAOS */
+#iaosModal .modal-content, #iaosModal .modal-body, .iaos-modal-row {
   height: 100%;
 }
 
-#iaosDockRow {
-  max-height: 100%;
+.iaos-modal-row, .iaos-modal-table-col {
+  display: flex;
   flex-direction: column;
 }
 
-#iaosDockInfoCol {
-  height: min-content;
-  max-height: 40%;
+.iaos-modal-info-col {
+  height: 35%;
 }
 
-#iaosDockCard {
+.iaos-modal-info-col .card {
   flex-direction: row;
   height: min-content;
   max-height: 100%;
   overflow-y: scroll;
-}
-
-#iaosDockCard > .card-body {
-  padding-bottom: 0;
 }
 
 #iaosDockCardImg {
@@ -442,9 +384,12 @@ Theme: cvmDisabled
   height: min-content;
 }
 
-#iaosDockTableCol {
+.iaos-modal-table-col, #iaosTabContent {
   height: 0;
   flex-grow: 1;
+}
+
+#iaosTabContent {
   overflow-y: scroll;
 }
 
@@ -454,28 +399,24 @@ Theme: cvmDisabled
 
 /* IAOS: Desktop style */
 @media screen and (min-width: 768px) {
-  #iaosDock {
-    height: 60%;
-  }
-  #iaosDockRow {
+  .iaos-modal-row {
     flex-direction: row;
   }
-  #iaosDockInfoCol {
+  .iaos-modal-info-col {
+    margin-right: 0.5rem;
+  }
+  .iaos-modal-info-col, .iaos-modal-table-col {
+    width: 40%;
     height: 100%;
-    max-height: 100%;
+    max-height: unset;
   }
-  #iaosDockTableCol {
-    height: 100%;
-  }
-  #iaosDockCardImg {
-    max-height: none;
-    max-width: 100%;
-  }
-  #iaosDockCard {
+
+  .iaos-modal-info-col .card {
     height: min-content;
     flex-direction: column;
   }
-  #iaosDockCard > .card-body {
-    padding-bottom: var(--bs-card-spacer-y);
+  #iaosDockCardImg {
+    max-width: 100%;
+    height: min-content;
   }
 }

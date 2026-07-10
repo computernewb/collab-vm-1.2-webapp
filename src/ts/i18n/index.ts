@@ -118,13 +118,13 @@ export enum I18nStringKey {
 
 	kNotLoggedIn = 'kNotLoggedIn',
 
-	kIaosTabMediaKind_iso = 'kIaosTabMediaKind_iso',
-	kIaosTabMediaKind_flp = 'kIaosTabMediaKind_flp',
+	kIaosMediaKind_iso = 'kIaosMediaKind_iso',
+	kIaosMediaKind_flp = 'kIaosMediaKind_flp',
 	kIaosDriveMediaKind_iso = 'kIaosDriveMediaKind_iso',
 	kIaosDriveMediaKind_flp = 'kIaosDriveMediaKind_flp',
 	kIaosMediaChanged = 'kIaosMediaChanged',
 	kIaosMediaEjected = 'kIaosMediaEjected',
-	kIaosDockHeader = 'kIaosDockHeader',
+	kIaosChangeMediaHeader = 'kIaosChangeMediaHeader',
 	kIaosInsert = 'kIaosInsert',
 	kIaosEject = 'kIaosEject'
 }
@@ -284,8 +284,8 @@ export class I18n {
 			'mod-indef-mute-btn': I18nStringKey.kAdminVMButtons_IndefMute,
 			'mod-unmute-btn': I18nStringKey.kAdminVMButtons_Unmute,
 			'mod-get-ip-btn': I18nStringKey.kAdminVMButtons_GetIP,
-			'iaos-dock-tab-label-iso': I18nStringKey.kIaosTabMediaKind_iso,
-			'iaos-dock-tab-label-flp': I18nStringKey.kIaosTabMediaKind_flp
+			'iaos-tab-label-iso': I18nStringKey.kIaosMediaKind_iso,
+			'iaos-tab-label-flp': I18nStringKey.kIaosMediaKind_flp
 		};
 
 		if (classList.length === 0) {
@@ -378,7 +378,8 @@ export class I18n {
 			accountResetPasswordVerifyBtn: I18nStringKey.kAccountModal_ResetPassword,
 
 			// iaos
-			iaosDockHeader: I18nStringKey.kIaosDockHeader,
+			changeMediaBtnText: I18nStringKey.kIaosChangeMediaHeader,
+			iaosModalHeader: I18nStringKey.kIaosChangeMediaHeader,
 			iaosInsertBtnLabel: I18nStringKey.kIaosInsert,
 			iaosEjectBtnLabel: I18nStringKey.kIaosEject
 		};
