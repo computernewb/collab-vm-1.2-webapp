@@ -116,13 +116,13 @@ const enusLanguage: Language = {
 
 		kNotLoggedIn: 'Not Logged in',
 
-		kIaosTabMediaKind_iso: 'Disc Images',
-		kIaosTabMediaKind_flp: 'Floppy Images',
+		kIaosMediaKind_iso: 'Disc Images',
+		kIaosMediaKind_flp: 'Floppy Images',
 		kIaosDriveMediaKind_iso: 'CD drive',
 		kIaosDriveMediaKind_flp: 'floppy drive',
 		kIaosMediaChanged: '{0} inserted {1} into the {2}.',
 		kIaosMediaEjected: '{0} ejected the {1}.',
-		kIaosDockHeader: 'Select a disc below, then press load on the right.',
+		kIaosChangeMediaHeader: 'Change Media',
 		kIaosInsert: 'Load..',
 		kIaosEject: 'Eject'
 	}

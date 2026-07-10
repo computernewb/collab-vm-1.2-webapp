@@ -684,8 +684,7 @@ function addUser(user: User) {
 	elements.userlist.appendChild(tr);
 	if (olduser !== undefined) {
 		Object.assign(olduser, u);
-	}
-	else users.push(u);
+	} else users.push(u);
 	elements.onlineusercount.innerHTML = VM!.getUsers().length.toString();
 }
 

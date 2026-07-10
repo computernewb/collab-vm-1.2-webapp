@@ -181,6 +181,47 @@
 			</div>
 		</div>
 	</div>
+    <div class="modal fade" id="iaosModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl modal-fullscreen-md-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="iaosModalHeader"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="iaos-modal-row">
+                        <div class="iaos-modal-info-col">
+                            <div class="card">
+                                <img id="iaosDockCardImg" class="card-img-top" />
+                                <div class="card-body">
+                                    <h5 id="iaosDockCardTitle" class="card-title"></h5>
+                                    <p id="iaosDockCardDesc" class="card-text"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="iaos-modal-table-col">
+                            <ul class="nav nav-tabs" id="iaosTabList" role="tablist"></ul>
+
+                            <div class="tab-content" id="iaosTabContent"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="iaosInsertBtn" type="button" class="btn btn-primary">
+                        <i class="fa-solid fa-compact-disc"></i>
+                        <span id="iaosInsertBtnLabel"></span>
+                    </button>
+                    <button id="iaosEjectBtn" type="button" class="btn btn-danger">
+                        <i class="fa-solid fa-eject"></i>
+                        <span id="iaosEjectBtnLabel"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><span id="siteNameText"></span></a>
@@ -276,6 +317,7 @@
                 </span>
                 <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i> <span id="screenshotBtnText"></span></button>
                 <button class="btn btn-secondary" id="ctrlAltDelBtn"><i class="fa-solid fa-gear"></i> <span id="ctrlAltDelBtnText"></span></button>
+                <button class="btn btn-secondary d-none" id="changeMediaBtn" data-bs-toggle="modal" data-bs-target="#iaosModal"><i class="fa-solid fa-compact-disc"></i> <span id="changeMediaBtnText"></span></button>
                 <div id="staffbtns">
                     <button class="btn btn-secondary" id="restoreBtn"><i class="fa-solid fa-rotate-left"></i> <span id="restoreBtnText"></span></button>
                     <button class="btn btn-secondary" id="rebootBtn"><i class="fa-solid fa-power-off"></i> <span id="rebootBtnText"></span></button>
@@ -327,44 +369,6 @@
                             <label class="form-check-label" for="xssCheckbox">XSS</label>
                         </div>
                         <button class="btn btn-primary" type="button" id="sendChatBtn"><i class="fa-solid fa-paper-plane"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="iaosDock" class="offcanvas offcanvas-bottom" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1">
-            <div id="iaosTabBar">
-                <div id="iaosTabContainer"></div>
-            </div>
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="iaosDockHeader"></h5>
-                <div class="btn-group" role="group" id="iaosDockActionBtnGroup">
-                    <button id="iaosInsertBtn" type="button" class="btn btn-primary">
-                        <i class="fa-solid fa-compact-disc"></i>
-                        <span id="iaosInsertBtnLabel"></span>
-                    </button>
-                    <button id="iaosEjectBtn" type="button" class="btn btn-danger">
-                        <i class="fa-solid fa-eject"></i>
-                        <span id="iaosEjectBtnLabel"></span>
-                    </button>
-                </div>
-            </div>
-            <div class="offcanvas-body">
-                <div class="container-fluid" id="iaosDockContainer">
-                    <div class="row" id="iaosDockRow">
-                        <div class="col-xs-12 col-md-2" id="iaosDockInfoCol">
-                            <div class="card" id="iaosDockCard">
-                                <img id="iaosDockCardImg" class="card-img-top" />
-                                <div class="card-body">
-                                    <h5 id="iaosDockCardTitle" class="card-title"></h5>
-                                    <p id="iaosDockCardDesc" class="card-text"></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-10" id="iaosDockTableCol">
-                                <table id="iaosDockTable" class="table table-bordered">
-                                    <tbody id="iaosDockTableBody"></tbody>
-                                </table>
-                        </div>
                     </div>
                 </div>
             </div>
