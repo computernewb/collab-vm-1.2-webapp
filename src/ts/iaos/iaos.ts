@@ -225,4 +225,12 @@ export class IaosManager {
 		this.VM.ejectMedia(this.currentOpenTab.kind);
 		this.modal?.hide();
 	}
+
+	show() {
+		this.modal?.show();
+	}
+
+	hide() {
+		this.modal?.hide();
+	}
 }
