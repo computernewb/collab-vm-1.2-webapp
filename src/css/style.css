@@ -397,6 +397,10 @@ Theme: cvmDisabled
   width: 6em;
 }
 
+tr.iaos-media-entry-row {
+  cursor: pointer;
+}
+
 /* IAOS: Desktop style */
 @media screen and (min-width: 768px) {
   .iaos-modal-row {
