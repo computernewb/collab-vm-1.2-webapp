@@ -878,4 +878,8 @@ export default class CollabVMClient {
 		this.unsubscribeCallbacks.push(unsub);
 		return unsub;
 	}
+
+	hasCapability(capability: string) {
+		return this.enabledCapabilities.indexOf(capability) !== -1;
+	}
 }

@@ -24,5 +24,6 @@
 	"Auth": {
 		"Enabled": false,
 		"APIEndpoint": "http://127.0.0.1:5858"
-	}
+	},
+	"DetectLegacyIAOSCommands": true
 }

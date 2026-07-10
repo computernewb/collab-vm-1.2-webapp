@@ -919,8 +919,54 @@ function setTurnStatus() {
 	else elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_WaitingTurnTimer, turnTimer);
 }
 
+function detectLegacyIaosCommand(msg: string): boolean {
+	let re = /\!(?<cmd>[a-zA-Z]+)(\s|$)(?<arg>.*)/.exec(msg);
+	if (re) {
+		switch (re.groups?.cmd) {
+			case 'cd':
+			case 'lilycd':
+			case 'crustycd':
+			case 'flp':
+			case 'lilyflp':
+			case 'httpcd':
+				// Change media
+				IAOS.show();
+				return true;
+			case 'eject':
+				// Eject media
+				switch (re.groups?.arg) {
+					case 'cd':
+						VM?.ejectMedia('iso');
+						return true;
+					case 'flp':
+						VM?.ejectMedia('flp');
+						return true;
+					default:
+						return false;
+				}
+				break;
+			case 'reboot':
+				// Reboot
+				VM?.startVote(VoteType.VoteReboot);
+				return true;
+			default:
+				return false;
+		}
+	} else {
+		return false;
+	}
+}
+
 function sendChat() {
 	if (VM === null) return;
+
+	if (VM.hasCapability('iaos') && Config.DetectLegacyIAOSCommands) {
+		if (detectLegacyIaosCommand(elements.chatinput.value)) {
+			elements.chatinput.value = '';
+			return;
+		}
+	}
+
 	if (elements.xssCheckbox.checked) VM.xss(elements.chatinput.value);
 	else VM.chat(elements.chatinput.value);
 	elements.chatinput.value = '';
