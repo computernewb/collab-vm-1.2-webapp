@@ -406,7 +406,7 @@ Theme: cvmDisabled
     margin-right: 0.5rem;
   }
   .iaos-modal-info-col, .iaos-modal-table-col {
-    width: 40%;
+    width: 30%;
     height: 100%;
     max-height: unset;
   }
