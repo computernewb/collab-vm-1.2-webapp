@@ -2,7 +2,7 @@
 	"languageName": "Hrvatski",
 	"translatedLanguageName": "Croatian",
 	"flag": "🇭🇷",
-	"author": "xDLiveRBLX",
+	"author": "T420User",
 
 	"stringKeys": {
 		"kGeneric_CollabVM": "CollabVM",
@@ -35,13 +35,27 @@
 
 		"kVM_UsersOnlineText": "Korisnici na mreži:",
 
+		"kVM_TurnYouHave": "Vi imate red.",
+		"kVM_TurnsPaused": "Red je trenutno pauziran.",
 		"kVM_TurnTimeTimer": "Red isteće za {0} sekundi.",
 		"kVM_WaitingTurnTimer": "Čekanje za red u {0} sekundi.",
+		
 		"kVM_VoteCooldownTimer": "Molim Vas pričekajte {0} sekundi prije početka novog glasanja.",
-
-		"kVM_VoteForResetTitle": "Želite li resetirati VM?",
+		"kVM_VoteError_existingVote": "Glasovanje je već u tijeku.",
+		"kVM_VoteTitle": "Želite li {0}?",
 		"kVM_VoteTimer": "Glasanje završava za {0} sekundi",
-
+		"kVM_VoteStarted": "{0} je započelo glasovanje za {1}.",
+		"kVM_VoteSuccess": "Glasovanje za {0} je pobijedilo.",
+		"kVM_VoteFail": "Glasovanje za {0} je izgubilo.",
+		"kVM_UserVotedYes": "{0} je glasovao Da.",
+		"kVM_UserVotedNo": "{0} je glasovao Ne.",
+		"kVM_VoteMarker_UserVotedYes": "Glasali ste Da.",
+		"kVM_VoteMarker_UserVotedNo": "Glasali ste Ne.",
+		"kVM_VoteType_VoteReset": "resetirati VM",
+		"kVM_VoteType_VoteReboot": "ponovno pokreniti VM",
+		"kVM_VoteType_VoteIaosInsertMedia": "umetniti {0} u {1}",
+		"kVM_VoteType_VoteIaosEjectMedia": "izbaciti {0}",
+		
 		"kVMButtons_TakeTurn": "Uzmi red",
 		"kVMButtons_EndTurn": "Završi red",
 		"kVMButtons_ChangeUsername": "Promijeni korisničko ime",
@@ -93,6 +107,16 @@
 		"kAccountModal_VerifyPasswordResetText": "Poslali smo E-Mail na {0}. Da biste resetirali svoju lozinku, unesite osmero-znamenkasti kod iz poruke ispod.",
 		"kAccountModal_PasswordResetSuccess": "Vaša lozinka je uspješno resetirana. Sada se možete prijaviti sa svojom novom lozinkom.",
 
-		"kNotLoggedIn": "Niste prijavljeni."
+		"kNotLoggedIn": "Niste prijavljeni.",
+		
+		"kIaosMediaKind_iso": "Slike diska",
+		"kIaosMediaKind_flp": "Slike disketa",
+		"kIaosDriveMediaKind_iso": "CD pogon",
+		"kIaosDriveMediaKind_flp": "Pogon za diskete",
+		"kIaosMediaChanged": "{0} je umetnuto {1} u {2}.",
+		"kIaosMediaEjected": "{0} je izbacio {1}.",
+		"kIaosChangeMediaHeader": "Promjeni medij",
+		"kIaosInsert": "Umetni",
+		"kIaosEjecet": "Izbaci"
 	}
 }
