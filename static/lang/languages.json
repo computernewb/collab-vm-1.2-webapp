@@ -79,6 +79,10 @@
 		"it-it": {
 			"languageName": "Italiano (Italia)",
 			"flag": " 🇮🇹"
+		},
+		"cs-cz": {
+			"languageName": "Čeština",
+			"flag": "🇨🇿"
 		}
 	},
 	"defaultLanguage": "en-us"
