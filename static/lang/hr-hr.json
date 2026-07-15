@@ -2,7 +2,7 @@
 	"languageName": "Hrvatski",
 	"translatedLanguageName": "Croatian",
 	"flag": "🇭🇷",
-	"author": "xDLiveRBLX",
+	"author": "xDLiveRBLX, T420User",
 
 	"stringKeys": {
 		"kGeneric_CollabVM": "CollabVM",
@@ -22,7 +22,7 @@
 		"kGeneric_Verify": "Potvrdi",
 		"kGeneric_Update": "Ažuriraj",
 		"kGeneric_Logout": "Odjavi se",
-		
+
 		"kWelcomeModal_Header": "Dobrodošli u CollabVM",
 		"kWelcomeModal_Body": "<p>Prije nastavka, upoznajte se sa našim pravilima:</p> <h3>R1. Nemojte kršiti zakon.</h3> Ne koristite CollabVM da biste kršili federalni zakon SAD-a, zakon savezne države New York ili međunarodni zakon. Ako CollabVM sazna da je preko usluge učinjen zakon, odmah ćete dobiti ban sa usluge a vaše aktivnosti mogu biti prijavljene policiji ako je potrebno.<br><br>CollabVM je dužan po zakonu obavijestiti agencije ako postane svjestan o prisutnosti dječje pornografije ili prijenosa kroz njihovu mrežu.<br><br>COPPA je također provođen, nemojte koristiti CollabVM ako ste mlađi od 13 godina. <h3>R2. Nema pokretanja/korištenja DOS/DDoS alata.</h3> Ne koristite CollabVM za provođenje DOS/DDoS napada na pojedince, tvrtke, kompanije ili bilo koga drugoga. <h3>R3. Ne šaljite neželjenu poštu.</h3> Ne šaljite neželjenu poštu kroz ovu uslugu i općenito ne šaljite neželjene stvari. <h3>R4. Nemojte zlorabiti exploite. </h3> Nemojte zlorabiti bilo kakve exploite, dodatno, ako vidite nekoga da zlorabljuje exploite ili trebate priajviti jedan, molim Vas kontaktirajte me na: computernewbab@gmail.com <h3>R5. Nemojte lažno predstavljati druge korisnike.</h3> Nemojte lažno predstavljati druge korisnike CollabVM-a. Ako ste ulovljeni, biti ćete privremeno odspojeni sa stranice i ban-ani ako potrebno. <h3>R6. Jedan glas po osobi.</h3> Nemojte koristiti nikakve metode ili alate za zaobilaženje ograničenja glasova. Samo jedan glas je dozvoljen po osobi, bez obzira na sve. Svatko tko bude ulovljen biti će ban-an. <h3>R7. Nema alata za daljinski pristup.</h3> Ne koristite nikakve alate za daljinski pristup (npr: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, itd.) <h3>R8. Nema zaobilaženja CollabNet-a.</h3> Ne pokušavajte zaobilaziti blokiranje koje nudi CollabNet, pogotovo ako se koristi za kršenje 1., 2., ili 7., pravila. (ili za pokretanje glupih previše korištenih stvari.). <h3>R9. Nema stalnog izvođenja uništavajućih radnji.</h3> Bilo koji korisnik ne smije uništiti VM (čineći ga stalno neupotrebljivim), instalirati/deinstalirati operativni sustav (osim na VM7 ili VM8), ili pokretati botove koje to čine. Ovo uključuje botove koji unose goleme količine unosa tipkovnice ili miša. (\"kitting\"). <h3>R10. Nema rudarenja kriptovaluta.</h3> Pokušavanje rudarenja kriptovaluta na ovim VM-ovima rezultirati će izbačenjem, a zatim trajnim banom ako nastavite. Osim toga, nije kao da ćete zaraditi ikakve novce na tome. <h3>NSFW upozorenje</h3> Imajte na umu da je NSFW sadržaj dopušten na anarchy VMu (VM0b0t) i da se redovito pregledava. Osim toga, dok se jako trudimo spriječiti NSFW od glavnih VMova, ponekad će se prošuljati.",
 
@@ -35,12 +35,26 @@
 
 		"kVM_UsersOnlineText": "Korisnici na mreži:",
 
+		"kVM_TurnYouHave": "Vi imate red.",
+		"kVM_TurnsPaused": "Red je trenutno pauziran.",
 		"kVM_TurnTimeTimer": "Red isteće za {0} sekundi.",
 		"kVM_WaitingTurnTimer": "Čekanje za red u {0} sekundi.",
-		"kVM_VoteCooldownTimer": "Molim Vas pričekajte {0} sekundi prije početka novog glasanja.",
 
-		"kVM_VoteForResetTitle": "Želite li resetirati VM?",
-		"kVM_VoteForResetTimer": "Glasanje završava za {0} sekundi",
+		"kVM_VoteCooldownTimer": "Molim Vas pričekajte {0} sekundi prije početka novog glasanja.",
+		"kVM_VoteError_existingVote": "Glasovanje je već u tijeku.",
+		"kVM_VoteTitle": "Želite li {0}?",
+		"kVM_VoteTimer": "Glasanje završava za {0} sekundi",
+		"kVM_VoteStarted": "{0} je započelo glasovanje za {1}.",
+		"kVM_VoteSuccess": "Glasovanje za {0} je pobijedilo.",
+		"kVM_VoteFail": "Glasovanje za {0} je izgubilo.",
+		"kVM_UserVotedYes": "{0} je glasovao Da.",
+		"kVM_UserVotedNo": "{0} je glasovao Ne.",
+		"kVM_VoteMarker_UserVotedYes": "Glasali ste Da.",
+		"kVM_VoteMarker_UserVotedNo": "Glasali ste Ne.",
+		"kVM_VoteType_VoteReset": "resetirati VM",
+		"kVM_VoteType_VoteReboot": "ponovno pokreniti VM",
+		"kVM_VoteType_VoteIaosInsertMedia": "umetniti {0} u {1}",
+		"kVM_VoteType_VoteIaosEjectMedia": "izbaciti {0}",
 
 		"kVMButtons_TakeTurn": "Uzmi red",
 		"kVMButtons_EndTurn": "Završi red",
@@ -93,6 +107,16 @@
 		"kAccountModal_VerifyPasswordResetText": "Poslali smo E-Mail na {0}. Da biste resetirali svoju lozinku, unesite osmero-znamenkasti kod iz poruke ispod.",
 		"kAccountModal_PasswordResetSuccess": "Vaša lozinka je uspješno resetirana. Sada se možete prijaviti sa svojom novom lozinkom.",
 
-		"kNotLoggedIn": "Niste prijavljeni."
+		"kNotLoggedIn": "Niste prijavljeni.",
+
+		"kIaosMediaKind_iso": "Slike diska",
+		"kIaosMediaKind_flp": "Slike disketa",
+		"kIaosDriveMediaKind_iso": "CD pogon",
+		"kIaosDriveMediaKind_flp": "Pogon za diskete",
+		"kIaosMediaChanged": "{0} je umetnuto {1} u {2}.",
+		"kIaosMediaEjected": "{0} je izbacio {1}.",
+		"kIaosChangeMediaHeader": "Promjeni medij",
+		"kIaosInsert": "Umetni",
+		"kIaosEjecet": "Izbaci"
 	}
 }

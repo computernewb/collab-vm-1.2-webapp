@@ -6,13 +6,18 @@ import { AdminOpcode, Permissions, Rank } from './Permissions.js';
 import TurnStatus from './TurnStatus.js';
 import Mouse from './mouse.js';
 import GetKeysym from '../keyboard.js';
-import VoteStatus from './VoteStatus.js';
+import { VoteStatusEvent, VoteEndedEvent } from './VoteStatus.js';
 import MuteState from './MuteState.js';
-import { StringLike } from '../StringLike.js';
+import { StringLike } from '../util';
 import * as msgpack from 'msgpackr';
 // TODO: Properly workspaceify this
-import { CollabVMProtocolMessage, CollabVMProtocolMessageType } from '../../../collab-vm-1.2-binary-protocol/src/index.js';
+import { CollabVMProtocolMessage, CollabVMProtocolMessageType, VoteType } from '../../../collab-vm-1.2-binary-protocol/src/index.js';
 const w = window as any;
+
+enum SpecialTurnTimes {
+	OneUser = 2147483647,
+	Paused = 2147483646
+}
 
 export interface CollabVMClientEvents {
 	//open: () => void;
@@ -31,9 +36,10 @@ export interface CollabVMClientEvents {
 
 	rename: (oldUsername: string, newUsername: string, selfRename: boolean) => void;
 
-	vote: (status: VoteStatus) => void;
-	voteend: () => void;
-	votecd: (coolDownTime: number) => void;
+	vote: (e: VoteStatusEvent) => void;
+	voteend: (e: VoteEndedEvent) => void;
+	votestarterr: (error: string, cooldownTime?: number) => void;
+	votesenabled: (restore: boolean, reboot: boolean) => void;
 
 	badpw: () => void;
 	login: (rank: Rank, perms: Permissions) => void;
@@ -43,6 +49,10 @@ export interface CollabVMClientEvents {
 	accountlogin: (success: boolean) => void;
 
 	flag: () => void;
+
+	// iaos
+	iaosAdvertisement: (iaosApi: string, mediaKindSupported: Array<string>) => void;
+	iaosMediaChanged: (username: string, mediaKind: string, ejected: boolean, mediaName?: string) => void;
 }
 
 // types for private emitter
@@ -54,7 +64,7 @@ interface CollabVMClientPrivateEvents {
 	qemu: (qemuResponse: string) => void;
 }
 
-const DefaultCapabilities = [ "bin" ];
+const DefaultCapabilities = ['bin', 'iaos', 'votex'];
 
 export default class CollabVMClient {
 	// Fields
@@ -62,8 +72,8 @@ export default class CollabVMClient {
 	canvas: HTMLCanvasElement;
 	// A secondary canvas that is not scaled
 	unscaledCanvas: HTMLCanvasElement;
-	canvasScale : { width : number, height : number } = { width: 0, height: 0 };
-	actualScreenSize : { width : number, height : number } = { width: 0, height: 0 };
+	canvasScale: { width: number; height: number } = { width: 0, height: 0 };
+	actualScreenSize: { width: number; height: number } = { width: 0, height: 0 };
 	private unscaledCtx: CanvasRenderingContext2D;
 	private ctx: CanvasRenderingContext2D;
 	private url: string;
@@ -73,9 +83,10 @@ export default class CollabVMClient {
 	private mouse: Mouse = new Mouse();
 	private rank: Rank = Rank.Unregistered;
 	private perms: Permissions = new Permissions(0);
-	private voteStatus: VoteStatus | null = null;
+	private currentVote: VoteStatusEvent | null = null;
 	private node: string | null = null;
 	private auth: boolean = false;
+	private enabledCapabilities: Array<string> = [];
 	// events that are used internally and not exposed
 	private internalEmitter: Emitter<CollabVMClientPrivateEvents>;
 	// public events
@@ -207,14 +218,14 @@ export default class CollabVMClient {
 		try {
 			msg = msgpack.decode(data);
 		} catch {
-			console.error("Server sent invalid binary message");
+			console.error('Server sent invalid binary message');
 			return;
 		}
 		if (msg.type === undefined) return;
 		switch (msg.type) {
 			case CollabVMProtocolMessageType.rect: {
 				if (!msg.rect || msg.rect.x === undefined || msg.rect.y === undefined || msg.rect.data === undefined) return;
-				let blob = new Blob( [ new Uint8Array(msg.rect.data) ], {type: "image/jpeg"});
+				let blob = new Blob([new Uint8Array(msg.rect.data)], { type: 'image/jpeg' });
 				let url = URL.createObjectURL(blob);
 				let img = new Image();
 				img.addEventListener('load', () => {
@@ -223,6 +234,58 @@ export default class CollabVMClient {
 				});
 				img.src = url;
 				break;
+			}
+			case CollabVMProtocolMessageType.iaosAdvertisement: {
+				if (!msg.iaosAdvertisement || msg.iaosAdvertisement.api === undefined || msg.iaosAdvertisement.mediaKindSupported === undefined) return;
+
+				this.publicEmitter.emit('iaosAdvertisement', msg.iaosAdvertisement.api, msg.iaosAdvertisement.mediaKindSupported);
+				break;
+			}
+			case CollabVMProtocolMessageType.iaosMediaChanged: {
+				if (!msg.iaosMediaChanged || msg.iaosMediaChanged.username === undefined || msg.iaosMediaChanged.mediaKind === undefined) return;
+
+				this.publicEmitter.emit('iaosMediaChanged', msg.iaosMediaChanged.username, msg.iaosMediaChanged.mediaKind, msg.iaosMediaChanged.ejected, msg.iaosMediaChanged.mediaName);
+				break;
+			}
+			case CollabVMProtocolMessageType.voteStatus: {
+				if (!msg.voteStatus) return;
+				let e = {
+					started: msg.voteStatus.started,
+					voteType: msg.voteStatus.voteType,
+					voteIntentStr: msg.voteStatus.voteIntentStr,
+					voteTime: msg.voteStatus.voteTime,
+					startedByUser: msg.voteStatus.startedByUser,
+					yesVotes: msg.voteStatus.yesVotes,
+					noVotes: msg.voteStatus.noVotes,
+					yesCount: msg.voteStatus.yesVotes.length,
+					noCount: msg.voteStatus.noVotes.length,
+					data: msg.voteStatus.data
+				};
+
+				this.currentVote = e;
+
+				this.publicEmitter.emit('vote', e);
+				break;
+			}
+			case CollabVMProtocolMessageType.voteEnded: {
+				if (!msg.voteEnded) return;
+				this.currentVote = null;
+				this.publicEmitter.emit('voteend', {
+					voteType: msg.voteEnded.voteType,
+					voteIntentStr: msg.voteEnded.voteIntentStr,
+					voteSucceeded: msg.voteEnded.voteSucceeded
+				});
+				break;
+			}
+			case CollabVMProtocolMessageType.voteStartFailed: {
+				if (!msg.voteStartFailed) return;
+
+				this.publicEmitter.emit('votestarterr', msg.voteStartFailed.error, msg.voteStartFailed.cooldownTime);
+				break;
+			}
+			case CollabVMProtocolMessageType.votesEnabled: {
+				if (!msg.votesEnabled) return;
+				this.publicEmitter.emit('votesenabled', msg.votesEnabled.votesEnabled.indexOf(VoteType.VoteReset) !== -1, msg.votesEnabled.votesEnabled.indexOf(VoteType.VoteReboot) !== -1);
 			}
 		}
 	}
@@ -247,6 +310,11 @@ export default class CollabVMClient {
 				this.send('nop');
 				break;
 			}
+			case 'cap': {
+				// Save capabilities
+				this.enabledCapabilities = msgArr.slice(1);
+				break;
+			}
 			case 'list': {
 				// pass msgarr to the emitter for processing by list()
 				this.internalEmitter.emit('list', msgArr.slice(1));
@@ -255,6 +323,9 @@ export default class CollabVMClient {
 			case 'connect': {
 				this.connectedToVM = msgArr[1] === '1';
 				this.internalEmitter.emit('connect', this.connectedToVM);
+				if (this.enabledCapabilities.indexOf('votex') === -1) {
+					this.publicEmitter.emit('votesenabled', msgArr[3] === '1', false);
+				}
 				break;
 			}
 			case 'size': {
@@ -340,9 +411,13 @@ export default class CollabVMClient {
 			case 'turn': {
 				// Reset all turn data
 				for (let user of this.users) user.turn = -1;
+				let turnTime = parseInt(msgArr[1]);
 				let queuedUsers = parseInt(msgArr[2]);
+
 				if (queuedUsers === 0) {
 					this.publicEmitter.emit('turn', {
+						paused: turnTime == SpecialTurnTimes.Paused,
+						soleUser: false,
 						user: null,
 						queue: [],
 						turnTime: null,
@@ -350,6 +425,7 @@ export default class CollabVMClient {
 					});
 					return;
 				}
+
 				let currentTurn = this.users.find((u) => u.username === msgArr[3])!;
 				currentTurn.turn = 0;
 				let queue: User[] = [];
@@ -360,40 +436,57 @@ export default class CollabVMClient {
 						user.turn = i;
 					}
 				}
+
 				this.publicEmitter.emit('turn', {
+					paused: turnTime == SpecialTurnTimes.Paused,
+					soleUser: turnTime == SpecialTurnTimes.OneUser,
 					user: currentTurn,
 					queue: queue,
-					turnTime: currentTurn.username === this.username ? parseInt(msgArr[1]) : null,
+					turnTime: currentTurn.username === this.username ? turnTime : null,
 					queueTime: queue.some((u) => u.username === this.username) ? parseInt(msgArr[msgArr.length - 1]) : null
 				});
 				break;
 			}
 			case 'vote': {
+				let started = false;
 				switch (msgArr[1]) {
 					case '0':
-					// Vote started
+						// Vote started
+						started = true;
 					case '1':
 						// Vote updated
 						let timeToEnd = parseInt(msgArr[2]);
 						let yesVotes = parseInt(msgArr[3]);
 						let noVotes = parseInt(msgArr[4]);
 						// Some server implementations dont send data for status 0, and some do
-						if (Number.isNaN(timeToEnd) || Number.isNaN(yesVotes) || Number.isNaN(noVotes)) return;
-						this.voteStatus = {
-							timeToEnd: timeToEnd,
-							yesVotes: yesVotes,
-							noVotes: noVotes
+						if (Number.isNaN(timeToEnd)) timeToEnd = 0;
+						if (Number.isNaN(yesVotes)) yesVotes = 0;
+						if (Number.isNaN(noVotes)) noVotes = 0;
+						this.currentVote = {
+							started,
+							voteType: VoteType.VoteReset,
+							voteIntentStr: 'reset the VM',
+							voteTime: timeToEnd / 1000,
+							startedByUser: null,
+							yesVotes: null,
+							noVotes: null,
+							yesCount: yesVotes,
+							noCount: noVotes
 						};
-						this.publicEmitter.emit('vote', this.voteStatus);
+						this.publicEmitter.emit('vote', this.currentVote);
 						break;
 					case '2':
 						// Vote ended
-						this.voteStatus = null;
-						this.publicEmitter.emit('voteend');
+						this.currentVote = null;
+						this.publicEmitter.emit('voteend', {
+							voteType: VoteType.VoteReset,
+							voteIntentStr: 'reset the VM',
+							voteSucceeded: null
+						});
 						break;
 					case '3':
 						// Cooldown
-						this.publicEmitter.emit('votecd', parseInt(msgArr[2]));
+						this.publicEmitter.emit('votestarterr', 'cooldown', parseInt(msgArr[2]));
 						break;
 				}
 				break;
@@ -405,11 +498,11 @@ export default class CollabVMClient {
 				break;
 			}
 			case 'login': {
-				if (msgArr[1] === "1") {
+				if (msgArr[1] === '1') {
 					this.rank = Rank.Registered;
 					this.publicEmitter.emit('login', Rank.Registered, new Permissions(0));
 				}
-				this.publicEmitter.emit('accountlogin', msgArr[1] === "1");
+				this.publicEmitter.emit('accountlogin', msgArr[1] === '1');
 				break;
 			}
 			case 'admin': {
@@ -457,10 +550,14 @@ export default class CollabVMClient {
 	}
 
 	private loadRectangle(img: HTMLImageElement, x: number, y: number) {
-		if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height)
-			this.unscaledCtx.drawImage(img, x, y);
+		if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height) this.unscaledCtx.drawImage(img, x, y);
 		// Scale the image to the canvas
-		this.ctx.drawImage(img, 0, 0, img.width, img.height,
+		this.ctx.drawImage(
+			img,
+			0,
+			0,
+			img.width,
+			img.height,
 			(x / this.actualScreenSize.width) * this.canvas.width,
 			(y / this.actualScreenSize.height) * this.canvas.height,
 			(img.width / this.actualScreenSize.width) * this.canvas.width,
@@ -514,6 +611,11 @@ export default class CollabVMClient {
 		});
 
 		this.socket.send(Guacutils.encode(...guacElements));
+	}
+
+	// Send a binary message to the server
+	sendBinary(msg: CollabVMProtocolMessage) {
+		this.socket.send(msgpack.encode(msg));
 	}
 
 	// Get a list of all VMs
@@ -602,11 +704,28 @@ export default class CollabVMClient {
 	}
 
 	// Get vote status
-	getVoteStatus(): VoteStatus | null {
-		return this.voteStatus;
+	getCurrentVote(): VoteStatusEvent | null {
+		return this.currentVote;
 	}
 
-	// Start a vote, or vote
+	// Start a vote
+	startVote(voteType: VoteType) {
+		if (this.enabledCapabilities.indexOf('votex') !== -1) {
+			this.sendBinary({
+				type: CollabVMProtocolMessageType.voteStart,
+				voteStart: {
+					voteType
+				}
+			});
+		} else {
+			if (voteType !== VoteType.VoteReset) {
+				throw new Error('Tried to start a vote other than reset without votex capability enabled.');
+			}
+			this.send('vote', '1');
+		}
+	}
+
+	// Cast a vote
 	vote(vote: boolean) {
 		this.send('vote', vote ? '1' : '0');
 	}
@@ -701,11 +820,11 @@ export default class CollabVMClient {
 	}
 
 	// Toggle turns
-	turns(enabled: boolean) {
+	pauseTurns(enabled: boolean) {
 		this.send('admin', AdminOpcode.ToggleTurns, enabled ? '1' : '0');
 	}
 
-	// Indefinite turn
+	// Indefinite turn (deprecated)
 	indefiniteTurn() {
 		this.send('admin', AdminOpcode.IndefiniteTurn);
 	}
@@ -728,17 +847,39 @@ export default class CollabVMClient {
 		return this.node;
 	}
 
+	insertMedia(mediaId: string) {
+		this.sendBinary({
+			type: CollabVMProtocolMessageType.iaosChangeMedia,
+			iaosChangeMedia: {
+				id: mediaId
+			}
+		});
+	}
+
+	ejectMedia(kind: string) {
+		this.sendBinary({
+			type: CollabVMProtocolMessageType.iaosEjectMedia,
+			iaosEjectMedia: {
+				kind
+			}
+		});
+	}
+
 	private onInternal<E extends keyof CollabVMClientPrivateEvents>(event: E, callback: CollabVMClientPrivateEvents[E]): Unsubscribe {
 		return this.internalEmitter.on(event, callback);
 	}
 
 	private shouldSendInput() {
-		return this.users.find(u => u.username === this.username)?.turn === 0 || (w.collabvm.ghostTurn && this.rank === Rank.Admin);
+		return this.users.find((u) => u.username === this.username)?.turn === 0 || (w.collabvm.ghostTurn && this.rank === Rank.Admin);
 	}
 
 	on<E extends keyof CollabVMClientEvents>(event: E, callback: CollabVMClientEvents[E]): Unsubscribe {
 		let unsub = this.publicEmitter.on(event, callback);
 		this.unsubscribeCallbacks.push(unsub);
 		return unsub;
+	}
+
+	hasCapability(capability: string) {
+		return this.enabledCapabilities.indexOf(capability) !== -1;
 	}
 }

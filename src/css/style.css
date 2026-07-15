@@ -51,7 +51,7 @@
 #turnstatus {
   text-align: center;
 }
-#voteResetPanel {
+#votePanel {
   text-align: center;
 }
 
@@ -348,4 +348,79 @@ Theme: cvmDisabled
 
 .userlist-flag:empty {
   display: none;
+}
+
+.userlist-vote-marker {
+  padding-left: 0.5rem;
+}
+
+.userlist-vote-marker:empty {
+  display: none;
+}
+
+/* IAOS */
+#iaosModal .modal-content, #iaosModal .modal-body, .iaos-modal-row {
+  height: 100%;
+}
+
+.iaos-modal-row, .iaos-modal-table-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.iaos-modal-info-col {
+  height: 35%;
+}
+
+.iaos-modal-info-col .card {
+  flex-direction: row;
+  height: min-content;
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+#iaosDockCardImg {
+  max-width: 50%;
+  height: min-content;
+}
+
+.iaos-modal-table-col, #iaosTabContent {
+  height: 0;
+  flex-grow: 1;
+}
+
+#iaosTabContent {
+  overflow-y: scroll;
+}
+
+.iaos-media-year-col {
+  width: 6em;
+}
+
+tr.iaos-media-entry-row {
+  cursor: pointer;
+}
+
+/* IAOS: Desktop style */
+@media screen and (min-width: 768px) {
+  .iaos-modal-row {
+    flex-direction: row;
+  }
+  .iaos-modal-info-col {
+    margin-right: 0.5rem;
+  }
+  .iaos-modal-info-col, .iaos-modal-table-col {
+    width: 30%;
+    height: 100%;
+    max-height: unset;
+  }
+
+  .iaos-modal-info-col .card {
+    height: min-content;
+    flex-direction: column;
+  }
+  #iaosDockCardImg {
+    max-width: 100%;
+    height: min-content;
+  }
 }

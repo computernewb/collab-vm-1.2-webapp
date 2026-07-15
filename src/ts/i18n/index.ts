@@ -1,7 +1,6 @@
-import { StringLike } from './StringLike';
-import { Format } from './format';
+import { StringLike, Format } from '../util';
 import { Emitter, Unsubscribe, createNanoEvents } from 'nanoevents';
-import Config from '../../config.json';
+import Config from '../../../config.json';
 
 /// All string keys.
 export enum I18nStringKey {
@@ -37,11 +36,25 @@ export enum I18nStringKey {
 	kVM_UsersOnlineText = 'kVM_UsersOnlineText',
 
 	kVM_TurnTimeTimer = 'kVM_TurnTimeTimer',
+	kVM_TurnYouHave = 'kVM_TurnYouHave',
+	kVM_TurnsPaused = 'kVM_TurnsPaused',
 	kVM_WaitingTurnTimer = 'kVM_WaitingTurnTimer',
-	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
 
-	kVM_VoteForResetTitle = 'kVM_VoteForResetTitle',
-	kVM_VoteForResetTimer = 'kVM_VoteForResetTimer',
+	kVM_VoteCooldownTimer = 'kVM_VoteCooldownTimer',
+	kVM_VoteError_existingVote = 'kVM_VoteError_existingVote',
+	kVM_VoteTitle = 'kVM_VoteTitle',
+	kVM_VoteTimer = 'kVM_VoteTimer',
+	kVM_VoteStarted = 'kVM_VoteStarted',
+	kVM_VoteSuccess = 'kVM_VoteSuccess',
+	kVM_VoteFail = 'kVM_VoteFail',
+	kVM_UserVotedYes = 'kVM_UserVotedYes',
+	kVM_UserVotedNo = 'kVM_UserVotedNo',
+	kVM_VoteMarker_UserVotedYes = 'kVM_VoteMarker_UserVotedYes',
+	kVM_VoteMarker_UserVotedNo = 'kVM_VoteMarker_UserVotedNo',
+	kVM_VoteType_VoteReset = 'kVM_VoteType_VoteReset',
+	kVM_VoteType_VoteReboot = 'kVM_VoteType_VoteReboot',
+	kVM_VoteType_VoteIaosInsertMedia = 'kVM_VoteType_VoteIaosInsertMedia',
+	kVM_VoteType_VoteIaosEjectMedia = 'kVM_VoteType_VoteIaosEjectMedia',
 
 	kVMButtons_TakeTurn = 'kVMButtons_TakeTurn',
 	kVMButtons_EndTurn = 'kVMButtons_EndTurn',
@@ -49,7 +62,7 @@ export enum I18nStringKey {
 	kVMButtons_Keyboard = 'kVMButtons_Keyboard',
 	KVMButtons_CtrlAltDel = 'KVMButtons_CtrlAltDel',
 
-	kVMButtons_VoteForReset = 'kVMButtons_VoteForReset',
+	kVMButtons_Vote = 'kVMButtons_Vote',
 	kVMButtons_Screenshot = 'kVMButtons_Screenshot',
 
 	// Admin VM buttons
@@ -61,7 +74,8 @@ export enum I18nStringKey {
 	kAdminVMButtons_Reboot = 'kAdminVMButtons_Reboot',
 	kAdminVMButtons_ClearTurnQueue = 'kAdminVMButtons_ClearTurnQueue',
 	kAdminVMButtons_BypassTurn = 'kAdminVMButtons_BypassTurn',
-	kAdminVMButtons_IndefiniteTurn = 'kAdminVMButtons_IndefiniteTurn',
+	kAdminVMButtons_PauseTurns = 'kAdminVMButtons_PauseTurns',
+	kAdminVMButtons_UnpauseTurns = 'kAdminVMButtons_UnpauseTurns',
 	kAdminVMButtons_GhostTurnOn = 'kAdminVMButtons_GhostTurnOn',
 	kAdminVMButtons_GhostTurnOff = 'kAdminVMButtons_GhostTurnOff',
 
@@ -103,6 +117,16 @@ export enum I18nStringKey {
 	kPasswordsMustMatch = 'kPasswordsMustMatch',
 
 	kNotLoggedIn = 'kNotLoggedIn',
+
+	kIaosMediaKind_iso = 'kIaosMediaKind_iso',
+	kIaosMediaKind_flp = 'kIaosMediaKind_flp',
+	kIaosDriveMediaKind_iso = 'kIaosDriveMediaKind_iso',
+	kIaosDriveMediaKind_flp = 'kIaosDriveMediaKind_flp',
+	kIaosMediaChanged = 'kIaosMediaChanged',
+	kIaosMediaEjected = 'kIaosMediaEjected',
+	kIaosChangeMediaHeader = 'kIaosChangeMediaHeader',
+	kIaosInsert = 'kIaosInsert',
+	kIaosEject = 'kIaosEject'
 }
 
 export interface I18nEvents {
@@ -134,17 +158,15 @@ export type LanguageMetadata = {
 // `languages.json`
 export type LanguagesJson = {
 	// Array of language IDs to allow loading
-	languages: {[key: string]: LanguageMetadata};
+	languages: { [key: string]: LanguageMetadata };
 
 	// The default language (set if a invalid language not in the languages array is set, or no language is set)
 	defaultLanguage: string;
 };
 
-// ID for fallback language
-const fallbackId = '!!fallback';
-
-// This language is provided in the webapp itself just in case language stuff fails
-import fallbackLanguage from './fallbackLanguage.js';
+// Language ID for the default en-us language.
+const enusId = 'en-us';
+import enusLanguage from './enusLanguage';
 
 interface StringKeyMap {
 	[k: string]: I18nStringKey;
@@ -153,28 +175,28 @@ interface StringKeyMap {
 /// our fancy internationalization helper.
 export class I18n {
 	// The language data itself
-	private langs : Map<string, LanguageMetadata> = new Map<string, Language>();
-	private lang: Language = fallbackLanguage;
+	private langs: Map<string, LanguageMetadata> = new Map<string, Language>();
+	private lang: Language = enusLanguage;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
 
 	CurrentLanguage = () => this.langId;
 
 	// the ID of the language
-	private langId: string = fallbackId;
+	private langId: string = enusId;
 
-	private regionNameRenderer = new Intl.DisplayNames(['en-US'], {type: 'region'});
-	
+	private regionNameRenderer = new Intl.DisplayNames(['en-US'], { type: 'region' });
+
 	async Init() {
 		// Load language list
-		var res = await fetch("lang/languages.json");
+		var res = await fetch('lang/languages.json');
 		if (!res.ok) {
-			alert("Failed to load languages.json: " + res.statusText);
-			await this.SetLanguage(fallbackId);
+			alert('Failed to load languages.json: ' + res.statusText);
+			await this.SetLanguage(enusId);
 			this.ReplaceStaticStrings();
 			return;
 		}
-		var langData = await res.json() as LanguagesJson;
+		var langData = (await res.json()) as LanguagesJson;
 		for (const langId in langData.languages) {
 			this.langs.set(langId, langData.languages[langId]);
 		}
@@ -184,7 +206,7 @@ export class I18n {
 			a.classList.add('dropdown-item');
 			a.href = '#';
 			a.innerText = `${_lang.flag} ${_lang.languageName}`;
-			a.addEventListener('click', async e => {
+			a.addEventListener('click', async (e) => {
 				e.preventDefault();
 				await this.SetLanguage(langId);
 				this.ReplaceStaticStrings();
@@ -213,7 +235,7 @@ export class I18n {
 		this.ReplaceStaticStrings();
 	}
 
-	getCountryName(code: string) : string {
+	getCountryName(code: string): string {
 		return this.regionNameRenderer.of(code) || code;
 	}
 
@@ -222,16 +244,17 @@ export class I18n {
 		this.langId = id;
 
 		let lang;
-		if (id === fallbackId) lang = fallbackLanguage;
+
+		if (id === enusId) lang = enusLanguage;
 		else {
 			let path = `./lang/${id}.json`;
 			let res = await fetch(path);
 			if (!res.ok) {
 				console.error(`Failed to load lang/${id}.json: ${res.statusText}`);
-				await this.SetLanguage(fallbackId);
+				await this.SetLanguage(enusId);
 				return;
 			}
-			lang = await res.json() as Language;
+			lang = (await res.json()) as Language;
 		}
 
 		this.lang = lang;
@@ -239,18 +262,42 @@ export class I18n {
 		if (this.langId != lastId) {
 			// Replace static strings
 			this.ReplaceStaticStrings();
-			
+
 			// Update region name renderer target language
-			this.regionNameRenderer = new Intl.DisplayNames([this.langId], {type: 'region'});
-		};
+			this.regionNameRenderer = new Intl.DisplayNames([this.langId], { type: 'region' });
+		}
 
 		// Set the language ID localstorage entry
-		if (this.langId !== fallbackId) {
-			window.localStorage.setItem('i18n-lang', this.langId);
-		}
+		window.localStorage.setItem('i18n-lang', this.langId);
 
 		this.emitter.emit('languageChanged', this.langId);
 		console.log('i18n initalized for', id, 'sucessfully!');
+	}
+
+	LocalizeClassNames(...classList: Array<string>) {
+		const kDomClassToStringMap: StringKeyMap = {
+			'mod-end-turn-btn': I18nStringKey.kVMButtons_EndTurn,
+			'mod-ban-btn': I18nStringKey.kAdminVMButtons_Ban,
+			'mod-kick-btn': I18nStringKey.kAdminVMButtons_Kick,
+			'mod-change-username-btn': I18nStringKey.kVMButtons_ChangeUsername,
+			'mod-temp-mute-btn': I18nStringKey.kAdminVMButtons_TempMute,
+			'mod-indef-mute-btn': I18nStringKey.kAdminVMButtons_IndefMute,
+			'mod-unmute-btn': I18nStringKey.kAdminVMButtons_Unmute,
+			'mod-get-ip-btn': I18nStringKey.kAdminVMButtons_GetIP,
+			'iaos-tab-label-iso': I18nStringKey.kIaosMediaKind_iso,
+			'iaos-tab-label-flp': I18nStringKey.kIaosMediaKind_flp
+		};
+
+		if (classList.length === 0) {
+			classList = Object.keys(kDomClassToStringMap);
+		}
+
+		for (let domClass of classList) {
+			let elements = document.getElementsByClassName(domClass);
+			for (let element of elements) {
+				element.innerHTML = this.GetStringRaw(kDomClassToStringMap[domClass]);
+			}
+		}
 	}
 
 	// Replaces static strings that we don't recompute
@@ -265,21 +312,22 @@ export class I18n {
 			accountSettingsButton: I18nStringKey.kAccountModal_AccountSettings,
 			accountLogoutButton: I18nStringKey.kGeneric_Logout,
 			languageDropdownText: I18nStringKey.kSiteButtons_Languages,
-			
+
 			welcomeModalHeader: I18nStringKey.kWelcomeModal_Header,
 			welcomeModalBody: I18nStringKey.kWelcomeModal_Body,
 			welcomeModalDismiss: I18nStringKey.kGeneric_Understood,
 
 			usersOnlineText: I18nStringKey.kVM_UsersOnlineText,
 
-			voteResetHeaderText: I18nStringKey.kVM_VoteForResetTitle,
 			voteYesBtnText: I18nStringKey.kGeneric_Yes,
 			voteNoBtnText: I18nStringKey.kGeneric_No,
 
 			changeUsernameBtnText: I18nStringKey.kVMButtons_ChangeUsername,
 			oskBtnText: I18nStringKey.kVMButtons_Keyboard,
 			ctrlAltDelBtnText: I18nStringKey.KVMButtons_CtrlAltDel,
-			voteForResetBtnText: I18nStringKey.kVMButtons_VoteForReset,
+			voteBtnText: I18nStringKey.kVMButtons_Vote,
+			voteForResetBtnText: I18nStringKey.kAdminVMButtons_Restore,
+			voteForRebootBtnText: I18nStringKey.kAdminVMButtons_Reboot,
 			screenshotBtnText: I18nStringKey.kVMButtons_Screenshot,
 
 			// admin stuff
@@ -297,7 +345,7 @@ export class I18n {
 			rebootBtnText: I18nStringKey.kAdminVMButtons_Reboot,
 			clearQueueBtnText: I18nStringKey.kAdminVMButtons_ClearTurnQueue,
 			bypassTurnBtnText: I18nStringKey.kAdminVMButtons_BypassTurn,
-			indefTurnBtnText: I18nStringKey.kAdminVMButtons_IndefiniteTurn,
+			pauseTurnsBtnText: I18nStringKey.kAdminVMButtons_PauseTurns,
 			ghostTurnBtnText: I18nStringKey.kAdminVMButtons_GhostTurnOff,
 
 			// Account modal
@@ -328,78 +376,73 @@ export class I18n {
 			accountResetPasswordNewPasswordLabel: I18nStringKey.kAccountModal_NewPassword,
 			accountResetPasswordConfirmNewPasswordLabel: I18nStringKey.kAccountModal_ConfirmNewPassword,
 			accountResetPasswordVerifyBtn: I18nStringKey.kAccountModal_ResetPassword,
+
+			// iaos
+			changeMediaBtnText: I18nStringKey.kIaosChangeMediaHeader,
+			iaosModalHeader: I18nStringKey.kIaosChangeMediaHeader,
+			iaosInsertBtnLabel: I18nStringKey.kIaosInsert,
+			iaosEjectBtnLabel: I18nStringKey.kIaosEject
 		};
 
 		const kDomAttributeToStringMap = {
 			adminPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountLoginUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountLoginPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountRegisterEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
+				placeholder: I18nStringKey.kGeneric_EMail
 			},
 			accountRegisterUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountRegisterPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountRegisterConfirmPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmPassword,
+				placeholder: I18nStringKey.kAccountModal_ConfirmPassword
 			},
 			accountVerifyEmailCode: {
-				placeholder: I18nStringKey.kGeneric_VerificationCode,
+				placeholder: I18nStringKey.kGeneric_VerificationCode
 			},
 			accountVerifyEmailPassword: {
-				placeholder: I18nStringKey.kGeneric_Password,
+				placeholder: I18nStringKey.kGeneric_Password
 			},
 			accountSettingsEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
+				placeholder: I18nStringKey.kGeneric_EMail
 			},
 			accountSettingsUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountSettingsNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_NewPassword,
+				placeholder: I18nStringKey.kAccountModal_NewPassword
 			},
 			accountSettingsConfirmNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword,
+				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword
 			},
 			accountSettingsCurrentPassword: {
-				placeholder: I18nStringKey.kAccountModal_CurrentPassword,
+				placeholder: I18nStringKey.kAccountModal_CurrentPassword
 			},
 			accountResetPasswordEmail: {
-				placeholder: I18nStringKey.kGeneric_EMail,
+				placeholder: I18nStringKey.kGeneric_EMail
 			},
 			accountResetPasswordUsername: {
-				placeholder: I18nStringKey.kGeneric_Username,
+				placeholder: I18nStringKey.kGeneric_Username
 			},
 			accountResetPasswordCode: {
-				placeholder: I18nStringKey.kGeneric_VerificationCode,
+				placeholder: I18nStringKey.kGeneric_VerificationCode
 			},
 			accountResetPasswordNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_NewPassword,
+				placeholder: I18nStringKey.kAccountModal_NewPassword
 			},
 			accountResetPasswordConfirmNewPassword: {
-				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword,
-			},
+				placeholder: I18nStringKey.kAccountModal_ConfirmNewPassword
+			}
 		};
-
-		const kDomClassToStringMap: StringKeyMap = {
-			"mod-end-turn-btn": I18nStringKey.kVMButtons_EndTurn,
-			"mod-ban-btn": I18nStringKey.kAdminVMButtons_Ban,
-			"mod-kick-btn": I18nStringKey.kAdminVMButtons_Kick,
-			"mod-change-username-btn": I18nStringKey.kVMButtons_ChangeUsername,
-			"mod-temp-mute-btn": I18nStringKey.kAdminVMButtons_TempMute,
-			"mod-indef-mute-btn": I18nStringKey.kAdminVMButtons_IndefMute,
-			"mod-unmute-btn": I18nStringKey.kAdminVMButtons_Unmute,
-			"mod-get-ip-btn": I18nStringKey.kAdminVMButtons_GetIP,
-		}
 
 		for (let domId of Object.keys(kDomIdtoStringMap)) {
 			let element = document.getElementById(domId);
@@ -430,12 +473,7 @@ export class I18n {
 			}
 		}
 
-		for (let domClass of Object.keys(kDomClassToStringMap)) {
-			let elements = document.getElementsByClassName(domClass);
-			for (let element of elements) {
-				element.innerHTML = this.GetStringRaw(kDomClassToStringMap[domClass]);
-			}
-		}
+		this.LocalizeClassNames();
 	}
 
 	// Returns a (raw, unformatted) string. Currently only used if we don't need formatting.
@@ -449,7 +487,7 @@ export class I18n {
 		// have that string key yet; if the fallback doesn't have it either,
 		// then just return the string key and a bit of a notice things have gone wrong
 		if (val == undefined) {
-			let fallback = fallbackLanguage.stringKeys[key];
+			let fallback = enusLanguage.stringKeys[key];
 			if (fallback !== undefined) val = fallback;
 			else return `${key} (ERROR LOOKING UP TRANSLATION!!!)`;
 		}
@@ -460,6 +498,10 @@ export class I18n {
 	// Returns a formatted localized string.
 	GetString(key: I18nStringKey, ...replacements: StringLike[]): string {
 		return Format(this.GetStringRaw(key), ...replacements);
+	}
+
+	Has(key: I18nStringKey) {
+		return this.lang.stringKeys[key] || enusLanguage.stringKeys[key];
 	}
 
 	on<e extends keyof I18nEvents>(event: e, cb: I18nEvents[e]): Unsubscribe {

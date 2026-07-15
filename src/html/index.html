@@ -10,6 +10,7 @@
         <script src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="icon" href="../assets/favicon.ico">
         <meta name="description" content="Take turns controlling online virtual machines with complete strangers, on CollabVM!"/>
+        <meta name="darkreader-lock">
         <!-- Opengraph -->
         <meta property="og:type" content="website"/>
         <meta property="og:title" content="CollabVM"/>
@@ -159,6 +160,7 @@
                             <div id="accountResetPasswordReCaptchaContainer"></div>
                             <div id="accountResetPasswordTurnstileContainer"></div>
                             <button type="submit" class="btn btn-primary" id="accountResetPasswordBtn"></button>
+                        </form>
                     </div>
                     <div id="accountResetPasswordVerifySection">
                         <center>
@@ -179,6 +181,47 @@
 			</div>
 		</div>
 	</div>
+    <div class="modal fade" id="iaosModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl modal-fullscreen-md-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="iaosModalHeader"></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="iaos-modal-row">
+                        <div class="iaos-modal-info-col">
+                            <div class="card">
+                                <img id="iaosDockCardImg" class="card-img-top" />
+                                <div class="card-body">
+                                    <h5 id="iaosDockCardTitle" class="card-title"></h5>
+                                    <p id="iaosDockCardDesc" class="card-text"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="iaos-modal-table-col">
+                            <ul class="nav nav-tabs" id="iaosTabList" role="tablist"></ul>
+
+                            <div class="tab-content" id="iaosTabContent"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="iaosInsertBtn" type="button" class="btn btn-primary">
+                        <i class="fa-solid fa-compact-disc"></i>
+                        <span id="iaosInsertBtnLabel"></span>
+                    </button>
+                    <button id="iaosEjectBtn" type="button" class="btn btn-danger">
+                        <i class="fa-solid fa-eject"></i>
+                        <span id="iaosEjectBtnLabel"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#"><span id="siteNameText"></span></a>
@@ -241,8 +284,8 @@
         <div id="vmview">
             <div id="vmDisplay"></div>
             <p id="turnstatus"></p>
-            <div id="voteResetPanel" style="display:none;">
-                <span id="voteResetHeaderText"></span><br/>
+            <div id="votePanel" style="display:none;">
+                <span id="voteHeaderText"></span><br/>
                 <button class="btn btn-success" id="voteYesBtn"><i class="fa-solid fa-check"></i> <span id="voteYesBtnText"></span><span class="badge bg-secondary" id="voteYesLabel"></span></button> <button class="btn btn-danger" id="voteNoBtn"><i class="fa-solid fa-ban"></i> <span id="voteNoBtnText"></span><span class="badge bg-secondary" id="voteNoLabel"></span></button><br/>
                 <span id="voteTimeText"></span>
                 <div id="forceVotePanel">
@@ -254,16 +297,34 @@
                 <button class="btn btn-secondary" id="takeTurnBtn"><i class="fa-solid fa-computer-mouse"></i> <span id="turnBtnText"></span></button>
                 <button class="btn btn-secondary" id="oskBtn"><i class="fa-solid fa-keyboard"></i> <span id="oskBtnText"></span></button>
                 <button class="btn btn-secondary" id="changeUsernameBtn"><i class="fa-solid fa-signature"></i> <span id="changeUsernameBtnText"></span></button>
-                <button class="btn btn-secondary" id="voteResetButton"><i class="fa-solid fa-rotate-left"></i> <span id="voteForResetBtnText"></span></button>
+                <span class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="voteButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-check-to-slot"></i>
+                        <span id="voteBtnText"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="voteButton">
+                        <li>
+                            <a class="dropdown-item" href="javascript:void(0)" id="voteResetButton">
+                                <i class="fa-solid fa-rotate-left"></i> <span id="voteForResetBtnText"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="javascript:void(0)" id="voteRebootButton">
+                                <i class="fa-solid fa-power-off"></i> <span id="voteForRebootBtnText"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </span>
                 <button class="btn btn-secondary" id="screenshotButton"><i class="fa-solid fa-camera"></i> <span id="screenshotBtnText"></span></button>
                 <button class="btn btn-secondary" id="ctrlAltDelBtn"><i class="fa-solid fa-gear"></i> <span id="ctrlAltDelBtnText"></span></button>
+                <button class="btn btn-secondary d-none" id="changeMediaBtn" data-bs-toggle="modal" data-bs-target="#iaosModal"><i class="fa-solid fa-compact-disc"></i> <span id="changeMediaBtnText"></span></button>
                 <div id="staffbtns">
                     <button class="btn btn-secondary" id="restoreBtn"><i class="fa-solid fa-rotate-left"></i> <span id="restoreBtnText"></span></button>
                     <button class="btn btn-secondary" id="rebootBtn"><i class="fa-solid fa-power-off"></i> <span id="rebootBtnText"></span></button>
                     <button class="btn btn-secondary" id="clearQueueBtn"><i class="fa-solid fa-eraser"></i> <span id="clearQueueBtnText"></span></button>
                     <button class="btn btn-secondary" id="bypassTurnBtn"><i class="fa-solid fa-forward"></i> <span id="bypassTurnBtnText"></span></button>
                     <button class="btn btn-secondary" id="endTurnBtn"><i class="fa-solid fa-ban"></i>  <span id="endTurnBtnText"></span></button>
-                    <button class="btn btn-secondary" id="indefTurnBtn"><i class="fa-solid fa-infinity"></i> <span id="indefTurnBtnText"></span></button>
+                    <button class="btn btn-secondary" id="pauseTurnsBtn"><i class="fa-solid fa-pause"></i> <span id="pauseTurnsBtnText"></span></button>
                     <button class="btn btn-secondary" id="ghostTurnBtn"><i class="fa-solid fa-ghost"></i> <span id="ghostTurnBtnText"></span></button>
                     <button class="btn btn-secondary" id="qemuMonitorBtn" data-bs-toggle="modal" data-bs-target="#qemuMonitorModal"><i class="fa-solid fa-terminal"></i> <span id="qemuMonitorBtnText"></span></button>
                 </div>
