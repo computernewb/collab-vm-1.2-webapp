@@ -200,7 +200,9 @@ export class I18n {
 		for (const langId in langData.languages) {
 			this.langs.set(langId, langData.languages[langId]);
 		}
-		this.langs.forEach((_lang, langId) => {
+		// Sort alphabetically
+		let langsSorted = Array.from(this.langs.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+		for (let [langId, _lang] of langsSorted) {
 			// Add to language dropdown
 			var a = document.createElement('a');
 			a.classList.add('dropdown-item');
@@ -212,7 +214,7 @@ export class I18n {
 				this.ReplaceStaticStrings();
 			});
 			this.languageDropdown.appendChild(a);
-		});
+		}
 		let lang = null;
 		let lsLang = window.localStorage.getItem('i18n-lang');
 		var browserLang = navigator.language.toLowerCase();
