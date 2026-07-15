@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Odota {0} sekuntia ennen kuin aloitat toisen äänestyksen.",
 
 		"kVM_VoteForResetTitle": "Haluatko nollata virtuaalikoneen?",
-		"kVM_VoteForResetTimer": "Äänestys päättyy {0} sekunnin kuluttua",
+		"kVM_VoteTimer": "Äänestys päättyy {0} sekunnin kuluttua",
 
 		"kVMButtons_TakeTurn": "Ota Vuoro",
 		"kVMButtons_EndTurn": "Lopeta Vuoro",
@@ -96,6 +96,30 @@
 		"kAccountModal_VerifyPasswordResetText": "Lähetimme sähköpostin osoitteeseen {0}. Nollatakseesi salasanasi, kirjoita kahdeksan-numeroinen koodi alla olevasta sähköpostista.",
 		"kAccountModal_PasswordResetSuccess": "Salasana vaihdettu. Voit nyt kirjautua sisään uudella salasanallasi.",
 
-		"kNotLoggedIn": "Ei kirjattu sisään"
+		"kNotLoggedIn": "Ei kirjattu sisään",
+
+		"kIaosMediaKind_iso": "Levykuvat",
+		"kIaosMediaKind_flp": "Levykevedokset",
+		"kIaosDriveMediaKind_iso": "CD-asema",
+		"kIaosDriveMediaKind_flp": "Levyke-asema",
+		"kIaosMediaChanged": "{0} syötti {1} kohteeseen {2}",
+		"kIaosMediaEjected": "{0} posti kohteen {1}.",
+		"kIaosChangeMediaHeader": "Vaihda media",
+		"kIaosInsert": "Lataa...",
+		"kIaosEject": "Poista",
+		"kVMButtons_Vote": "Äänestä...",
+		"kVM_VoteError_existingVote": "Äänestys on jo käynnissä.",
+		"kVM_VoteTitle": "Haluatko {0}?",
+		"kVM_VoteStarted": "{0} on aloittaunt äänestyksen aiheella \"{1}\".",
+		"kVM_VoteSuccess": "Äänestys \"{0}\" hyväksyttiin.",
+		"kVM_VoteFail": "Äänestys \"{0}\" hylättiin.",
+		"kVM_UserVotedYes": "{0} on äänestänyt kyllä.",
+		"kVM_UserVotedNo": "{0} on äänestänyt ei.",
+		"kVM_VoteMarker_UserVotedYes": "Äänesti kyllä",
+		"kVM_VoteMarker_UserVotedNo": "Äänesti ei",
+		"kVM_VoteType_VoteReset": "nollaa virtuaalikone",
+		"kVM_VoteType_VoteReboot": "käynnistä virtuaalikone uudelleen",
+		"kVM_VoteType_VoteIaosInsertMedia": "syötä {0} kohteeseen {1}",
+		"kVM_VoteType_VoteIaosEjectMedia": "poista kohde {0}"
 	}
 }
