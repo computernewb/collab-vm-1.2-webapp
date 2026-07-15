@@ -115,8 +115,8 @@
 
 		"kIaosMediaKind_iso": "Obrazy Disků",
 		"kIaosMediaKind_flp": "Obrazy Disket",
-		"kIaosDriveMediaKind_iso": "CD mechanika",
-		"kIaosDriveMediaKind_flp": "disketová mechanika",
+		"kIaosDriveMediaKind_iso": "CD mechaniky",
+		"kIaosDriveMediaKind_flp": "disketové mechaniky",
 		"kIaosMediaChanged": "{0} vložil {1} do {2}.",
 		"kIaosMediaEjected": "{0} vysunul {1}.",
 		"kIaosChangeMediaHeader": "Změnit médium",
