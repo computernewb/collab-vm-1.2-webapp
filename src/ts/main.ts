@@ -1790,11 +1790,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	// Welcome modal
 	let welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal') as HTMLDivElement);
-	let noWelcomeModal = window.localStorage.getItem(Config.WelcomeModalLocalStorageKey);
-	if (noWelcomeModal !== '1') {
+	let welcomeModalVersion = window.localStorage.getItem(Config.WelcomeModalLocalStorageKey);
+	if (welcomeModalVersion !== Config.WelcomeModalVersion) {
 		let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
 		welcomeModalDismissBtn.addEventListener('click', () => {
-			window.localStorage.setItem(Config.WelcomeModalLocalStorageKey, '1');
+			window.localStorage.setItem(Config.WelcomeModalLocalStorageKey, Config.WelcomeModalVersion);
 		});
 		welcomeModalDismissBtn.disabled = true;
 		welcomeModal.show();
@@ -1802,10 +1802,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 			welcomeModalDismissBtn.disabled = false;
 		}, 5000);
 	}
-	elements.rulesBtn.addEventListener('click', (e) => {
-		if (TheI18n.CurrentLanguage() !== 'en-us') {
-			e.preventDefault();
-			welcomeModal.show();
-		}
-	});
 });

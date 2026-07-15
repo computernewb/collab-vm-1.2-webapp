@@ -3,6 +3,7 @@
 	"WelcomeModalTitleOverride": null,
 	"WelcomeModalLeadOverride": null,
 	"WelcomeModalLocalStorageKey": "no-welcome-modal",
+	"WelcomeModalVersion": "1",
 	"ChatSound": "//computernewb.com/collab-vm/notify.ogg",
 	"ServerAddresses": [
 		"wss://computernewb.com/collab-vm/vm0",
