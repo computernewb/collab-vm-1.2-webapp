@@ -1793,13 +1793,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 	let welcomeModalVersion = window.localStorage.getItem(Config.WelcomeModalLocalStorageKey);
 	if (welcomeModalVersion !== Config.WelcomeModalVersion) {
 		let welcomeModalDismissBtn = document.getElementById('welcomeModalDismiss') as HTMLButtonElement;
-		welcomeModalDismissBtn.addEventListener('click', () => {
-			window.localStorage.setItem(Config.WelcomeModalLocalStorageKey, Config.WelcomeModalVersion);
-		});
+		welcomeModalDismissBtn.addEventListener(
+			'click',
+			() => {
+				window.localStorage.setItem(Config.WelcomeModalLocalStorageKey, Config.WelcomeModalVersion);
+			},
+			{ once: true }
+		);
 		welcomeModalDismissBtn.disabled = true;
 		welcomeModal.show();
 		setTimeout(() => {
 			welcomeModalDismissBtn.disabled = false;
 		}, 5000);
 	}
+
+	elements.rulesBtn.addEventListener('click', () => welcomeModal.show());
 });
