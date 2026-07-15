@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "请等待 {0} 秒后再开始投票。",
 
 		"kVM_VoteForResetTitle": "您想重置虚拟机吗？",
-		"kVM_VoteForResetTimer": "投票在 {0} 秒后结束",
+		"kVM_VoteTimer": "投票在 {0} 秒后结束",
 
 		"kVMButtons_TakeTurn": "开始轮次",
 		"kVMButtons_EndTurn": "结束轮次",

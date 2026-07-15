@@ -7,18 +7,32 @@ import TurnStatus from './protocol/TurnStatus.js';
 import Keyboard from 'simple-keyboard';
 import { OSK_buttonToKeysym } from './keyboard';
 import 'simple-keyboard/build/css/index.css';
-import VoteStatus from './protocol/VoteStatus.js';
+import { VoteStatusEvent, VoteEndedEvent } from './protocol/VoteStatus.js';
 import * as bootstrap from 'bootstrap';
 import MuteState from './protocol/MuteState.js';
 import { I18nStringKey, TheI18n } from './i18n';
 import { Format } from './util';
 import AuthManager from './AuthManager.js';
 import dayjs from 'dayjs';
-import * as dompurify from 'dompurify';
+import dompurify from 'dompurify';
+import { IaosManager } from './iaos/iaos.js';
+import { VoteType } from '../../collab-vm-1.2-binary-protocol/src/votex.js';
 const _eval = window.eval;
 
 // Elements
 const w = window as any;
+
+const fa = w.FontAwesome as {
+	icon(c: { prefix: string; iconName: string }): {
+		html: Array<string>;
+		icon: Array<any>;
+		iconName: string;
+		node: HTMLCollection;
+		prefix: string;
+		type: string;
+	};
+};
+
 const elements = {
 	vmlist: document.getElementById('vmlist') as HTMLDivElement,
 	vmview: document.getElementById('vmview') as HTMLDivElement,
@@ -39,8 +53,11 @@ const elements = {
 	osk: window.document.getElementById('oskBtn') as HTMLButtonElement,
 	oskContainer: document.getElementById('osk-container') as HTMLDivElement,
 	screenshotButton: document.getElementById('screenshotButton') as HTMLButtonElement,
-	voteResetButton: document.getElementById('voteResetButton') as HTMLButtonElement,
-	voteResetPanel: document.getElementById('voteResetPanel') as HTMLDivElement,
+	voteButton: document.getElementById('voteButton') as HTMLButtonElement,
+	voteResetButton: document.getElementById('voteResetButton') as HTMLAnchorElement,
+	voteRebootButton: document.getElementById('voteRebootButton') as HTMLAnchorElement,
+	votePanel: document.getElementById('votePanel') as HTMLDivElement,
+	voteHeaderText: document.getElementById('voteHeaderText') as HTMLSpanElement,
 	voteYesBtn: document.getElementById('voteYesBtn') as HTMLButtonElement,
 	voteNoBtn: document.getElementById('voteNoBtn') as HTMLButtonElement,
 	voteYesLabel: document.getElementById('voteYesLabel') as HTMLSpanElement,
@@ -326,6 +343,7 @@ const users: {
 	user: User;
 	usernameElement: HTMLSpanElement;
 	flagElement: HTMLSpanElement;
+	voteMarkerElement: HTMLSpanElement;
 	element: HTMLTableRowElement;
 }[] = [];
 let turnsPaused = false;
@@ -339,6 +357,10 @@ const chatsound = new Audio(Config.ChatSound);
 
 // Active VM
 let VM: CollabVMClient | null = null;
+
+let IAOS: IaosManager = new IaosManager(TheI18n);
+
+let voteStatus: VoteStatusEvent | null = null;
 
 async function multicollab(url: string) {
 	// Create the client
@@ -423,9 +445,10 @@ async function openVM(vm: VM): Promise<void> {
 	});
 
 	VM!.on('turn', (status) => turnUpdate(status));
-	VM!.on('vote', (status: VoteStatus) => voteUpdate(status));
-	VM!.on('voteend', () => voteEnd());
-	VM!.on('votecd', (voteCooldown) => window.alert(TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, voteCooldown)));
+	VM!.on('vote', (e: VoteStatusEvent) => onVoteStatus(e));
+	VM!.on('voteend', (e: VoteEndedEvent) => onVoteEnd(e));
+	VM!.on('votestarterr', (error: string, cooldownTime?: number) => onVoteStartErr(error, cooldownTime));
+	VM!.on('votesenabled', (restore: boolean, reboot: boolean) => onVotesEnabled(restore, reboot));
 	VM!.on('login', (rank: Rank, perms: Permissions) => onLogin(rank, perms));
 
 	VM!.on('close', () => {
@@ -441,6 +464,18 @@ async function openVM(vm: VM): Promise<void> {
 		} else if (!Config.Auth.Enabled || Config.Auth.APIEndpoint !== server) {
 			auth = new AuthManager(server);
 			await renderAuth();
+		}
+	});
+
+	VM!.on('iaosAdvertisement', (iaosApi, mediaKindSupported) => {
+		IAOS.initIaos(iaosApi, mediaKindSupported, VM!);
+	});
+
+	VM!.on('iaosMediaChanged', (username, mediaKind, ejected, mediaName) => {
+		if (ejected) {
+			chatMessage('', TheI18n.GetString(I18nStringKey.kIaosMediaEjected, username, TheI18n.GetString(`kIaosDriveMediaKind_${mediaKind}` as I18nStringKey)));
+		} else {
+			chatMessage('', TheI18n.GetString(I18nStringKey.kIaosMediaChanged, username, mediaName!, TheI18n.GetString(`kIaosDriveMediaKind_${mediaKind}` as I18nStringKey)));
 		}
 	});
 
@@ -474,6 +509,7 @@ function closeVM() {
 	// Close the VM
 	VM.close();
 	VM = null;
+	IAOS.destroyIaosUi();
 	document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 	turn = -1;
 	// Remove the canvas
@@ -499,7 +535,7 @@ function closeVM() {
 	elements.ghostTurnBtn.style.display = 'none';
 	elements.xssCheckboxContainer.style.display = 'none';
 	elements.forceVotePanel.style.display = 'none';
-	elements.voteResetPanel.style.display = 'none';
+	elements.votePanel.style.display = 'none';
 	elements.voteYesLabel.innerText = '0';
 	elements.voteNoLabel.innerText = '0';
 	elements.xssCheckbox.checked = false;
@@ -615,8 +651,10 @@ function addUser(user: User) {
 	let td = document.createElement('td');
 	let flagSpan = document.createElement('span');
 	let usernameSpan = document.createElement('span');
+	let voteMarkerSpan = document.createElement('span');
 	flagSpan.classList.add('userlist-flag');
 	usernameSpan.classList.add('userlist-username');
+	voteMarkerSpan.classList.add('userlist-vote-marker');
 	td.appendChild(flagSpan);
 	if (user.countryCode !== null) {
 		flagSpan.innerHTML = getFlagEmoji(user.countryCode);
@@ -639,12 +677,14 @@ function addUser(user: User) {
 			break;
 	}
 	if (user.username === w.username) tr.classList.add('user-current');
+	td.appendChild(voteMarkerSpan);
 	tr.appendChild(td);
-	let u = { user: user, element: tr, usernameElement: usernameSpan, flagElement: flagSpan };
+	let u = { user: user, element: tr, usernameElement: usernameSpan, flagElement: flagSpan, voteMarkerElement: voteMarkerSpan };
 	if (rank === Rank.Admin || rank === Rank.Moderator) userModOptions(u);
 	elements.userlist.appendChild(tr);
-	if (olduser !== undefined) olduser.element = tr;
-	else users.push(u);
+	if (olduser !== undefined) {
+		Object.assign(olduser, u);
+	} else users.push(u);
 	elements.onlineusercount.innerHTML = VM!.getUsers().length.toString();
 }
 
@@ -743,26 +783,130 @@ function turnUpdate(status: TurnStatus) {
 	sortUserList();
 }
 
-function voteUpdate(status: VoteStatus) {
+function getVoteAction(vote: VoteStatusEvent) {
+	switch (vote.voteType) {
+		case VoteType.VoteReset: {
+			return TheI18n.GetString(I18nStringKey.kVM_VoteType_VoteReset);
+		}
+		case VoteType.VoteReboot: {
+			return TheI18n.GetString(I18nStringKey.kVM_VoteType_VoteReboot);
+		}
+		case VoteType.VoteIaosInsertMedia: {
+			return TheI18n.GetString(I18nStringKey.kVM_VoteType_VoteIaosInsertMedia, vote.data.mediaName, TheI18n.GetString(`kIaosDriveMediaKind_${vote.data.mediaKind}` as I18nStringKey));
+		}
+		case VoteType.VoteIaosEjectMedia: {
+			return TheI18n.GetString(I18nStringKey.kVM_VoteType_VoteIaosEjectMedia, TheI18n.GetString(`kIaosDriveMediaKind_${vote.data.mediaKind}` as I18nStringKey));
+		}
+		default: {
+			let headerKey = `kVM_VoteType_${vote.voteType}` as I18nStringKey;
+			if (TheI18n.Has(headerKey)) {
+				return TheI18n.GetString(headerKey);
+			} else {
+				return vote.voteIntentStr;
+			}
+		}
+	}
+}
+
+function setVoteMarker(voteMarkerElement: HTMLSpanElement, voteValue: boolean | null) {
+	if (voteValue === null) {
+		voteMarkerElement.classList.remove('userlist-vote-marker-yes', 'userlist-vote-marker-no');
+		voteMarkerElement.replaceChildren();
+		voteMarkerElement.removeAttribute('title');
+	} else {
+		let iconName, tooltipKey;
+		if (voteValue === true) {
+			voteMarkerElement.classList.remove('userlist-vote-marker-no');
+			voteMarkerElement.classList.add('userlist-vote-marker-yes');
+			iconName = { prefix: 'fas', iconName: 'thumbs-up' };
+			tooltipKey = I18nStringKey.kVM_VoteMarker_UserVotedYes;
+		} else {
+			voteMarkerElement.classList.remove('userlist-vote-marker-yes');
+			voteMarkerElement.classList.add('userlist-vote-marker-no');
+			iconName = { prefix: 'fas', iconName: 'thumbs-down' };
+			tooltipKey = I18nStringKey.kVM_VoteMarker_UserVotedNo;
+		}
+
+		let icon = fa.icon(iconName);
+		voteMarkerElement.replaceChildren(...icon.node);
+		voteMarkerElement.title = TheI18n.GetString(tooltipKey);
+	}
+}
+
+function onVoteStatus(e: VoteStatusEvent) {
 	clearInterval(voteInterval);
-	elements.voteResetPanel.style.display = 'block';
-	elements.voteYesLabel.innerText = status.yesVotes.toString();
-	elements.voteNoLabel.innerText = status.noVotes.toString();
-	voteTimer = Math.floor(status.timeToEnd / 1000);
-	//@ts-ignore
+	elements.votePanel.style.display = 'block';
+	elements.voteYesLabel.innerText = e.yesCount.toString();
+	elements.voteNoLabel.innerText = e.noCount.toString();
+	let voteAction = getVoteAction(e);
+	elements.voteHeaderText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteTitle, voteAction);
+	voteTimer = e.voteTime;
 	voteInterval = setInterval(() => updateVoteEndTime(), 1000);
 	updateVoteEndTime();
+
+	if (e.started && e.startedByUser) {
+		chatMessage('', TheI18n.GetString(I18nStringKey.kVM_VoteStarted, e.startedByUser, voteAction));
+	}
+
+	if (e.yesVotes !== null && e.noVotes !== null) {
+		if (!e.started && voteStatus) {
+			for (let user of e.yesVotes) {
+				if (voteStatus!.yesVotes!.indexOf(user) === -1) {
+					chatMessage('', TheI18n.GetString(I18nStringKey.kVM_UserVotedYes, user));
+				}
+			}
+			for (let user of e.noVotes) {
+				if (voteStatus!.noVotes!.indexOf(user) === -1) {
+					chatMessage('', TheI18n.GetString(I18nStringKey.kVM_UserVotedNo, user));
+				}
+			}
+		}
+
+		for (let user of users) {
+			setVoteMarker(user.voteMarkerElement, e.yesVotes.indexOf(user.user.username) !== -1 ? true : e.noVotes.indexOf(user.user.username) !== -1 ? false : null);
+		}
+	}
+
+	voteStatus = VM!.getCurrentVote();
+}
+
+function onVoteEnd(e: VoteEndedEvent) {
+	clearInterval(voteInterval);
+	elements.votePanel.style.display = 'none';
+
+	let voteAction = getVoteAction(voteStatus!);
+	if (e.voteSucceeded === true) {
+		chatMessage('', TheI18n.GetString(I18nStringKey.kVM_VoteSuccess, voteAction));
+	} else if (e.voteSucceeded === false) {
+		chatMessage('', TheI18n.GetString(I18nStringKey.kVM_VoteFail, voteAction));
+	}
+
+	for (let user of users) {
+		setVoteMarker(user.voteMarkerElement, null);
+	}
+	voteStatus = null;
+}
+
+function onVoteStartErr(error: string, cooldownTime?: number) {
+	if (error === 'cooldown') {
+		chatMessage('', TheI18n.GetString(I18nStringKey.kVM_VoteCooldownTimer, cooldownTime!));
+	} else {
+		chatMessage('', TheI18n.GetString(`kVM_VoteError_${error}` as I18nStringKey));
+	}
 }
 
 function updateVoteEndTime() {
 	voteTimer--;
-	elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteForResetTimer, voteTimer);
+	elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteTimer, voteTimer);
 	if (voteTimer === 0) clearInterval(voteInterval);
 }
 
-function voteEnd() {
-	clearInterval(voteInterval);
-	elements.voteResetPanel.style.display = 'none';
+function onVotesEnabled(restore: boolean, reboot: boolean) {
+	let anyVoteEnabled = restore || reboot;
+	elements.voteButton.style.display = anyVoteEnabled ? 'inline-block' : 'none';
+
+	elements.voteResetButton.style.display = restore ? 'inline-block' : 'none';
+	elements.voteRebootButton.style.display = reboot ? 'inline-block' : 'none';
 }
 
 function turnIntervalCb() {
@@ -775,8 +919,54 @@ function setTurnStatus() {
 	else elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_WaitingTurnTimer, turnTimer);
 }
 
+function detectLegacyIaosCommand(msg: string): boolean {
+	let re = /\!(?<cmd>[a-zA-Z]+)(\s|$)(?<arg>.*)/.exec(msg);
+	if (re) {
+		switch (re.groups?.cmd) {
+			case 'cd':
+			case 'lilycd':
+			case 'crustycd':
+			case 'flp':
+			case 'lilyflp':
+			case 'httpcd':
+				// Change media
+				IAOS.show();
+				return true;
+			case 'eject':
+				// Eject media
+				switch (re.groups?.arg) {
+					case 'cd':
+						VM?.ejectMedia('iso');
+						return true;
+					case 'flp':
+						VM?.ejectMedia('flp');
+						return true;
+					default:
+						return false;
+				}
+				break;
+			case 'reboot':
+				// Reboot
+				VM?.startVote(VoteType.VoteReboot);
+				return true;
+			default:
+				return false;
+		}
+	} else {
+		return false;
+	}
+}
+
 function sendChat() {
 	if (VM === null) return;
+
+	if (VM.hasCapability('iaos') && Config.DetectLegacyIAOSCommands) {
+		if (detectLegacyIaosCommand(elements.chatinput.value)) {
+			elements.chatinput.value = '';
+			return;
+		}
+	}
+
 	if (elements.xssCheckbox.checked) VM.xss(elements.chatinput.value);
 	else VM.chat(elements.chatinput.value);
 	elements.chatinput.value = '';
@@ -820,7 +1010,10 @@ elements.ctrlAltDelBtn.addEventListener('click', () => {
 	// Del
 	VM?.key(0xffff, false);
 });
-elements.voteResetButton.addEventListener('click', () => VM?.vote(true));
+
+elements.voteResetButton.addEventListener('click', () => VM?.startVote(VoteType.VoteReset));
+elements.voteRebootButton.addEventListener('click', () => VM?.startVote(VoteType.VoteReboot));
+
 elements.voteYesBtn.addEventListener('click', () => VM?.vote(true));
 elements.voteNoBtn.addEventListener('click', () => VM?.vote(false));
 // Login
@@ -1553,7 +1746,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 				else elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_WaitingTurnTimer, turnTimer);
 				elements.turnBtnText.innerText = TheI18n.GetString(I18nStringKey.kVMButtons_EndTurn);
 			} else elements.turnBtnText.innerText = TheI18n.GetString(I18nStringKey.kVMButtons_TakeTurn);
-			if (VM!.getVoteStatus()) elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteForResetTimer, voteTimer);
+			if (voteStatus) {
+				elements.voteTimeText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteTimer, voteTimer);
+				elements.voteHeaderText.innerText = TheI18n.GetString(I18nStringKey.kVM_VoteTitle, getVoteAction(voteStatus));
+			}
 		} else {
 			document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 		}

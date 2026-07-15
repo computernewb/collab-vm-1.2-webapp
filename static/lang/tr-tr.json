@@ -39,7 +39,7 @@
 		"kVM_VoteCooldownTimer": "Oylama yapmadan önce lütfen {0} saniye bekleyin.",
 
 		"kVM_VoteForResetTitle": "Bu VM'i sıfırlamak istermisin?",
-		"kVM_VoteForResetTimer": "Oylama {0} saniye içinde bitecek.",
+		"kVM_VoteTimer": "Oylama {0} saniye içinde bitecek.",
 
 		"kVMButtons_TakeTurn": "Sıra al",
 		"kVMButtons_EndTurn": "Sıranı sonlandır",

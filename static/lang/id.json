@@ -40,7 +40,7 @@
 		"kVM_VoteCooldownTimer": "Harap tunggu {0} detik sebelum memulai pemungutan suara lainnya.",
 
 		"kVM_VoteForResetTitle": "Apakah Anda ingin menyetel ulang VM?",
-		"kVM_VoteForResetTimer": "Pemungutan suara berakhir dalam {0} detik",
+		"kVM_VoteTimer": "Pemungutan suara berakhir dalam {0} detik",
 
 		"kVMButtons_TakeTurn": "Mengambil giliran",
 		"kVMButtons_EndTurn": "Akhiri Putaran",
