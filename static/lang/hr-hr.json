@@ -39,7 +39,7 @@
 		"kVM_TurnsPaused": "Red je trenutno pauziran.",
 		"kVM_TurnTimeTimer": "Red isteće za {0} sekundi.",
 		"kVM_WaitingTurnTimer": "Čekanje za red u {0} sekundi.",
-		
+
 		"kVM_VoteCooldownTimer": "Molim Vas pričekajte {0} sekundi prije početka novog glasanja.",
 		"kVM_VoteError_existingVote": "Glasovanje je već u tijeku.",
 		"kVM_VoteTitle": "Želite li {0}?",
@@ -55,7 +55,7 @@
 		"kVM_VoteType_VoteReboot": "ponovno pokreniti VM",
 		"kVM_VoteType_VoteIaosInsertMedia": "umetniti {0} u {1}",
 		"kVM_VoteType_VoteIaosEjectMedia": "izbaciti {0}",
-		
+
 		"kVMButtons_TakeTurn": "Uzmi red",
 		"kVMButtons_EndTurn": "Završi red",
 		"kVMButtons_ChangeUsername": "Promijeni korisničko ime",
@@ -108,7 +108,7 @@
 		"kAccountModal_PasswordResetSuccess": "Vaša lozinka je uspješno resetirana. Sada se možete prijaviti sa svojom novom lozinkom.",
 
 		"kNotLoggedIn": "Niste prijavljeni.",
-		
+
 		"kIaosMediaKind_iso": "Slike diska",
 		"kIaosMediaKind_flp": "Slike disketa",
 		"kIaosDriveMediaKind_iso": "CD pogon",
