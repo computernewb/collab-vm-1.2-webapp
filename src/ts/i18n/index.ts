@@ -24,7 +24,7 @@ export enum I18nStringKey {
 	kGeneric_Logout = 'kGeneric_Logout',
 
 	kWelcomeModal_Header = 'kWelcomeModal_Header',
-	kWelcomeModal_Body = 'kWelcomeModal_Body',
+	kWelcomeModal_Lead = 'kWelcomeModal_Lead',
 
 	kSiteButtons_Home = 'kSiteButtons_Home',
 	kSiteButtons_FAQ = 'kSiteButtons_FAQ',
@@ -316,7 +316,7 @@ export class I18n {
 			languageDropdownText: I18nStringKey.kSiteButtons_Languages,
 
 			welcomeModalHeader: I18nStringKey.kWelcomeModal_Header,
-			welcomeModalBody: I18nStringKey.kWelcomeModal_Body,
+			welcomeModalLead: I18nStringKey.kWelcomeModal_Lead,
 			welcomeModalDismiss: I18nStringKey.kGeneric_Understood,
 
 			usersOnlineText: I18nStringKey.kVM_UsersOnlineText,
@@ -482,7 +482,7 @@ export class I18n {
 	GetStringRaw(key: I18nStringKey): string {
 		if (key === I18nStringKey.kGeneric_CollabVM && Config.SiteNameOverride) return Config.SiteNameOverride;
 		if (key === I18nStringKey.kWelcomeModal_Header && Config.WelcomeModalTitleOverride) return Config.WelcomeModalTitleOverride;
-		if (key === I18nStringKey.kWelcomeModal_Body && Config.WelcomeModalBodyOverride) return Config.WelcomeModalBodyOverride;
+		if (key === I18nStringKey.kWelcomeModal_Lead && Config.WelcomeModalLeadOverride) return Config.WelcomeModalLeadOverride;
 		let val = this.lang.stringKeys[key];
 
 		// Look up the fallback language by default if the language doesn't
