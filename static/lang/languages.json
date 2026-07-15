@@ -83,6 +83,10 @@
 		"fi-fi": {
 			"languageName": "Suomi",
 			"flag": "🇫🇮"
+    },
+		"cs-cz": {
+			"languageName": "Čeština",
+			"flag": "🇨🇿"
 		}
 	},
 	"defaultLanguage": "en-us"
