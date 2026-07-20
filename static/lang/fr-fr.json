@@ -121,6 +121,10 @@
 		"kIaosMediaEjected": "{0} a éjecté le {1}.",
 		"kIaosChangeMediaHeader": "Changer de média",
 		"kIaosInsert": "Charger..",
-		"kIaosEject": "Éjecter"
+		"kIaosEject": "Éjecter",
+		"kIaosTableHeader_Build": "Build",
+		"kIaosTableHeader_Architecture": "Arch",
+		"kIaosTableHeader_Year": "Année",
+		"kIaosTable_Filter": "Filtrer"
 	}
 }
