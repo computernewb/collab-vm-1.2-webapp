@@ -5,12 +5,12 @@
 	author: 'rootq',
 
 	stringKeys: {
-		kGeneric_CollabVM: 'CollabVM',
-		kGeneric_Yes: 'Ja',
-		kGeneric_No: 'Nej',
-		kGeneric_Ok: 'OK',
-		kGeneric_Cancel: 'Annuller',
-		kGeneric_Send: 'Send',
+	kGeneric_CollabVM: 'CollabVM',
+	kGeneric_Yes: 'Ja',
+	kGeneric_No: 'Nej',
+	kGeneric_Ok: 'OK',
+	kGeneric_Cancel: 'Annuller',
+	kGeneric_Send: 'Send',
     kGeneric_Send: 'Send',
     kGeneric_Understood: 'Forstået',
     kGeneric_Username: 'Brugernavn',
@@ -100,7 +100,7 @@
     kAccountModal_AccountSettings: 'Kontoindstillinger',
     kAccountModal_ResetPassword: 'Nulstil adgangskode',
 
-	  kAccountModal_NewPassword: 'Ny adgangskode',
+	kAccountModal_NewPassword: 'Ny adgangskode',
     kAccountModal_ConfirmNewPassword: 'Bekræft ny adgangskode',
     kAccountModal_CurrentPassword: 'Nuværende adgangskode',
     kAccountModal_ConfirmPassword: 'Bekræft adgangskode',
