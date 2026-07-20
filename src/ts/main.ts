@@ -17,21 +17,11 @@ import dayjs from 'dayjs';
 import dompurify from 'dompurify';
 import { IaosManager } from './iaos/iaos.js';
 import { VoteType } from '../../collab-vm-1.2-binary-protocol/src/votex.js';
+import fa from './fontawesome.js';
 const _eval = window.eval;
 
 // Elements
 const w = window as any;
-
-const fa = w.FontAwesome as {
-	icon(c: { prefix: string; iconName: string }): {
-		html: Array<string>;
-		icon: Array<any>;
-		iconName: string;
-		node: HTMLCollection;
-		prefix: string;
-		type: string;
-	};
-};
 
 const elements = {
 	vmlist: document.getElementById('vmlist') as HTMLDivElement,

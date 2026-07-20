@@ -1,7 +1,8 @@
 import { I18n } from '../i18n';
 import CollabVMClient from '../protocol/CollabVMClient';
 import { IaosApi, IaosMediaEntry, IaosMediaList } from './api';
-import { Modal } from 'bootstrap';
+import { Collapse, Modal } from 'bootstrap';
+import fa from '../fontawesome.js';
 
 const PLACEHOLDER_IMG_SRC = 'assets/img/disc_placeholder.svg';
 
@@ -14,11 +15,12 @@ const elements = {
 	iaosEjectBtn: document.getElementById('iaosEjectBtn') as HTMLButtonElement,
 	iaosTabList: document.getElementById('iaosTabList') as HTMLUListElement,
 	iaosTabContent: document.getElementById('iaosTabContent') as HTMLDivElement,
-	changeMediaBtn: document.getElementById('changeMediaBtn') as HTMLButtonElement
+	changeMediaBtn: document.getElementById('changeMediaBtn') as HTMLButtonElement,
+	iaosTableFilter: document.getElementById('iaosTableFilter') as HTMLInputElement
 };
 
-const MEDIA_TABLE_COLSPAN =
-	'<colgroup><col span="1" class="iaos-media-name-col"/><col span="1" class="iaos-media-build-col"/><col span="1" class="iaos-media-arch-col"/><col span="1" class="iaos-media-year-col"/></colgroup>';
+const MEDIA_TABLE_COLGROUP =
+	'<colgroup><col span="1" class="iaos-media-name-col"/><col span="1" class="iaos-media-build-col"/><col span="1" class="iaos-media-arch-col"/><col span="1" class="iaos-media-year-col"/><col span="1" class="iaos-collapse-marker-col"/></colgroup>';
 
 type ModalTab = {
 	kind: string;
@@ -26,8 +28,16 @@ type ModalTab = {
 	tabButton: HTMLButtonElement;
 	tabContent: HTMLDivElement;
 	tableBody: HTMLTableSectionElement;
-	categories: Map<string, HTMLTableSectionElement>;
+	categories: Map<string, CategorySection>;
 	entryRows: Map<IaosMediaEntry, HTMLTableRowElement>;
+};
+
+type CategorySection = {
+	headerRow: HTMLTableRowElement;
+	tableRow: HTMLTableRowElement;
+	tableDiv: HTMLDivElement;
+	table: HTMLTableElement;
+	tableBody: HTMLTableSectionElement;
 };
 
 export class IaosManager {
@@ -38,6 +48,7 @@ export class IaosManager {
 	private selectedEntry: IaosMediaEntry | null;
 	private modalTabs: Map<string, ModalTab>;
 	private VM: CollabVMClient | null;
+	private filterInputHandler = (ev: InputEvent) => this.onFilterInput();
 
 	constructor(i18n: I18n) {
 		this.i18n = i18n;
@@ -64,6 +75,8 @@ export class IaosManager {
 		this.selectedEntry = null;
 		this.VM = null;
 		elements.changeMediaBtn.classList.add('d-none');
+		elements.iaosTableFilter.removeEventListener('input', this.filterInputHandler);
+		elements.iaosTableFilter.value = '';
 	}
 
 	async initIaos(apiBase: string, mediaKindSupported: Array<string>, VM: CollabVMClient) {
@@ -93,8 +106,8 @@ export class IaosManager {
 			let tabContent = document.createElement('div');
 			tabContent.classList.add('tab-pane', 'iaos-tab-pane');
 			let table = document.createElement('table');
-			table.classList.add('table', 'table-bordered', 'm-0');
-			table.insertAdjacentHTML('afterbegin', MEDIA_TABLE_COLSPAN);
+			table.classList.add('iaos-category-table', 'table', 'table-bordered', 'm-0');
+			table.insertAdjacentHTML('afterbegin', MEDIA_TABLE_COLGROUP);
 			let tableBody = document.createElement('tbody');
 			table.appendChild(tableBody);
 			tabContent.appendChild(table);
@@ -117,6 +130,8 @@ export class IaosManager {
 			this.populateDock(kind);
 		}
 
+		elements.iaosTableFilter.addEventListener('input', this.filterInputHandler);
+
 		this.i18n.LocalizeClassNames(...mediaKindSupported.map((kind) => `iaos-tab-label-${kind}`), 'iaos-media-build-header', 'iaos-media-arch-header', 'iaos-media-year-header');
 		this.selectTab(this.modalTabs.get(mediaKindSupported[0])!.kind);
 		elements.changeMediaBtn.classList.remove('d-none');
@@ -138,21 +153,42 @@ export class IaosManager {
 				headerTr.appendChild(headerTh);
 				headerTr.insertAdjacentHTML('beforeend', '<th class="iaos-media-build-header"></th><th class="iaos-media-arch-header"></th><th class="iaos-media-year-header"></th>');
 
+				let collapseMarker = document.createElement('th');
+				collapseMarker.classList.add('iaos-category-collapse-marker');
+				collapseMarker.replaceChildren(...fa.icon({ prefix: 'fas', iconName: 'caret-down' }).node);
+				collapseMarker.setAttribute('aria-expanded', 'true');
+				headerTr.appendChild(collapseMarker);
+
 				// create category section
 				let sectionTr = document.createElement('tr');
+				sectionTr.classList.add('iaos-category-entries-row');
 				let sectionTd = document.createElement('td');
-				sectionTd.colSpan = 4;
+				sectionTd.colSpan = 5;
+				// two divs are needed for the transition to look correct
+				let sectionDiv = document.createElement('div');
+				sectionDiv.classList.add('iaos-entry-table-container-outer');
+				let sectionDivInner = document.createElement('div');
+				sectionDivInner.classList.add('iaos-entry-table-container-inner');
+
 				let sectionTable = document.createElement('table');
-				sectionTable.classList.add('table', 'table-striped', 'table-hover', 'mb-0');
-				sectionTable.insertAdjacentHTML('afterbegin', MEDIA_TABLE_COLSPAN);
+				sectionTable.classList.add('iaos-entry-table', 'table', 'table-striped', 'table-hover', 'mb-0');
+				sectionTable.insertAdjacentHTML('afterbegin', MEDIA_TABLE_COLGROUP);
 				let sectionTableBody = document.createElement('tbody');
 				sectionTable.appendChild(sectionTableBody);
-				sectionTd.appendChild(sectionTable);
+				sectionDivInner.appendChild(sectionTable);
+				sectionDiv.appendChild(sectionDivInner);
+				sectionTd.appendChild(sectionDiv);
 				sectionTr.appendChild(sectionTd);
+
+				// collapse functionality
+				let collapse = new Collapse(sectionDiv, { toggle: true });
+				sectionDiv.addEventListener('show.bs.collapse', () => collapseMarker.setAttribute('aria-expanded', 'true'));
+				sectionDiv.addEventListener('hide.bs.collapse', () => collapseMarker.setAttribute('aria-expanded', 'false'));
+				headerTr.addEventListener('click', () => collapse.toggle());
 
 				tab.tableBody.appendChild(headerTr);
 				tab.tableBody.appendChild(sectionTr);
-				categorySection = sectionTableBody;
+				categorySection = { headerRow: headerTr, tableRow: sectionTr, tableDiv: sectionDiv, table: sectionTable, tableBody: sectionTableBody };
 				tab.categories.set(entry.category, categorySection);
 			}
 
@@ -180,7 +216,10 @@ export class IaosManager {
 			entryYear.innerText = entry.year ?? '';
 			entryTr.appendChild(entryYear);
 
-			categorySection.appendChild(entryTr);
+			// empty td so row extends full width
+			entryTr.appendChild(document.createElement('td'));
+
+			categorySection.tableBody.appendChild(entryTr);
 			tab.entryRows.set(entry, entryTr);
 		}
 	}
@@ -214,6 +253,7 @@ export class IaosManager {
 		if (this.currentOpenTab) {
 			this.currentOpenTab.tabButton.classList.remove('active');
 			this.currentOpenTab.tabContent.classList.remove('active');
+			this.clearFilter();
 		}
 
 		if (this.selectedEntry) {
@@ -224,6 +264,7 @@ export class IaosManager {
 		tab.tabButton.classList.add('active');
 		tab.tabContent.classList.add('active');
 		this.currentOpenTab = tab;
+		this.onFilterInput();
 	}
 
 	private onInsert() {
@@ -242,6 +283,56 @@ export class IaosManager {
 
 		this.VM.ejectMedia(this.currentOpenTab.kind);
 		this.modal?.hide();
+	}
+
+	private onFilterInput() {
+		if (elements.iaosTableFilter.value.length > 0) {
+			this.filterEntries(elements.iaosTableFilter.value);
+		} else {
+			this.clearFilter();
+		}
+	}
+
+	private filterEntries(filter: string) {
+		if (!this.currentOpenTab) {
+			return;
+		}
+
+		this.clearFilter();
+		filter = filter.toLowerCase();
+
+		let categoryHasResults: { [category: string]: boolean } = {};
+
+		for (let [entry, entryEl] of this.currentOpenTab.entryRows.entries()) {
+			if (entry.name.toLowerCase().includes(filter)) {
+				entryEl.classList.add('iaos-filter-match');
+				categoryHasResults[entry.category] = true;
+			} else {
+				entryEl.classList.add('iaos-filter-no-match');
+			}
+		}
+
+		for (let [cat, catSect] of this.currentOpenTab.categories.entries()) {
+			if (categoryHasResults[cat]) {
+				catSect.headerRow.classList.add('iaos-filter-match');
+				catSect.tableRow.classList.add('iaos-filter-match');
+			} else {
+				catSect.headerRow.classList.add('iaos-filter-no-match');
+				catSect.tableRow.classList.add('iaos-filter-no-match');
+			}
+		}
+	}
+
+	private clearFilter() {
+		for (let tab of this.modalTabs.values()) {
+			for (let cat of tab.categories.values()) {
+				cat.headerRow.classList.remove('iaos-filter-match', 'iaos-filter-no-match');
+				cat.tableRow.classList.remove('iaos-filter-match', 'iaos-filter-no-match');
+			}
+			for (let entry of tab.entryRows.values()) {
+				entry.classList.remove('iaos-filter-match', 'iaos-filter-no-match');
+			}
+		}
 	}
 
 	show() {

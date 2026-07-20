@@ -129,7 +129,8 @@ export enum I18nStringKey {
 	kIaosEject = 'kIaosEject',
 	kIaosTableHeader_Build = 'kIaosTableHeader_Build',
 	kIaosTableHeader_Architecture = 'kIaosTableHeader_Architecture',
-	kIaosTableHeader_Year = 'kIaosTableHeader_Year'
+	kIaosTableHeader_Year = 'kIaosTableHeader_Year',
+	kIaosTable_Filter = 'kIaosTable_Filter'
 }
 
 export interface I18nEvents {
@@ -389,7 +390,8 @@ export class I18n {
 			changeMediaBtnText: I18nStringKey.kIaosChangeMediaHeader,
 			iaosModalHeader: I18nStringKey.kIaosChangeMediaHeader,
 			iaosInsertBtnLabel: I18nStringKey.kIaosInsert,
-			iaosEjectBtnLabel: I18nStringKey.kIaosEject
+			iaosEjectBtnLabel: I18nStringKey.kIaosEject,
+			iaosTableFilterLabel: I18nStringKey.kIaosTable_Filter
 		};
 
 		const kDomAttributeToStringMap = {

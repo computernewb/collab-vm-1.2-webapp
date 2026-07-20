@@ -384,6 +384,10 @@ Theme: cvmDisabled
   height: min-content;
 }
 
+#iaosTabList {
+  border-bottom: 0;
+}
+
 .iaos-modal-table-col, #iaosTabContent {
   height: 0;
   flex-grow: 1;
@@ -401,6 +405,32 @@ Theme: cvmDisabled
   width: 10rem;
 }
 
+.iaos-collapse-marker-col {
+  width: 1em;
+}
+
+.iaos-category-collapse-marker > svg {
+  transition: rotate .35s;
+}
+
+.iaos-category-collapse-marker[aria-expanded=false] > svg {
+  rotate: -90deg;
+}
+
+.iaos-category-header-row:hover > * {
+  /* needed because using table-hover on the whole table makes the subtables in their entirety have a hover effect which is ugly */
+  --bs-table-color-state: var(--bs-table-hover-color);
+  --bs-table-bg-state: var(--bs-table-hover-bg);
+}
+
+.iaos-table-filter-container > * {
+  border-radius: 0 !important;
+}
+
+.iaos-filter-no-match {
+  display: none;
+}
+
 .iaos-category-header-row > th:not(:first-child) {
   border-left: 0;
 }
@@ -409,8 +439,22 @@ Theme: cvmDisabled
   border-right: 0;
 }
 
-tr.iaos-media-entry-row {
+tr.iaos-media-entry-row, tr.iaos-category-header-row {
   cursor: pointer;
+}
+
+.iaos-category-header-row {
+  border-top: 0 !important;
+}
+
+.iaos-category-entries-row > td {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+}
+
+.iaos-entry-table-container-inner {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 /* IAOS: Desktop style */

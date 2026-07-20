@@ -126,7 +126,8 @@ const enusLanguage: Language = {
 		kIaosEject: 'Eject',
 		kIaosTableHeader_Build: 'Build',
 		kIaosTableHeader_Architecture: 'Arch',
-		kIaosTableHeader_Year: 'Year'
+		kIaosTableHeader_Year: 'Year',
+		kIaosTable_Filter: 'Filter'
 	}
 };
 
