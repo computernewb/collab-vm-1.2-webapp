@@ -480,3 +480,56 @@ tr.iaos-media-entry-row, tr.iaos-category-header-row {
     height: min-content;
   }
 }
+
+#debugOverlay {
+  position: fixed;
+  top: 64px;
+  left: 14px;
+  z-index: 2147483000;
+  pointer-events: none;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--bs-body-color, #ffffff);
+  background: var(--bs-tertiary-bg, #2b3035);
+  border: 1px solid #575757;
+  border-radius: 6px;
+  padding: 10px 13px;
+  min-width: 250px;
+  max-width: 360px;
+  max-height: 88vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+#debugOverlay .dbg-h {
+  font-weight: 700;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  margin-top: 8px;
+}
+
+#debugOverlay .dbg-h:first-child {
+  margin-top: 0;
+}
+
+#debugOverlay .dbg-k {
+  opacity: 0.72;
+}
+
+#debugOverlay .dbg-warn {
+  color: #ffcc55;
+}
+
+#debugOverlay .dbg-bad {
+  color: #ff6b6b;
+}
+
+#debugOverlay .dbg-vm {
+  margin-top: 4px;
+}
+
+#debugOverlay .dbg-vm .dbg-id {
+  font-weight: 700;
+}
