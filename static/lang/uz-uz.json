@@ -1,7 +1,7 @@
 {
 	"languageName": "Uzbek",
 	"translatedLanguageName": "Uzbek",
-	"flag": "uz",
+	"flag": "🇺🇿",
 	"author": "guest86841",
 
 	"stringKeys": {
@@ -24,7 +24,6 @@
 		"kGeneric_Logout": "Hisobdan chiqish",
 		
 		"kWelcomeModal_Header": "CollabVM ga xush kelibsiz",
-		"kWelcomeModal_Body": "<p>Davom etishdan oldin,bizning qoidalarimiz bilan tanishib oling :</p> <h3>Q1. Qoidalarni buzmang.</h3>  CollabVMni yoki CollabVMning tarmog'ini  AQSH qoida federalini, Nyu York statik qoidasini, yoki Xalqaro qoidalarni buzib kirmang. Agar CollabVM kriminallika ayblanib qolsa, servis uni to'xtatishga majbur etadi, siz esa zudlikda bloklanasiz, va sizning harakatlaringiz xabar qilinadi..<br><br>CollabVM qonunga ko'ra, agar u o'z tarmog'ida bolalar pornografiyasi borligi yoki uning tarmog'i orqali uzatilayotganidan xabar topsa, huquqni muhofaza qilish organlarini xabardor qilishi shart..<br><br>COPPA hattoki majburlatilgan, Iltimos, CollabVMni 13 yoshdan kichik bo'lsangiz, ishlatmang. <h3>Q2. DoS/DDoSni ishga tushirmang.</h3> CollabVMni DoS/DDoS hujumini ishlatmang, biznes, kompaniyan, yoki boshqa narsaga ishlatmang. <h3>Q3. Spam distributsiya ruxsat berilmagan.</h3> E-pochtani CollabVMda spamni uyushtirmang. <h3>Q4. Ekspluatatsiya qilmang.</h3> Ekspluatatsiya qilmang,  agar siz bunday odamlarni ko'rsangiz, computernewbab@gmail.com ga murojaat qiling <h3>Q5. Boshqa foydalanuvchilarga taqlid qilmang.</h3> CollabVMning boshqa a'zolarini taqlid qilmang. Agar tutilsangiz, siz vaqtinchaga uzilasiz, kerak bo'lsa bloklanasiz. <h3>Q6. Bir odam bir ovoz.</h3> Ovoz qoidalarini buzish uchun har qanday metoddan foydalanmang. Agar kimdir bu ishni bajarsa, bloklanadi. <h3>Q7. Boshqaruv ish stolidan foydalanmang.</h3> Boshqaruv ish stolidan foydalanmang(masalan: DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, RustDesk.) <h3>Q8.CollabNetdan o'tmang.</h3> CollabNet tarmog'idan o'tmang, agar Qoida 1, Qoida 2, or Qoida 7 (yoki keraksiz ish bajarganda). <h3>R9. VMni darrov buzishga o'tmang.</h3> VMni xohlagan uslub bilan buzmang (agar foydasiz bo'lsa), Operatsion tizimni o'rnatish/qayta o'rnatish (VM7 yoki VM8dan tashqari), yoki buni botlar bajarishi mumkin emas. Bu hattoki, galni ishlatishda qo'llanadigan botlarni (\"haking\") ni ham o'z ichiga oladi. <h3>Q10. Kriptomaniya bajarmang</h3>Bunday VMlar kriptomaniya uchun mo'ljallanmagan. Agar kriptomaniyani bajarsangiz, siz bloklanasiz. Bu yerda baribir pul ishlay olmaysiz. <h3>Diskleymer!!!</h3>  NSFW kontent bizning anarxiya VMga (VM0b0t) ruxsat berilgan,boshqalarda esa NSFW ruxsat berilmagan va E2Guarden tomonidan taqiqlanadi.",
 
 		"kSiteButtons_Home": "Asosiy",
 		"kSiteButtons_FAQ": "FAQ",
@@ -60,8 +59,6 @@
 		"kAdminVMButtons_ClearTurnQueue": "Gal navbatligini tozalash",
 		"kAdminVMButtons_BypassTurn": "Galdan o'tish",
 		"kAdminVMButtons_IndefiniteTurn": "Galni o'chirish",
-		"kAdminVMButtons_GhostTurnOn": "Ko'rinmas rejim (Yoniq)",
-		"kAdminVMButtons_GhostTurnOff": "Ko'rinmas rejim(O'chiq)",
 
 		"kAdminVMButtons_Ban": "Bloklash",
 		"kAdminVMButtons_Kick": "Chiqarish",
