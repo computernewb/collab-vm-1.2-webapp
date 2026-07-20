@@ -6,6 +6,8 @@ export type IaosMediaEntry = {
 	description: string | null;
 	year: string | null;
 	image_url: string | null;
+	build_number: string | null;
+	architecture: string | null;
 };
 
 export type IaosMediaCategory = { name: string };

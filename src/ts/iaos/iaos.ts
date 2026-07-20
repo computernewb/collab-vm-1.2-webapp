@@ -17,6 +17,9 @@ const elements = {
 	changeMediaBtn: document.getElementById('changeMediaBtn') as HTMLButtonElement
 };
 
+const MEDIA_TABLE_COLSPAN =
+	'<colgroup><col span="1" class="iaos-media-name-col"/><col span="1" class="iaos-media-build-col"/><col span="1" class="iaos-media-arch-col"/><col span="1" class="iaos-media-year-col"/></colgroup>';
+
 type ModalTab = {
 	kind: string;
 	tabLi: HTMLLIElement;
@@ -91,6 +94,7 @@ export class IaosManager {
 			tabContent.classList.add('tab-pane', 'iaos-tab-pane');
 			let table = document.createElement('table');
 			table.classList.add('table', 'table-bordered', 'm-0');
+			table.insertAdjacentHTML('afterbegin', MEDIA_TABLE_COLSPAN);
 			let tableBody = document.createElement('tbody');
 			table.appendChild(tableBody);
 			tabContent.appendChild(table);
@@ -113,7 +117,7 @@ export class IaosManager {
 			this.populateDock(kind);
 		}
 
-		this.i18n.LocalizeClassNames(...mediaKindSupported.map((kind) => `iaos-tab-label-${kind}`));
+		this.i18n.LocalizeClassNames(...mediaKindSupported.map((kind) => `iaos-tab-label-${kind}`), 'iaos-media-build-header', 'iaos-media-arch-header', 'iaos-media-year-header');
 		this.selectTab(this.modalTabs.get(mediaKindSupported[0])!.kind);
 		elements.changeMediaBtn.classList.remove('d-none');
 	}
@@ -127,16 +131,20 @@ export class IaosManager {
 				let category = this.media!.categories[entry.category];
 				// create category header
 				let headerTr = document.createElement('tr');
-				let headerTd = document.createElement('td');
-				headerTd.classList.add('iaos-media-category-header');
-				headerTd.innerText = category.name;
-				headerTr.appendChild(headerTd);
+				headerTr.classList.add('iaos-category-header-row');
+				let headerTh = document.createElement('th');
+				headerTh.classList.add('iaos-media-category-header');
+				headerTh.innerText = category.name;
+				headerTr.appendChild(headerTh);
+				headerTr.insertAdjacentHTML('beforeend', '<th class="iaos-media-build-header"></th><th class="iaos-media-arch-header"></th><th class="iaos-media-year-header"></th>');
+
 				// create category section
 				let sectionTr = document.createElement('tr');
 				let sectionTd = document.createElement('td');
+				sectionTd.colSpan = 4;
 				let sectionTable = document.createElement('table');
 				sectionTable.classList.add('table', 'table-striped', 'table-hover', 'mb-0');
-				sectionTable.insertAdjacentHTML('afterbegin', '<colgroup><col span="1" class="iaos-media-name-col"/><col span="1" class="iaos-media-year-col" /></colgroup>');
+				sectionTable.insertAdjacentHTML('afterbegin', MEDIA_TABLE_COLSPAN);
 				let sectionTableBody = document.createElement('tbody');
 				sectionTable.appendChild(sectionTableBody);
 				sectionTd.appendChild(sectionTable);
@@ -156,6 +164,16 @@ export class IaosManager {
 			entryName.classList.add('iaos-media-entry-name');
 			entryName.innerText = entry.name;
 			entryTr.appendChild(entryName);
+
+			let entryBuild = document.createElement('td');
+			entryBuild.classList.add('iaos-media-entry-build');
+			entryBuild.innerText = entry.build_number ?? '';
+			entryTr.appendChild(entryBuild);
+
+			let entryArch = document.createElement('td');
+			entryArch.classList.add('iaos-media-entry-arch');
+			entryArch.innerText = entry.architecture ?? '';
+			entryTr.appendChild(entryArch);
 
 			let entryYear = document.createElement('td');
 			entryYear.classList.add('iaos-media-entry-year');

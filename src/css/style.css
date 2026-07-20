@@ -393,8 +393,20 @@ Theme: cvmDisabled
   overflow-y: scroll;
 }
 
-.iaos-media-year-col {
+.iaos-media-arch-col, .iaos-media-year-col {
   width: 6em;
+}
+
+.iaos-media-build-col {
+  width: 10rem;
+}
+
+.iaos-category-header-row > th:not(:first-child) {
+  border-left: 0;
+}
+
+.iaos-category-header-row > th:not(:last-child) {
+  border-right: 0;
 }
 
 tr.iaos-media-entry-row {

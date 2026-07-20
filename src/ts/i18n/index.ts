@@ -126,7 +126,10 @@ export enum I18nStringKey {
 	kIaosMediaEjected = 'kIaosMediaEjected',
 	kIaosChangeMediaHeader = 'kIaosChangeMediaHeader',
 	kIaosInsert = 'kIaosInsert',
-	kIaosEject = 'kIaosEject'
+	kIaosEject = 'kIaosEject',
+	kIaosTableHeader_Build = 'kIaosTableHeader_Build',
+	kIaosTableHeader_Architecture = 'kIaosTableHeader_Architecture',
+	kIaosTableHeader_Year = 'kIaosTableHeader_Year'
 }
 
 export interface I18nEvents {
@@ -287,7 +290,10 @@ export class I18n {
 			'mod-unmute-btn': I18nStringKey.kAdminVMButtons_Unmute,
 			'mod-get-ip-btn': I18nStringKey.kAdminVMButtons_GetIP,
 			'iaos-tab-label-iso': I18nStringKey.kIaosMediaKind_iso,
-			'iaos-tab-label-flp': I18nStringKey.kIaosMediaKind_flp
+			'iaos-tab-label-flp': I18nStringKey.kIaosMediaKind_flp,
+			'iaos-media-build-header': I18nStringKey.kIaosTableHeader_Build,
+			'iaos-media-arch-header': I18nStringKey.kIaosTableHeader_Architecture,
+			'iaos-media-year-header': I18nStringKey.kIaosTableHeader_Year
 		};
 
 		if (classList.length === 0) {
