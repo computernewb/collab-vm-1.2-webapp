@@ -1,10 +1,10 @@
 {
-    languageName: 'Danish',
-    translatedLanguageName: 'Dansk',
-    flag: '🇩🇰',
-    author: 'rootq',
+    "languageName": "Danish",
+    "translatedLanguageName": "Dansk",
+    "flag": "🇩🇰",
+    "author": "rootq",
 
-    stringKeys: {
+    "stringKeys": {
         "kGeneric_CollabVM": "CollabVM",
         "kGeneric_Yes": "Ja",
         "kGeneric_No": "Nej",
