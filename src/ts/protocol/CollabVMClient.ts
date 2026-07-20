@@ -64,6 +64,40 @@ interface CollabVMClientPrivateEvents {
 	qemu: (qemuResponse: string) => void;
 }
 
+export interface DebugStats {
+	url: string;
+	node: string | null;
+	connectedToVM: boolean;
+	wsReadyState: number;
+	wsOpenTime: number | null;
+	vmConnectTime: number | null;
+	rxPackets: number;
+	txPackets: number;
+	rxBytes: number;
+	txBytes: number;
+	rects: number;
+	lastRxTime: number | null;
+	lastOpcode: string | null;
+	subprotocol: string;
+	binaryRects: boolean;
+	accountAuth: boolean;
+	screenWidth: number;
+	screenHeight: number;
+	canvasWidth: number;
+	canvasHeight: number;
+	users: number;
+	username: string | null;
+	rank: Rank;
+	perms: string[];
+	ghostTurn: boolean;
+	capabilities: string[];
+	turnUser: string | null;
+	queueLength: number;
+	voteActive: boolean;
+	voteYes: number;
+	voteNo: number;
+}
+
 const DefaultCapabilities = ['bin', 'iaos', 'votex'];
 
 export default class CollabVMClient {
@@ -87,6 +121,15 @@ export default class CollabVMClient {
 	private node: string | null = null;
 	private auth: boolean = false;
 	private enabledCapabilities: Array<string> = [];
+	private statRxPackets: number = 0;
+	private statTxPackets: number = 0;
+	private statRxBytes: number = 0;
+	private statTxBytes: number = 0;
+	private statRects: number = 0;
+	private statLastRxTime: number | null = null;
+	private statLastOpcode: string | null = null;
+	private wsOpenTime: number | null = null;
+	private vmConnectTime: number | null = null;
 	// events that are used internally and not exposed
 	private internalEmitter: Emitter<CollabVMClientPrivateEvents>;
 	// public events
@@ -210,6 +253,7 @@ export default class CollabVMClient {
 
 	// Fires when the WebSocket connection is opened
 	private onOpen() {
+		this.wsOpenTime = Date.now();
 		this.internalEmitter.emit('open');
 	}
 
@@ -292,10 +336,15 @@ export default class CollabVMClient {
 
 	// Fires on WebSocket message
 	private onMessage(event: MessageEvent) {
+		this.statRxPackets++;
+		this.statLastRxTime = Date.now();
 		if (event.data instanceof ArrayBuffer) {
+			this.statRxBytes += event.data.byteLength;
+			this.statLastOpcode = '(binary)';
 			this.onBinaryMessage(event.data);
 			return;
 		}
+		this.statRxBytes += (event.data as string).length;
 		let msgArr: string[];
 		try {
 			msgArr = Guacutils.decode(event.data);
@@ -303,6 +352,7 @@ export default class CollabVMClient {
 			console.error(`Server sent invalid message (${e})`);
 			return;
 		}
+		this.statLastOpcode = msgArr[0];
 		this.publicEmitter.emit('message', ...msgArr);
 		switch (msgArr[0]) {
 			case 'nop': {
@@ -322,6 +372,7 @@ export default class CollabVMClient {
 			}
 			case 'connect': {
 				this.connectedToVM = msgArr[1] === '1';
+				if (this.connectedToVM && this.vmConnectTime === null) this.vmConnectTime = Date.now();
 				this.internalEmitter.emit('connect', this.connectedToVM);
 				if (this.enabledCapabilities.indexOf('votex') === -1) {
 					this.publicEmitter.emit('votesenabled', msgArr[3] === '1', false);
@@ -550,6 +601,7 @@ export default class CollabVMClient {
 	}
 
 	private loadRectangle(img: HTMLImageElement, x: number, y: number) {
+		this.statRects++;
 		if (this.actualScreenSize.width !== this.canvasScale.width || this.actualScreenSize.height !== this.canvasScale.height) this.unscaledCtx.drawImage(img, x, y);
 		// Scale the image to the canvas
 		this.ctx.drawImage(
@@ -610,12 +662,18 @@ export default class CollabVMClient {
 			return el.toString();
 		});
 
-		this.socket.send(Guacutils.encode(...guacElements));
+		let encoded = Guacutils.encode(...guacElements);
+		this.statTxPackets++;
+		this.statTxBytes += encoded.length;
+		this.socket.send(encoded);
 	}
 
 	// Send a binary message to the server
 	sendBinary(msg: CollabVMProtocolMessage) {
-		this.socket.send(msgpack.encode(msg));
+		let encoded = msgpack.encode(msg);
+		this.statTxPackets++;
+		this.statTxBytes += encoded.length;
+		this.socket.send(encoded);
 	}
 
 	// Get a list of all VMs
@@ -654,6 +712,47 @@ export default class CollabVMClient {
 			this.send('connect', id);
 			this.node = id;
 		});
+	}
+
+	getDebugStats(): DebugStats {
+		let turnUser = this.users.find((u) => u.turn === 0) ?? null;
+		let perms: string[] = [];
+		for (let key of Object.keys(this.perms) as Array<keyof Permissions>) {
+			if (this.perms[key] === true) perms.push(key);
+		}
+		return {
+			url: this.url,
+			node: this.node,
+			connectedToVM: this.connectedToVM,
+			wsReadyState: this.socket.readyState,
+			wsOpenTime: this.wsOpenTime,
+			vmConnectTime: this.vmConnectTime,
+			rxPackets: this.statRxPackets,
+			txPackets: this.statTxPackets,
+			rxBytes: this.statRxBytes,
+			txBytes: this.statTxBytes,
+			rects: this.statRects,
+			lastRxTime: this.statLastRxTime,
+			lastOpcode: this.statLastOpcode,
+			subprotocol: this.socket.protocol || '—',
+			binaryRects: this.enabledCapabilities.indexOf('bin') !== -1,
+			accountAuth: this.auth,
+			screenWidth: this.actualScreenSize.width,
+			screenHeight: this.actualScreenSize.height,
+			canvasWidth: this.canvasScale.width,
+			canvasHeight: this.canvasScale.height,
+			users: this.users.length,
+			username: this.username,
+			rank: this.rank,
+			perms,
+			ghostTurn: w.collabvm?.ghostTurn === true && this.rank === Rank.Admin,
+			capabilities: this.enabledCapabilities.slice(),
+			turnUser: turnUser ? turnUser.username : null,
+			queueLength: this.users.filter((u) => u.turn > 0).length,
+			voteActive: this.currentVote !== null,
+			voteYes: this.currentVote?.yesCount ?? 0,
+			voteNo: this.currentVote?.noCount ?? 0
+		};
 	}
 
 	// Close the connection

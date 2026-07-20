@@ -18,6 +18,7 @@ import dompurify from 'dompurify';
 import { IaosManager } from './iaos/iaos.js';
 import { VoteType } from '../../collab-vm-1.2-binary-protocol/src/votex.js';
 import fa from './fontawesome.js';
+import DebugOverlay from './DebugOverlay.js';
 const _eval = window.eval;
 
 // Elements
@@ -348,6 +349,21 @@ const chatsound = new Audio(Config.ChatSound);
 // Active VM
 let VM: CollabVMClient | null = null;
 
+const debugOverlay = new DebugOverlay();
+debugOverlay.setVmList(vms);
+
+window.addEventListener(
+	'keydown',
+	(e) => {
+		if (e.altKey && e.code === 'KeyI') {
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			debugOverlay.toggle();
+		}
+	},
+	{ capture: true }
+);
+
 let IAOS: IaosManager = new IaosManager(TheI18n);
 
 let voteStatus: VoteStatusEvent | null = null;
@@ -487,6 +503,7 @@ async function openVM(vm: VM): Promise<void> {
 	document.title = Format('{0} - {1}', vm.id, TheI18n.GetString(I18nStringKey.kGeneric_CollabVM));
 	// Append canvas
 	elements.vmDisplay.appendChild(VM!.canvas);
+	debugOverlay.attach(VM!);
 	// Switch to the VM view
 	elements.vmlist.style.display = 'none';
 	elements.vmview.style.display = 'block';
@@ -496,6 +513,7 @@ async function openVM(vm: VM): Promise<void> {
 function closeVM() {
 	if (VM === null) return;
 	expectedClose = true;
+	debugOverlay.detach();
 	// Close the VM
 	VM.close();
 	VM = null;
