@@ -79,6 +79,18 @@
 		"uz-uz": {
 			"languageName": "O'zbekcha",
 			"flag": "🇺🇿"
+    },
+		"it-it": {
+			"languageName": "Italiano (Italia)",
+			"flag": " 🇮🇹"
+		},
+		"fi-fi": {
+			"languageName": "Suomi",
+			"flag": "🇫🇮"
+		},
+		"cs-cz": {
+			"languageName": "Čeština",
+			"flag": "🇨🇿"
 		}
 	},
 	"defaultLanguage": "en-us"

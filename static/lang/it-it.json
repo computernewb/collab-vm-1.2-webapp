@@ -1,0 +1,99 @@
+{
+	"languageName": "Italiano (Italia)",
+	"translatedLanguageName": "Italian (Italy)",
+	"flag": "🇮🇹",
+	"author": "whatdidyouexpect",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Sì",
+		"kGeneric_No": "No",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Annulla",
+		"kGeneric_Send": "Invia",
+		"kGeneric_Understood": "Ho Capito",
+		"kGeneric_Username": "Nome utente",
+		"kGeneric_Password": "Password",
+		"kGeneric_Login": "Accedi",
+		"kGeneric_Register": "Registrati",
+		"kGeneric_EMail": "E-mail",
+		"kGeneric_DateOfBirth": "Data di nascita",
+		"kGeneric_VerificationCode": "Codice di verifica",
+		"kGeneric_Verify": "Verifica",
+		"kGeneric_Update": "Aggiorna",
+		"kGeneric_Logout": "Esci",
+
+		"kWelcomeModal_Header": "Benvenuto su CollabVM",
+		"kWelcomeModal_Lead": "CollabVM ti permette di prendere il controllo di macchine virtuali online a turno con persone sconosciute!",
+
+		"kSiteButtons_Home": "Home",
+		"kSiteButtons_FAQ": "FAQ",
+		"kSiteButtons_Rules": "Regole",
+		"kSiteButtons_DarkMode": "Modalità scura",
+		"kSiteButtons_LightMode": "Modalità chiara",
+		"kSiteButtons_Languages": "Lingue",
+
+		"kVM_UsersOnlineText": "Utenti online:",
+
+		"kVM_TurnTimeTimer": "Il turno scade tra {0} secondi.",
+		"kVM_WaitingTurnTimer": "In attesa del turno: {0} secondi.",
+		"kVM_VoteCooldownTimer": "Attendi {0} secondi prima di iniziare un altro voto.",
+
+		"kVM_VoteForResetTitle": "Vuoi ripristinare la VM?",
+		"kVM_VoteTimer": "Il voto termina tra {0} secondi",
+
+		"kVMButtons_TakeTurn": "Prendi il turno",
+		"kVMButtons_EndTurn": "Termina turno",
+		"kVMButtons_ChangeUsername": "Cambia nome utente",
+		"kVMButtons_Keyboard": "Tastiera",
+		"kVMButtons_CtrlAltDel": "Ctrl+Alt+Canc",
+
+		"kVMButtons_VoteForReset": "Vota per il reset",
+		"kVMButtons_Screenshot": "Screenshot",
+
+		"kQEMUMonitor": "Monitor QEMU",
+		"kAdminVMButtons_PassVote": "Passa il voto",
+		"kAdminVMButtons_CancelVote": "Annulla voto",
+
+		"kAdminVMButtons_Restore": "Ripristina",
+		"kAdminVMButtons_Reboot": "Riavvia",
+		"kAdminVMButtons_ClearTurnQueue": "Svuota coda dei turni",
+		"kAdminVMButtons_BypassTurn": "Salta turno",
+		"kAdminVMButtons_IndefiniteTurn": "Turno indefinito",
+		"kAdminVMButtons_GhostTurnOn": "Turno fantasma (Attivo)",
+		"kAdminVMButtons_GhostTurnOff": "Turno fantasma (Disattivo)",
+
+		"kAdminVMButtons_Ban": "Banna",
+		"kAdminVMButtons_Kick": "Espelli",
+		"kAdminVMButtons_TempMute": "Mute temporaneo",
+		"kAdminVMButtons_IndefMute": "Mute indefinito",
+		"kAdminVMButtons_Unmute": "Ripristina audio",
+		"kAdminVMButtons_GetIP": "Ottieni IP",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Inserisci il nuovo nome utente per {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Sei sicuro di voler ripristinare la VM?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Inserisci un nuovo nome utente oppure lascia vuoto per assegnarne uno da ospite",
+
+		"kError_UnexpectedDisconnection": "Sei stato disconnesso dal server.",
+		"kError_UsernameTaken": "Questo nome utente è già in uso",
+		"kError_UsernameInvalid": "I nomi utente possono contenere solo numeri, lettere, spazi, trattini, underscore e punti, e devono essere compresi tra 3 e 20 caratteri.",
+		"kError_UsernameBlacklisted": "Questo nome utente è stato inserito in blacklist.",
+		"kError_IncorrectPassword": "Password errata.",
+
+		"kAccountModal_Verify": "Verifica e-mail",
+		"kAccountModal_AccountSettings": "Impostazioni dell’account",
+		"kAccountModal_ResetPassword": "Reimposta password",
+
+		"kAccountModal_NewPassword": "Nuova password",
+		"kAccountModal_ConfirmNewPassword": "Conferma nuova password",
+		"kAccountModal_CurrentPassword": "Password attuale",
+		"kAccountModal_ConfirmPassword": "Conferma password",
+		"kAccountModal_HideFlag": "Nascondi la mia bandiera del Paese",
+
+		"kMissingCaptcha": "Compila il captcha.",
+		"kPasswordsMustMatch": "Le password devono coincidere.",
+		"kAccountModal_VerifyText": "Abbiamo inviato un’e-mail a {0}. Per verificare il tuo account, inserisci qui sotto il codice di 8 cifre presente nell’e-mail.",
+		"kAccountModal_VerifyPasswordResetText": "Abbiamo inviato un’e-mail a {0}. Per reimpostare la password, inserisci qui sotto il codice di 8 cifre presente nell’e-mail.",
+		"kAccountModal_PasswordResetSuccess": "La password è stata modificata correttamente. Ora puoi accedere con la nuova password."
+	}
+}

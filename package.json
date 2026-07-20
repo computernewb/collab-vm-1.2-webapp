@@ -9,7 +9,8 @@
     "test": "jest",
     "clean": "run-script-os",
     "clean:darwin:linux": "rm -rf dist .parcel-cache",
-    "clean:win32": "rd /s /q dist .parcel-cache"
+    "clean:win32": "rd /s /q dist .parcel-cache",
+    "format": "prettier --write src/ static/lang/ config.example.json"
   },
   "author": "Elijah R",
   "license": "GPL-3.0",
@@ -18,16 +19,17 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "dayjs": "^1.11.13",
-    "dompurify": "^3.1.7",
+    "dompurify": "^3.3.2",
     "msgpackr": "^1.11.2",
     "nanoevents": "^9.1.0",
+    "posthtml-include": "^2.0.1",
     "simple-keyboard": "^3.8.14"
   },
   "devDependencies": {
     "@hcaptcha/types": "^1.0.4",
     "@types/bootstrap": "^5.2.10",
     "@types/cloudflare-turnstile": "^0.2.2",
-    "@types/dompurify": "^3.0.5",
+    "@types/dompurify": "^3.2.0",
     "@types/grecaptcha": "^3.0.9",
     "@types/jest": "^29.5.14",
     "buffer": "^6.0.3",
