@@ -4,8 +4,10 @@
   "description": "kill me",
   "private": true,
   "scripts": {
-    "build": "parcel build --no-source-maps --dist-dir dist --public-url '.' src/html/index.html",
-    "serve": "parcel src/html/index.html",
+    "build": "yarn build:main && yarn build:rules",
+    "build:main": "parcel build --no-source-maps --dist-dir dist --public-url '.' src/html/index.html",
+    "build:rules": "parcel build --no-source-maps --dist-dir dist/rules --public-url '.' src/html/rules/index.html",
+    "serve": "parcel src/html/index.html src/html/rules/index.html",
     "test": "jest",
     "clean": "run-script-os",
     "clean:darwin:linux": "rm -rf dist .parcel-cache",

@@ -4,11 +4,11 @@
         <title>CollabVM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8"/>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
-        <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link rel="preload" href="../assets/NotoColorEmoji.ttf" as="font" type="font/tff" crossorigin>
-        <script src="../../node_modules/@fortawesome/fontawesome-free/js/all.min.js" crossorigin="anonymous"></script>
-        <link rel="icon" href="../assets/favicon.ico">
+        <link href="/src/css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="npm:bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="preload" href="/src/assets/NotoColorEmoji.ttf" as="font" type="font/tff" crossorigin>
+        <script src="npm:@fortawesome/fontawesome-free/js/all.min.js" crossorigin="anonymous"></script>
+        <link rel="icon" href="/src/assets/favicon.ico">
         <meta name="description" content="Take turns controlling online virtual machines with complete strangers, on CollabVM!"/>
         <meta name="darkreader-lock">
         <!-- Opengraph -->
@@ -45,7 +45,7 @@
                 </div>
                 <div class="modal-body" id="welcomeModalBody">
                     <p id="welcomeModalLead"></p>
-                    <include src="src/html/motd.html"></include>
+                    <include src="src/html/_bits/motd.html"></include>
                 </div>
                 <div class="modal-footer">
                         <button type="button" id="welcomeModalDismiss" class="btn btn-primary" data-bs-dismiss="modal"></button>
@@ -246,7 +246,7 @@
                             <a id="rulesBtn" href="#" class="nav-link"><i class="fa-solid fa-clipboard-check"></i> <span id="rulesBtnText"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://discord.horse/invite/collabvm" class="nav-link"><i class="fa-brands fa-discord"></i> Discord</a>
+                            <a href="https://computernewb.com/discord/" class="nav-link"><i class="fa-brands fa-discord"></i> Discord</a>
                         </li>
                         <li class="nav-item">
                             <a href="https://reddit.com/r/collabvm" class="nav-link"><i class="fa-brands fa-reddit"></i> Subreddit</a>
@@ -258,7 +258,7 @@
                             <a href="https://computernewb.com/collab-vm/user-vm" class="nav-link"><i class="fa-solid fa-user"></i> UserVM</a>
                         </li>
                         <li class="nav-item">
-                            <a id="toggleThemeBtn" href="#" class="nav-link"><i id="toggleThemeIcon" class="fa-solid fa-sun"></i> <span id="toggleThemeBtnText"></span></a>
+                            <a id="toggleThemeBtn" href="#" class="nav-link"><span id="toggleThemeIcon"></span> <span id="toggleThemeBtnText"></span></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="languageDropdownLink" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -379,6 +379,6 @@
                 </div>
             </div>
         </div>
-        <script type="module" src="../ts/main.ts" type="application/javascript"></script>
+        <script type="module" src="/src/ts/main.ts"></script>
     </body>
 </html>

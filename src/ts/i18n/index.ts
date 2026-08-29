@@ -183,6 +183,7 @@ export class I18n {
 	private lang: Language = enusLanguage;
 	private languageDropdown: HTMLSpanElement = document.getElementById('languageDropdown') as HTMLSpanElement;
 	private emitter: Emitter<I18nEvents> = createNanoEvents();
+	baseUrl: string = new URL('lang', window.location.href).href;
 
 	CurrentLanguage = () => this.langId;
 
@@ -193,7 +194,7 @@ export class I18n {
 
 	async Init() {
 		// Load language list
-		var res = await fetch('lang/languages.json');
+		var res = await fetch(`${this.baseUrl}/languages.json`);
 		if (!res.ok) {
 			alert('Failed to load languages.json: ' + res.statusText);
 			await this.SetLanguage(enusId);
@@ -253,7 +254,7 @@ export class I18n {
 
 		if (id === enusId) lang = enusLanguage;
 		else {
-			let path = `./lang/${id}.json`;
+			let path = `${this.baseUrl}/${id}.json`;
 			let res = await fetch(path);
 			if (!res.ok) {
 				console.error(`Failed to load lang/${id}.json: ${res.statusText}`);
@@ -321,6 +322,8 @@ export class I18n {
 			accountSettingsButton: I18nStringKey.kAccountModal_AccountSettings,
 			accountLogoutButton: I18nStringKey.kGeneric_Logout,
 			languageDropdownText: I18nStringKey.kSiteButtons_Languages,
+
+			rulesHeader: I18nStringKey.kSiteButtons_Rules,
 
 			welcomeModalHeader: I18nStringKey.kWelcomeModal_Header,
 			welcomeModalLead: I18nStringKey.kWelcomeModal_Lead,
@@ -457,8 +460,7 @@ export class I18n {
 		for (let domId of Object.keys(kDomIdtoStringMap)) {
 			let element = document.getElementById(domId);
 			if (element == null) {
-				alert(`Error: Could not find element with ID ${domId} in the DOM! Please tell a site admin this happened.`);
-				return;
+				continue;
 			}
 
 			// Do the magic.
@@ -468,17 +470,14 @@ export class I18n {
 			element.innerHTML = this.GetStringRaw(kDomIdtoStringMap[domId]);
 		}
 
-		for (let domId of Object.keys(kDomAttributeToStringMap)) {
+		for (let domId of Object.keys(kDomAttributeToStringMap) as Array<keyof typeof kDomAttributeToStringMap>) {
 			let element = document.getElementById(domId);
 			if (element == null) {
-				alert(`Error: Could not find element with ID ${domId} in the DOM! Please tell a site admin this happened.`);
-				return;
+				continue;
 			}
 
-			// TODO: Figure out if we can get rid of this ts-ignore
-			// @ts-ignore
 			let attributes = kDomAttributeToStringMap[domId];
-			for (let attr of Object.keys(attributes)) {
+			for (let attr of Object.keys(attributes) as Array<keyof typeof attributes>) {
 				element.setAttribute(attr, this.GetStringRaw(attributes[attr] as I18nStringKey));
 			}
 		}

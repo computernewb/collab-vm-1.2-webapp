@@ -18,6 +18,7 @@ import dompurify from 'dompurify';
 import { IaosManager } from './iaos/iaos.js';
 import { VoteType } from '../../collab-vm-1.2-binary-protocol/src/votex.js';
 import fa from './fontawesome.js';
+import { ThemeMgr } from './theme.js';
 const _eval = window.eval;
 
 // Elements
@@ -60,9 +61,6 @@ const elements = {
 	badPasswordAlert: document.getElementById('badPasswordAlert') as HTMLDivElement,
 	incorrectPasswordDismissBtn: document.getElementById('incorrectPasswordDismissBtn') as HTMLButtonElement,
 	ctrlAltDelBtn: document.getElementById('ctrlAltDelBtn') as HTMLButtonElement,
-	toggleThemeBtn: document.getElementById('toggleThemeBtn') as HTMLAnchorElement,
-	toggleThemeIcon: document.getElementById('toggleThemeIcon') as HTMLElement,
-	toggleThemeBtnText: document.getElementById('toggleThemeBtnText') as HTMLSpanElement,
 	// Admin
 	staffbtns: document.getElementById('staffbtns') as HTMLDivElement,
 	restoreBtn: document.getElementById('restoreBtn') as HTMLButtonElement,
@@ -764,7 +762,6 @@ function turnUpdate(status: TurnStatus) {
 			if (status.soleUser) {
 				elements.turnstatus.innerText = TheI18n.GetString(I18nStringKey.kVM_TurnYouHave);
 			} else {
-				//@ts-ignore
 				turnInterval = setInterval(() => turnIntervalCb(), 1000);
 				setTurnStatus();
 			}
@@ -1655,28 +1652,7 @@ elements.accountResetPasswordVerifyForm.addEventListener('submit', async (e) => 
 	return false;
 });
 
-let darkTheme = true;
-function loadColorTheme(dark: boolean) {
-	if (dark) {
-		darkTheme = true;
-		document.children[0].setAttribute('data-bs-theme', 'dark');
-		elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_LightMode);
-		elements.toggleThemeIcon.classList.remove('fa-moon');
-		elements.toggleThemeIcon.classList.add('fa-sun');
-	} else {
-		darkTheme = false;
-		document.children[0].setAttribute('data-bs-theme', 'light');
-		elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_DarkMode);
-		elements.toggleThemeIcon.classList.remove('fa-sun');
-		elements.toggleThemeIcon.classList.add('fa-moon');
-	}
-}
-elements.toggleThemeBtn.addEventListener('click', (e) => {
-	e.preventDefault();
-	loadColorTheme(!darkTheme);
-	localStorage.setItem('cvm-dark-theme', darkTheme ? '1' : '0');
-	return false;
-});
+let theme = new ThemeMgr(TheI18n);
 
 // Public API
 w.collabvm = {
@@ -1744,8 +1720,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 			document.title = TheI18n.GetString(I18nStringKey.kGeneric_CollabVM);
 		}
 		if (!auth || !auth.account) elements.accountDropdownUsername.innerText = TheI18n.GetString(I18nStringKey.kNotLoggedIn);
-		if (darkTheme) elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_LightMode);
-		else elements.toggleThemeBtnText.innerHTML = TheI18n.GetString(I18nStringKey.kSiteButtons_DarkMode);
 
 		if (w.collabvm.ghostTurn) elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOn);
 		else elements.ghostTurnBtnText.innerText = TheI18n.GetString(I18nStringKey.kAdminVMButtons_GhostTurnOff);
@@ -1757,12 +1731,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 		}
 	});
 	// Load theme
-	var _darktheme: boolean;
-	// Check if dark theme is set in local storage
-	if (localStorage.getItem('cvm-dark-theme') !== null) loadColorTheme(localStorage.getItem('cvm-dark-theme') === '1');
-	// Otherwise, try to detect the system theme
-	else if (window.matchMedia('(prefers-color-scheme: dark)').matches) loadColorTheme(true);
-	else loadColorTheme(false);
+	theme.init();
 	// Initialize authentication if enabled
 	if (Config.Auth.Enabled) {
 		auth = new AuthManager(Config.Auth.APIEndpoint);
