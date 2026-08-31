@@ -1,0 +1,66 @@
+{
+    "languageName": "Danish",
+    "translatedLanguageName": "Dansk",
+    "flag": "🇩🇰",
+    "author": "rootq",
+
+    "stringKeys": {
+        "kGeneric_CollabVM": "CollabVM",
+        "kGeneric_Yes": "Ja",
+        "kGeneric_No": "Nej",
+        "kGeneric_Ok": "OK",
+        "kGeneric_Cancel": "Annuller",
+        "kGeneric_Send": "Send",
+        "kGeneric_Understood": "Forstået",
+        "kGeneric_Username": "Brugernavn",
+        "kGeneric_Password": "Adgangskode",
+        "kGeneric_Login": "Log ind",
+        "kGeneric_Register": "Registrer",
+        "kGeneric_EMail": "E-mail",
+        "kGeneric_DateOfBirth": "Fødselsdato",
+        "kGeneric_VerificationCode": "Bekræftelseskode",
+        "kGeneric_Verify": "Bekræft",
+        "kGeneric_Update": "Opdater",
+        "kGeneric_Logout": "Log ud",
+
+        "kWelcomeModal_Header": "Velkommen til CollabVM",
+        "kWelcomeModal_Lead": "CollabVM giver dig mulighed for at skiftes til at styre online virtuelle maskiner sammen med helt fremmede!",
+
+        "kSiteButtons_Home": "Hjem",
+        "kSiteButtons_FAQ": "Ofte stillede spørgsmål",
+        "kSiteButtons_Rules": "Regler",
+        "kSiteButtons_DarkMode": "Mørk tilstand",
+        "kSiteButtons_LightMode": "Lys tilstand",
+        "kSiteButtons_Languages": "Sprog",
+
+        "kVM_UsersOnlineText": "Brugere online:",
+
+        "kVM_TurnTimeTimer": "Din tur udløber om {0} sekunder.",
+        "kVM_TurnYouHave": "Det er din tur.",
+        "kVM_TurnsPaused": "Ture er sat på pause.",
+        "kVM_WaitingTurnTimer": "Venter på tur om {0} sekunder.",
+
+        "kVM_VoteCooldownTimer": "Vent venligst {0} sekunder, før du starter en ny afstemning.",
+        "kVM_VoteError_existingVote": "En afstemning er allerede i gang.",
+        "kVM_VoteTitle": "Vil du {0}?",
+        "kVM_VoteTimer": "Afstemningen slutter om {0} sekunder",
+        "kVM_VoteStarted": "{0} har startet en afstemning om at {1}.",
+        "kVM_VoteSuccess": "Afstemningen om at {0} blev vedtaget.",
+        "kVM_VoteFail": "Afstemningen om at {0} blev forkastet.",
+        "kVM_UserVotedYes": "{0} stemte ja.",
+        "kVM_UserVotedNo": "{0} stemte nej.",
+
+        "kVMButtons_TakeTurn": "Tag tur",
+        "kVMButtons_EndTurn": "Afslut tur",
+        "kVMButtons_ChangeUsername": "Skift brugernavn",
+        "kVMButtons_Keyboard": "Tastatur",
+        "KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+        "kVMButtons_Vote": "Afstem...",
+        "kVMButtons_Screenshot": "Skærmbillede",
+
+        "kQEMUMonitor": "QEMU Monitor",
+
+        "kNotLoggedIn": "Ikke logget ind"
+    }
+}
