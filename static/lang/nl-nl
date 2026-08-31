@@ -1,0 +1,99 @@
+{
+	"languageName": "Nederland",
+	"translatedLanguageName": "Dutch",
+	"flag": "🇳🇱",
+	"author": "KateFastEatViolin/Kate Fast Eat Fiddle",
+
+	"stringKeys": {
+		"kGeneric_CollabVM": "CollabVM",
+		"kGeneric_Yes": "Ja",
+		"kGeneric_No": "Nee",
+		"kGeneric_Ok": "OK",
+		"kGeneric_Cancel": "Geannuleerd",
+		"kGeneric_Send": "Versturen",
+		"kGeneric_Understood": "Begrepen",
+		"kGeneric_Username": "Gebruikersnaam",
+		"kGeneric_Password": "Wachtwoord",
+		"kGeneric_Login": "Inloggen",
+		"kGeneric_Register": "Register",
+		"kGeneric_EMail": "E-Mail",
+		"kGeneric_DateOfBirth": "Geboortedatum",
+		"kGeneric_VerificationCode": "Verificatiecode",
+		"kGeneric_Verify": "Verifiëren",
+		"kGeneric_Update": "Update",
+		"kGeneric_Logout": "Uitloggen",
+		
+		"kWelcomeModal_Header": "Welkom bij CollabVM",
+		"kWelcomeModal_Body": "<p>Met CollabVM kun je om de beurt online virtuele machines besturen met volslagen vreemden!</p> <p>Lees voordat je verdergaat onze regels door:</p> <h3>R1. Overtreed de wet niet.</h3> Gebruik CollabVM of het netwerk van CollabVM niet om de federale wetgeving van de Verenigde Staten, de wetgeving van de staat New York of het internationaal recht te overtreden. Als CollabVM erachter komt dat er via de dienst een misdrijf is gepleegd, word je onmiddellijk geblokkeerd en kunnen je activiteiten indien nodig aan de autoriteiten worden gemeld.<br><br>CollabVM is wettelijk verplicht om de wetshandhavingsinstanties op de hoogte te stellen als het kennis krijgt van de aanwezigheid van kinderpornografie op of de verzending ervan via het netwerk.<br><br>Ook COPPA is van toepassing; gebruik CollabVM niet als je jonger bent dan 13 jaar. <h3>R2. Gebruik geen DoS/DDoS-tools.</h3> Gebruik CollabVM niet om een ​​individu, bedrijf, onderneming of wie dan ook aan te vallen met DoS/DDoS-aanvallen. <h3>R3. Geen spamverspreiding.</h3> Verstuur geen spam-e-mails via deze service en verspreid in het algemeen geen spam. <h3>R4. Maak geen misbruik van exploits.</h3> Maak geen misbruik van exploits. Als u iemand exploits ziet misbruiken of als u er een wilt melden, neem dan contact met mij op via: computernewbab@gmail.com <h3>R5. Doe u niet voor als andere gebruikers.</h3> Doe u niet voor als andere leden van CollabVM. Als u betrapt wordt, wordt u tijdelijk losgekoppeld en indien nodig verbannen. <h3>R6. Eén stem per persoon.</h3> Gebruik geen methoden of tools om de stembeperking te omzeilen. Slechts één stem per persoon is toegestaan, ongeacht de omstandigheden. Iedereen die betrapt wordt op het doen van dit, wordt verbannen. <h3>R7. Geen tools voor beheer op afstand.</h3> Gebruik geen tools voor beheer op afstand (bijv. DarkComet, NanoCore, Anydesk, TeamViewer, Orcus, enz.). <h3>R8. CollabNet niet omzeilen.</h3> Probeer de blokkering van CollabNet niet te omzeilen, vooral niet als dit wordt gebruikt om Regel 1, Regel 2 of Regel 7 te overtreden (of om domme, overgebruikte dingen te doen). <h3>R9. Geen destructieve acties constant uitvoeren.</h3> Het is gebruikers niet toegestaan ​​de VM te vernietigen (waardoor deze constant onbruikbaar wordt), het besturingssysteem te installeren/herinstalleren (behalve op VM7 of VM8), of bots uit te voeren die dit doen. Dit omvat bots die enorme hoeveelheden toetsenbord-/muisinvoer spammen ("kitting"). <h3>R10. Geen cryptomining</h3> Pogingen om cryptovaluta te minen op de VM's zullen resulteren in een kick, en vervolgens een permanente ban als je het blijft proberen. Bovendien zul je er geen geld mee verdienen. <h3>NSFW-waarschuwing</h3> Houd er rekening mee dat NSFW-content is toegestaan ​​op onze anarchistische VM (VM0b0t) en regelmatig wordt bekeken. Hoewel we ons best doen om NSFW-content van de hoofd-VM's te weren, lukt het soms toch om er iets doorheen te glippen.",
+		"kSiteButtons_Home": " Thuis",
+		"kSiteButtons_FAQ": "Veelgestelde vragen",
+		"kSiteButtons_Rules": "Regels",
+		"kSiteButtons_DarkMode": "Donkere modus",
+		"kSiteButtons_LightMode": "Lichte modus",
+		"kSiteButtons_Languages": "Talen",
+
+		"kVM_UsersOnlineText": "Gebruiker online:",
+
+		"kVM_TurnTimeTimer": "De beurt verloopt over {0} seconden.",
+		"kVM_WaitingTurnTimer": "Wacht {0} seconden voordat u een nieuwe stem uitbrengt.",
+		"kVM_VoteCooldownTimer": "Wil je de virtuele machine resetten?",
+
+		"kVM_VoteForResetTitle": "Wil je de virtuele machine resetten?",
+		"kVM_VoteForResetTimer": "De stemming eindigt over {0} seconden",
+
+		"kVMButtons_TakeTurn": "Neem de beurt",
+		"kVMButtons_EndTurn": "Einde beurt",
+		"kVMButtons_ChangeUsername": "Wijzig gebruikersnaam",
+		"kVMButtons_Keyboard": "Toetsenbord",
+		"KVMButtons_CtrlAltDel": "Ctrl+Alt+Del",
+
+		"kVMButtons_VoteForReset": "Stem voor resetten",
+		"kVMButtons_Screenshot": "ScreenshotSchermafbeelding",
+
+		"kQEMUMonitor": "QEMU Monitor",
+		"kAdminVMButtons_PassVote": "Stem door",
+		"kAdminVMButtons_CancelVote": "Stem annuleren",
+
+		"kAdminVMButtons_Restore": "Herstellen",
+		"kAdminVMButtons_Reboot": "Opnieuw opstarten",
+		"kAdminVMButtons_ClearTurnQueue": "Wis de wachtrij",
+		"kAdminVMButtons_BypassTurn": "Omzeil de bocht",
+		"kAdminVMButtons_IndefiniteTurn": "Onbepaalde beurt",
+		"kAdminVMButtons_GhostTurnOn": "Spookbeurt (In)",
+		"kAdminVMButtons_GhostTurnOff": "Spookbeurt (Uit)",
+
+		"kAdminVMButtons_Ban": "Verbod",
+		"kAdminVMButtons_Kick": "Trap",
+		"kAdminVMButtons_TempMute": "Tijdelijk dempen",
+		"kAdminVMButtons_IndefMute": "Onbepaalde tijd dempen",
+		"kAdminVMButtons_Unmute": "Dempen opheffen",
+		"kAdminVMButtons_GetIP": "IP verkrijgen",
+
+		"kVMPrompts_AdminChangeUsernamePrompt": "Voer een nieuwe gebruikersnaam in {0}:",
+		"kVMPrompts_AdminRestoreVMPrompt": "Weet je zeker dat je de VM wilt herstellen?",
+		"kVMPrompts_EnterNewUsernamePrompt": "Voer een nieuwe gebruikersnaam in, of laat het veld leeg om een ​​gastgebruikersnaam toegewezen te krijgen.",
+		"kError_UnexpectedDisconnection": "Je bent losgekoppeld van de server.",
+		"kError_UsernameTaken": "De gebruikersnaam is al in gebruik.",
+		"kError_UsernameInvalid": "Gebruikersnamen mogen alleen cijfers, letters, spaties, streepjes, underscores en punten bevatten en moeten tussen de 3 en 20 tekens lang zijn.",
+		"kError_UsernameBlacklisted": "Die gebruikersnaam staat op de zwarte lijst.",
+		"kError_IncorrectPassword": "Onjuist wachtwoord.",
+
+		"kAccountModal_Verify": "E-mailadres verifiëren",
+		"kAccountModal_AccountSettings": "Accountinstellingen",
+		"kAccountModal_ResetPassword": "Wachtwoord opnieuw instellen",
+
+		"kAccountModal_NewPassword": "Nieuw wachtwoord",
+		"kAccountModal_ConfirmNewPassword": "Bevestig nieuw wachtwoord",
+		"kAccountModal_CurrentPassword": "Huidig ​​wachtwoord",
+		"kAccountModal_ConfirmPassword": "Bevestig wachtwoord",
+		"kAccountModal_HideFlag": "Verberg mijn landvlag",
+
+		"kMissingCaptcha": "Vul de captcha in.",
+		"kPasswordsMustMatch": "Wachtwoord moet overeenkomen.",
+		"kAccountModal_VerifyText": "We hebben een e-mail gestuurd naar {0}. Om uw account te verifiëren, voert u de 8-cijferige code uit de e-mail hieronder in.",
+		"kAccountModal_VerifyPasswordResetText": "We hebben een e-mail gestuurd naar {0}. Om uw wachtwoord opnieuw in te stellen, voert u de 8-cijferige code uit de onderstaande e-mail in.",
+		"kAccountModal_PasswordResetSuccess": Je wachtwoord is succesvol gewijzigd. Je kunt nu inloggen met je nieuwe wachtwoord.",
+
+		"kNotLoggedIn": "Niet ingelogd"
+	}
+}
