@@ -344,6 +344,8 @@ Theme: cvmDisabled
 .userlist-flag {
   padding-right: 0.5rem;
   user-select: none;
+	// use teh font, its there fore a reason, idk why it wasnt used before
+	font-family: 'Noto Color Emoji';
 }
 
 .userlist-flag:empty {
