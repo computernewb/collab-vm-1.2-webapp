@@ -344,6 +344,9 @@ Theme: cvmDisabled
 .userlist-flag {
   padding-right: 0.5rem;
   user-select: none;
+	// use teh font, its there fore a reason, idk why it wasnt used before
+  // mod: Make exhuast all options before using the color emoji (segoe excluded cuz it has no flags, so it will defeat the purposes of this commit/PR)
+	font-family: "Apple Color Emoji", "Noto Color Emoji", system-ui, sans-serif;
 }
 
 .userlist-flag:empty {
